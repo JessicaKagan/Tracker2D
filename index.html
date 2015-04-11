@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Simtunes Clone</title>
+        <link rel="stylesheet" href="css/main.css">
+        
+    </head>
+
+    <body>
+        <div id="box">
+            <!--Note: Decide whether to use canvas or just regular HTML/CSS positioning for parts of the UI.-->
+            <canvas id="canvas" width="800px" height="600px">Canvas failed. Try reloading or upgrading your browser.</canvas>
+        </div>
+    </body>
+
+    <script src="js/jquery-2.1.3.min.js"></script>
+    
+    <script src="js/music_instructions.js"></script> <!--Handles tiles-->
+    <script src="js/bugs.js"></script> <!--Bugs represent musicians and execute tile instructions when they move over them-->
+    <script src="js/song_properties.js"></script> <!--Governs some aspects of playback logic and will eventually link to file saving/IO-->
+    <script src="js/main.js"></script> <!--Basic engine logic and anything that hasn't been moved to a separate file-->
+
+</html>
