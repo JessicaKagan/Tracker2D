@@ -14,15 +14,15 @@ for(var i = 0; i < rows; ++i) {
     fieldContents[i] = new Array(23);
 }
 
-//Global for now.
-var bug1;
-
+//Globals for now. Deglobalize as implementation permits.
+var bug1, soundFont, audioEngine, audioLoader;
 
 
 //Use Web Audio API or something to actually play audio.
 var testSound = new Audio('Ach.wav');
 var bugImage = new Image();
-bugImage.src = "images/placeholder_bug.png";
+bugImage.src = 'images/placeholder_bug.png';
+var testSoundArray = ['/sounds/Ach.wav','/sounds/OrchestraHit.wav'];
 
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the AI; x-coords 80-> 800, y-coords 0->552
 
@@ -37,6 +37,13 @@ bugImage.onload = function() {
 }
 
 function init() {
+
+    //Set up the audio engine and a system for playing sounds.
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioEngine = new AudioContext();
+    audioLoader = new BufferLoader(audioEngine, testSoundArray, soundsAreReady);
+    audioLoader.load();
+
     ctx.fillStyle = "#000000";
     //There has to be a better way to handle the names. Apparently apply() in JS might be usable?
     ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
@@ -52,11 +59,11 @@ function init() {
     fieldContents[16][1] = new Tile("blue", undefined, undefined, undefined);
     fieldContents[21][1] = new Tile("blue", undefined, undefined, undefined);
     fieldContents[26][1] = new Tile("blue", undefined, undefined, undefined);
-    
+
     document.addEventListener("click", interact);
 
     //Draws a test bug, spawning at tile [0,1] without any behavior.
-    bug1 = new Bug(fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),null);
+    bug1 = new Bug(fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),null,'George');
     //console.log(bug1);
     //Experimentally moving the bug. Needs an implementation that wipes the screen as needed.
     /*
@@ -68,7 +75,7 @@ function init() {
             bug1.drawBug();
             //If the bug is on a blue tile, play ach.wav
             if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
-                testSound.play();
+                soundFont[0].start(0); //Plays the sound
                 if(fieldContents[bugTile[0]][bugTile[1]].note == "green") {bug1.y -=24;}
                 if(fieldContents[bugTile[0]][bugTile[1]].note == "red") {bug1.y +=24;}
             }
@@ -101,6 +108,8 @@ function interact(e) {
     }
 }
 
+//Graphics functions.
+//It might be wise to make these subfunctions of something tile related.
 function getTile(x,y) {
     var tileX = Math.floor((x - 80)/TILE_SIZE);
     var tileY = Math.floor(y/TILE_SIZE);
@@ -120,6 +129,22 @@ function paintTile(tileX, tileY, color){
                  fieldBoundaries[1] + (TILE_SIZE*tileY),
                 (TILE_SIZE*1), 
                 (TILE_SIZE*1));
+
+}
+
+//Maybe move the audio routines into a seperate file?
+function soundsAreReady(soundList) {
+    console.log("Sounds loaded, or so I'm told.");
+    //console.log(soundList);
+    //Populate soundFont with all the sounds we need.
+    soundFont = [];
+    for(var i = 0; i < soundList.length; ++i) {
+        soundFont.push(soundList[i]); //We fill up SoundFont with sounds...
+        soundFont[i] = audioEngine.createBufferSource(); 
+        soundFont[i].buffer = soundList[i];
+        //console.log(soundFont[i]);
+        soundFont[i].connect(audioEngine.destination); //And route them to audio.
+    }
 
 }
 

@@ -4,11 +4,12 @@
  * 2. Current action, which needs a function to change it as needed..
  */
 
-var Bug = function(x,y, action){
+var Bug = function(x,y, action,name){
     this.image = bugImage;
     this.action = action;
     this.x = x;
     this.y = y;
+    this.name = name; //Long term idea: Create naming function for bugs, might come in handy.
 
 }
 
