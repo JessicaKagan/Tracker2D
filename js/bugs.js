@@ -14,7 +14,7 @@ var Bug = function(x,y, action,name){
 }
 
 Bug.prototype.drawBug = function(){
-    //This gets called but doesn't execute right.
+    //This might not need to be its own function unless we can change the bug stuff?
     ctx.drawImage(this.image,this.x,this.y);
 
 }

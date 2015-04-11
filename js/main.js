@@ -6,6 +6,7 @@ var TILE_SIZE = 24; //This is more cumbersome early on, but I will eventually ne
 var LEFT_VERTICAL_BAR = [0,0,80,800];
 var BOTTOM_HORIZONTAL_BAR = [80,552,720,48];
 var FIELD_PIXELS = [80,0,800,552];
+var PAUSE_PLAY_BUTTON_AREA = [80,576,24,24];
 
 var fieldContents = new Array(30);
 var rows = FILE_SIZE[0];
@@ -16,11 +17,18 @@ for(var i = 0; i < rows; ++i) {
 
 //Globals for now. Deglobalize as implementation permits.
 var bug1, soundFont, audioEngine, audioLoader;
+var pauseImages = [];
 
 
-//Use Web Audio API or something to actually play audio.
 var bugImage = new Image();
 bugImage.src = 'images/placeholder_bug.png';
+
+//Needs generalization.
+pauseImages[0] = new Image();
+pauseImages[1] = new Image();
+pauseImages[0].src = 'images/pause_button.png';
+pauseImages[1].src = 'images/play_button.png';
+
 var testSoundArray = ['/sounds/Ach.wav','/sounds/OrchestraHit.wav'];
 
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the AI; x-coords 80-> 800, y-coords 0->552
@@ -30,8 +38,8 @@ var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the AI; 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-//Kludge. Extend to involve all 'bug' images and then work from there. I guess.
-bugImage.onload = function() {
+//Kludge. Rewrite this to start when ALL images are loaded.
+pauseImages[1].onload = function() {
     init();
 }
 
@@ -60,30 +68,34 @@ function init() {
     fieldContents[26][1] = new Tile("blue", undefined, undefined, undefined);
 
     document.addEventListener("click", interact);
+    pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
 
     //Draws a test bug, spawning at tile [0,1] without any behavior.
     bug1 = new Bug(fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),null,'George');
     //console.log(bug1);
-    //Experimentally moving the bug. Needs an implementation that wipes the screen as needed.
+    //Experimentally moving the bug. Adding experimental pause implementation that will need generalization.
+    
     
     setInterval(function(){
+        if(pauseState == false) {
         var bugTile = [(bug1.x - 80)/24, bug1.y/24];
-        if(bug1.x < 800) {
-            //console.log(bugTile);
-            bug1.x += 24;
-            bug1.drawBug();
-            //If the bug is on a blue tile, play ach.wav
-            if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
+            if(bug1.x < 800) {
+                //console.log(bugTile);
+                bug1.x += 24;
+                bug1.drawBug();
+                //If the bug is on a blue tile, play ach.wav
+                if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
+                    playSound(soundFont[1]); //Plays whatever sound this is. Might be nice to alias soundfont names somehow?
+                    if(fieldContents[bugTile[0]][bugTile[1]].note == "green") {bug1.y -=24;}
+                    if(fieldContents[bugTile[0]][bugTile[1]].note == "red") {bug1.y +=24;}
+                }
+                //Experiment with turn logic.
 
-                playSound(soundFont[1]); //Plays whatever sound this is. Might be nice to alias soundfont names somehow?
-                if(fieldContents[bugTile[0]][bugTile[1]].note == "green") {bug1.y -=24;}
-                if(fieldContents[bugTile[0]][bugTile[1]].note == "red") {bug1.y +=24;}
-            }
-            //Experiment with turn logic.
-
-        } else bug1.x = 80;
+            } else bug1.x = 80;
+        }
     }, 200)
     
+
     
     window.requestAnimationFrame(main);
 
@@ -92,8 +104,19 @@ function init() {
 function interact(e) {
     var cursorX = e.pageX - $('#canvas').offset().left;
     var cursorY = e.pageY - $('#canvas').offset().top;
+    //Displays debug messages for now based on where you click.
+    //When we find buttons, we'll need some sort of 2D switch statement.
     if(cursorX <= 80 && cursorX > 0) { console.log("LEFT_VERTICAL_BAR"); }
-    if(cursorY >= 540 && cursorY <= 600 && cursorX >= 80) { console.log("BOTTOM_HORIZONTAL_BAR"); }
+    if(cursorY >= 540 && cursorY <= 600 && cursorX >= 80) { 
+        console.log("BOTTOM_HORIZONTAL_BAR");
+        //If you click the pause button, it switches between paused and unpaused modes.
+        if(cursorY >= 576 && cursorX <= 104) { 
+            console.log("PAUSE_PLAY_BUTTON_AREA");
+            if(pauseState == true || undefined) { pauseState = false; }
+            else pauseState = true;
+            console.log(pauseState);
+        }
+    }
     //If we're inside the playfield, convert to a tile.
     if(cursorX >= 80 && cursorX <= 800 && cursorY >= 0 && cursorY <= 540){
         console.log("In the playfield");
@@ -154,7 +177,7 @@ function playSound(buffer) {
     source.buffer = buffer;
     source.connect(audioEngine.destination);
     /*EXTREMELY IMPORTANT! This might be where filter code goes when those are added. */
-
+    //Decide how to handle audio when page isn't visible, see http://www.w3.org/TR/page-visibility/?csw=1
     source.start(0);
 }
 
@@ -208,8 +231,15 @@ function render(){
     //3. Bugs
     bug1.drawBug();
     //4. UI (Seems trivial, but I plan to have translucent popups in the near future.)
-    //2 & 3 are going to take up most of our time.
-
-    //Then call a new frame of animation.
+    ctx.fillRect(PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1],PAUSE_PLAY_BUTTON_AREA[2],PAUSE_PLAY_BUTTON_AREA[3]);
+    /*
+    if(pauseState = true) { 
+        ctx.drawImage(pauseImages[0],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); 
+    } else { 
+        ctx.drawImage(pauseImages[1],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); 
+    }
+    */
+    //pauseUI.drawButton();
+    
    
 }
