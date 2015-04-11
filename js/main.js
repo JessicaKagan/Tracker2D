@@ -45,18 +45,19 @@ function init() {
     ctx.fillStyle = "#BBBBBB";
 
     //In the future, we'll pull this information from a save file, if we can.
-    fieldContents[1][1] = new Tile("test", undefined, undefined, undefined);
-    fieldContents[6][1] = new Tile("test", undefined, undefined, undefined);
-    fieldContents[11][1] = new Tile("test", undefined, undefined, undefined);
-    fieldContents[16][1] = new Tile("test", undefined, undefined, undefined);
-    fieldContents[21][1] = new Tile("test", undefined, undefined, undefined);
-    fieldContents[26][1] = new Tile("test", undefined, undefined, undefined);
-      
+    //In the not so distant future, we'll initialize the entire array as empty.
+    fieldContents[1][1] = new Tile("blue", undefined, undefined, undefined);
+    fieldContents[6][1] = new Tile("blue", undefined, undefined, undefined);
+    fieldContents[11][1] = new Tile("blue", undefined, undefined, undefined);
+    fieldContents[16][1] = new Tile("blue", undefined, undefined, undefined);
+    fieldContents[21][1] = new Tile("blue", undefined, undefined, undefined);
+    fieldContents[26][1] = new Tile("blue", undefined, undefined, undefined);
+    
     document.addEventListener("click", interact);
 
     //Draws a test bug, spawning at tile [0,1] without any behavior.
     bug1 = new Bug(fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),null);
-    console.log(bug1);
+    //console.log(bug1);
     //Experimentally moving the bug. Needs an implementation that wipes the screen as needed.
     /*
     setInterval(function(){
@@ -68,11 +69,16 @@ function init() {
             //If the bug is on a blue tile, play ach.wav
             if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
                 testSound.play();
+                if(fieldContents[bugTile[0]][bugTile[1]].note == "green") {bug1.y -=24;}
+                if(fieldContents[bugTile[0]][bugTile[1]].note == "red") {bug1.y +=24;}
             }
+            //Experiment with turn logic.
+
         } else bug1.x = 80;
     }, 200)
     */
-    window.requestAnimationFrame(render);
+    
+    window.requestAnimationFrame(main);
 
 }
 
@@ -86,8 +92,12 @@ function interact(e) {
         console.log("In the playfield");
         var currentTile = getTile(cursorX, cursorY);
         console.log(currentTile);
-        //if(currentTile[0] == 1 && currentTile[1] == 1) { testSound.play(); } //Debug
-        paintTile(currentTile[0],currentTile[1], "#00BB00"); //Simple painting test
+        //The logic for this is going to become a great deal more complex with time, I think.
+        if(fieldContents[currentTile[0]][currentTile[1]] == undefined) { 
+            fieldContents[currentTile[0]][currentTile[1]] = new Tile("red", undefined, undefined, undefined);
+        } else fieldContents[currentTile[0]][currentTile[1]].note = "green";
+        console.log(fieldContents[currentTile[0]][currentTile[1]]);
+        //paintTile(currentTile[0],currentTile[1], "#00BB00"); //Simple painting test
     }
 }
 
@@ -114,8 +124,15 @@ function paintTile(tileX, tileY, color){
 }
 
 function main(){
+    //This is our main loop!
+    //updateBugPositions(); //Needs to be written.
+    render();
+    window.requestAnimationFrame(main);
+    
+
     //Implement a basic delta function later for smooth operation regardless of FPS and speed.
-    //This needs to link into Tempo, I think.
+    //This needs to link partially into Tempo. Bug positions only need to update on tempo ticks.
+    //However, rendering needs to be as fast and responsive as possible.
     //Init:
     //var lastTime = Date.now();
     //Loop:
@@ -148,7 +165,7 @@ function render(){
     for(var i = 0; i < FILE_SIZE[0]; ++i){
         for(var j = 0; j < FILE_SIZE[1]; ++j){
             if(typeof fieldContents[i][j] === 'object'){
-                paintTile(i,j, "#0000FF");
+                paintTile(i,j, fieldContents[i][j].note);
             }   
         }
     }
@@ -159,5 +176,5 @@ function render(){
     //2 & 3 are going to take up most of our time.
 
     //Then call a new frame of animation.
-    window.requestAnimationFrame(render);
+   
 }
