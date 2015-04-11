@@ -62,7 +62,8 @@ function init() {
     fieldContents[16][1] = new Tile("test", undefined, undefined, undefined);
     fieldContents[21][1] = new Tile("test", undefined, undefined, undefined);
     fieldContents[26][1] = new Tile("test", undefined, undefined, undefined);
-
+    //Painting squares! From an MVC stance this is the "view", I guess.
+    //Our update needs to change the underlying model without going through the view.
     for(var i = 0; i < FILE_SIZE[0]; ++i){
         
         for(var j = 0; j < FILE_SIZE[1]; ++j){
@@ -80,40 +81,26 @@ function init() {
     console.log(bug1);
     bug1.drawBug();
     //Experimentally moving the bug. Needs an implementation that wipes the screen as needed.
-        setInterval(function(){
-            var bugTile = [(bug1.x - 80)/24, bug1.y/24];
-            if(bug1.x < 800) {
-                //console.log(bugTile);
-                bug1.x += 24;
-                bug1.drawBug();
-                //If the bug is on a blue tile, play ach.wav
-                if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
-                    testSound.play();
-                }
+    /*
+    setInterval(function(){
+        var bugTile = [(bug1.x - 80)/24, bug1.y/24];
+        if(bug1.x < 800) {
+            //console.log(bugTile);
+            bug1.x += 24;
+            bug1.drawBug();
+            //If the bug is on a blue tile, play ach.wav
+            if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
+                testSound.play();
             }
-        }, 200)
-
-    //}
-    //bug1.x += 72;
-    //bug1.drawBug();
-
-
-}
-
-//Move this where it's needed
-function paintTile(tileX, tileY, color){
-    ctx.fillStyle = color //Pass in #hexadecimal for best results.
-    ctx.fillRect(fieldBoundaries[0] + (TILE_SIZE*tileX), 
-                 fieldBoundaries[1] + (TILE_SIZE*tileY),
-                (TILE_SIZE*1), 
-                (TILE_SIZE*1));
+        }
+    }, 200)
+    */
 
 }
 
 function interact(e) {
     var cursorX = e.pageX - $('#canvas').offset().left;
     var cursorY = e.pageY - $('#canvas').offset().top;
-    console.log("Clicked " + cursorX + ", " + cursorY);
     if(cursorX <= 80 && cursorX > 0) { console.log("LEFT_VERTICAL_BAR"); }
     if(cursorY >= 540 && cursorY <= 600 && cursorX >= 80) { console.log("BOTTOM_HORIZONTAL_BAR"); }
     //If we're inside the playfield, convert to a tile.
@@ -122,6 +109,7 @@ function interact(e) {
         var currentTile = getTile(cursorX, cursorY);
         console.log(currentTile);
         //if(currentTile[0] == 1 && currentTile[1] == 1) { testSound.play(); } //Debug
+        paintTile(currentTile[0],currentTile[1], "#00BB00"); //Simple painting test
     }
 }
 
@@ -137,3 +125,31 @@ function convertTiletoPixels(x,y){
     return [pixelX, pixelY];
 }
 
+//Move this where it's needed
+function paintTile(tileX, tileY, color){
+    ctx.fillStyle = color //Pass in #hexadecimal for best results.
+    ctx.fillRect(fieldBoundaries[0] + (TILE_SIZE*tileX), 
+                 fieldBoundaries[1] + (TILE_SIZE*tileY),
+                (TILE_SIZE*1), 
+                (TILE_SIZE*1));
+
+}
+
+function main(){
+    //Implement a basic delta function later for smooth operation regardless of FPS and speed.
+    //This needs to link into Tempo, I think.
+    //Init:
+    //var lastTime = Date.now();
+    //Loop:
+    //var now = Date.now();
+    //var delta = (now - lastTime) / 1000.0;
+    //lastTime = now;
+}
+
+function render(){
+    //Render things in this order:
+    //1. Background
+    //2. Painted tiles
+    //3. Bugs
+    //4. UI (Seems trivial, but I plan to have translucent popups in the near future.)
+}
