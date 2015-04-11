@@ -19,7 +19,6 @@ var bug1, soundFont, audioEngine, audioLoader;
 
 
 //Use Web Audio API or something to actually play audio.
-var testSound = new Audio('Ach.wav');
 var bugImage = new Image();
 bugImage.src = 'images/placeholder_bug.png';
 var testSoundArray = ['/sounds/Ach.wav','/sounds/OrchestraHit.wav'];
@@ -66,7 +65,7 @@ function init() {
     bug1 = new Bug(fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),null,'George');
     //console.log(bug1);
     //Experimentally moving the bug. Needs an implementation that wipes the screen as needed.
-    /*
+    
     setInterval(function(){
         var bugTile = [(bug1.x - 80)/24, bug1.y/24];
         if(bug1.x < 800) {
@@ -75,7 +74,8 @@ function init() {
             bug1.drawBug();
             //If the bug is on a blue tile, play ach.wav
             if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
-                soundFont[0].start(0); //Plays the sound
+
+                playSound(soundFont[1]); //Plays whatever sound this is. Might be nice to alias soundfont names somehow?
                 if(fieldContents[bugTile[0]][bugTile[1]].note == "green") {bug1.y -=24;}
                 if(fieldContents[bugTile[0]][bugTile[1]].note == "red") {bug1.y +=24;}
             }
@@ -83,7 +83,7 @@ function init() {
 
         } else bug1.x = 80;
     }, 200)
-    */
+    
     
     window.requestAnimationFrame(main);
 
@@ -140,12 +140,22 @@ function soundsAreReady(soundList) {
     soundFont = [];
     for(var i = 0; i < soundList.length; ++i) {
         soundFont.push(soundList[i]); //We fill up SoundFont with sounds...
-        soundFont[i] = audioEngine.createBufferSource(); 
-        soundFont[i].buffer = soundList[i];
-        //console.log(soundFont[i]);
-        soundFont[i].connect(audioEngine.destination); //And route them to audio.
+        //soundFont[i] = audioEngine.createBufferSource(); 
+        //soundFont[i].buffer = soundList[i];
+        //soundFont[i].connect(audioEngine.destination); //And route them to audio.
     }
 
+}
+
+function playSound(buffer) {
+    console.log("playSound() triggered.");
+
+    var source = audioEngine.createBufferSource();
+    source.buffer = buffer;
+    source.connect(audioEngine.destination);
+    /*EXTREMELY IMPORTANT! This might be where filter code goes when those are added. */
+
+    source.start(0);
 }
 
 function main(){
