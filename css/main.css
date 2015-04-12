@@ -1,7 +1,42 @@
+@font-face{
+    font-family: 'Visitor';
+    src:
+    url('fonts/visitor1.ttf');
+}
+
+p { 
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 #box {
     width: 800px;
     height: 600px;
     border-style: solid;
     border-width: 1px;
     position: absolute;
+}
+
+.UIInputBox {
+    position: absolute;
+    left: 0px;
+    color: #FFFFFF;
+    font-family: Tahoma, sans-serif;
+    font-size: 14px;
+    text-align: center;
+
+}
+
+#UIShifter {
+    top: 200px;
+}
+
+#UIShifter2{
+    top: 300px;
+}
+
+.UIShifterInput {
+    width:80px;
+    border-width: 0px;
+    padding: 0px;
 }

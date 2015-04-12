@@ -86,7 +86,7 @@ function init() {
                 bug1.drawBug();
                 //If the bug is on a blue tile, play ach.wav
                 if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
-                    playSound(soundFont[1], pitchTable[bugTile[0]]); //Plays whatever sound this is at the default playback rate (1/1). Might be nice to alias soundfont names somehow?
+                    playSound(soundFont[1], pitchTable[bugTile[0] + 12]); //Plays whatever sound this is at the default playback rate (1/1). Might be nice to alias soundfont names somehow?
                     if(fieldContents[bugTile[0]][bugTile[1]].note == "green") {bug1.y -=24;}
                     if(fieldContents[bugTile[0]][bugTile[1]].note == "red") {bug1.y +=24;}
                 }
@@ -158,15 +158,12 @@ function paintTile(tileX, tileY, color){
 
 //Maybe move the audio routines into a seperate file?
 function soundsAreReady(soundList) {
-    console.log("Sounds loaded, or so I'm told.");
+    console.log("Sounds loaded");
     //console.log(soundList);
     //Populate soundFont with all the sounds we need.
     soundFont = [];
     for(var i = 0; i < soundList.length; ++i) {
         soundFont.push(soundList[i]); //We fill up SoundFont with sounds...
-        //soundFont[i] = audioEngine.createBufferSource(); 
-        //soundFont[i].buffer = soundList[i];
-        //soundFont[i].connect(audioEngine.destination); //And route them to audio.
     }
 
 }
@@ -176,7 +173,7 @@ function playSound(buffer, pitch) {
     var source = audioEngine.createBufferSource();
     source.buffer = buffer;
     source.playbackRate.value = pitch;
-
+    console.log(source.playbackRate.value*44100);
     source.connect(audioEngine.destination);
 
     /*EXTREMELY IMPORTANT! This might be where filter code goes when those are added. */
