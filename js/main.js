@@ -62,7 +62,7 @@ function init() {
 
     //In the future, we'll pull this information from a save file, if we can.
     //In the not so distant future, we'll initialize the entire array as empty, but not undefined?
-    fieldContents[1][1] = new Tile(36, 1, undefined, undefined);
+    fieldContents[1][1] = new Tile(36, 0, undefined, undefined);
     fieldContents[5][1] = new Tile(35, 1, undefined, undefined);
     fieldContents[8][1] = new Tile(34, 1, undefined, undefined);
     fieldContents[13][1] = new Tile(33, 1, undefined, undefined);
@@ -88,7 +88,7 @@ function init() {
                 //Plays whatever sound this is at a pitch determined by the note value. 
                 //Might be nice to alias soundfont names somehow?
                 if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
-                    playSound(soundFont[1], fieldContents[bugTile[0]][bugTile[1]].note);
+                    playSound(soundFont[fieldContents[bugTile[0]][bugTile[1]].instrument], fieldContents[bugTile[0]][bugTile[1]].note);
                     //Primitive flow control experiment.
                     if(fieldContents[bugTile[0]][bugTile[1]].note == "green") {bug1.y -=24;}
                     if(fieldContents[bugTile[0]][bugTile[1]].note == "red") {bug1.y +=24;}
@@ -106,11 +106,12 @@ function init() {
             $('#pitchInput').val('');
         }
     })
+    //Definitely functionalize. This handles instruments.
     $('#instrumentInput').keydown(function(event){
         if (event.keyCode == 13) {
-            if($('instrumentInput').val() <= 72 && $('#instrumentInput').val() > 0) {}
-            else { console.log("Please input a note between 0 and 72"); }
-            console.log(currentPitch);
+            if($('#instrumentInput').val() < testSoundArray.length) { currentInstrument = $('#instrumentInput').val();}
+            else { console.log("There are only " + testSoundArray.length + " instruments right now. Remind me to turn this into a list.");}
+            console.log(currentInstrument);
             $('#instrumentInput').val('');
         }
     })
@@ -143,7 +144,7 @@ function interact(e) {
         console.log(currentTile);
         //The logic for this is going to become a great deal more complex with time, I think.
         //if(fieldContents[currentTile[0]][currentTile[1]] == undefined) { 
-            fieldContents[currentTile[0]][currentTile[1]] = new Tile(currentPitch, undefined, undefined, undefined);
+            fieldContents[currentTile[0]][currentTile[1]] = new Tile(currentPitch, currentInstrument, undefined, undefined);
         //}
         console.log(fieldContents[currentTile[0]][currentTile[1]]);
         //paintTile(currentTile[0],currentTile[1], "#00BB00"); //Simple painting test
