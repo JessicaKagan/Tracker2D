@@ -61,11 +61,12 @@ function init() {
     //In the future, we'll pull this information from a save file, if we can.
     //In the not so distant future, we'll initialize the entire array as empty.
     fieldContents[1][1] = new Tile("blue", undefined, undefined, undefined);
-    fieldContents[6][1] = new Tile("blue", undefined, undefined, undefined);
-    fieldContents[11][1] = new Tile("blue", undefined, undefined, undefined);
-    fieldContents[16][1] = new Tile("blue", undefined, undefined, undefined);
-    fieldContents[21][1] = new Tile("blue", undefined, undefined, undefined);
-    fieldContents[26][1] = new Tile("blue", undefined, undefined, undefined);
+    fieldContents[5][1] = new Tile("blue", undefined, undefined, undefined);
+    fieldContents[8][1] = new Tile("blue", undefined, undefined, undefined);
+    fieldContents[13][1] = new Tile("blue", undefined, undefined, undefined);
+    fieldContents[17][1] = new Tile("blue", undefined, undefined, undefined);
+    fieldContents[20][1] = new Tile("blue", undefined, undefined, undefined);
+    fieldContents[25][1] = new Tile("blue", undefined, undefined, undefined);
 
     document.addEventListener("click", interact);
     pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
@@ -85,7 +86,7 @@ function init() {
                 bug1.drawBug();
                 //If the bug is on a blue tile, play ach.wav
                 if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
-                    playSound(soundFont[1]); //Plays whatever sound this is. Might be nice to alias soundfont names somehow?
+                    playSound(soundFont[1], pitchTable[bugTile[0]]); //Plays whatever sound this is at the default playback rate (1/1). Might be nice to alias soundfont names somehow?
                     if(fieldContents[bugTile[0]][bugTile[1]].note == "green") {bug1.y -=24;}
                     if(fieldContents[bugTile[0]][bugTile[1]].note == "red") {bug1.y +=24;}
                 }
@@ -170,12 +171,14 @@ function soundsAreReady(soundList) {
 
 }
 
-function playSound(buffer) {
-    console.log("playSound() triggered.");
-
+function playSound(buffer, pitch) {
+    //console.log("playSound() triggered.");
     var source = audioEngine.createBufferSource();
     source.buffer = buffer;
+    source.playbackRate.value = pitch;
+
     source.connect(audioEngine.destination);
+
     /*EXTREMELY IMPORTANT! This might be where filter code goes when those are added. */
     //Decide how to handle audio when page isn't visible, see http://www.w3.org/TR/page-visibility/?csw=1
     source.start(0);

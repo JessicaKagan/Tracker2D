@@ -10,8 +10,17 @@
  * TODO: Look at https://github.com/corbanbrook/dsp.js/
  */
 
+//Defining a basic frequency multiplier for notes. For simplicity's sake, I am going to use 12-TET.
+//Later, I may switch to just intonation or (in the distant future) even allow users to switch between tuning systems.
+var pitchTable = Array(72);
+pitchTable[0] = (1/8); //Chosen so that the midpoint (36) has a rate of "1" (44100 Hz)
+for(var i = 1; i < pitchTable.length; ++i){
+    pitchTable[i] = pitchTable[i - 1] * Math.pow(2, (1/12));
+}
+
+
 var Tile = function(note, instrument, dspEffect, flowEffect) {
-    this.note = note;
+    this.note = note; //If we make colors correspond to pitches, we'll need logarithms or something.
     this.instrument = instrument;
     this.dspEffect = dspEffect;
     this.FlowEffect = flowEffect;
@@ -20,5 +29,4 @@ var Tile = function(note, instrument, dspEffect, flowEffect) {
         console.log("Not implemented yet");
     }
 }
-
 
