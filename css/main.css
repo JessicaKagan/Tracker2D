@@ -32,12 +32,21 @@ input[type="text"] {
 }
 
 #UIShifter {
+    top: 150px;
+}
+
+#UIShifter2 {
     top: 200px;
 }
 
-#UIShifter2{
+#UIShifter3 {
+    top: 250px;
+}
+
+#UIShifter4 {
     top: 300px;
 }
+
 
 .UIShifterInput {
     width:80px;
