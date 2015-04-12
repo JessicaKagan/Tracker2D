@@ -9,6 +9,10 @@ p {
     margin-bottom: 0px;
 }
 
+input[type="text"] {
+    font-size: 10px;
+}
+
 #box {
     width: 800px;
     height: 600px;

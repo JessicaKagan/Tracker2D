@@ -17,6 +17,8 @@ for(var i = 0; i < rows; ++i) {
 
 //Globals for now. Deglobalize as implementation permits.
 var bug1, soundFont, audioEngine, audioLoader;
+var currentPitch = 36;
+var currentInstrument = 0;
 var pauseImages = [];
 
 
@@ -59,14 +61,14 @@ function init() {
     ctx.fillStyle = "#BBBBBB";
 
     //In the future, we'll pull this information from a save file, if we can.
-    //In the not so distant future, we'll initialize the entire array as empty.
-    fieldContents[1][1] = new Tile("blue", undefined, undefined, undefined);
-    fieldContents[5][1] = new Tile("blue", undefined, undefined, undefined);
-    fieldContents[8][1] = new Tile("blue", undefined, undefined, undefined);
-    fieldContents[13][1] = new Tile("blue", undefined, undefined, undefined);
-    fieldContents[17][1] = new Tile("blue", undefined, undefined, undefined);
-    fieldContents[20][1] = new Tile("blue", undefined, undefined, undefined);
-    fieldContents[25][1] = new Tile("blue", undefined, undefined, undefined);
+    //In the not so distant future, we'll initialize the entire array as empty, but not undefined?
+    fieldContents[1][1] = new Tile(36, 1, undefined, undefined);
+    fieldContents[5][1] = new Tile(35, 1, undefined, undefined);
+    fieldContents[8][1] = new Tile(34, 1, undefined, undefined);
+    fieldContents[13][1] = new Tile(33, 1, undefined, undefined);
+    fieldContents[17][1] = new Tile(31, 1, undefined, undefined);
+    fieldContents[20][1] = new Tile(29, 1, undefined, undefined);
+    fieldContents[25][1] = new Tile(26, 1, undefined, undefined);
 
     document.addEventListener("click", interact);
     pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
@@ -74,9 +76,8 @@ function init() {
     //Draws a test bug, spawning at tile [0,1] without any behavior.
     bug1 = new Bug(fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),null,'George');
     //console.log(bug1);
+
     //Experimentally moving the bug. Adding experimental pause implementation that will need generalization.
-    
-    
     setInterval(function(){
         if(pauseState == false) {
         var bugTile = [(bug1.x - 80)/24, bug1.y/24];
@@ -84,21 +85,38 @@ function init() {
                 //console.log(bugTile);
                 bug1.x += 24;
                 bug1.drawBug();
-                //If the bug is on a blue tile, play ach.wav
+                //Plays whatever sound this is at a pitch determined by the note value. 
+                //Might be nice to alias soundfont names somehow?
                 if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
-                    playSound(soundFont[1], pitchTable[bugTile[0] + 12]); //Plays whatever sound this is at the default playback rate (1/1). Might be nice to alias soundfont names somehow?
+                    playSound(soundFont[1], fieldContents[bugTile[0]][bugTile[1]].note);
+                    //Primitive flow control experiment.
                     if(fieldContents[bugTile[0]][bugTile[1]].note == "green") {bug1.y -=24;}
                     if(fieldContents[bugTile[0]][bugTile[1]].note == "red") {bug1.y +=24;}
                 }
-                //Experiment with turn logic.
-
             } else bug1.x = 80;
         }
     }, 200)
-    
 
-    
+    //Setting up text input. Functionalize?
+    $('#pitchInput').keydown(function(event){
+        if (event.keyCode == 13) {
+            if($('#pitchInput').val() <= 72 && $('#pitchInput').val() > 0) { currentPitch = $('#pitchInput').val();}
+            else { console.log("Please input a note between 0 and 72"); }
+            console.log(currentPitch);
+            $('#pitchInput').val('');
+        }
+    })
+    $('#instrumentInput').keydown(function(event){
+        if (event.keyCode == 13) {
+            if($('instrumentInput').val() <= 72 && $('#instrumentInput').val() > 0) {}
+            else { console.log("Please input a note between 0 and 72"); }
+            console.log(currentPitch);
+            $('#instrumentInput').val('');
+        }
+    })
+
     window.requestAnimationFrame(main);
+
 
 }
 
@@ -118,15 +136,15 @@ function interact(e) {
             console.log(pauseState);
         }
     }
-    //If we're inside the playfield, convert to a tile.
+    //If we're inside the playfield, convert to a tile. Functionalize this!
     if(cursorX >= 80 && cursorX <= 800 && cursorY >= 0 && cursorY <= 540){
         console.log("In the playfield");
         var currentTile = getTile(cursorX, cursorY);
         console.log(currentTile);
         //The logic for this is going to become a great deal more complex with time, I think.
-        if(fieldContents[currentTile[0]][currentTile[1]] == undefined) { 
-            fieldContents[currentTile[0]][currentTile[1]] = new Tile("red", undefined, undefined, undefined);
-        } else fieldContents[currentTile[0]][currentTile[1]].note = "green";
+        //if(fieldContents[currentTile[0]][currentTile[1]] == undefined) { 
+            fieldContents[currentTile[0]][currentTile[1]] = new Tile(currentPitch, undefined, undefined, undefined);
+        //}
         console.log(fieldContents[currentTile[0]][currentTile[1]]);
         //paintTile(currentTile[0],currentTile[1], "#00BB00"); //Simple painting test
     }
@@ -144,16 +162,6 @@ function convertTiletoPixels(x,y){
     var pixelX = (x*24) + 80;
     var pixelY = y*24;
     return [pixelX, pixelY];
-}
-
-//Move this where it's needed
-function paintTile(tileX, tileY, color){
-    ctx.fillStyle = color //Pass in #hexadecimal for best results.
-    ctx.fillRect(fieldBoundaries[0] + (TILE_SIZE*tileX), 
-                 fieldBoundaries[1] + (TILE_SIZE*tileY),
-                (TILE_SIZE*1), 
-                (TILE_SIZE*1));
-
 }
 
 //Maybe move the audio routines into a seperate file?
@@ -220,10 +228,15 @@ function render(){
     }
     //Painting squares! From an MVC stance this is the "view", I guess.
     //paintTile eventually needs to choose colors first based on tile properties, and then a subset of it based on user's viewmode.
+    //Experimenting with color based on note pitch.
     for(var i = 0; i < FILE_SIZE[0]; ++i){
         for(var j = 0; j < FILE_SIZE[1]; ++j){
             if(typeof fieldContents[i][j] === 'object'){
-                paintTile(i,j, fieldContents[i][j].note);
+                //console.log(fieldContents[i][j].note);
+                //var currentColor = 'rgb(255,0,0)';
+                var currentColor = "#444444";
+                //console.log(color);
+                paintTile(i,j, currentColor);
             }   
         }
     }
@@ -240,6 +253,15 @@ function render(){
     }
     */
     //pauseUI.drawButton();
-    
-   
+  
+}
+
+//This is a rendering function, anyways.
+function paintTile(tileX, tileY, color){
+    ctx.fillStyle = color; 
+    ctx.fillRect(fieldBoundaries[0] + (TILE_SIZE*tileX), 
+                 fieldBoundaries[1] + (TILE_SIZE*tileY),
+                (TILE_SIZE*1), 
+                (TILE_SIZE*1));
+
 }

@@ -20,7 +20,7 @@ for(var i = 1; i < pitchTable.length; ++i){
 
 
 var Tile = function(note, instrument, dspEffect, flowEffect) {
-    this.note = note; //If we make colors correspond to pitches, we'll need logarithms or something.
+    this.note = pitchTable[note]; //If we make colors correspond to pitches, we'll need logarithms or something.
     this.instrument = instrument;
     this.dspEffect = dspEffect;
     this.FlowEffect = flowEffect;
