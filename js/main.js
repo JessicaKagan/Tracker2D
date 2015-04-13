@@ -112,7 +112,8 @@ function init() {
     //Definitely functionalize. This handles instruments.
     $('#instrumentInput').keydown(function(event){
         if (event.keyCode == 13) {
-            if($('#instrumentInput').val() < testSoundArray.length) { currentInstrument = $('#instrumentInput').val();}
+            if($('#instrumentInput').val() === -1) {currentInstrument = -1 ;}
+            else if($('#instrumentInput').val() < testSoundArray.length) { currentInstrument = $('#instrumentInput').val();}
             else { console.log("There are only " + testSoundArray.length + " instruments right now. Remind me to turn this into a list.");}
             console.log(currentInstrument);
             $('#instrumentInput').val('');
@@ -157,7 +158,7 @@ function init() {
             } else bug1.x = 80;
         }
     }, TEMPO*2.5)
-*/
+    */
 
     lastTime = Date.now();
     updateFrequency = 12.5/TEMPO; //Currently, 8 'ticks' every beat?
@@ -241,7 +242,7 @@ function playSound(buffer, pitch) {
     var source = audioEngine.createBufferSource();
     source.buffer = buffer;
     source.playbackRate.value = pitch;
-    console.log(source.playbackRate.value*44100);
+    //console.log(source.playbackRate.value*44100);
     source.connect(audioEngine.destination);
 
     /*EXTREMELY IMPORTANT! This might be where filter code goes when those are added. */
@@ -253,7 +254,7 @@ function main(){
     /* This is our main loop! It updates the internal model of bug positions and such when the game is unpaused.
      * Then it calls the render function to update the view so that the user sees the actual state of this toy.
      * This needs to link partially into the tempo variable. Bug positions only need to update on tempo ticks.
-     * However, rendering needs to be as fast and responsive as possible.
+     * However, rendering needs to be as fast and responsive as possible, so it's independent of our timing function.
      */
     var now = Date.now();
     var delta = (now - lastTime) / 1000.0;
@@ -263,7 +264,9 @@ function main(){
     timeToUpdate = timeToUpdate - delta;
     //When it hits zero, we update.
     if(timeToUpdate <= 0) { 
-        if(pauseState == false) { bug1.updateBug(); }
+        if(pauseState == false) { 
+            bug1.updateBug();
+        }
         timeToUpdate = updateFrequency; 
     }
     render();

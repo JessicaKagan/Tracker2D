@@ -21,7 +21,7 @@ for(var i = 1; i < pitchTable.length; ++i){
 //Might need better names, but this is a way to think about effects. Aliases, I guess.
 //We need more of these. 
 var possibleDSPEffects = ['none','bendpitch', 'arpeggio'];
-var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south'];
+var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south', 'turn_around'];
 //To be implemented: "teleport" and "counter". 'Counter' will turn into another effect after a bug steps on it enough.
 //Also: "random_tile", which will send the bug to a random tile within a user defined range.
 
@@ -33,6 +33,7 @@ var Tile = function(note, instrument, dspEffect, flowEffect) {
     this.dspEffect = dspEffect;
     this.flowEffect = flowEffect;
 
+    //I think this might be residue that needs to be flushed out.
     function updateValues(note, instrument, dspEffect, flowEffect) {
         console.log("Not implemented yet");
     }
