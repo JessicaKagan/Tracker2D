@@ -20,8 +20,8 @@ for(var i = 1; i < pitchTable.length; ++i){
 
 //Might need better names, but this is a way to think about effects. Aliases, I guess.
 //We need more of these. 'Counter' will turn into another effect after a bug steps on it enough.
-var possibleDSPEffects = ['bendpitch', 'arpeggio'];
-var possibleFlowEffects =['turnsignal_west', 'turnsignal_north', 'turnsignal_east', 'turnsignal_south', 'teleport', 'counter'];
+var possibleDSPEffects = ['none','bendpitch', 'arpeggio'];
+var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south', 'teleport', 'counter'];
 
 
 

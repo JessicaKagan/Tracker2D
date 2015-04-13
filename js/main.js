@@ -21,6 +21,8 @@ for(var i = 0; i < rows; ++i) {
 var bug1, soundFont, audioEngine, audioLoader;
 var currentPitch = 36;
 var currentInstrument = 0;
+var currentDSP = "none";
+var currentFlowControl = "none";
 var UIImages = new Array(4);
 
 
@@ -42,11 +44,11 @@ var testSoundArray = ['/sounds/Ach.wav','/sounds/OrchestraHit.wav'];
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the AI; x-coords 80-> 800, y-coords 0->552
 
 //Set up a canvas to draw on.
-//All these drawing steps need to be functionalized since they'll get repeated a ton. 
+//All the drawing functions should be in render() now.
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-//Kludge. Rewrite this to start when ALL images are loaded.
+//Kludge. Rewrite this to start after making sure all the images actually loaded.
 UIImages[3].onload = function() {
     init();
 }
@@ -68,13 +70,13 @@ function init() {
 
     //In the future, we'll pull this information from a save file, if we can.
     //In the not so distant future, we'll initialize the entire array as empty, but not undefined?
-    fieldContents[1][1] = new Tile(36, 0, undefined, undefined);
-    fieldContents[5][1] = new Tile(35, 1, undefined, undefined);
-    fieldContents[8][1] = new Tile(34, 1, undefined, undefined);
-    fieldContents[13][1] = new Tile(33, 1, undefined, undefined);
-    fieldContents[17][1] = new Tile(31, 1, undefined, undefined);
-    fieldContents[20][1] = new Tile(29, 1, undefined, undefined);
-    fieldContents[25][1] = new Tile(26, 1, undefined, undefined);
+    fieldContents[1][1] = new Tile(36, 0, undefined, "none");
+    fieldContents[5][1] = new Tile(35, 1, undefined, "none");
+    fieldContents[8][1] = new Tile(34, 1, undefined, "none");
+    fieldContents[13][1] = new Tile(33, 1, undefined, "none");
+    fieldContents[17][1] = new Tile(31, 1, undefined, "none");
+    fieldContents[20][1] = new Tile(29, 1, undefined, "none");
+    fieldContents[25][1] = new Tile(26, 1, undefined, "none");
 
     document.addEventListener("click", interact);
     pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
@@ -121,6 +123,26 @@ function init() {
             $('#instrumentInput').val('');
         }
     })
+
+    //This handles the audio FX menu.
+    for(var i = 0; i < possibleDSPEffects.length; ++i){
+        $('#DSPInput').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
+    }
+    $( "#DSPInput" ).change(function() {
+        //console.log($(this).find('option:selected').attr('value'));
+        currentDSP = $(this).find('option:selected').attr('value');
+        console.log(currentDSP);
+    });
+
+    //This handles the flow control menu.
+    for(var i = 0; i < possibleFlowEffects.length; ++i){
+        $('#controlInput').append('<option value="' + possibleFlowEffects[i] + '">' + possibleFlowEffects[i] + '</option>');
+    }
+    $( "#controlInput" ).change(function() {
+        //console.log($(this).find('option:selected').attr('value'));
+        currentFlowControl = $(this).find('option:selected').attr('value');
+        console.log(currentFlowControl);
+    });
 
     window.requestAnimationFrame(main);
 
