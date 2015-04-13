@@ -26,6 +26,7 @@ var currentInstrument = 0;
 var currentDSP = "none";
 var currentFlowControl = "none";
 var UIImages = new Array(4);
+var tileOverlayImages = new Array(4); //Used for flow control.
 
 
 var bugImage = new Image();
@@ -35,18 +36,27 @@ bugImage.src = 'images/placeholder_bug.png';
 for(var i = 0; i < UIImages.length; i++) {
     UIImages[i] = new Image();
 }
+
+for(var i = 0; i < tileOverlayImages.length; i++) {
+    tileOverlayImages[i] = new Image();
+}
+tileOverlayImages[0].src = 'images/west_arrow_overlay.png';
+tileOverlayImages[1].src = 'images/north_arrow_overlay.png';
+tileOverlayImages[2].src = 'images/east_arrow_overlay.png';
+tileOverlayImages[3].src = 'images/south_arrow_overlay.png';
+
 UIImages[0].src = 'images/pause_button.png';
 UIImages[1].src = 'images/play_button.png';
 UIImages[2].src = 'images/pen_button.png';
 UIImages[3].src = 'images/eraser_button.png';
 
 
+
 var testSoundArray = ['/sounds/Ach.wav','/sounds/OrchestraHit.wav'];
 
-var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the AI; x-coords 80-> 800, y-coords 0->552
+var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
-//Set up a canvas to draw on.
-//All the drawing functions should be in render() now.
+//Set up a canvas to draw on. All the drawing functions should be in render() now.
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
@@ -72,14 +82,13 @@ function init() {
 
     //In the future, we'll pull this information from a save file, if we can.
     //In the not so distant future, we'll initialize the entire array as empty, but not undefined?
-    fieldContents[1][1] = new Tile(36, 0, undefined, "none");
+    fieldContents[1][1] = new Tile(36, 0, undefined, "turn_east");
     fieldContents[5][1] = new Tile(35, 1, undefined, "none");
     fieldContents[8][1] = new Tile(34, 1, undefined, "none");
     fieldContents[13][1] = new Tile(33, 1, undefined, "none");
     fieldContents[17][1] = new Tile(31, 1, undefined, "none");
     fieldContents[20][1] = new Tile(29, 1, undefined, "none");
-    fieldContents[25][1] = new Tile(26, 1, undefined, "none");
-    console.log(fieldContents[0][0]);
+    fieldContents[25][1] = new Tile(26, 1, undefined, "turn_west");
 
     document.addEventListener("click", interact);
     pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
@@ -294,10 +303,34 @@ function render(){
 
 //This is a rendering function, anyways.
 function paintTile(tileX, tileY, color){
+    //Fill in the basics.
     ctx.fillStyle = color; 
     ctx.fillRect(fieldBoundaries[0] + (TILE_SIZE*tileX), 
                  fieldBoundaries[1] + (TILE_SIZE*tileY),
                 (TILE_SIZE*1), 
                 (TILE_SIZE*1));
+    //Add overlays as needed.
+    var currentOverlay = fieldContents[tileX][tileY].flowEffect;
+    if(currentOverlay !== "none") {
+        switch(currentOverlay) {
+            //Currently, only turn signals are implemented.
+            case "turn_west":
+                ctx.drawImage(tileOverlayImages[0],fieldBoundaries[0] + (TILE_SIZE*tileX),fieldBoundaries[1] + (TILE_SIZE*tileY));
+                break;
+            case "turn_north":
+                ctx.drawImage(tileOverlayImages[1],fieldBoundaries[0] + (TILE_SIZE*tileX),fieldBoundaries[1] + (TILE_SIZE*tileY));
+                break;
+            case "turn_east":
+                ctx.drawImage(tileOverlayImages[2],fieldBoundaries[0] + (TILE_SIZE*tileX),fieldBoundaries[1] + (TILE_SIZE*tileY));
+                break;
+            case "turn_south":
+                ctx.drawImage(tileOverlayImages[3],fieldBoundaries[0] + (TILE_SIZE*tileX),fieldBoundaries[1] + (TILE_SIZE*tileY));
+                break;
+            default:
+                break;
+        }
+    }
+
+
 
 }

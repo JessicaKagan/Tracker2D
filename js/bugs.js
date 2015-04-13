@@ -6,7 +6,8 @@
 
 //Just a reference for whatever I can think of.
 //For now, bugs start with a direction and only change directions when a tile tells them to.
-var bugActions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile'];
+//reverseDirection is to simplify the implementation of walls.
+var bugActions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile','reverseDirection'];
 
 var Bug = function(x,y, action,name){
     this.image = bugImage;
