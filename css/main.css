@@ -44,6 +44,10 @@ select {
     top: 300px;
 }
 
+#UIShifter5 {
+    top: 320px;
+}
+
 #bugStorage {
     position: absolute;
     top: 350px;

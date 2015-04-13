@@ -5,6 +5,12 @@
  * We'll also need states for buttons.
  * Long term thoughts: At some point in the near future, we might want to add a synchronization feature to help people create more complicated interlocking
 */
+
+/*
+    Short term important stuff: Save, load, copy, paste
+    Medium term useful thing: Extrapolation feature.
+*/
+
 var pauseState = true;
 var toolList = ['pencil', 'line', 'eraser', 'pause']; //We can add a bunch more. Use these to label buttons?
 var selectedTool = 'pencil'; //Change as needed, default to painting.

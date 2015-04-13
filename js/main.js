@@ -26,6 +26,7 @@ var lastTime, updateFrequency, timeToUpdate;
 
 var currentPitch = 36;
 var currentInstrument = 0;
+var currentDSPValue = 0;
 var currentDSP = "none";
 var currentFlowControl = "none";
 var UIImages = new Array(4);
@@ -57,7 +58,7 @@ UIImages[3].src = 'images/eraser_button.png';
 
 
 
-var testSoundArray = ['/sounds/Ach.wav','/sounds/OrchestraHit.wav'];
+var testSoundArray = ['/sounds/Ach.wav','/sounds/OrchestraHit.wav', '/sounds/sawtooth.wav'];
 
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
@@ -87,15 +88,42 @@ function init() {
     ctx.fillStyle = "#BBBBBB";
 
     //In the future, we'll pull this information from a save file, if we can.
-    //In the not so distant future, we'll initialize the entire array as empty, but not undefined?
-    fieldContents[1][1] = new Tile(36, 1, undefined, "turn_east");
-    fieldContents[5][1] = new Tile(35, 1, undefined, "none");
-    fieldContents[9][1] = new Tile(34, 1, undefined, "none");
-    fieldContents[13][1] = new Tile(33, 1, undefined, "none");
-    fieldContents[17][1] = new Tile(31, 1, undefined, "none");
-    fieldContents[21][1] = new Tile(29, 1, undefined, "none");
-    fieldContents[25][1] = new Tile(26, 1, undefined, "none");
-    fieldContents[29][1] = new Tile(24, 1, undefined, "turn_west");
+    //The array doesn't need to be initialized with stuff in it to work, but this helps a bit.
+    
+    
+    fieldContents[1][1] = new Tile(22, 2, "lowpass", "none", 1, 220, 0);
+    fieldContents[2][1] = new Tile(32, 2, "lowpass", "none", 1, 330, 0);
+    fieldContents[3][1] = new Tile(34, 2, "lowpass", "none", 1, 440, 0);
+    fieldContents[4][1] = new Tile(22, 2, "lowpass", "none", 1, 550, 0);
+    fieldContents[5][1] = new Tile(35, 2, "lowpass", "none", 1, 660, 0);
+    fieldContents[6][1] = new Tile(22, 2, "lowpass", "none", 1, 770, 0);
+    fieldContents[7][1] = new Tile(32, 2, "lowpass", "none", 1, 880, 0);
+    fieldContents[8][1] = new Tile(34, 2, "lowpass", "turn_south", 1, 990, 0);
+    fieldContents[8][2] = new Tile(22, 2, "lowpass", "none", 1, 220, 0);
+    fieldContents[8][3] = new Tile(32, 2, "lowpass", "none", 1, 330, 0);
+    fieldContents[8][4] = new Tile(34, 2, "lowpass", "none", 1, 440, 0);
+    fieldContents[8][5] = new Tile(22, 2, "lowpass", "none", 1, 550, 0);
+    fieldContents[8][6] = new Tile(35, 2, "lowpass", "none", 1, 660, 0);
+    fieldContents[8][7] = new Tile(22, 2, "lowpass", "none", 1, 770, 0);
+    fieldContents[8][8] = new Tile(32, 2, "lowpass", "none", 1, 880, 0);
+    fieldContents[8][9] = new Tile(34, 2, "lowpass", "turn_west", 1, 990, 0);
+    fieldContents[7][9] = new Tile(22, 2, "lowpass", "none", 1, 440, 0);
+    fieldContents[6][9] = new Tile(32, 2, "lowpass", "none", 1, 550, 0);
+    fieldContents[5][9] = new Tile(34, 2, "lowpass", "none", 1, 660, 0);
+    fieldContents[4][9] = new Tile(22, 2, "lowpass", "none", 1, 770, 0);
+    fieldContents[3][9] = new Tile(35, 2, "lowpass", "none", 1, 880, 0);
+    fieldContents[2][9] = new Tile(22, 2, "lowpass", "none", 1, 990, 0);
+    fieldContents[1][9] = new Tile(32, 2, "lowpass", "none", 1, 1100, 0);
+    fieldContents[0][9] = new Tile(34, 2, "lowpass", "turn_north", 1, 1650, 0);
+    fieldContents[0][8] = new Tile(22, 2, "lowpass", "none", 1, 550, 0);
+    fieldContents[0][7] = new Tile(32, 2, "lowpass", "none", 1, 770, 0);
+    fieldContents[0][6] = new Tile(34, 2, "lowpass", "none", 1, 990, 0);
+    fieldContents[0][5] = new Tile(22, 2, "lowpass", "none", 1, 1100, 0);
+    fieldContents[0][4] = new Tile(35, 2, "lowpass", "none", 1, 1320, 0);
+    fieldContents[0][3] = new Tile(22, 2, "lowpass", "none", 1, 1540, 0);
+    fieldContents[0][2] = new Tile(32, 2, "lowpass", "none", 1, 1800, 0);
+    fieldContents[0][1] = new Tile(34, 2, "lowpass", "turn_east", 1, 220, 0);
+    
 
     //Set up the UI.
     document.addEventListener("click", interact);
@@ -127,6 +155,14 @@ function init() {
         currentDSP = $(this).find('option:selected').attr('value');
         console.log(currentDSP);
     });
+    //Definitely functionalize. This handles input for Audio FX.    
+    $('#dspValueInput').keydown(function(event){
+        if (event.keyCode == 13) {
+            currentDSPValue = $('#dspValueInput').val(); //Unlike the others, this needs to be interpreted based on the current DSP.
+            console.log(currentDSPValue);
+            $('#dspValueInput').val('');
+        }
+    })
     //This handles the flow control menu.
     for(var i = 0; i < possibleFlowEffects.length; ++i){
         $('#controlInput').append('<option value="' + possibleFlowEffects[i] + '">' + possibleFlowEffects[i] + '</option>');
@@ -141,24 +177,6 @@ function init() {
     bug1 = new Bug(bugImage, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','George');
     //bug2 = new Bug(bugImage2, fieldBoundaries[0] + (TILE_SIZE*2),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','Steve');
     //console.log(bug1);
-
-    //Experimentally moving the bug. Adding experimental pause implementation that will need generalization.
-    /*
-    setInterval(function(){
-        if(pauseState == false) {
-        var bugTile = [(bug1.x - 80)/24, bug1.y/24];
-            if(bug1.x < 800) {
-                //console.log(bugTile);
-                bug1.x += TILE_SIZE;
-                //Plays whatever sound this is at a pitch determined by the note value. 
-                //Might be nice to alias soundfont names somehow?
-                if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
-                    playSound(soundFont[fieldContents[bugTile[0]][bugTile[1]].instrument], fieldContents[bugTile[0]][bugTile[1]].note);
-                }
-            } else bug1.x = 80;
-        }
-    }, TEMPO*2.5)
-    */
 
     lastTime = Date.now();
     updateFrequency = 12.5/TEMPO; //Currently, 8 'ticks' every beat?
@@ -197,7 +215,7 @@ function interact(e) {
         //if(fieldContents[currentTile[0]][currentTile[1]] == undefined) { 
             switch(selectedTool){
                 case "pencil":
-                    fieldContents[currentTile[0]][currentTile[1]] = new Tile(currentPitch, currentInstrument, currentDSP, currentFlowControl);
+                    fieldContents[currentTile[0]][currentTile[1]] = new Tile(currentPitch, currentInstrument, currentDSP, currentFlowControl, 1, currentDSPValue, 0);
                     break;
                 case "eraser":
                     fieldContents[currentTile[0]][currentTile[1]] = undefined;
@@ -237,16 +255,27 @@ function soundsAreReady(soundList) {
 
 }
 
-function playSound(buffer, pitch) {
-    //console.log("playSound() triggered.");
-    var source = audioEngine.createBufferSource();
+function playSound(buffer, pitch, dspEffect, dspValue) {
+    console.log(dspEffect + ": " + dspValue);
+    var source = audioEngine.createBufferSource();  
     source.buffer = buffer;
     source.playbackRate.value = pitch;
     //console.log(source.playbackRate.value*44100);
-    source.connect(audioEngine.destination);
 
     /*EXTREMELY IMPORTANT! This might be where filter code goes when those are added. */
     //Decide how to handle audio when page isn't visible, see http://www.w3.org/TR/page-visibility/?csw=1
+    switch(dspEffect){
+        case 'lowpass':
+            var createLowPass = audioEngine.createBiquadFilter();
+            source.connect(createLowPass);
+            createLowPass.connect(audioEngine.destination);
+            createLowPass.type = 'lowpass';
+            createLowPass.frequency.value = dspValue;
+            break;
+        default:
+            source.connect(audioEngine.destination);
+            break;
+    }
     source.start(0);
 }
 

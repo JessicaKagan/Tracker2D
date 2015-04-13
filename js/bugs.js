@@ -6,7 +6,8 @@
 
 //Just a reference for whatever I can think of.
 //For now, bugs start with a direction and only change directions when a tile tells them to.
-var bugActions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile'];
+//holdPosition means the bug will not move and is basically a debug thing.
+var bugActions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile', 'holdPosition'];
 
 var Bug = function(image, x,y, action,name){
     this.image = bugImage;
@@ -36,16 +37,19 @@ Bug.prototype.updateBug = function() {
 
             //Play sounds BEFORE moving the bug.
             if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
+                //Right now, sounds have separate playback routines if they have effects.
                 if(fieldContents[bugTile[0]][bugTile[1]].instrument != -1){
-                    playSound(soundFont[fieldContents[bugTile[0]][bugTile[1]].instrument], 
-                                        fieldContents[bugTile[0]][bugTile[1]].note);
+                    //console.log(fieldContents[bugTile[0]][bugTile[1]].dspValue);
+                    playSound(soundFont[fieldContents[bugTile[0]][bugTile[1]].instrument],
+                                        fieldContents[bugTile[0]][bugTile[1]].note,
+                                        fieldContents[bugTile[0]][bugTile[1]].dspEffect,
+                                        fieldContents[bugTile[0]][bugTile[1]].dspValue
+                                        );
                 }
             }
 
             //Change the behavior of the bug based on what it's standing on.
-            console.log(fieldContents[bugTile[0]][bugTile[1]]);
             if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
-                console.log(fieldContents[bugTile[0]][bugTile[1]].flowEffect);
                 switch(fieldContents[bugTile[0]][bugTile[1]].flowEffect){
                     case "turn_west":
                         this.action = 'moveLeft';
