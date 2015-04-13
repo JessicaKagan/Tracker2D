@@ -58,7 +58,7 @@ UIImages[3].src = 'images/eraser_button.png';
 
 
 
-var testSoundArray = ['/sounds/Ach.wav','/sounds/OrchestraHit.wav', '/sounds/sawtooth.wav'];
+var testSoundArray = ['./sounds/Ach.wav','./sounds/OrchestraHit.wav', './sounds/sawtooth.wav'];
 
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
