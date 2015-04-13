@@ -14,6 +14,7 @@
 var pauseState = true;
 var toolList = ['pencil', 'line', 'eraser', 'pause']; //We can add a bunch more. Use these to label buttons?
 var selectedTool = 'pencil'; //Change as needed, default to painting.
+var tileBuffer; //This is probably the key to not only saving, but all sorts of data manipulation.
 
 var bottomUIButton = function(coords) {
     this.coords = coords;
@@ -34,6 +35,10 @@ var drawButtons = function() {
     //Pencil
     ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]);
     //Eraser
-    ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]);
-    
+    ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]);   
+}
+
+function fillBuffer(fromX, toX, fromY, toY, command) {
+    //Stores a rectangle of tiles (a subset of the entire field). 
+    //When saving, it fills up with the entire field. Otherwise, it probably covers a bit less.
 }
