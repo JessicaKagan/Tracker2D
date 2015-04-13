@@ -1,4 +1,4 @@
-    
+//All the glue that holds this project together.    
 
 //UI constants:
 var FILE_SIZE = [30,23]; //This is how many tiles are on the screen right now. It will eventually change.
@@ -15,21 +15,27 @@ for(var i = 0; i < rows; ++i) {
     fieldContents[i] = new Array(23);
 }
 
+//var fieldBackup = fieldContents; //When we implement saving, this will come in handy. We'll need a header, too.
+
 //Globals for now. Deglobalize as implementation permits.
 var bug1, soundFont, audioEngine, audioLoader;
 var currentPitch = 36;
 var currentInstrument = 0;
-var pauseImages = [];
+var UIImages = new Array(4);
 
 
 var bugImage = new Image();
 bugImage.src = 'images/placeholder_bug.png';
 
 //Needs generalization.
-pauseImages[0] = new Image();
-pauseImages[1] = new Image();
-pauseImages[0].src = 'images/pause_button.png';
-pauseImages[1].src = 'images/play_button.png';
+for(var i = 0; i < UIImages.length; i++) {
+    UIImages[i] = new Image();
+}
+UIImages[0].src = 'images/pause_button.png';
+UIImages[1].src = 'images/play_button.png';
+UIImages[2].src = 'images/pen_button.png';
+UIImages[3].src = 'images/eraser_button.png';
+
 
 var testSoundArray = ['/sounds/Ach.wav','/sounds/OrchestraHit.wav'];
 
@@ -41,7 +47,7 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 //Kludge. Rewrite this to start when ALL images are loaded.
-pauseImages[1].onload = function() {
+UIImages[3].onload = function() {
     init();
 }
 
@@ -245,15 +251,9 @@ function render(){
     //3. Bugs
     bug1.drawBug();
     //4. UI (Seems trivial, but I plan to have translucent popups in the near future.)
-    ctx.fillRect(PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1],PAUSE_PLAY_BUTTON_AREA[2],PAUSE_PLAY_BUTTON_AREA[3]);
-    /*
-    if(pauseState = true) { 
-        ctx.drawImage(pauseImages[0],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); 
-    } else { 
-        ctx.drawImage(pauseImages[1],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); 
-    }
-    */
-    //pauseUI.drawButton();
+    //ctx.fillRect(PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1],PAUSE_PLAY_BUTTON_AREA[2],PAUSE_PLAY_BUTTON_AREA[3]);
+    
+    pauseUI.drawButton();
   
 }
 

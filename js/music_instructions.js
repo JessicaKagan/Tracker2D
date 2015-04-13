@@ -18,6 +18,12 @@ for(var i = 1; i < pitchTable.length; ++i){
     pitchTable[i] = pitchTable[i - 1] * Math.pow(2, (1/12));
 }
 
+//Might need better names, but this is a way to think about effects. Aliases, I guess.
+//We need more of these. 'Counter' will turn into another effect after a bug steps on it enough.
+var possibleDSPEffects = ['bendpitch', 'arpeggio'];
+var possibleFlowEffects =['turnsignal_west', 'turnsignal_north', 'turnsignal_east', 'turnsignal_south', 'teleport', 'counter'];
+
+
 
 var Tile = function(note, instrument, dspEffect, flowEffect) {
     this.note = pitchTable[note]; //If we make colors correspond to pitches, we'll need logarithms or something.
