@@ -9,7 +9,7 @@
 //reverseDirection is to simplify the implementation of walls.
 var bugActions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile','reverseDirection'];
 
-var Bug = function(x,y, action,name){
+var Bug = function(image, x,y, action,name){
     this.image = bugImage;
     this.action = action;
     this.x = x;
@@ -24,4 +24,24 @@ Bug.prototype.drawBug = function(){
 
 }
 
+Bug.prototype.updateBug = function() {
+    //Adjust this!
+    //
+    //setInterval(function(){}, TEMPO)
 
+    var bugTile = [(bug1.x - 80)/24, bug1.y/24];
+        if(bug1.x < 800) {
+            //Play sounds BEFORE moving the bug.
+            if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
+                playSound(soundFont[fieldContents[bugTile[0]][bugTile[1]].instrument], fieldContents[bugTile[0]][bugTile[1]].note);
+            }
+            bug1.x += TILE_SIZE;
+            //Plays whatever sound this is at a pitch determined by the note value. 
+            //Might be nice to alias soundfont names somehow?
+
+        } else bug1.x = 80;
+
+    
+    
+
+}

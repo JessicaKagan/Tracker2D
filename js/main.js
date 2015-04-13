@@ -21,6 +21,9 @@ for(var i = 0; i < rows; ++i) {
 
 //Globals for now. Deglobalize as implementation permits.
 var bug1, soundFont, audioEngine, audioLoader;
+//For synch.
+var lastTime, updateFrequency, timeToUpdate;
+
 var currentPitch = 36;
 var currentInstrument = 0;
 var currentDSP = "none";
@@ -30,7 +33,9 @@ var tileOverlayImages = new Array(4); //Used for flow control.
 
 
 var bugImage = new Image();
+var bugImage2 = new Image();
 bugImage.src = 'images/placeholder_bug.png';
+bugImage2.src = 'images/placeholder_bug_2.png';
 
 //Needs generalization.
 for(var i = 0; i < UIImages.length; i++) {
@@ -73,6 +78,7 @@ function init() {
     audioLoader = new BufferLoader(audioEngine, testSoundArray, soundsAreReady);
     audioLoader.load();
 
+    //Draw the grid.
     ctx.fillStyle = "#000000";
     //There has to be a better way to handle the names. Apparently apply() in JS might be usable?
     ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
@@ -82,41 +88,18 @@ function init() {
 
     //In the future, we'll pull this information from a save file, if we can.
     //In the not so distant future, we'll initialize the entire array as empty, but not undefined?
-    fieldContents[1][1] = new Tile(36, 0, undefined, "turn_east");
+    fieldContents[1][1] = new Tile(36, 1, undefined, "turn_east");
     fieldContents[5][1] = new Tile(35, 1, undefined, "none");
-    fieldContents[8][1] = new Tile(34, 1, undefined, "none");
+    fieldContents[9][1] = new Tile(34, 1, undefined, "none");
     fieldContents[13][1] = new Tile(33, 1, undefined, "none");
     fieldContents[17][1] = new Tile(31, 1, undefined, "none");
-    fieldContents[20][1] = new Tile(29, 1, undefined, "none");
-    fieldContents[25][1] = new Tile(26, 1, undefined, "turn_west");
+    fieldContents[21][1] = new Tile(29, 1, undefined, "none");
+    fieldContents[25][1] = new Tile(26, 1, undefined, "none");
+    fieldContents[29][1] = new Tile(24, 1, undefined, "turn_west");
 
+    //Set up the UI.
     document.addEventListener("click", interact);
     pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
-
-    //Draws a test bug, spawning at tile [0,1] with a test behavior.
-    bug1 = new Bug(fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','George');
-    //console.log(bug1);
-
-    //Experimentally moving the bug. Adding experimental pause implementation that will need generalization.
-    setInterval(function(){
-        if(pauseState == false) {
-        var bugTile = [(bug1.x - 80)/24, bug1.y/24];
-            if(bug1.x < 800) {
-                //console.log(bugTile);
-                bug1.x += 24;
-                bug1.drawBug();
-                //Plays whatever sound this is at a pitch determined by the note value. 
-                //Might be nice to alias soundfont names somehow?
-                if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
-                    playSound(soundFont[fieldContents[bugTile[0]][bugTile[1]].instrument], fieldContents[bugTile[0]][bugTile[1]].note);
-                    //Primitive flow control experiment.
-                    if(fieldContents[bugTile[0]][bugTile[1]].note == "green") {bug1.y -=24;}
-                    if(fieldContents[bugTile[0]][bugTile[1]].note == "red") {bug1.y +=24;}
-                }
-            } else bug1.x = 80;
-        }
-    }, 200)
-
     //Setting up text input. Functionalize?
     $('#pitchInput').keydown(function(event){
         if (event.keyCode == 13) {
@@ -135,7 +118,6 @@ function init() {
             $('#instrumentInput').val('');
         }
     })
-
     //This handles the audio FX menu.
     for(var i = 0; i < possibleDSPEffects.length; ++i){
         $('#DSPInput').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
@@ -144,7 +126,6 @@ function init() {
         currentDSP = $(this).find('option:selected').attr('value');
         console.log(currentDSP);
     });
-
     //This handles the flow control menu.
     for(var i = 0; i < possibleFlowEffects.length; ++i){
         $('#controlInput').append('<option value="' + possibleFlowEffects[i] + '">' + possibleFlowEffects[i] + '</option>');
@@ -155,6 +136,32 @@ function init() {
     });
     //Left bar menu stuff ends here.
 
+    //Draws a test bug, spawning at tile [0,1] with a test behavior.
+    bug1 = new Bug(bugImage, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','George');
+    //bug2 = new Bug(bugImage2, fieldBoundaries[0] + (TILE_SIZE*2),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','Steve');
+    //console.log(bug1);
+
+    //Experimentally moving the bug. Adding experimental pause implementation that will need generalization.
+    /*
+    setInterval(function(){
+        if(pauseState == false) {
+        var bugTile = [(bug1.x - 80)/24, bug1.y/24];
+            if(bug1.x < 800) {
+                //console.log(bugTile);
+                bug1.x += TILE_SIZE;
+                //Plays whatever sound this is at a pitch determined by the note value. 
+                //Might be nice to alias soundfont names somehow?
+                if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
+                    playSound(soundFont[fieldContents[bugTile[0]][bugTile[1]].instrument], fieldContents[bugTile[0]][bugTile[1]].note);
+                }
+            } else bug1.x = 80;
+        }
+    }, TEMPO*2.5)
+*/
+
+    lastTime = Date.now();
+    updateFrequency = 12.5/TEMPO; //Currently, 8 'ticks' every beat?
+    timeToUpdate = updateFrequency;
     window.requestAnimationFrame(main);
 }
 
@@ -243,20 +250,26 @@ function playSound(buffer, pitch) {
 }
 
 function main(){
-    //This is our main loop!
-    //updateBugPositions(); //Needs to be written.
+    /* This is our main loop! It updates the internal model of bug positions and such when the game is unpaused.
+     * Then it calls the render function to update the view so that the user sees the actual state of this toy.
+     * This needs to link partially into the tempo variable. Bug positions only need to update on tempo ticks.
+     * However, rendering needs to be as fast and responsive as possible.
+     */
+    var now = Date.now();
+    var delta = (now - lastTime) / 1000.0;
+    lastTime = now;
+    //console.log(timeToUpdate);
+    //Use the delta as a timeOut surrogate.
+    timeToUpdate = timeToUpdate - delta;
+    //When it hits zero, we update.
+    if(timeToUpdate <= 0) { 
+        if(pauseState == false) { bug1.updateBug(); }
+        timeToUpdate = updateFrequency; 
+    }
     render();
     window.requestAnimationFrame(main);
     
-    //Implement a basic delta function later for smooth operation regardless of FPS and speed.
-    //This needs to link partially into Tempo. Bug positions only need to update on tempo ticks.
-    //However, rendering needs to be as fast and responsive as possible.
-    //Init:
-    //var lastTime = Date.now();
-    //Loop:
-    //var now = Date.now();
-    //var delta = (now - lastTime) / 1000.0;
-    //lastTime = now;
+
 }
 
 function render(){
@@ -294,6 +307,7 @@ function render(){
 
     //3. Bugs
     bug1.drawBug();
+    //bug2.drawBug();
     //4. UI (Seems trivial, but I plan to have translucent popups in the near future.)
     //ctx.fillRect(PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1],PAUSE_PLAY_BUTTON_AREA[2],PAUSE_PLAY_BUTTON_AREA[3]);
     
