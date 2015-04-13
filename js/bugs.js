@@ -4,6 +4,10 @@
  * 2. Current action, which needs a function to change it as needed..
  */
 
+//Just a reference for whatever I can think of.
+//For now, bugs start with a direction and only change directions when a tile tells them to.
+var bugActions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile'];
+
 var Bug = function(x,y, action,name){
     this.image = bugImage;
     this.action = action;
@@ -20,6 +24,3 @@ Bug.prototype.drawBug = function(){
 }
 
 
-//Just a reference for whatever I can think of.
-//For now, bugs start with a direction and only change directions when a tile tells them to.
-var Actions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile'];

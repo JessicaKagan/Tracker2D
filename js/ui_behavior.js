@@ -6,17 +6,28 @@
  * Long term thoughts: At some point in the near future, we might want to add a synchronization feature to help people create more complicated interlocking
 */
 var pauseState = true;
-var toolList = ['paint', 'line', 'eraser', 'pause']; //We can add a bunch more. Use these to label buttons?
-var selectedTool = 'paint'; //Change as needed, default to painting.
+var toolList = ['pencil', 'line', 'eraser', 'pause']; //We can add a bunch more. Use these to label buttons?
+var selectedTool = 'pencil'; //Change as needed, default to painting.
 
+var bottomUIButton = function(coords) {
+    this.coords = coords;
+}
+
+//Deprecate this?
 var pauseButton = function(coords) {
     this.coords = coords;
 }
 
 //See main.js for the UI images, although maybe we should move that here.
 //Extend this to draw all buttons?
-pauseButton.prototype.drawButton = function() {
+var drawButtons = function() {
+
+    //Pause button with 2 states
     if(pauseState == false) { ctx.drawImage(UIImages[0],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
     else if(pauseState == true) { ctx.drawImage(UIImages[1],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
+    //Pencil
+    ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]);
+    //Eraser
+    ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]);
     
 }

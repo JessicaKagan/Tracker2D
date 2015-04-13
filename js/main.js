@@ -7,6 +7,8 @@ var LEFT_VERTICAL_BAR = [0,0,80,800];
 var BOTTOM_HORIZONTAL_BAR = [80,552,720,48];
 var FIELD_PIXELS = [80,0,800,552];
 var PAUSE_PLAY_BUTTON_AREA = [80,576,24,24];
+var PENCIL_BUTTON_AREA = [104,576,24,24];
+var ERASER_BUTTON_AREA = [128,576,24,24];
 
 var fieldContents = new Array(30);
 var rows = FILE_SIZE[0];
@@ -77,12 +79,13 @@ function init() {
     fieldContents[17][1] = new Tile(31, 1, undefined, "none");
     fieldContents[20][1] = new Tile(29, 1, undefined, "none");
     fieldContents[25][1] = new Tile(26, 1, undefined, "none");
+    console.log(fieldContents[0][0]);
 
     document.addEventListener("click", interact);
     pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
 
-    //Draws a test bug, spawning at tile [0,1] without any behavior.
-    bug1 = new Bug(fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),null,'George');
+    //Draws a test bug, spawning at tile [0,1] with a test behavior.
+    bug1 = new Bug(fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','George');
     //console.log(bug1);
 
     //Experimentally moving the bug. Adding experimental pause implementation that will need generalization.
@@ -129,7 +132,6 @@ function init() {
         $('#DSPInput').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
     }
     $( "#DSPInput" ).change(function() {
-        //console.log($(this).find('option:selected').attr('value'));
         currentDSP = $(this).find('option:selected').attr('value');
         console.log(currentDSP);
     });
@@ -139,30 +141,34 @@ function init() {
         $('#controlInput').append('<option value="' + possibleFlowEffects[i] + '">' + possibleFlowEffects[i] + '</option>');
     }
     $( "#controlInput" ).change(function() {
-        //console.log($(this).find('option:selected').attr('value'));
         currentFlowControl = $(this).find('option:selected').attr('value');
         console.log(currentFlowControl);
     });
+    //Left bar menu stuff ends here.
 
     window.requestAnimationFrame(main);
-
-
 }
 
 function interact(e) {
     var cursorX = e.pageX - $('#canvas').offset().left;
     var cursorY = e.pageY - $('#canvas').offset().top;
     //Displays debug messages for now based on where you click.
-    //When we find buttons, we'll need some sort of 2D switch statement.
+    //When we make more, we'll need some sort of 2D switch statement.
     if(cursorX <= 80 && cursorX > 0) { console.log("LEFT_VERTICAL_BAR"); }
     if(cursorY >= 540 && cursorY <= 600 && cursorX >= 80) { 
         console.log("BOTTOM_HORIZONTAL_BAR");
-        //If you click the pause button, it switches between paused and unpaused modes.
-        if(cursorY >= 576 && cursorX <= 104) { 
+        //UI buttons on 
+        if(cursorY >= 576 && cursorX < 104) { 
             console.log("PAUSE_PLAY_BUTTON_AREA");
             if(pauseState == true || undefined) { pauseState = false; }
             else pauseState = true;
             console.log(pauseState);
+        } else if(cursorY >= 576 && cursorX >= 104 && cursorX < 128) { 
+            console.log("PENCIL_BUTTON_AREA");
+            selectedTool = "pencil";
+        } else if(cursorY >= 576 && cursorX >= 128 && cursorX < 152) { 
+            console.log("ERASER_BUTTON_AREA");
+            selectedTool = "eraser";
         }
     }
     //If we're inside the playfield, convert to a tile. Functionalize this!
@@ -172,7 +178,16 @@ function interact(e) {
         console.log(currentTile);
         //The logic for this is going to become a great deal more complex with time, I think.
         //if(fieldContents[currentTile[0]][currentTile[1]] == undefined) { 
-            fieldContents[currentTile[0]][currentTile[1]] = new Tile(currentPitch, currentInstrument, undefined, undefined);
+            switch(selectedTool){
+                case "pencil":
+                    fieldContents[currentTile[0]][currentTile[1]] = new Tile(currentPitch, currentInstrument, currentDSP, currentFlowControl);
+                    break;
+                case "eraser":
+                    fieldContents[currentTile[0]][currentTile[1]] = undefined;
+                    break;
+                default:
+                    break;
+            }
         //}
         console.log(fieldContents[currentTile[0]][currentTile[1]]);
         //paintTile(currentTile[0],currentTile[1], "#00BB00"); //Simple painting test
@@ -224,7 +239,6 @@ function main(){
     render();
     window.requestAnimationFrame(main);
     
-
     //Implement a basic delta function later for smooth operation regardless of FPS and speed.
     //This needs to link partially into Tempo. Bug positions only need to update on tempo ticks.
     //However, rendering needs to be as fast and responsive as possible.
@@ -257,12 +271,11 @@ function render(){
     }
     //Painting squares! From an MVC stance this is the "view", I guess.
     //paintTile eventually needs to choose colors first based on tile properties, and then a subset of it based on user's viewmode.
-    //Experimenting with color based on note pitch.
+    //Tiles need to eventually be extended with a user defined color value. 
     for(var i = 0; i < FILE_SIZE[0]; ++i){
         for(var j = 0; j < FILE_SIZE[1]; ++j){
             if(typeof fieldContents[i][j] === 'object'){
                 //console.log(fieldContents[i][j].note);
-                //var currentColor = 'rgb(255,0,0)';
                 var currentColor = "#444444";
                 //console.log(color);
                 paintTile(i,j, currentColor);
@@ -275,7 +288,7 @@ function render(){
     //4. UI (Seems trivial, but I plan to have translucent popups in the near future.)
     //ctx.fillRect(PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1],PAUSE_PLAY_BUTTON_AREA[2],PAUSE_PLAY_BUTTON_AREA[3]);
     
-    pauseUI.drawButton();
+    drawButtons();
   
 }
 
