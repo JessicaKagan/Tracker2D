@@ -6,9 +6,12 @@ var TILE_SIZE = 24; //This is more cumbersome early on, but I will eventually ne
 var LEFT_VERTICAL_BAR = [0,0,80,800];
 var BOTTOM_HORIZONTAL_BAR = [80,552,720,48];
 var FIELD_PIXELS = [80,0,800,552];
+
 var PAUSE_PLAY_BUTTON_AREA = [80,576,24,24];
 var PENCIL_BUTTON_AREA = [104,576,24,24];
 var ERASER_BUTTON_AREA = [128,576,24,24];
+var SAVE_BUTTON_AREA = [752,576,24,24];
+var LOAD_BUTTON_AREA = [776,576,24,24];
 
 var fieldContents = new Array(30);
 var rows = FILE_SIZE[0];
@@ -29,7 +32,7 @@ var currentInstrument = 0;
 var currentDSPValue = 0;
 var currentDSP = "none";
 var currentFlowControl = "none";
-var UIImages = new Array(4);
+var UIImages = new Array(6);
 var tileOverlayImages = new Array(4); //Used for flow control.
 
 
@@ -55,14 +58,11 @@ UIImages[0].src = 'images/pause_button.png';
 UIImages[1].src = 'images/play_button.png';
 UIImages[2].src = 'images/pen_button.png';
 UIImages[3].src = 'images/eraser_button.png';
+UIImages[4].src = 'images/save_button.png';
+UIImages[5].src = 'images/load_button.png';
 
 
-
-<<<<<<< HEAD:Tracker2D/js/main.js
-var testSoundArray = ['/Tracker2D/sounds/Ach.wav','/Tracker2D/sounds/OrchestraHit.wav', '/Tracker2D/sounds/sawtooth.wav'];
-=======
 var testSoundArray = ['./sounds/Ach.wav','./sounds/OrchestraHit.wav', './sounds/sawtooth.wav'];
->>>>>>> parent of 1ee5994... Highly experimental directory structure change:js/main.js
 
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
@@ -70,8 +70,14 @@ var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; 
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
+//Check to make sure the browser supports everything we need. Write a test for the audio API.
+if (window.File && window.FileReader && window.FileList && window.Blob) { } 
+else { 
+    alert('The File APIs are not fully supported in this browser.'); 
+}
+
 //Kludge. Rewrite this to start after making sure all the images actually loaded.
-UIImages[3].onload = function() {
+UIImages[5].onload = function() {
     init();
 }
 
@@ -192,7 +198,7 @@ function interact(e) {
     var cursorX = e.pageX - $('#canvas').offset().left;
     var cursorY = e.pageY - $('#canvas').offset().top;
     //Displays debug messages for now based on where you click.
-    //When we make more, we'll need some sort of 2D switch statement.
+    //When we make more, we'll need some sort of 2D switch statement, because this is just getting ugly.
     if(cursorX <= 80 && cursorX > 0) { console.log("LEFT_VERTICAL_BAR"); }
     if(cursorY >= 540 && cursorY <= 600 && cursorX >= 80) { 
         console.log("BOTTOM_HORIZONTAL_BAR");
@@ -208,6 +214,12 @@ function interact(e) {
         } else if(cursorY >= 576 && cursorX >= 128 && cursorX < 152) { 
             console.log("ERASER_BUTTON_AREA");
             selectedTool = "eraser";
+        } else if(cursorY >= 576 && cursorX >= 752 && cursorX < 776) {
+            console.log('SAVE_BUTTON_AREA');
+            saveFile();
+        } else if(cursorY >= 576 && cursorX >= 776 && cursorX < 800) {
+            console.log('LOAD_BUTTON_AREA');
+            loadFile();
         }
     }
     //If we're inside the playfield, convert to a tile. Functionalize this!

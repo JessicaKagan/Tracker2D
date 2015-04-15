@@ -36,9 +36,31 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]);
     //Eraser
     ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]);   
+    ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[5],LOAD_BUTTON_AREA[0],LOAD_BUTTON_AREA[1]);   
 }
 
 function fillBuffer(fromX, toX, fromY, toY, command) {
+    console.log("Filling the buffer");
     //Stores a rectangle of tiles (a subset of the entire field). 
     //When saving, it fills up with the entire field. Otherwise, it probably covers a bit less.
+    //What's the most efficient way to copy an array, or part of an array in jQuery?
+}
+
+function pasteBuffer(fromX, toX, fromY, toY, tile) {
+
+}
+
+//We need a standard save format.
+//1. Start with a header containing values from song_properties.js
+//2. Then the entire playfield with JSON.
+
+function saveFile() {
+    //console.log("Save dialog? Use fillBuffer.");
+    fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1]);
+}
+
+function loadFile() {
+    console.log("Not implemented yet. Won't be useful until loadFile exists.");
+    //Pull up a file loading dialogue, and then run our functions on that.
 }
