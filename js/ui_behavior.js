@@ -7,7 +7,7 @@
 */
 
 /*
-    Short term important stuff: Save, load, copy, paste
+    Short term important stuff: Save, load, copy, paste, general rectangle-based selector.
     Medium term useful thing: Extrapolation feature.
 */
 
@@ -15,6 +15,7 @@ var pauseState = true;
 var toolList = ['pencil', 'line', 'eraser', 'pause']; //We can add a bunch more. Use these to label buttons?
 var selectedTool = 'pencil'; //Change as needed, default to painting.
 var tileBuffer; //This is probably the key to not only saving, but all sorts of data manipulation.
+var saveContent; //Whatever we save organized in the form of a string?
 
 var bottomUIButton = function(coords) {
     this.coords = coords;
@@ -41,9 +42,18 @@ var drawButtons = function() {
 }
 
 function fillBuffer(fromX, toX, fromY, toY, command) {
-    console.log("Filling the buffer");
     //Stores a rectangle of tiles (a subset of the entire field). 
     //When saving, it fills up with the entire field. Otherwise, it probably covers a bit less.
+    console.log("Filling the buffer");
+    switch(command) {
+        case 'save':
+            tileBuffer = fieldContents;
+            console.log(tileBuffer);
+            break;
+        default:
+            break;
+    }
+
     //What's the most efficient way to copy an array, or part of an array in jQuery?
 }
 
@@ -51,16 +61,46 @@ function pasteBuffer(fromX, toX, fromY, toY, tile) {
 
 }
 
-//We need a standard save format.
-//1. Start with a header containing values from song_properties.js
-//2. Then the entire playfield with JSON.
+//We need a standard save format. Make the JSON array, then follow up with a footer to simplify extension of song properties.
 
 function saveFile() {
-    //console.log("Save dialog? Use fillBuffer.");
-    fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1]);
+
+    fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1], 'save');
+    if(tileBuffer === fieldContents) { 
+        console.log("We're ready to save now."); 
+    } else { console.log("Something went wrong in saveFile() or fillBuffer(). Real error trapping later."); }
+    //Bake everything into a string.
+    saveContent = "";
+    //console.log(tileBuffer.length);
+    //The very first line contains the amount of tiles.
+    saveContent += FILE_SIZE[0]*FILE_SIZE[1] + '\n';
+
+    //Dump all tiles to a string. Parses top to bottom before moving left to right.
+    for(var i = 0; i < tileBuffer.length; ++i){
+        for(var j = 0; j < tileBuffer[i].length; ++j){
+            if(tileBuffer[i][j] !== undefined) { 
+                saveContent += tileBuffer[i][j].toString();
+            } else saveContent += "undefined"; //In the load function, lines with only the word "undefined" on them will not become tiles.
+            saveContent += '\n';
+        }
+
+    }
+    //Dump song properties next, and we're done.
+    saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n';
+    console.log(saveContent);
+    //Now we need to get this to the user, somehow.
+    //See http://www.html5rocks.com/en/tutorials/file/dndfiles/
+    //We may need HTML DOM elements.
+    //See if we can get a .tracker2D extension or something.
+
 }
 
 function loadFile() {
-    console.log("Not implemented yet. Won't be useful until loadFile exists.");
+    console.log("Not implemented yet. Won't be useful until saveFile works.");
     //Pull up a file loading dialogue, and then run our functions on that.
+    //The dialogue needs to prefer the extension we used earlier.
+    //We'll have to turn the file into an array, I think.
+    //Iterate through every line in the file, with some caveats.
+    //All lines from the second line to a line with (max index - AMOUNT_OF_SONG_PROPERTIES).
+    //Currently, there are 4 properties, so the last 4 lines will be song properties.
 }

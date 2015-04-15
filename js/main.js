@@ -14,11 +14,18 @@ var SAVE_BUTTON_AREA = [752,576,24,24];
 var LOAD_BUTTON_AREA = [776,576,24,24];
 
 var fieldContents = new Array(30);
-var rows = FILE_SIZE[0];
 //Everything is undefined by default.
-for(var i = 0; i < rows; ++i) {
+for(var i = 0; i < FILE_SIZE[0]; ++i) {
     fieldContents[i] = new Array(23);
 }
+//To keep the array 'fat', we need to fill it up with empty tiles?
+/*
+for(var i = 0; i < FILE_SIZE[0]; ++i) {
+    for(var j = 0; j < FILE_SIZE[1]; ++j)
+    fieldContents[i][j] = new Tile(undefined);
+}
+*/
+
 
 //var fieldBackup = fieldContents; //When we implement saving, this will come in handy. We'll need a header, too.
 
@@ -221,6 +228,10 @@ function interact(e) {
             console.log('LOAD_BUTTON_AREA');
             loadFile();
         }
+        //Idea for 'scrolling' - Have a 48x48 low precision miniature of the entire field.
+        //Try to center on an area corresponding to where the user clicks.
+        //If not possible, move the 'camera' gradually towards the center until this can be done before centering.
+        //Possibly overlay a translucent rectangle indicating boundaries.
     }
     //If we're inside the playfield, convert to a tile. Functionalize this!
     if(cursorX >= 80 && cursorX <= 800 && cursorY >= 0 && cursorY <= 540){

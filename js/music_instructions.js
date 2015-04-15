@@ -48,3 +48,14 @@ var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, f
 
 }
 
+//Used in the save function.
+Tile.prototype.toString = function exportTile() {
+    var tileToString = this.note + "," + 
+                       this.instrument  + "," + 
+                       this.dspEffect  + "," + 
+                       this.flowEffect + "," + 
+                       this.volume  + "," + 
+                       this.dspValue + "," + 
+                       this.flowValue;
+    return tileToString;
+}

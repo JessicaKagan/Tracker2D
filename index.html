@@ -11,30 +11,37 @@
         <div id="box">
             <canvas id="canvas" width="800px" height="600px">If you can see this, canvas failed. Try reloading or upgrading your browser.</canvas>
             <!--HTML UI elements here.-->
-            <div id="UIShifter" class="UIInputBox">
-                <p>Pitch</p>
-                <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="pitchInput"></input>
-            </div>
-            <div id="UIShifter2" class="UIInputBox">
-                <p>Instrument</p>
-                <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="instrumentInput"></input>
-            </div>
-            <div id="UIShifter3" class="UIInputBox">
-                <p>Audio FX</p>
-                <select class="UIShifterInput" id="DSPInput"></select>
+                <div id="saveButton" class="HTMLUIButton alwaysHidden">
+                    <input type="file" name="saveToFile"></input>
+                </div>
+                <div id="loadButton" class="HTMLUIButton alwaysHidden">
+                    <input type="file" name="loadFile"></input>
+                </div>
 
-            </div>
-            <div id="UIShifter4" class="UIInputBox">
-                <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="dspValueInput"></input>
-            </div>
-            <div id="UIShifter5" class="UIInputBox">
-                <p>Flow Control</p>
-                <select class="UIShifterInput" id="controlInput"></select>
-            </div>
-            <div id="bugStorage">More musicians coming soon!</div>
+                <div id="UIShifter" class="UIInputBox">
+                    <p>Pitch</p>
+                    <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="pitchInput"></input>
+                </div>
+                <div id="UIShifter2" class="UIInputBox">
+                    <p>Instrument</p>
+                    <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="instrumentInput"></input>
+                </div>
+                <div id="UIShifter3" class="UIInputBox">
+                    <p>Audio FX</p>
+                    <select class="UIShifterInput" id="DSPInput"></select>
 
-            <!--Now for elements that will pop up and take drawing precedence when the user presses a button.-->
-            <div id="canvasUIElements"></div>
+                </div>
+                <div id="UIShifter4" class="UIInputBox">
+                    <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="dspValueInput"></input>
+                </div>
+                <div id="UIShifter5" class="UIInputBox">
+                    <p>Flow Control</p>
+                    <select class="UIShifterInput" id="controlInput"></select>
+                </div>
+                <div id="bugStorage">More musicians coming soon!</div>
+
+                <!--Now for elements that will pop up and take drawing precedence when the user presses a button.-->
+                <div id="canvasUIElements"></div>
         </div>
     </body>
 
