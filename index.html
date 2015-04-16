@@ -9,15 +9,24 @@
 
     <body>
         <div id="box">
-            <canvas id="canvas" width="800px" height="600px">If you can see this, canvas failed. Try reloading or upgrading your browser.</canvas>
+            <canvas id="canvas"  width="800px" height="600px">If you can see this, canvas failed. Try reloading or upgrading your browser.</canvas>
             <!--HTML UI elements here.-->
+            <!--
                 <div id="saveButton" class="HTMLUIButton alwaysHidden">
                     <input type="file" name="saveToFile"></input>
                 </div>
                 <div id="loadButton" class="HTMLUIButton alwaysHidden">
                     <input type="file" name="loadFile"></input>
                 </div>
-
+            -->
+                <div id="saveExport" class="currentlyHidden">
+                    <p>Copy this save data somewhere safe. <button type="button" id="closeSaveWindow" onClick="closeSaveWindow()">Close Window</button></p>
+                    <textarea id="saveText" class="fileIOArea" readonly></textarea>
+                </div>
+                <div id="loadExport" class="currentlyHidden">
+                    <p>Paste in a valid save. <button type="button" id="closeSaveWindow" onClick="loadFile()">Load</button></p>
+                    <textarea id="loadText" class="fileIOArea"></textarea>
+                </div>
                 <div id="UIShifter" class="UIInputBox">
                     <p>Pitch</p>
                     <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="pitchInput"></input>

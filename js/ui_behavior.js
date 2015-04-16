@@ -11,11 +11,13 @@
     Medium term useful thing: Extrapolation feature.
 */
 
+var isOverlayShowing = false; //Used to handle some pointer events CSS.
 var pauseState = true;
 var toolList = ['pencil', 'line', 'eraser', 'pause']; //We can add a bunch more. Use these to label buttons?
 var selectedTool = 'pencil'; //Change as needed, default to painting.
 var tileBuffer; //This is probably the key to not only saving, but all sorts of data manipulation.
 var saveContent; //Whatever we save organized in the form of a string?
+var encodedContent; //Base64 test variable
 
 var bottomUIButton = function(coords) {
     this.coords = coords;
@@ -85,9 +87,16 @@ function saveFile() {
         }
 
     }
-    //Dump song properties next, and we're done.
+    //Dump song properties next.
     saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n';
+    
     console.log(saveContent);
+    //Convert the entire thing to base64.
+    encodedContent = window.btoa(saveContent);
+    console.log(encodedContent);
+    $("#saveExport").removeClass("currentlyHidden");
+    $("#canvas").addClass("ignoreInput");
+    $("#saveText").html(encodedContent);
     //Now we need to get this to the user, somehow.
     //See http://www.html5rocks.com/en/tutorials/file/dndfiles/
     //We may need HTML DOM elements.
@@ -96,6 +105,10 @@ function saveFile() {
 }
 
 function loadFile() {
+    if(encodedContent !== undefined) {
+        encodedContent = window.atob(encodedContent);
+    }
+    console.log(encodedContent);
     console.log("Not implemented yet. Won't be useful until saveFile works.");
     //Pull up a file loading dialogue, and then run our functions on that.
     //The dialogue needs to prefer the extension we used earlier.
@@ -103,4 +116,12 @@ function loadFile() {
     //Iterate through every line in the file, with some caveats.
     //All lines from the second line to a line with (max index - AMOUNT_OF_SONG_PROPERTIES).
     //Currently, there are 4 properties, so the last 4 lines will be song properties.
+}
+
+function closeSaveWindow(){
+    $("#saveExport").addClass("currentlyHidden");
+}
+
+function closeLoadWindow(){
+    $("#loadExport").addClass("currentlyHidden");
 }

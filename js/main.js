@@ -223,10 +223,10 @@ function interact(e) {
             selectedTool = "eraser";
         } else if(cursorY >= 576 && cursorX >= 752 && cursorX < 776) {
             console.log('SAVE_BUTTON_AREA');
-            saveFile();
+            if($("#loadExport").hasClass("currentlyHidden") === true) { saveFile(); } //Kludge against UI clash.
         } else if(cursorY >= 576 && cursorX >= 776 && cursorX < 800) {
             console.log('LOAD_BUTTON_AREA');
-            loadFile();
+            if($("#saveExport").hasClass("currentlyHidden") === true) { $("#loadExport").removeClass("currentlyHidden"); }
         }
         //Idea for 'scrolling' - Have a 48x48 low precision miniature of the entire field.
         //Try to center on an area corresponding to where the user clicks.

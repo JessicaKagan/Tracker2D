@@ -36,6 +36,10 @@ select {
 
 }
 
+#canvas {
+    z-index: 0;
+}
+
 #saveButton {
     left: 752px;
     top: 576px;
@@ -46,6 +50,20 @@ select {
     top: 576px; 
 }
 
+#saveExport, #loadExport {
+    position: absolute;
+    top: 48px;
+    left: 200px;
+    width: 480px;
+    height: 360px;
+    background-color: rgba(192,192,192, 1);
+    color: #000000;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    z-index: 1;
+
+}
 
 #UIShifter {
     top: 150px;
@@ -83,10 +101,27 @@ select {
     padding: 0px;
 }
 
+.fileIOArea {
+    position: absolute;
+    top: 48px;
+    width: 474px;
+    height: 306px;
+}
+
 /* A useful fallback if we need to attach event handlers to canvas things?*/
 .alwaysHidden {
     display: block;
     visibility: hidden;
     height: 0;
     width: 0;
+}
+
+/*Used for the text area divs that sometimes but don't always need to be visible.*/
+.currentlyHidden {
+    display: block;
+    visibility: hidden;
+}
+
+.ignoreInput {
+    pointer-events: none;
 }
