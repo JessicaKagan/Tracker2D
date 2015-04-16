@@ -106,8 +106,7 @@ function init() {
 
     //In the future, we'll pull this information from a save file, if we can.
     //The array doesn't need to be initialized with stuff in it to work, but this helps a bit.
-    
-    
+    /*
     fieldContents[1][1] = new Tile(22, 2, "lowpass", "none", 1, 220, 0);
     fieldContents[2][1] = new Tile(32, 2, "lowpass", "none", 1, 330, 0);
     fieldContents[3][1] = new Tile(34, 2, "lowpass", "none", 1, 440, 0);
@@ -140,7 +139,7 @@ function init() {
     fieldContents[0][3] = new Tile(22, 2, "lowpass", "none", 1, 1540, 0);
     fieldContents[0][2] = new Tile(32, 2, "lowpass", "none", 1, 1800, 0);
     fieldContents[0][1] = new Tile(34, 2, "lowpass", "turn_east", 1, 220, 0);
-    
+    */
 
     //Set up the UI.
     document.addEventListener("click", interact);

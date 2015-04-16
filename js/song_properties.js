@@ -9,3 +9,6 @@ var PLAYFIELD_SIZE = [64, 128, 256, 512]; //The user will eventually be able to 
 //Once these are implemented, it should reflect badly on the user not to put anything at all here when sharing a file.
 var author = "If you see this, the author couldn't be bothered to even claim anonymity.";
 var songDescription = "If you see this, the author couldn't be bothered to say anything about his work.";
+
+//Implement bug starting positions if any.
+var bug1StartingPosition = [1,1];

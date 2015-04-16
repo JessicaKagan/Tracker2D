@@ -63,7 +63,9 @@ function pasteBuffer(fromX, toX, fromY, toY, tile) {
 
 }
 
-//We need a standard save format. Make the JSON array, then follow up with a footer to simplify extension of song properties.
+//We need a standard save format. 
+//Make the JSON array, then follow up with a footer to simplify extension of song properties.
+//This also needs to be extended with the starting positions of the bugs.
 
 function saveFile() {
 
@@ -75,7 +77,7 @@ function saveFile() {
     saveContent = "";
     //console.log(tileBuffer.length);
     //The very first line contains the amount of tiles.
-    saveContent += FILE_SIZE[0]*FILE_SIZE[1] + '\n';
+    saveContent += FILE_SIZE[0] + "," + FILE_SIZE[1] + '\n';
 
     //Dump all tiles to a string. Parses top to bottom before moving left to right.
     for(var i = 0; i < tileBuffer.length; ++i){
@@ -105,17 +107,41 @@ function saveFile() {
 }
 
 function loadFile() {
+    closeLoadWindow();
+    //We need to implement error trapping at some point.
+    encodedContent = $("#loadText").val();
     if(encodedContent !== undefined) {
         encodedContent = window.atob(encodedContent);
     }
     console.log(encodedContent);
-    console.log("Not implemented yet. Won't be useful until saveFile works.");
-    //Pull up a file loading dialogue, and then run our functions on that.
-    //The dialogue needs to prefer the extension we used earlier.
-    //We'll have to turn the file into an array, I think.
-    //Iterate through every line in the file, with some caveats.
-    //All lines from the second line to a line with (max index - AMOUNT_OF_SONG_PROPERTIES).
-    //Currently, there are 4 properties, so the last 4 lines will be song properties.
+    var loadingWorkArray = encodedContent.split("\n");
+    var loadDimensions = loadingWorkArray[0].split(",");
+    //loadDimensions[0] = parseInt(loadDimensions[0]);
+    //loadDimensions[1] = parseInt(loadDimensions[1]);
+    
+    console.log(loadDimensions);
+    //1 to (max index - 4) for now
+    //Input all the tiles. This produces buggy, incorrect output. Fix it!
+    for(var i = 0; i < loadDimensions[0]; ++i){
+        for(var j = 0; j < loadDimensions[1]; ++j) {
+            var currentIndex = (j*loadDimensions[0]) + i; //Not sure if this is right, but it looks like it.
+
+            if(loadingWorkArray[currentIndex-1] !== "undefined") {
+                var currentTile = loadingWorkArray[currentIndex].split(",");
+                console.log(currentTile);
+                fieldContents[i][j] = new Tile(currentTile[0],currentTile[1],
+                                               currentTile[2],currentTile[3],
+                                               currentTile[4],currentTile[5],
+                                               currentTile[6]);
+                console.log(fieldContents[i][j]);
+            } else fieldContents[i][j] = undefined;
+        }
+    }
+    //We can still make song properties work. This will require editing in the future.
+    TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
+    //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
+    author = loadingWorkArray[loadingWorkArray.length - 3];
+    songDescription = loadingWorkArray[loadingWorkArray.length - 2];
 }
 
 function closeSaveWindow(){
