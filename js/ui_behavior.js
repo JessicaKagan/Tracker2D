@@ -68,7 +68,7 @@ function pasteBuffer(fromX, toX, fromY, toY, tile) {
 //This also needs to be extended with the starting positions of the bugs.
 
 function saveFile() {
-
+    pauseState = true;
     fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1], 'save');
     if(tileBuffer === fieldContents) { 
         console.log("We're ready to save now."); 
@@ -107,6 +107,7 @@ function saveFile() {
 }
 
 function loadFile() {
+    pauseState = true;
     closeLoadWindow();
     //We need to implement error trapping at some point.
     encodedContent = $("#loadText").val();
@@ -119,22 +120,23 @@ function loadFile() {
     //loadDimensions[0] = parseInt(loadDimensions[0]);
     //loadDimensions[1] = parseInt(loadDimensions[1]);
     
-    console.log(loadDimensions);
+    //console.log(loadDimensions);
     //1 to (max index - 4) for now
     //Input all the tiles. This produces buggy, incorrect output. Fix it!
     for(var i = 0; i < loadDimensions[0]; ++i){
         for(var j = 0; j < loadDimensions[1]; ++j) {
-            var currentIndex = (j*loadDimensions[0]) + i; //Not sure if this is right, but it looks like it.
+            var currentIndex = (j*loadDimensions[1]) + i; //Flow control seems to be right.
 
-            if(loadingWorkArray[currentIndex-1] !== "undefined") {
-                var currentTile = loadingWorkArray[currentIndex].split(",");
+            if(loadingWorkArray[currentIndex + 1] !== "undefined") {
+                console.log(j + " , " + i);
+                var currentTile = loadingWorkArray[currentIndex + 1].split(",");
                 console.log(currentTile);
-                fieldContents[i][j] = new Tile(currentTile[0],currentTile[1],
+                fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
                                                currentTile[2],currentTile[3],
                                                currentTile[4],currentTile[5],
                                                currentTile[6]);
-                console.log(fieldContents[i][j]);
-            } else fieldContents[i][j] = undefined;
+                console.log(fieldContents[j][i]);
+            } else fieldContents[j][i] = undefined;
         }
     }
     //We can still make song properties work. This will require editing in the future.
@@ -142,6 +144,10 @@ function loadFile() {
     //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
     author = loadingWorkArray[loadingWorkArray.length - 3];
     songDescription = loadingWorkArray[loadingWorkArray.length - 2];
+    //We need to add bug parameters to this format. Here's another kludge. Don't you love kludging?
+    bug1.x = 80; 
+    bug1.y = 24;
+    bug1.action = "moveRight";
 }
 
 function closeSaveWindow(){

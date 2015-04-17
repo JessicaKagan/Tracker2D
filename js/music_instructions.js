@@ -30,7 +30,13 @@ var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_s
 
 
 var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, flowValue) {
-    this.note = pitchTable[note]; //If we make colors correspond to pitches, we'll need logarithms or something.
+    //Loading kludge. UI uses the pitchtable, but file loading doesn't.
+    this.note = note;
+    if(this.note === parseInt(this.note, 10)) { 
+        this.note = pitchTable[note];
+        //console.log(this.note + " , " + parseInt(this.note, 10)); 
+    }
+    //this.note = pitchTable[note]; 
     this.instrument = instrument;
     this.dspEffect = dspEffect;
     this.flowEffect = flowEffect;
