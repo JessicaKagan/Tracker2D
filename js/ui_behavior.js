@@ -99,11 +99,7 @@ function saveFile() {
     $("#saveExport").removeClass("currentlyHidden");
     $("#canvas").addClass("ignoreInput");
     $("#saveText").html(encodedContent);
-    //Now we need to get this to the user, somehow.
-    //See http://www.html5rocks.com/en/tutorials/file/dndfiles/
-    //We may need HTML DOM elements.
-    //See if we can get a .tracker2D extension or something.
-
+    //It will be some time before we can actually get this to a user.
 }
 
 function loadFile() {

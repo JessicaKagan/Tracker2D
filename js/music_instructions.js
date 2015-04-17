@@ -28,7 +28,9 @@ var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_s
 //Also: "random_tile", which will send the bug to a random tile within a user defined range.
 
 
-
+//Planned extension: Tile color.
+//Possible extension: Tiles that only affect certain bugs. For N bugs we will need 2^N intspace to handle it.
+//For instance: 10000001 would change the behavior of bugs 1 and 8 (equivalent to 129).
 var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, flowValue) {
     this.note = note; //Note ID to relative pitch conversion now takes place when the tile is instanced, for save-load compatibility
     this.instrument = instrument;
