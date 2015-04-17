@@ -241,7 +241,7 @@ function interact(e) {
         //if(fieldContents[currentTile[0]][currentTile[1]] == undefined) { 
             switch(selectedTool){
                 case "pencil":
-                    fieldContents[currentTile[0]][currentTile[1]] = new Tile(currentPitch, currentInstrument, currentDSP, currentFlowControl, 1, currentDSPValue, 0);
+                    fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, 1, currentDSPValue, 0);
                     break;
                 case "eraser":
                     fieldContents[currentTile[0]][currentTile[1]] = undefined;

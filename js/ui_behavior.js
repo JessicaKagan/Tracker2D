@@ -130,11 +130,19 @@ function loadFile() {
             if(loadingWorkArray[currentIndex + 1] !== "undefined") {
                 console.log(j + " , " + i);
                 var currentTile = loadingWorkArray[currentIndex + 1].split(",");
-                console.log(currentTile);
+
+                //Let's try this kludge instead.
+                /*
+                console.log(currentTile[0]);
+                currentTile[0] = (currentTile[0])*(44100);
+                console.log(currentTile[0]);
+                */
+
                 fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
                                                currentTile[2],currentTile[3],
                                                currentTile[4],currentTile[5],
                                                currentTile[6]);
+
                 console.log(fieldContents[j][i]);
             } else fieldContents[j][i] = undefined;
         }
