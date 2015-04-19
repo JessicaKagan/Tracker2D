@@ -18,6 +18,7 @@ var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var tileBuffer; //An array representing a rectangle of selected tiles.
 var saveContent; //A string representing the contents of the map.
 var encodedContent; //Stores the base64 equivalent of saveContent.
+var selectBoxCoords = new Array(4); //Stores two coordinate pairs.
 
 var bottomUIButton = function(coords) {
     this.coords = coords;
@@ -57,15 +58,26 @@ function fillBuffer(fromX, toX, fromY, toY, command) {
             //console.log(tileBuffer);
             break;
         case 'selectBox':
-            console.log("Not implemented yet");
+            //In this case, tileBuffer has to actually be defined.
+            tileBuffer = new Array((toX - fromX) + 1);
+            for(var i = 0; i < tileBuffer.length; ++i) {
+                tileBuffer[i] = new Array((toY - fromY) + 1);
+            }
+            //Only then can it be populated properly.
+            for(var i = 0; i < tileBuffer.length; ++i){
+                for(var j = 0; j < tileBuffer[i].length; ++j){
+                    tileBuffer[i][j] = fieldContents[fromX + i][fromY + j];
+                }
+            }
+            console.log(tileBuffer);
             break;
         default:
             break;
     }
-
-    //What's the most efficient way to copy an array, or part of an array in jQuery?
 }
 
+//toX and toY are derived from the size of tileBuffer.
+//tile is an optional argument that might be used for extrapolation in the deep future.
 function pasteBuffer(fromX, toX, fromY, toY, tile) {
 
 }
@@ -155,6 +167,9 @@ function loadFile() {
     bug1.x = 80; 
     bug1.y = 24;
     bug1.action = "moveRight";
+    bug2.x = 80; 
+    bug2.y = 72;
+    bug2.action = "moveRight";
 }
 
 function closeSaveWindow(){

@@ -24,7 +24,7 @@ for(var i = 0; i < FILE_SIZE[0]; ++i) {
 //var fieldBackup = fieldContents; //When we implement saving, this will come in handy. We'll need a header, too.
 
 //Globals for now. Deglobalize as implementation permits. 
-var soundFont, audioEngine, audioLoader;
+var soundFont, audioEngine, audioLoader, selectBoxStage;
 //For synch.
 var lastTime, updateFrequency, timeToUpdate;
 
@@ -161,6 +161,7 @@ function interact(e) {
         } else if(cursorY >= 576 && cursorX >= 152 && cursorX < 176) { 
             console.log("SELECTBOX_BUTTON_AREA");
             selectedTool = "selectBox";
+            selectBoxStage = 1; //Start the selection process.
         } else if(cursorY >= 576 && cursorX >= 752 && cursorX < 776) {
             console.log('SAVE_BUTTON_AREA');
             if($("#loadExport").hasClass("currentlyHidden") === true) { saveFile(); } //Kludge against UI clash.
@@ -191,7 +192,36 @@ function interact(e) {
                         fieldContents[currentTile[0]][currentTile[1]] = undefined;
                         break;
                     case "selectBox":
-                        console.log('Not implemented yet');
+                        if(selectBoxStage === 1) {
+                            //Get the first pair for the buffer.
+                            selectBoxCoords[0] = currentTile[0];
+                            selectBoxCoords[2] = currentTile[1];
+                            selectBoxStage = 2;
+                            alert("Placeholder for a better way to tell you that you need to select a second tile now. I'd close this with the Enter key if I were you, because we might have a clickthrough problem otherwise.");
+                        } else if(selectBoxStage === 2) {
+                            //A second click gets the second pair. 
+                            selectBoxCoords[1] = currentTile[0];
+                            selectBoxCoords[3] = currentTile[1];
+                            /* If the user selected something above or to the left of their first selection,
+                             * swap the coordinates. X values first, then Y.
+                             * This uses a functional but inelegant temporary swapping variable.
+                             */
+                            if(selectBoxCoords[0] > selectBoxCoords[1]) {
+                                var selectBoxBuffer = selectBoxCoords[0];
+                                selectBoxCoords[0] = selectBoxCoords[1];
+                                selectBoxCoords[1] = selectBoxBuffer;
+                            }
+                            if(selectBoxCoords[2] > selectBoxCoords[3]) {
+                                var selectBoxBuffer = selectBoxCoords[2];
+                                selectBoxCoords[2] = selectBoxCoords[3];
+                                selectBoxCoords[3] = selectBoxBuffer;
+                            }
+                            //Finally, we send these coords to the buffer filler.
+                            fillBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3],'selectBox');
+                            //And this allows the user to select something again.
+                            selectBoxStage = 1;
+                        } else console.log("selectBox() in interact() failed.");
+                        break;
                     default:
                         break;
                 }
