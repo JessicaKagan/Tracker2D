@@ -104,43 +104,6 @@ function init() {
     ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
     ctx.fillStyle = "#BBBBBB";
 
-    //In the future, we'll pull this information from a save file, if we can.
-    //The array doesn't need to be initialized with stuff in it to work, but this helps a bit.
-    /*
-    fieldContents[1][1] = new Tile(22, 2, "lowpass", "none", 1, 220, 0);
-    fieldContents[2][1] = new Tile(32, 2, "lowpass", "none", 1, 330, 0);
-    fieldContents[3][1] = new Tile(34, 2, "lowpass", "none", 1, 440, 0);
-    fieldContents[4][1] = new Tile(22, 2, "lowpass", "none", 1, 550, 0);
-    fieldContents[5][1] = new Tile(35, 2, "lowpass", "none", 1, 660, 0);
-    fieldContents[6][1] = new Tile(22, 2, "lowpass", "none", 1, 770, 0);
-    fieldContents[7][1] = new Tile(32, 2, "lowpass", "none", 1, 880, 0);
-    fieldContents[8][1] = new Tile(34, 2, "lowpass", "turn_south", 1, 990, 0);
-    fieldContents[8][2] = new Tile(22, 2, "lowpass", "none", 1, 220, 0);
-    fieldContents[8][3] = new Tile(32, 2, "lowpass", "none", 1, 330, 0);
-    fieldContents[8][4] = new Tile(34, 2, "lowpass", "none", 1, 440, 0);
-    fieldContents[8][5] = new Tile(22, 2, "lowpass", "none", 1, 550, 0);
-    fieldContents[8][6] = new Tile(35, 2, "lowpass", "none", 1, 660, 0);
-    fieldContents[8][7] = new Tile(22, 2, "lowpass", "none", 1, 770, 0);
-    fieldContents[8][8] = new Tile(32, 2, "lowpass", "none", 1, 880, 0);
-    fieldContents[8][9] = new Tile(34, 2, "lowpass", "turn_west", 1, 990, 0);
-    fieldContents[7][9] = new Tile(22, 2, "lowpass", "none", 1, 440, 0);
-    fieldContents[6][9] = new Tile(32, 2, "lowpass", "none", 1, 550, 0);
-    fieldContents[5][9] = new Tile(34, 2, "lowpass", "none", 1, 660, 0);
-    fieldContents[4][9] = new Tile(22, 2, "lowpass", "none", 1, 770, 0);
-    fieldContents[3][9] = new Tile(35, 2, "lowpass", "none", 1, 880, 0);
-    fieldContents[2][9] = new Tile(22, 2, "lowpass", "none", 1, 990, 0);
-    fieldContents[1][9] = new Tile(32, 2, "lowpass", "none", 1, 1100, 0);
-    fieldContents[0][9] = new Tile(34, 2, "lowpass", "turn_north", 1, 1650, 0);
-    fieldContents[0][8] = new Tile(22, 2, "lowpass", "none", 1, 550, 0);
-    fieldContents[0][7] = new Tile(32, 2, "lowpass", "none", 1, 770, 0);
-    fieldContents[0][6] = new Tile(34, 2, "lowpass", "none", 1, 990, 0);
-    fieldContents[0][5] = new Tile(22, 2, "lowpass", "none", 1, 1100, 0);
-    fieldContents[0][4] = new Tile(35, 2, "lowpass", "none", 1, 1320, 0);
-    fieldContents[0][3] = new Tile(22, 2, "lowpass", "none", 1, 1540, 0);
-    fieldContents[0][2] = new Tile(32, 2, "lowpass", "none", 1, 1800, 0);
-    fieldContents[0][1] = new Tile(34, 2, "lowpass", "turn_east", 1, 220, 0);
-    */
-
     //Set up the UI.
     document.addEventListener("click", interact);
     pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
@@ -191,7 +154,7 @@ function init() {
 
     //Draws a test bug, spawning at tile [0,1] with a test behavior.
     bug1 = new Bug(bugImage, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','George');
-    //bug2 = new Bug(bugImage2, fieldBoundaries[0] + (TILE_SIZE*2),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','Steve');
+    bug2 = new Bug(bugImage2, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*3),'moveRight','Steve');
     //console.log(bug1);
 
     lastTime = Date.now();
@@ -241,11 +204,13 @@ function interact(e) {
         //if(fieldContents[currentTile[0]][currentTile[1]] == undefined) { 
             switch(selectedTool){
                 case "pencil":
-                    fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, 1, currentDSPValue, 0);
+                    fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, 0.6, currentDSPValue, 0);
                     break;
                 case "eraser":
                     fieldContents[currentTile[0]][currentTile[1]] = undefined;
                     break;
+                case "selectBox":
+                    console.log('Not implemented yet');
                 default:
                     break;
             }
@@ -321,6 +286,7 @@ function main(){
     if(timeToUpdate <= 0) { 
         if(pauseState == false) { 
             bug1.updateBug();
+            bug2.updateBug();
         }
         timeToUpdate = updateFrequency; 
     }
@@ -365,7 +331,7 @@ function render(){
 
     //3. Bugs
     bug1.drawBug();
-    //bug2.drawBug();
+    bug2.drawBug();
     //4. UI (Seems trivial, but I plan to have translucent popups in the near future.)
     //ctx.fillRect(PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1],PAUSE_PLAY_BUTTON_AREA[2],PAUSE_PLAY_BUTTON_AREA[3]);
     

@@ -13,11 +13,11 @@
 
 var isOverlayShowing = false; //Used to handle some pointer events CSS.
 var pauseState = true;
-var toolList = ['pencil', 'line', 'eraser', 'pause']; //We can add a bunch more. Use these to label buttons?
-var selectedTool = 'pencil'; //Change as needed, default to painting.
-var tileBuffer; //This is probably the key to not only saving, but all sorts of data manipulation.
-var saveContent; //Whatever we save organized in the form of a string?
-var encodedContent; //Base64 test variable
+var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox']; //We can add a bunch more. Use these to label buttons?
+var selectedTool = 'pencil'; //Change as needed, default to pencil.
+var tileBuffer; //An array representing a rectangle of selected tiles.
+var saveContent; //A string representing the contents of the map.
+var encodedContent; //Stores the base64 equivalent of saveContent.
 
 var bottomUIButton = function(coords) {
     this.coords = coords;
