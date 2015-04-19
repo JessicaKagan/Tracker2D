@@ -5,6 +5,7 @@ function getImages() {
     tileOverlayImages[1].src = 'images/north_arrow_overlay.png';
     tileOverlayImages[2].src = 'images/east_arrow_overlay.png';
     tileOverlayImages[3].src = 'images/south_arrow_overlay.png';
+    tileOverlayImages[4].src = 'images/freeze_overlay.png';
 
     UIImages[0].src = 'images/pause_button.png';
     UIImages[1].src = 'images/play_button.png';

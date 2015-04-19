@@ -35,7 +35,7 @@ var currentDSPValue = 0;
 var currentDSP = "none";
 var currentFlowControl = "none";
 var UIImages = new Array(8);
-var tileOverlayImages = new Array(4); //Used for flow control.
+var tileOverlayImages = new Array(5); //Used for flow control.
 
 
 var bugImage = new Image();
@@ -398,6 +398,10 @@ function paintTile(tileX, tileY, color){
             case "turn_south":
                 ctx.drawImage(tileOverlayImages[3],fieldBoundaries[0] + (TILE_SIZE*tileX),fieldBoundaries[1] + (TILE_SIZE*tileY));
                 break;
+            case "freeze":
+                ctx.drawImage(tileOverlayImages[4],fieldBoundaries[0] + (TILE_SIZE*tileX),fieldBoundaries[1] + (TILE_SIZE*tileY));
+                break;
+
             default:
                 break;
         }

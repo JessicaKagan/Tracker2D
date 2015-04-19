@@ -38,7 +38,8 @@ Bug.prototype.updateBug = function() {
             //Play sounds BEFORE moving the bug.
             if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
                 //Right now, sounds have separate playback routines if they have effects.
-                if(fieldContents[bugTile[0]][bugTile[1]].instrument != -1){
+                //Frozen bugs only play their tile's sound once. Anything else would be detrimental to your sanity.
+                if(fieldContents[bugTile[0]][bugTile[1]].instrument != -1 && this.action !== "holdPosition"){
                     //console.log(fieldContents[bugTile[0]][bugTile[1]].dspValue);
                     playSound(soundFont[fieldContents[bugTile[0]][bugTile[1]].instrument],
                                         fieldContents[bugTile[0]][bugTile[1]].note,
@@ -63,6 +64,8 @@ Bug.prototype.updateBug = function() {
                     case "turn_south":
                         this.action = 'moveDown';
                         break;
+                    case "freeze":
+                        this.action = 'holdPosition';
                     default:
                         break;
                 }
