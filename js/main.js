@@ -10,6 +10,8 @@ var FIELD_PIXELS = [80,0,800,552];
 var PAUSE_PLAY_BUTTON_AREA = [80,576,24,24];
 var PENCIL_BUTTON_AREA = [104,576,24,24];
 var ERASER_BUTTON_AREA = [128,576,24,24];
+var SELECTBOX_BUTTON_AREA = [152,576,24,24];
+
 var SAVE_BUTTON_AREA = [752,576,24,24];
 var LOAD_BUTTON_AREA = [776,576,24,24];
 
@@ -18,19 +20,11 @@ var fieldContents = new Array(30);
 for(var i = 0; i < FILE_SIZE[0]; ++i) {
     fieldContents[i] = new Array(23);
 }
-//To keep the array 'fat', we need to fill it up with empty tiles?
-/*
-for(var i = 0; i < FILE_SIZE[0]; ++i) {
-    for(var j = 0; j < FILE_SIZE[1]; ++j)
-    fieldContents[i][j] = new Tile(undefined);
-}
-*/
-
 
 //var fieldBackup = fieldContents; //When we implement saving, this will come in handy. We'll need a header, too.
 
-//Globals for now. Deglobalize as implementation permits.
-var bug1, soundFont, audioEngine, audioLoader;
+//Globals for now. Deglobalize as implementation permits. 
+var soundFont, audioEngine, audioLoader;
 //For synch.
 var lastTime, updateFrequency, timeToUpdate;
 
@@ -39,7 +33,7 @@ var currentInstrument = 0;
 var currentDSPValue = 0;
 var currentDSP = "none";
 var currentFlowControl = "none";
-var UIImages = new Array(6);
+var UIImages = new Array(7);
 var tileOverlayImages = new Array(4); //Used for flow control.
 
 
@@ -56,49 +50,30 @@ for(var i = 0; i < UIImages.length; i++) {
 for(var i = 0; i < tileOverlayImages.length; i++) {
     tileOverlayImages[i] = new Image();
 }
-tileOverlayImages[0].src = 'images/west_arrow_overlay.png';
-tileOverlayImages[1].src = 'images/north_arrow_overlay.png';
-tileOverlayImages[2].src = 'images/east_arrow_overlay.png';
-tileOverlayImages[3].src = 'images/south_arrow_overlay.png';
 
-UIImages[0].src = 'images/pause_button.png';
-UIImages[1].src = 'images/play_button.png';
-UIImages[2].src = 'images/pen_button.png';
-UIImages[3].src = 'images/eraser_button.png';
-UIImages[4].src = 'images/save_button.png';
-UIImages[5].src = 'images/load_button.png';
-
+getImages(); //See image_loader.js
 
 var testSoundArray = ['./sounds/Ach.wav','./sounds/OrchestraHit.wav', './sounds/sawtooth.wav'];
-
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
 //Set up a canvas to draw on. All the drawing functions should be in render() now.
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-//Check to make sure the browser supports everything we need. Write a test for the audio API.
-if (window.File && window.FileReader && window.FileList && window.Blob) { } 
-else { 
-    alert('The File APIs are not fully supported in this browser.'); 
-}
 
 //Kludge. Rewrite this to start after making sure all the images actually loaded.
-UIImages[5].onload = function() {
+UIImages[6].onload = function() {
     init();
 }
 
 function init() {
-
     //Set up the audio engine and a system for playing sounds.
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     audioEngine = new AudioContext();
     audioLoader = new BufferLoader(audioEngine, testSoundArray, soundsAreReady);
     audioLoader.load();
-
     //Draw the grid.
     ctx.fillStyle = "#000000";
-    //There has to be a better way to handle the names. Apparently apply() in JS might be usable?
     ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
     ctx.fillStyle = "#888888";
     ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
@@ -183,6 +158,9 @@ function interact(e) {
         } else if(cursorY >= 576 && cursorX >= 128 && cursorX < 152) { 
             console.log("ERASER_BUTTON_AREA");
             selectedTool = "eraser";
+        } else if(cursorY >= 576 && cursorX >= 152 && cursorX < 176) { 
+            console.log("SELECTBOX_BUTTON_AREA");
+            selectedTool = "selectBox";
         } else if(cursorY >= 576 && cursorX >= 752 && cursorX < 776) {
             console.log('SAVE_BUTTON_AREA');
             if($("#loadExport").hasClass("currentlyHidden") === true) { saveFile(); } //Kludge against UI clash.
@@ -196,27 +174,29 @@ function interact(e) {
         //Possibly overlay a translucent rectangle indicating boundaries.
     }
     //If we're inside the playfield, convert to a tile. Functionalize this!
+    //The logic for this is going to become a great deal more complex with time, I think.
     if(cursorX >= 80 && cursorX <= 800 && cursorY >= 0 && cursorY <= 540){
         console.log("In the playfield");
         var currentTile = getTile(cursorX, cursorY);
         console.log(currentTile);
-        //The logic for this is going to become a great deal more complex with time, I think.
-        //if(fieldContents[currentTile[0]][currentTile[1]] == undefined) { 
-            switch(selectedTool){
-                case "pencil":
-                    fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, 0.6, currentDSPValue, 0);
-                    break;
-                case "eraser":
-                    fieldContents[currentTile[0]][currentTile[1]] = undefined;
-                    break;
-                case "selectBox":
-                    console.log('Not implemented yet');
-                default:
-                    break;
+        
+        //This statement reduces painting with UI elements open but doesn't remove it entirely.
+            if($("#saveExport").hasClass("currentlyHidden") === true &&
+               $("#loadExport").hasClass("currentlyHidden") === true){
+                switch(selectedTool){
+                    case "pencil":
+                        fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, 0.6, currentDSPValue, 0);
+                        break;
+                    case "eraser":
+                        fieldContents[currentTile[0]][currentTile[1]] = undefined;
+                        break;
+                    case "selectBox":
+                        console.log('Not implemented yet');
+                    default:
+                        break;
+                }
             }
-        //}
         console.log(fieldContents[currentTile[0]][currentTile[1]]);
-        //paintTile(currentTile[0],currentTile[1], "#00BB00"); //Simple painting test
     }
 }
 
@@ -262,6 +242,13 @@ function playSound(buffer, pitch, dspEffect, dspValue) {
             createLowPass.connect(audioEngine.destination);
             createLowPass.type = 'lowpass';
             createLowPass.frequency.value = dspValue;
+            break;
+        case 'hipass':
+            var createHighPass = audioEngine.createBiquadFilter();
+            source.connect(createHighPass);
+            createHighPass.connect(audioEngine.destination);
+            createHighPass.type = 'highpass';
+            createHighPass.frequency.value = dspValue;
             break;
         default:
             source.connect(audioEngine.destination);

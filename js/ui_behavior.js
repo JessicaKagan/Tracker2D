@@ -38,9 +38,13 @@ var drawButtons = function() {
     //Pencil
     ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]);
     //Eraser
-    ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]);   
+    ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]); 
+    //Box select
+    ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]);  
+    //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
-    ctx.drawImage(UIImages[5],LOAD_BUTTON_AREA[0],LOAD_BUTTON_AREA[1]);   
+    ctx.drawImage(UIImages[5],LOAD_BUTTON_AREA[0],LOAD_BUTTON_AREA[1]); 
+
 }
 
 function fillBuffer(fromX, toX, fromY, toY, command) {
@@ -50,7 +54,10 @@ function fillBuffer(fromX, toX, fromY, toY, command) {
     switch(command) {
         case 'save':
             tileBuffer = fieldContents;
-            console.log(tileBuffer);
+            //console.log(tileBuffer);
+            break;
+        case 'selectBox':
+            console.log("Not implemented yet");
             break;
         default:
             break;
@@ -91,14 +98,10 @@ function saveFile() {
     }
     //Dump song properties next.
     saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n';
-    
-    console.log(saveContent);
     //Convert the entire thing to base64.
     encodedContent = window.btoa(saveContent);
-    console.log(encodedContent);
-    $("#saveExport").removeClass("currentlyHidden");
-    $("#canvas").addClass("ignoreInput");
     $("#saveText").html(encodedContent);
+    $("#saveExport").removeClass("currentlyHidden")
     //It will be some time before we can actually get this to a user.
 }
 
@@ -155,9 +158,10 @@ function loadFile() {
 }
 
 function closeSaveWindow(){
-    $("#saveExport").addClass("currentlyHidden");
+    setTimeout(function() {$("#saveExport").addClass("currentlyHidden");}, 50);
+
 }
 
 function closeLoadWindow(){
-    $("#loadExport").addClass("currentlyHidden");
+    setTimeout(function() {$("#loadExport").addClass("currentlyHidden");}, 50);
 }

@@ -9,24 +9,7 @@
 
     <body>
         <div id="box">
-            <canvas id="canvas"  width="800px" height="600px">If you can see this, canvas failed. Try reloading or upgrading your browser.</canvas>
-            <!--HTML UI elements here.-->
-            <!--
-                <div id="saveButton" class="HTMLUIButton alwaysHidden">
-                    <input type="file" name="saveToFile"></input>
-                </div>
-                <div id="loadButton" class="HTMLUIButton alwaysHidden">
-                    <input type="file" name="loadFile"></input>
-                </div>
-            -->
-                <div id="saveExport" class="currentlyHidden">
-                    <p>Copy this save data somewhere safe. <button type="button" id="closeSaveWindow" onClick="closeSaveWindow()">Close Window</button></p>
-                    <textarea id="saveText" class="fileIOArea" readonly></textarea>
-                </div>
-                <div id="loadExport" class="currentlyHidden">
-                    <p>Paste in a valid save. <button type="button" id="closeSaveWindow" onClick="loadFile()">Load</button></p>
-                    <textarea id="loadText" class="fileIOArea"></textarea>
-                </div>
+            <canvas id="canvas"  width="800px" height="600px">If you can see this, Canvas failed. Try reloading or upgrading your browser.</canvas>
                 <div id="UIShifter" class="UIInputBox">
                     <p>Pitch</p>
                     <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="pitchInput"></input>
@@ -50,7 +33,17 @@
                 <div id="bugStorage">More musicians coming soon!</div>
 
                 <!--Now for elements that will pop up and take drawing precedence when the user presses a button.-->
-                <div id="canvasUIElements"></div>
+                <div id="canvasUIElements">
+                    <div id="saveExport" class="currentlyHidden">
+                        <p>Copy this save data somewhere safe. <button type="button" id="closeSaveWindow" onClick="closeSaveWindow()">Close Window</button></p>
+                        <textarea id="saveText" class="fileIOArea" readonly></textarea>
+                    </div>
+                    <!--Add an "exit without loading" button to this control.-->
+                    <div id="loadExport" class="currentlyHidden">
+                        <p>Paste in a valid save. <button type="button" id="closeSaveWindow" onClick="loadFile()">Load</button></p>
+                        <textarea id="loadText" class="fileIOArea"></textarea>
+                    </div>
+                </div>
         </div>
     </body>
 
@@ -61,6 +54,7 @@
     <script src="js/bugs.js"></script> <!--Bugs represent musicians and execute tile instructions when they move over them-->
     <script src="js/song_properties.js"></script> <!--Governs some aspects of playback logic and will eventually link to file saving/IO-->
     <script src="js/ui_behavior.js"></script> <!--Once I start adding buttons to the interface, this will keep an eye on them.-->
+    <script src="js/image_loader.js"></script> <!--To reduce clutter, all the defined images live here.-->
     <script src="js/main.js"></script> <!--Basic engine logic and anything that hasn't been moved to a separate file-->
 
 
