@@ -13,7 +13,7 @@
 
 var isOverlayShowing = false; //Used to handle some pointer events CSS.
 var pauseState = true;
-var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox']; //We can add a bunch more. Use these to label buttons?
+var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query']; //We can add a bunch more. Use these to label buttons?
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var tileBuffer; //An array representing a rectangle of selected tiles.
 var saveContent; //A string representing the contents of the map.
@@ -36,15 +36,16 @@ var drawButtons = function() {
     //Pause button with 2 states
     if(pauseState == false) { ctx.drawImage(UIImages[0],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
     else if(pauseState == true) { ctx.drawImage(UIImages[1],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
-    //Pencil
-    ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]);
-    //Eraser
-    ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]); 
-    //Box select
-    ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]);  
+
+    ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]); //Pencil
+    ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]); //Eraser
+    ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]); //Box select
+    ctx.drawImage(UIImages[7],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]); //Paste
+
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[5],LOAD_BUTTON_AREA[0],LOAD_BUTTON_AREA[1]); 
+    
 
 }
 
@@ -77,15 +78,23 @@ function fillBuffer(fromX, toX, fromY, toY, command) {
 }
 
 //toX and toY are derived from the size of tileBuffer.
-//tile is an optional argument that might be used for extrapolation in the deep future.
-function pasteBuffer(fromX, toX, fromY, toY, tile) {
-
+//TileX and tileY are where the user clicked.
+//currentTile is an optional instruction for interpolation, which will be defined later.
+function pasteBuffer(fromX, toX, fromY, toY, tileX, tileY, currentTile) {
+    //This is an overlap paste that replaces all contents.
+    //Maybe we can make a mixpaste later?
+    for(var i = 0; i < tileBuffer.length; ++i){
+        for(var j = 0; j < tileBuffer[i].length; ++j){
+            //Conditional to prevent accidental writes outside the file, which could get crashy.
+            //Horizontal overflows cause errors,  but don't break everything. I still consider this a bug.
+            if((i + tileX) < FILE_SIZE[0] || (j + tileY) < FILE_SIZE[1]) {
+                fieldContents[(i + tileX)][(j + tileY)] = tileBuffer[i][j];
+            }
+        }
+    }
 }
 
-//We need a standard save format. 
-//Make the JSON array, then follow up with a footer to simplify extension of song properties.
-//This also needs to be extended with the starting positions of the bugs.
-
+//This needs to be extended with more properties and the desired bug (musician) values.
 function saveFile() {
     pauseState = true;
     fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1], 'save');
