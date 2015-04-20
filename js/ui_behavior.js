@@ -104,7 +104,7 @@ function respondToQuery(X, Y) {
     queryResponse += "<p>Tile Coordinates: " + X + " , " + Y + "</p>";
     if(fieldContents[X][Y] !== undefined) {
         //We iterate through the tile properties.
-        if(fieldContents[X][Y].note !== undefined ) { queryResponse += "<p>Pitch: " + (fieldContents[X][Y].note * 44100);}
+        if(fieldContents[X][Y].note !== undefined ) { queryResponse += "<p>Pitch: " + Math.floor(fieldContents[X][Y].note * 44100);}
         else { queryResponse += "Does not reference a pitch."; }
         queryResponse += "<p> Instrument: " +  fieldContents[X][Y].instrument + "</p>";
         queryResponse += "<p> Audio Effect: " +  fieldContents[X][Y].dspEffect + "</p>";
@@ -114,7 +114,16 @@ function respondToQuery(X, Y) {
         queryResponse += "<p> Volume: " + (fieldContents[X][Y].volume * 100) + "%</p>";
     } else queryResponse += "No data in this tile.";
     //If there's a bug here, describe the one on top. This assumes that bugs should be allowed to overlap...
-
+    for(var i = 0; i < bugList.length; ++i){
+        //console.log(bugList[i].bugTile[0] + " , " + bugList[i].bugTile[1]);
+        //console.log(X + " , " + Y);
+        if( (bugList[i].bugTile[0] + 1) === X && 
+             bugList[i].bugTile[1] === Y) { 
+            queryResponse += "<p>Bug name: " + bugList[i].name + "<p>";
+            queryResponse += "<p>Current behavior: " + bugList[i].action + "<p>";
+            break;
+        }
+    }
 
     //We may want to call the playSound routine on this tile.
     $('#queryInfo').html(queryResponse);
@@ -155,7 +164,7 @@ function saveFile() {
 function loadFile() {
     pauseState = true;
     closeLoadWindow();
-    //We need to implement error trapping at some point.
+    //Convert the input from base64. We need to implement error trapping at some point.
     encodedContent = $("#loadText").val();
     if(encodedContent !== undefined) {
         encodedContent = window.atob(encodedContent);
@@ -166,7 +175,7 @@ function loadFile() {
     
     //console.log(loadDimensions);
     //1 to (max index - 4) for now
-    //Input all the tiles. This produces buggy, incorrect output. Fix it!
+    //Dump the tiles to fieldContents.
     for(var i = 0; i < loadDimensions[0]; ++i){
         for(var j = 0; j < loadDimensions[1]; ++j) {
             var currentIndex = (j*loadDimensions[1]) + i; //Flow control seems to be right.

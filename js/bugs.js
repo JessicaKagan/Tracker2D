@@ -16,6 +16,7 @@ var Bug = function(image, x,y, action,name){
     this.x = x;
     this.y = y;
     this.name = name; //Long term idea: Create naming function for bugs, might come in handy.
+    this.bugTile = [(this.x - 80)/TILE_SIZE, this.y/TILE_SIZE];
 
 }
 
@@ -28,7 +29,7 @@ Bug.prototype.drawBug = function(){
 Bug.prototype.updateBug = function() {
     //console.log(this.action);
     //Eventually we need to rewrite this so that if a bug slams into the edge of the playfield (not just tiles), it changes direction.
-    var bugTile = [(this.x - 80)/24, this.y/24];
+    this.bugTile = [(this.x - 80)/TILE_SIZE, this.y/TILE_SIZE]; //Updates our derivative.
         if(this.x > 799) {
             this.x = 80;
         } else if(this.x <= 79) {
@@ -37,22 +38,22 @@ Bug.prototype.updateBug = function() {
         else {
 
             //Play sounds BEFORE moving the bug.
-            if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
+            if(fieldContents[this.bugTile[0]][this.bugTile[1]] != undefined){
                 //Right now, sounds have separate playback routines if they have effects.
                 //Frozen bugs only play their tile's sound once. Anything else would be detrimental to your sanity.
-                if(fieldContents[bugTile[0]][bugTile[1]].instrument != -1 && this.action !== "holdPosition"){
+                if(fieldContents[this.bugTile[0]][this.bugTile[1]].instrument != -1 && this.action !== "holdPosition"){
                     //console.log(fieldContents[bugTile[0]][bugTile[1]].dspValue);
-                    playSound(soundFont[fieldContents[bugTile[0]][bugTile[1]].instrument],
-                                        fieldContents[bugTile[0]][bugTile[1]].note,
-                                        fieldContents[bugTile[0]][bugTile[1]].dspEffect,
-                                        fieldContents[bugTile[0]][bugTile[1]].dspValue
+                    playSound(soundFont[fieldContents[this.bugTile[0]][this.bugTile[1]].instrument],
+                                        fieldContents[this.bugTile[0]][this.bugTile[1]].note,
+                                        fieldContents[this.bugTile[0]][this.bugTile[1]].dspEffect,
+                                        fieldContents[this.bugTile[0]][this.bugTile[1]].dspValue
                                         );
                 }
             }
 
             //Change the behavior of the bug based on what it's standing on.
-            if(fieldContents[bugTile[0]][bugTile[1]] != undefined){
-                switch(fieldContents[bugTile[0]][bugTile[1]].flowEffect){
+            if(fieldContents[this.bugTile[0]][this.bugTile[1]] != undefined){
+                switch(fieldContents[this.bugTile[0]][this.bugTile[1]].flowEffect){
                     case "turn_west":
                         this.action = 'moveLeft';
                         break;
@@ -89,12 +90,5 @@ Bug.prototype.updateBug = function() {
                 default:
                     break;
             }
-
-            
-
         }
-
-    
-    
-
 }
