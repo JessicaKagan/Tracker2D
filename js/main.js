@@ -43,6 +43,7 @@ var tileOverlayImages = new Array(5); //Used for flow control.
 
 //Define a bug array.
 var bugList = new Array(2);
+//Move these to image_loader.js
 var bugImage = new Image();
 var bugImage2 = new Image();
 bugImage.src = 'images/placeholder_bug.png';
@@ -133,7 +134,7 @@ function init() {
     });
     //Left bar menu stuff ends here.
 
-    //Draws two bugs.
+    //Defines two bugs.
     bugList[0] = new Bug(bugImage, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','George');
     bugList[1] = new Bug(bugImage2, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*3),'moveRight','Steve');
 
@@ -341,7 +342,7 @@ function main(){
     if(timeToUpdate <= 0) { 
         if(pauseState == false) { 
             for(var i = 0; i < bugList.length; ++i){
-            bugList[i].updateBug();
+            if(bugList[i].action !== "inStorage") { bugList[i].updateBug(); }
             }
         }
         timeToUpdate = updateFrequency; 

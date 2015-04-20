@@ -7,11 +7,11 @@
 //Just a reference for whatever I can think of.
 //For now, bugs start with a direction and only change directions when a tile tells them to.
 //holdPosition means the bug will not move and is basically a debug thing.
-//inStorage is for bugs that currently aren't being used on the field.
+//inStorage is for bugs that currently aren't being used on the field, and it prevents the bug from updating at all.
 var bugActions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile', 'holdPosition', 'inStorage'];
 
 var Bug = function(image, x,y, action,name){
-    this.image = bugImage;
+    this.image = image;
     this.action = action;
     this.x = x;
     this.y = y;
@@ -30,14 +30,8 @@ Bug.prototype.updateBug = function() {
     //console.log(this.action);
     //Eventually we need to rewrite this so that if a bug slams into the edge of the playfield (not just tiles), it changes direction.
     this.bugTile = [(this.x - 80)/TILE_SIZE, this.y/TILE_SIZE]; //Updates our derivative.
-        if(this.x > 799) {
-            this.x = 80;
-        } else if(this.x <= 79) {
-            this.x = 776;
-        }
-        else {
-
-            //Play sounds BEFORE moving the bug.
+            
+            //Play sounds BEFORE attempting to move the bug.
             if(fieldContents[this.bugTile[0]][this.bugTile[1]] != undefined){
                 //Right now, sounds have separate playback routines if they have effects.
                 //Frozen bugs only play their tile's sound once. Anything else would be detrimental to your sanity.
@@ -50,6 +44,14 @@ Bug.prototype.updateBug = function() {
                                         );
                 }
             }
+
+            //If the bug is about to leave the map, make it turn around.
+            //Based on tiles, in the hopes of scaling gracefully to larger maps.
+            if((this.bugTile[0] + 1) >= FILE_SIZE[0] && this.action === 'moveRight') { this.action = 'moveLeft'; }
+            if(this.bugTile[0] === 0 && this.action === 'moveLeft') { this.action = 'moveRight'; }
+            if((this.bugTile[1] + 1) >= FILE_SIZE[1] && this.action === 'moveDown') { this.action = 'moveUp'; }
+            if(this.bugTile[1] === 0 && this.action === 'moveUp') { this.action = 'moveDown'; }
+
 
             //Change the behavior of the bug based on what it's standing on.
             if(fieldContents[this.bugTile[0]][this.bugTile[1]] != undefined){
@@ -90,5 +92,4 @@ Bug.prototype.updateBug = function() {
                 default:
                     break;
             }
-        }
 }
