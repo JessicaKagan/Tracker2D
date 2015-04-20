@@ -12,6 +12,7 @@ var PENCIL_BUTTON_AREA = [104,576,24,24];
 var ERASER_BUTTON_AREA = [128,576,24,24];
 var SELECTBOX_BUTTON_AREA = [152,576,24,24];
 var PASTE_BUTTON_AREA = [176,576,24,24];
+var QUERY_BUTTON_AREA = [200,576,24,24];
 
 var SAVE_BUTTON_AREA = [752,576,24,24];
 var LOAD_BUTTON_AREA = [776,576,24,24];
@@ -34,7 +35,7 @@ var currentInstrument = 0;
 var currentDSPValue = 0;
 var currentDSP = "none";
 var currentFlowControl = "none";
-var UIImages = new Array(8);
+var UIImages = new Array(9);
 var tileOverlayImages = new Array(5); //Used for flow control.
 
 
@@ -163,9 +164,12 @@ function interact(e) {
             console.log("SELECTBOX_BUTTON_AREA");
             selectedTool = "selectBox";
             selectBoxStage = 1; //Start the selection process.
-        } else if(cursorY >= 576 && cursorX >= 176 && cursorX < 204) {
+        } else if(cursorY >= 576 && cursorX >= 176 && cursorX < 200) {
             console.log("PASTE_BUTTON_AREA");
             selectedTool = "paste";
+        } else if(cursorY >= 576 && cursorX >= 200 && cursorX < 224) {
+            console.log("QUERY_BUTTON_AREA");
+            selectedTool = "query";
         } else if(cursorY >= 576 && cursorX >= 752 && cursorX < 776) {
             console.log('SAVE_BUTTON_AREA');
             if($("#loadExport").hasClass("currentlyHidden") === true) { saveFile(); } //Kludge against UI clash.
@@ -227,9 +231,8 @@ function interact(e) {
                         } else console.log("selectBox() in interact() failed.");
                         break;
                     case "paste":
-                    //Paste doesn't work if there's no tilebuffer.
+                    //Paste doesn't work if there's no tilebuffer, or if the tilebuffer is too large.
                         if(tileBuffer !== undefined) {
-                            //But it also doesn't work if the tilebuffer is too big.
                             //There might be other conditions; I'll implement them if I can think of them.
                             if(tileBuffer.length !== FILE_SIZE[0] ||
                                tileBuffer[0].length !== FILE_SIZE[1]) {
@@ -238,6 +241,9 @@ function interact(e) {
                                             currentTile[0], currentTile[1]);
                             } else { console.log("Can't paste that. It's too damn big!")};
                         } else { console.log("Select something first, then try pasting it.");} 
+                        break;
+                    case "query":
+                        console.log("Not implemented yet");
                         break;
                     default:
                         break;

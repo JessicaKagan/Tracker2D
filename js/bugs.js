@@ -7,7 +7,8 @@
 //Just a reference for whatever I can think of.
 //For now, bugs start with a direction and only change directions when a tile tells them to.
 //holdPosition means the bug will not move and is basically a debug thing.
-var bugActions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile', 'holdPosition'];
+//inStorage is for bugs that currently aren't being used on the field.
+var bugActions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile', 'holdPosition', 'inStorage'];
 
 var Bug = function(image, x,y, action,name){
     this.image = bugImage;
