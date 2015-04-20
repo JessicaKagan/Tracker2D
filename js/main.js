@@ -13,6 +13,7 @@ var ERASER_BUTTON_AREA = [128,576,24,24];
 var SELECTBOX_BUTTON_AREA = [152,576,24,24];
 var PASTE_BUTTON_AREA = [176,576,24,24];
 var QUERY_BUTTON_AREA = [200,576,24,24];
+var MOVEBUG_BUTTON_AREA = [224,576,24,24];
 
 var SAVE_BUTTON_AREA = [752,576,24,24];
 var LOAD_BUTTON_AREA = [776,576,24,24];
@@ -26,7 +27,8 @@ for(var i = 0; i < FILE_SIZE[0]; ++i) {
 //var fieldBackup = fieldContents; //When we implement saving, this will come in handy. We'll need a header, too.
 
 //Globals for now. Deglobalize as implementation permits. 
-var soundFont, audioEngine, audioLoader, selectBoxStage;
+var soundFont, audioEngine, audioLoader; 
+var selectBoxStage, moveBugStage;
 //For synch.
 var lastTime, updateFrequency, timeToUpdate;
 
@@ -35,10 +37,12 @@ var currentInstrument = 0;
 var currentDSPValue = 0;
 var currentDSP = "none";
 var currentFlowControl = "none";
-var UIImages = new Array(9);
+var UIImages = new Array(10);
 var tileOverlayImages = new Array(5); //Used for flow control.
 
 
+//Define a bug array.
+var bugList = new Array(2);
 var bugImage = new Image();
 var bugImage2 = new Image();
 bugImage.src = 'images/placeholder_bug.png';
@@ -129,10 +133,9 @@ function init() {
     });
     //Left bar menu stuff ends here.
 
-    //Draws a test bug, spawning at tile [0,1] with a test behavior.
-    bug1 = new Bug(bugImage, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','George');
-    bug2 = new Bug(bugImage2, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*3),'moveRight','Steve');
-    //console.log(bug1);
+    //Draws two bugs.
+    bugList[0] = new Bug(bugImage, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','George');
+    bugList[1] = new Bug(bugImage2, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*3),'moveRight','Steve');
 
     lastTime = Date.now();
     updateFrequency = 12.5/TEMPO; //Currently, 8 'ticks' every beat?
@@ -143,7 +146,7 @@ function init() {
 function interact(e) {
     //This type of bloc will be used for UI elements that don't have buttons.
     $("#queryInfo").addClass("currentlyHidden");
-    
+
     var cursorX = e.pageX - $('#canvas').offset().left;
     var cursorY = e.pageY - $('#canvas').offset().top;
     //Displays debug messages for now based on where you click.
@@ -173,6 +176,10 @@ function interact(e) {
         } else if(cursorY >= 576 && cursorX >= 200 && cursorX < 224) {
             console.log("QUERY_BUTTON_AREA");
             selectedTool = "query";
+        } else if(cursorY >= 576 && cursorX >= 224 && cursorX < 248) {
+            console.log("MOVE_BUG_BUTTON_AREA");
+            selectedTool = "moveBug";
+            moveBugStage = 1; //Like selecting a box, a two step process.
         } else if(cursorY >= 576 && cursorX >= 752 && cursorX < 776) {
             console.log('SAVE_BUTTON_AREA');
             if($("#loadExport").hasClass("currentlyHidden") === true) { saveFile(); } //Kludge against UI clash.
@@ -249,6 +256,8 @@ function interact(e) {
                     case "query":
                         $("#queryInfo").removeClass("currentlyHidden");
                         respondToQuery(currentTile[0],currentTile[1]);
+                        break;
+                    case "moveBug":
                         console.log("Not implemented yet");
                         break;
                     default:
@@ -286,7 +295,7 @@ function soundsAreReady(soundList) {
 }
 
 function playSound(buffer, pitch, dspEffect, dspValue) {
-    console.log(dspEffect + ": " + dspValue);
+    //console.log(dspEffect + ": " + dspValue);
     var source = audioEngine.createBufferSource();  
     source.buffer = buffer;
     source.playbackRate.value = pitch;
@@ -331,8 +340,9 @@ function main(){
     //When it hits zero, we update.
     if(timeToUpdate <= 0) { 
         if(pauseState == false) { 
-            bug1.updateBug();
-            bug2.updateBug();
+            for(var i = 0; i < bugList.length; ++i){
+            bugList[i].updateBug();
+            }
         }
         timeToUpdate = updateFrequency; 
     }
@@ -376,11 +386,11 @@ function render(){
     }
 
     //3. Bugs
-    bug1.drawBug();
-    bug2.drawBug();
-    //4. UI (Seems trivial, but I plan to have translucent popups in the near future.)
-    //ctx.fillRect(PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1],PAUSE_PLAY_BUTTON_AREA[2],PAUSE_PLAY_BUTTON_AREA[3]);
-    
+    for(var i = 0; i < bugList.length; ++i){
+        bugList[i].drawBug();
+    }
+
+    //4. UI Elements that don't use HTML (those that do are handled seperately)
     drawButtons();
   
 }

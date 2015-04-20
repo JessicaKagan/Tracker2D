@@ -13,7 +13,8 @@
 
 var isOverlayShowing = false; //Used to handle some pointer events CSS.
 var pauseState = true;
-var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query']; //We can add a bunch more. Use these to label buttons?
+//We can add a bunch more. Use these to label buttons?
+var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug']; 
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var tileBuffer; //An array representing a rectangle of selected tiles.
 var saveContent; //A string representing the contents of the map.
@@ -42,6 +43,7 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]); //Box select
     ctx.drawImage(UIImages[7],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]); //Paste
     ctx.drawImage(UIImages[8],QUERY_BUTTON_AREA[0],QUERY_BUTTON_AREA[1]); //Query
+    ctx.drawImage(UIImages[9],MOVEBUG_BUTTON_AREA[0],MOVEBUG_BUTTON_AREA[1]); //Move Bug
 
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
@@ -99,7 +101,7 @@ function pasteBuffer(fromX, toX, fromY, toY, tileX, tileY, currentTile) {
 function respondToQuery(X, Y) {
     var queryResponse = "";
     //Starting with the coordinates...
-    queryResponse += "<p>Coordinates: " + X + " , " + Y + "</p>";
+    queryResponse += "<p>Tile Coordinates: " + X + " , " + Y + "</p>";
     if(fieldContents[X][Y] !== undefined) {
         //We iterate through the tile properties.
         if(fieldContents[X][Y].note !== undefined ) { queryResponse += "<p>Pitch: " + (fieldContents[X][Y].note * 44100);}
@@ -111,6 +113,9 @@ function respondToQuery(X, Y) {
         //queryResponse += "<p> Flow Effect Parameter: " +  fieldContents[X][Y].flowValue + "</p>"; //Uncomment when relevant.
         queryResponse += "<p> Volume: " + (fieldContents[X][Y].volume * 100) + "%</p>";
     } else queryResponse += "No data in this tile.";
+    //If there's a bug here, describe the one on top. This assumes that bugs should be allowed to overlap...
+
+
     //We may want to call the playSound routine on this tile.
     $('#queryInfo').html(queryResponse);
 }
@@ -184,12 +189,12 @@ function loadFile() {
     author = loadingWorkArray[loadingWorkArray.length - 3];
     songDescription = loadingWorkArray[loadingWorkArray.length - 2];
     //We need to add bug parameters to this format. Here's another kludge. Don't you love kludging?
-    bug1.x = 80; 
-    bug1.y = 24;
-    bug1.action = "moveRight";
-    bug2.x = 80; 
-    bug2.y = 72;
-    bug2.action = "moveRight";
+    bugList[0].x = 80; 
+    bugList[0].y = 24;
+    bugList[0].action = "moveRight";
+    bugList[1].x = 80; 
+    bugList[1].y = 72;
+    bugList[1].action = "moveRight";
 }
 
 function closeSaveWindow(){

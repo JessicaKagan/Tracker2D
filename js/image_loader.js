@@ -16,4 +16,5 @@ function getImages() {
     UIImages[6].src = 'images/select_button.png';
     UIImages[7].src = 'images/paste_button.png';
     UIImages[8].src = 'images/query_button.png';
+    UIImages[9].src = 'images/move_bug_button.png';
 }
