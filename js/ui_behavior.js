@@ -95,6 +95,26 @@ function pasteBuffer(fromX, toX, fromY, toY, tileX, tileY, currentTile) {
     }
 }
 
+//Prettyprints some data to the queryInfo div, which should only show up when the query tool's selected.
+function respondToQuery(X, Y) {
+    var queryResponse = "";
+    //Starting with the coordinates...
+    queryResponse += "<p>Coordinates: " + X + " , " + Y + "</p>";
+    if(fieldContents[X][Y] !== undefined) {
+        //We iterate through the tile properties.
+        if(fieldContents[X][Y].note !== undefined ) { queryResponse += "<p>Pitch: " + (fieldContents[X][Y].note * 44100);}
+        else { queryResponse += "Does not reference a pitch."; }
+        queryResponse += "<p> Instrument: " +  fieldContents[X][Y].instrument + "</p>";
+        queryResponse += "<p> Audio Effect: " +  fieldContents[X][Y].dspEffect + "</p>";
+        queryResponse += "<p> Audio Effect Parameter: " +  fieldContents[X][Y].dspValue + "</p>";        
+        queryResponse += "<p> Flow Effect: " +  fieldContents[X][Y].flowEffect + "</p>";
+        //queryResponse += "<p> Flow Effect Parameter: " +  fieldContents[X][Y].flowValue + "</p>"; //Uncomment when relevant.
+        queryResponse += "<p> Volume: " + (fieldContents[X][Y].volume * 100) + "%</p>";
+    } else queryResponse += "No data in this tile.";
+    //We may want to call the playSound routine on this tile.
+    $('#queryInfo').html(queryResponse);
+}
+
 //This needs to be extended with more properties and the desired bug (musician) values.
 function saveFile() {
     pauseState = true;
@@ -138,8 +158,6 @@ function loadFile() {
     console.log(encodedContent);
     var loadingWorkArray = encodedContent.split("\n");
     var loadDimensions = loadingWorkArray[0].split(",");
-    //loadDimensions[0] = parseInt(loadDimensions[0]);
-    //loadDimensions[1] = parseInt(loadDimensions[1]);
     
     //console.log(loadDimensions);
     //1 to (max index - 4) for now
@@ -151,14 +169,6 @@ function loadFile() {
             if(loadingWorkArray[currentIndex + 1] !== "undefined") {
                 console.log(j + " , " + i);
                 var currentTile = loadingWorkArray[currentIndex + 1].split(",");
-
-                //Let's try this kludge instead.
-                /*
-                console.log(currentTile[0]);
-                currentTile[0] = (currentTile[0])*(44100);
-                console.log(currentTile[0]);
-                */
-
                 fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
                                                currentTile[2],currentTile[3],
                                                currentTile[4],currentTile[5],
@@ -190,3 +200,4 @@ function closeSaveWindow(){
 function closeLoadWindow(){
     setTimeout(function() {$("#loadExport").addClass("currentlyHidden");}, 50);
 }
+

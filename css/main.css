@@ -65,6 +65,21 @@ select {
 
 }
 
+#queryInfo {
+    position: absolute;
+    top: 392px;
+    left: 80px;
+    width: 160px;
+    height: 160px;
+    font-family: Tahoma, sans-serif;
+    font-size: 11px;
+    background-color: rgba(255,255,255, 0.75);
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    z-index: 1;
+}
+
 #UIShifter {
     top: 150px;
 }

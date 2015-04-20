@@ -141,6 +141,9 @@ function init() {
 }
 
 function interact(e) {
+    //This type of bloc will be used for UI elements that don't have buttons.
+    $("#queryInfo").addClass("currentlyHidden");
+    
     var cursorX = e.pageX - $('#canvas').offset().left;
     var cursorY = e.pageY - $('#canvas').offset().top;
     //Displays debug messages for now based on where you click.
@@ -182,16 +185,17 @@ function interact(e) {
         //If not possible, move the 'camera' gradually towards the center until this can be done before centering.
         //Possibly overlay a translucent rectangle indicating boundaries.
     }
-    //If we're inside the playfield, convert to a tile. Functionalize this!
+    //If we're inside the playfield, convert the coordinates to a tile.
     //The logic for this is going to become a great deal more complex with time, I think.
     if(cursorX >= 80 && cursorX <= 800 && cursorY >= 0 && cursorY <= 540){
         console.log("In the playfield");
         var currentTile = getTile(cursorX, cursorY);
         console.log(currentTile);
         
-        //This statement reduces painting with UI elements open but doesn't remove it entirely.
+        //This statement reduces painting with UI elements open; timeouts handle the rest.
             if($("#saveExport").hasClass("currentlyHidden") === true &&
                $("#loadExport").hasClass("currentlyHidden") === true){
+                
                 switch(selectedTool){
                     case "pencil":
                         fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, 0.6, currentDSPValue, 0);
@@ -243,6 +247,8 @@ function interact(e) {
                         } else { console.log("Select something first, then try pasting it.");} 
                         break;
                     case "query":
+                        $("#queryInfo").removeClass("currentlyHidden");
+                        respondToQuery(currentTile[0],currentTile[1]);
                         console.log("Not implemented yet");
                         break;
                     default:
