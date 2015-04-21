@@ -223,9 +223,10 @@ function getBug(bugVal){
     console.log(getBugHTML);
     if(bugList[bugVal].inStorage === false) { 
         bugList[bugVal].inStorage = true;
+        
+        //Functionalize this, so that if a bug starts off in storage, it reflects properly in the storage HTML.
         getBugHTML = '<button type="button" onclick="getBug(' + bugVal + ')">' + bugList[bugVal].image.outerHTML + '</button>';
         console.log(getBugHTML);
-        //Functionalize this.
         switch(bugVal) {
             case 0:
                 $('#bugStorageUnit1').html(getBugHTML);
