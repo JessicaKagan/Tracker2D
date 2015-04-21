@@ -14,7 +14,8 @@
 var isOverlayShowing = false; //Used to handle some pointer events CSS.
 var pauseState = true;
 //We can add a bunch more. Use these to label buttons?
-var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug']; 
+//singleStep executes a single update and then pauses.
+var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','singleStep']; 
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var tileBuffer; //An array representing a rectangle of selected tiles.
 var saveContent; //A string representing the contents of the map.
@@ -115,9 +116,9 @@ function respondToQuery(X, Y) {
     } else queryResponse += "No data in this tile.";
     //If there's a bug here, describe the one on top. This assumes that bugs should be allowed to overlap...
     for(var i = 0; i < bugList.length; ++i){
-        //console.log(bugList[i].bugTile[0] + " , " + bugList[i].bugTile[1]);
-        //console.log(X + " , " + Y);
-        if( (bugList[i].bugTile[0] + 1) === X && 
+        console.log(bugList[i].bugTile[0] + " , " + bugList[i].bugTile[1]);
+        console.log(X + " , " + Y);
+        if( (bugList[i].bugTile[0]) === X && 
              bugList[i].bugTile[1] === Y) { 
             queryResponse += "<p>Bug name: " + bugList[i].name + "<p>";
             queryResponse += "<p>Current behavior: " + bugList[i].action + "<p>";

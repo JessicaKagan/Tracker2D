@@ -30,7 +30,15 @@
                     <p>Flow Control</p>
                     <select class="UIShifterInput" id="controlInput"></select>
                 </div>
-                <div id="bugStorage">More musicians coming soon!</div>
+                <!--The user can eventually click these to get bugs out of storage.-->
+                <div id="bugStorage">
+                    <p>Bug Storage
+                    <p class="smallHTMLUIText">Click stored bugs to move them back to the field.</p>
+                    </p>
+
+                    <div id="bugStorageUnit1" class="bugHoldingPen"></div>
+                    <div id="bugStorageUnit2" class="bugHoldingPen"></div>
+                </div>
 
                 <!--Now for elements that will pop up and take drawing precedence when the user presses a button.-->
                 <div id="canvasUIElements">
@@ -53,6 +61,7 @@
     <script src="js/buffer-loader.js"></script> <!--From HTML5Rocks. Basic audio loading library.-->
 
     <script src="js/music_instructions.js"></script> <!--Handles tiles and what they 'mean'.-->
+    <script src="js/soundset.js"></script> <!--Defines instruments and their properties.--> 
     <script src="js/bugs.js"></script> <!--Bugs represent musicians and execute tile instructions when they move over them-->
     <script src="js/song_properties.js"></script> <!--Governs some aspects of playback logic and will eventually link to file saving/IO-->
     <script src="js/ui_behavior.js"></script> <!--Once I start adding buttons to the interface, this will keep an eye on them.-->

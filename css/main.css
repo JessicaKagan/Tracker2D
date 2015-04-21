@@ -81,33 +81,50 @@ select {
 }
 
 #UIShifter {
-    top: 150px;
+    top: 100px;
 }
 
 #UIShifter2 {
-    top: 200px;
+    top: 150px;
 }
 
 #UIShifter3 {
-    top: 250px;
+    top: 200px;
 }
 
 #UIShifter4 {
-    top: 300px;
+    top: 250px;
 }
 
 #UIShifter5 {
-    top: 320px;
+    top: 270px;
 }
 
 #bugStorage {
     position: absolute;
-    top: 350px;
+    top: 320px;
     color: white;
     width: 80px;
     font-family: Tahoma, sans-serif;
-    font-size: 10px;
+    font-size: 14px;
     text-align: center;
+}
+
+#bugStorageUnit1 {
+    top: 60px;
+    left: 8px;
+    /*background-image: url("/images/placeholder_bug.png");*/
+}
+#bugStorageUnit2 {
+    top: 60px;
+    left: 48px;
+}
+
+.bugHoldingPen {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: white;
 }
 
 .UIShifterInput {
@@ -139,4 +156,9 @@ select {
 
 .ignoreInput {
     pointer-events: none;
+}
+
+.smallHTMLUIText {
+    font-family: Tahoma, sans-serif;
+    font-size: 10px;
 }

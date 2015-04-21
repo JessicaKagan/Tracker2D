@@ -135,8 +135,8 @@ function init() {
     //Left bar menu stuff ends here.
 
     //Defines two bugs.
-    bugList[0] = new Bug(bugImage, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*1),'moveRight','George');
-    bugList[1] = new Bug(bugImage2, fieldBoundaries[0] + (TILE_SIZE*0),fieldBoundaries[1] + (TILE_SIZE*3),'moveRight','Steve');
+    bugList[0] = new Bug(bugImage, FIELD_PIXELS[0] + (TILE_SIZE*0),FIELD_PIXELS[1] + (TILE_SIZE*1),'moveRight','George');
+    bugList[1] = new Bug(bugImage2, FIELD_PIXELS[0] + (TILE_SIZE*0),FIELD_PIXELS[1] + (TILE_SIZE*3),'moveRight','Steve');
 
     lastTime = Date.now();
     updateFrequency = 12.5/TEMPO; //Currently, 8 'ticks' every beat?
@@ -180,7 +180,7 @@ function interact(e) {
         } else if(cursorY >= 576 && cursorX >= 224 && cursorX < 248) {
             console.log("MOVE_BUG_BUTTON_AREA");
             selectedTool = "moveBug";
-            moveBugStage = 1; //Like selecting a box, a two step process.
+            moveBugStage = 1; //Like selecting a box, this is a two step process.
         } else if(cursorY >= 576 && cursorX >= 752 && cursorX < 776) {
             console.log('SAVE_BUTTON_AREA');
             if($("#loadExport").hasClass("currentlyHidden") === true) { saveFile(); } //Kludge against UI clash.
@@ -259,7 +259,19 @@ function interact(e) {
                         respondToQuery(currentTile[0],currentTile[1]);
                         break;
                     case "moveBug":
-                        console.log("Not implemented yet");
+                    //In step one, check to see if the user actually clicked a bug.
+                    //The same tile bug from bugs.js dogs us.
+                        if(moveBugStage === 1) {
+                            for(var i = 0; i < bugList.length; ++i){
+                                if((bugList[i].bugTile[0]) === currentTile[0] && 
+                                    bugList[i].bugTile[1] === currentTile[1]) {
+                                    console.log("Ew, gross"); 
+                                    //alert("Now click where in the field you want to move the bug.");
+                                }
+                            }
+                        } else if (moveBugStage === 2) {
+                            console.log("Stage 2 not implemented yet");
+                        } else console.log("moveBug() in interact() failed.");
                         break;
                     default:
                         break;
@@ -360,13 +372,13 @@ function render(){
     //2. Painted tiles
 
     //Draw boundaries between tiles.
-    for(var i = 80; i < fieldBoundaries[2]; i += TILE_SIZE) {
+    for(var i = 80; i < FIELD_PIXELS[2]; i += TILE_SIZE) {
         ctx.beginPath();
         ctx.moveTo(i,0);
         ctx.lineTo(i,552);
         ctx.stroke();
     }
-    for(var i = 0; i < fieldBoundaries[3]; i += TILE_SIZE) {
+    for(var i = 0; i < FIELD_PIXELS[3]; i += TILE_SIZE) {
         ctx.beginPath();
         ctx.moveTo(0,i);
         ctx.lineTo(800,i);
@@ -400,8 +412,8 @@ function render(){
 function paintTile(tileX, tileY, color){
     //Fill in the basics.
     ctx.fillStyle = color; 
-    ctx.fillRect(fieldBoundaries[0] + (TILE_SIZE*tileX), 
-                 fieldBoundaries[1] + (TILE_SIZE*tileY),
+    ctx.fillRect(FIELD_PIXELS[0] + (TILE_SIZE*tileX), 
+                 FIELD_PIXELS[1] + (TILE_SIZE*tileY),
                 (TILE_SIZE*1), 
                 (TILE_SIZE*1));
     //Add overlays as needed.
@@ -410,19 +422,19 @@ function paintTile(tileX, tileY, color){
         switch(currentOverlay) {
             //Currently, only turn signals are implemented.
             case "turn_west":
-                ctx.drawImage(tileOverlayImages[0],fieldBoundaries[0] + (TILE_SIZE*tileX),fieldBoundaries[1] + (TILE_SIZE*tileY));
+                ctx.drawImage(tileOverlayImages[0],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
             case "turn_north":
-                ctx.drawImage(tileOverlayImages[1],fieldBoundaries[0] + (TILE_SIZE*tileX),fieldBoundaries[1] + (TILE_SIZE*tileY));
+                ctx.drawImage(tileOverlayImages[1],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
             case "turn_east":
-                ctx.drawImage(tileOverlayImages[2],fieldBoundaries[0] + (TILE_SIZE*tileX),fieldBoundaries[1] + (TILE_SIZE*tileY));
+                ctx.drawImage(tileOverlayImages[2],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
             case "turn_south":
-                ctx.drawImage(tileOverlayImages[3],fieldBoundaries[0] + (TILE_SIZE*tileX),fieldBoundaries[1] + (TILE_SIZE*tileY));
+                ctx.drawImage(tileOverlayImages[3],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
             case "freeze":
-                ctx.drawImage(tileOverlayImages[4],fieldBoundaries[0] + (TILE_SIZE*tileX),fieldBoundaries[1] + (TILE_SIZE*tileY));
+                ctx.drawImage(tileOverlayImages[4],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
 
             default:
