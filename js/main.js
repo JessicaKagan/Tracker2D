@@ -141,8 +141,8 @@ function init() {
     //Left bar menu stuff ends here.
 
     //Defines two bugs.
-    bugList[0] = new Bug(bugImage, FIELD_PIXELS[0] + (TILE_SIZE*0),FIELD_PIXELS[1] + (TILE_SIZE*1),'moveRight','George');
-    bugList[1] = new Bug(bugImage2, FIELD_PIXELS[0] + (TILE_SIZE*0),FIELD_PIXELS[1] + (TILE_SIZE*3),'moveRight','Steve');
+    bugList[0] = new Bug(bugImage, FIELD_PIXELS[0] + (TILE_SIZE*0),FIELD_PIXELS[1] + (TILE_SIZE*1),'moveRight','George', false);
+    bugList[1] = new Bug(bugImage2, FIELD_PIXELS[0] + (TILE_SIZE*0),FIELD_PIXELS[1] + (TILE_SIZE*3),'moveRight','Steve', false);
 
     lastTime = Date.now();
     updateFrequency = 12.5/TEMPO; //Currently, 8 'ticks' every beat?
@@ -378,7 +378,7 @@ function main(){
     if(timeToUpdate <= 0) { 
         if(pauseState == false) { 
             for(var i = 0; i < bugList.length; ++i){
-            if(bugList[i].action !== "inStorage") { bugList[i].updateBug(); }
+            if(bugList[i].inStorage === false) { bugList[i].updateBug(); }
             }
         }
         timeToUpdate = updateFrequency; 
@@ -424,7 +424,7 @@ function render(){
 
     //3. Bugs
     for(var i = 0; i < bugList.length; ++i){
-        bugList[i].drawBug();
+        if(bugList[i].inStorage === false) { bugList[i].drawBug(); }
     }
 
     //4. UI Elements that don't use HTML (those that do are handled seperately)

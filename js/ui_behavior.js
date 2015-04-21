@@ -216,3 +216,39 @@ function closeLoadWindow(){
     setTimeout(function() {$("#loadExport").addClass("currentlyHidden");}, 50);
 }
 
+function getBug(bugVal){
+    var getBugHTML = "";
+    pauseState = true; //If the user starts putting bugs in storage, it might play havoc with playback.
+    console.log(bugList[bugVal]);
+    console.log(getBugHTML);
+    if(bugList[bugVal].inStorage === false) { 
+        bugList[bugVal].inStorage = true;
+        getBugHTML = '<button type="button" onclick="getBug(' + bugVal + ')">' + bugList[bugVal].image.outerHTML + '</button>';
+        console.log(getBugHTML);
+        //Functionalize this.
+        switch(bugVal) {
+            case 0:
+                $('#bugStorageUnit1').html(getBugHTML);
+                break;
+            case 1:
+                $('#bugStorageUnit2').html(getBugHTML);
+                break;
+            default:
+                break;
+        }
+
+    } else if(bugList[bugVal].inStorage === true) {
+        bugList[bugVal].inStorage = false;
+        switch(bugVal) {
+            case 0:
+                $('#bugStorageUnit1').html('<button type="button" onclick="getBug(0)">1</button>');
+                break;
+            case 1:
+                $('#bugStorageUnit2').html('<button type="button" onclick="getBug(1)">2</button>');
+                break;
+            default:
+                break;
+        } 
+    }
+
+}

@@ -10,13 +10,14 @@
 //inStorage is for bugs that currently aren't being used on the field, and it prevents the bug from updating at all.
 var bugActions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile', 'holdPosition', 'inStorage'];
 
-var Bug = function(image, x,y, action,name){
+var Bug = function(image, x,y, action,name, inStorage){
     this.image = image;
     this.action = action;
     this.x = x;
     this.y = y;
     this.name = name; //Long term idea: Create naming function for bugs, might come in handy.
     this.bugTile = getTile(this.x, this.y);
+    this.inStorage = inStorage;
 }
 
 Bug.prototype.drawBug = function(){

@@ -113,7 +113,7 @@ select {
 #bugStorageUnit1 {
     top: 60px;
     left: 8px;
-    /*background-image: url("/images/placeholder_bug.png");*/
+
 }
 #bugStorageUnit2 {
     top: 60px;
@@ -125,6 +125,15 @@ select {
     width: 24px;
     height: 24px;
     background-color: white;
+    color: black;
+}
+
+.bugHoldingPen > button {
+    width: 24px;
+    height: 24px;
+    padding: 0px;
+    background-color: transparent;
+    border: none;
 }
 
 .UIShifterInput {
