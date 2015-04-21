@@ -116,8 +116,8 @@ function respondToQuery(X, Y) {
     } else queryResponse += "No data in this tile.";
     //If there's a bug here, describe the one on top. This assumes that bugs should be allowed to overlap...
     for(var i = 0; i < bugList.length; ++i){
-        console.log(bugList[i].bugTile[0] + " , " + bugList[i].bugTile[1]);
-        console.log(X + " , " + Y);
+        //console.log(bugList[i].bugTile[0] + " , " + bugList[i].bugTile[1]);
+        //console.log(X + " , " + Y);
         if( (bugList[i].bugTile[0]) === X && 
              bugList[i].bugTile[1] === Y) { 
             queryResponse += "<p>Bug name: " + bugList[i].name + "<p>";

@@ -22,7 +22,7 @@ for(var i = 1; i < pitchTable.length; ++i){
 //We need more of these. 
 //How are we going to combine arbitrary DSP filters on one instrument? 
 //We might need to rebuild the playback routine for this...
-var possibleDSPEffects = ['none','bendpitch', 'arpeggio', 'lowpass', 'hipass', 'resonance'];
+var possibleDSPEffects = ['none','bendpitch', 'arpeggio', 'lowpass', 'hipass', 'resonance', 'stopplayback', 'pauseresume'];
 var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south', 'turn_around', "freeze"];
 //To be implemented: "teleport" and "counter". 'Counter' will turn into another effect after a bug steps on it enough.
 //Also: "random_tile", which will send the bug to a random tile within a user defined range.

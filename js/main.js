@@ -28,7 +28,7 @@ for(var i = 0; i < FILE_SIZE[0]; ++i) {
 
 //Globals for now. Deglobalize as implementation permits. 
 var soundFont, audioEngine, audioLoader; 
-var selectBoxStage, moveBugStage;
+var selectBoxStage, moveBugStage, selectedBug;
 //For synch.
 var lastTime, updateFrequency, timeToUpdate;
 
@@ -93,9 +93,12 @@ function init() {
     $('#pitchInput').keydown(function(event){
         if (event.keyCode == 13) {
             if($('#pitchInput').val() <= 72 && $('#pitchInput').val() > 0) { currentPitch = $('#pitchInput').val();}
-            else { console.log("Please input a note between 0 and 72"); }
+            else { 
+                console.log("Please input a note between 1 and 72"); 
+                $('#pitchInput').val('');
+            }
             console.log(currentPitch);
-            $('#pitchInput').val('');
+            //$('#pitchInput').val('');
         }
     })
     //Definitely functionalize. This handles instruments.
@@ -103,9 +106,12 @@ function init() {
         if (event.keyCode == 13) {
             if($('#instrumentInput').val() === -1) {currentInstrument = -1 ;}
             else if($('#instrumentInput').val() < testSoundArray.length) { currentInstrument = $('#instrumentInput').val();}
-            else { console.log("There are only " + testSoundArray.length + " instruments right now. Remind me to turn this into a list.");}
+            else { 
+                console.log("There are only " + testSoundArray.length + " instruments right now. Remind me to turn this into a list.");
+                $('#instrumentInput').val('');
+            }
             console.log(currentInstrument);
-            $('#instrumentInput').val('');
+            //$('#instrumentInput').val('');
         }
     })
     //This handles the audio FX menu.
@@ -121,7 +127,7 @@ function init() {
         if (event.keyCode == 13) {
             currentDSPValue = $('#dspValueInput').val(); //Unlike the others, this needs to be interpreted based on the current DSP.
             console.log(currentDSPValue);
-            $('#dspValueInput').val('');
+            //$('#dspValueInput').val('');
         }
     })
     //This handles the flow control menu.
@@ -259,18 +265,25 @@ function interact(e) {
                         respondToQuery(currentTile[0],currentTile[1]);
                         break;
                     case "moveBug":
-                    //In step one, check to see if the user actually clicked a bug.
-                    //The same tile bug from bugs.js dogs us.
+                    //Only try to move a bug if the user selected one.
                         if(moveBugStage === 1) {
                             for(var i = 0; i < bugList.length; ++i){
                                 if((bugList[i].bugTile[0]) === currentTile[0] && 
                                     bugList[i].bugTile[1] === currentTile[1]) {
-                                    console.log("Ew, gross"); 
-                                    //alert("Now click where in the field you want to move the bug.");
+                                    selectedBug = i;
+                                    pauseState = true; //I recommend against trying to move bugs during playback, though.
+                                    moveBugStage = 2;
+                                    alert("Now click where in the field you want to move the bug.");
                                 }
                             }
                         } else if (moveBugStage === 2) {
-                            console.log("Stage 2 not implemented yet");
+                            var newBugCoords = convertTiletoPixels(currentTile[0],currentTile[1]);
+                            //console.log(newBugCoords);
+                            //These conversions are redundant, but necessary to make things work.
+                            bugList[selectedBug].x = newBugCoords[0];
+                            bugList[selectedBug].y = newBugCoords[1];
+                            moveBugStage = 1;
+                            bugList[selectedBug].bugTile = getTile(bugList[selectedBug].x,bugList[selectedBug].y);
                         } else console.log("moveBug() in interact() failed.");
                         break;
                     default:
@@ -313,9 +326,14 @@ function playSound(buffer, pitch, dspEffect, dspValue) {
     source.buffer = buffer;
     source.playbackRate.value = pitch;
     //console.log(source.playbackRate.value*44100);
-
-    /*EXTREMELY IMPORTANT! This might be where filter code goes when those are added. */
     //Decide how to handle audio when page isn't visible, see http://www.w3.org/TR/page-visibility/?csw=1
+    
+    /*  To extend the sound system to take at least two audio effects at a time, 
+     *  we'll need some sort of intermediate filter. (Source -> filter1 -> filter2 -> destination)
+     *  Also necessary - a null filter that doesn't do anything that we can pass through as needed.
+     *  Arpeggiation should not be handled through the DSP switch statement, but by a seperate playback linked into tempo?
+     *
+     */
     switch(dspEffect){
         case 'lowpass':
             var createLowPass = audioEngine.createBiquadFilter();
@@ -331,11 +349,17 @@ function playSound(buffer, pitch, dspEffect, dspValue) {
             createHighPass.type = 'highpass';
             createHighPass.frequency.value = dspValue;
             break;
+        case 'bendpitch':
+            if(dspValue <= 16 && dspValue >= 0) { source.playbackRate.value *= dspValue; } 
+            else { console.log('bendpitch only takes values between 0 and 16, for the sake of sanity. Effect not applied.'); }
+            source.connect(audioEngine.destination);
+            break;
         default:
             source.connect(audioEngine.destination);
             break;
     }
     source.start(0);
+    //Write a conditional that allows us to cut off a sound if we have a certain DSP effect.
 }
 
 function main(){
