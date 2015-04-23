@@ -141,8 +141,8 @@ function init() {
     //Left bar menu stuff ends here.
 
     //Defines two bugs.
-    bugList[0] = new Bug(bugImage, FIELD_PIXELS[0] + (TILE_SIZE*0),FIELD_PIXELS[1] + (TILE_SIZE*1),'moveRight','George', false);
-    bugList[1] = new Bug(bugImage2, FIELD_PIXELS[0] + (TILE_SIZE*0),FIELD_PIXELS[1] + (TILE_SIZE*3),'moveRight','Steve', false);
+    bugList[0] = new Bug(bugImage, 1,1,'moveRight','George', false);
+    bugList[1] = new Bug(bugImage2, 1,3,'moveRight','Steve', false);
 
     lastTime = Date.now();
     updateFrequency = 12.5/TEMPO; //Currently, 8 'ticks' every beat?
@@ -303,9 +303,10 @@ function interact(e) {
 
 //Graphics functions.
 //It might be wise to make these subfunctions of something tile related.
+//fieldOffset changes the logic!
 function getTile(x,y) {
-    var tileX = Math.floor((x - 80)/TILE_SIZE);
-    var tileY = Math.floor(y/TILE_SIZE);
+    var tileX = Math.floor((x - 80)/TILE_SIZE) + fieldOffset[0];
+    var tileY = Math.floor(y/TILE_SIZE) + fieldOffset[1];
     return [tileX, tileY];
 }
 
@@ -418,9 +419,9 @@ function render(){
     //Painting squares! From an MVC stance this is the "view", I guess.
     //paintTile eventually needs to choose colors first based on tile properties, and then a subset of it based on user's viewmode.
     //Tiles need to eventually be extended with a user defined color value. 
-    for(var i = 0; i < (FIELD_SIZE[0] + fieldOffset[0]); ++i){
-        for(var j = 0; j < (FIELD_SIZE[1] + fieldOffset[1]); ++j){
-            if(typeof fieldContents[i][j] === 'object'){
+    for(var i = 0; i < (FIELD_SIZE[0]); ++i){
+        for(var j = 1; j < (FIELD_SIZE[1]); ++j){
+            if(typeof fieldContents[i + fieldOffset[0]][j + fieldOffset[1]] === 'object'){
                 //console.log(fieldContents[i][j].note);
                 var currentColor = "#444444";
                 //console.log(color);
@@ -449,7 +450,7 @@ function paintTile(tileX, tileY, color){
                 (TILE_SIZE*1), 
                 (TILE_SIZE*1));
     //Add overlays as needed.
-    var currentOverlay = fieldContents[tileX][tileY].flowEffect;
+    var currentOverlay = fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowEffect;
     if(currentOverlay !== "none") {
         switch(currentOverlay) {
             //Currently, only turn signals are implemented.

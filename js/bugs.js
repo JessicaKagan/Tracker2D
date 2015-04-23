@@ -16,20 +16,27 @@ var Bug = function(image, x,y, action,name, inStorage){
     this.x = x;
     this.y = y;
     this.name = name; //Long term idea: Create naming function for bugs, might come in handy.
-    this.bugTile = getTile(this.x, this.y);
+    this.bugTile = [this.x, this.y];
+    //this.bugTile = getTile(this.x, this.y);
     this.inStorage = inStorage;
 }
 
 Bug.prototype.drawBug = function(){
     //This might not need to be its own function unless we can change the bug stuff?
-    ctx.drawImage(this.image,this.x,this.y);
+    //Make actual conditional based on the bug being on a viewable tile.
+    //Adjust bug drawing routine further!
+    var derivedBugTile = [this.bugTile[0] - fieldOffset[0] , this.bugTile[1] - fieldOffset[1]];
+    if(derivedBugTile[0] >= 0 && derivedBugTile[1] >= 0) { 
+        ctx.drawImage(this.image,(derivedBugTile[0]*24) + 80, (derivedBugTile[1]*24)); 
+    }
 
 }
 
 Bug.prototype.updateBug = function() {
     //console.log(this.action);
     //Eventually we need to rewrite this so that if a bug slams into the edge of the playfield (not just tiles), it changes direction.
-    this.bugTile = getTile(this.x, this.y); //Updates our derivative.
+    //console.log(this.bugTile);
+    //this.bugTile = getTile(this.x, this.y); //Updates our derivative.
 
     //Play sounds BEFORE attempting to move the bug.
     if(fieldContents[this.bugTile[0]][this.bugTile[1]] != undefined){
@@ -76,22 +83,23 @@ Bug.prototype.updateBug = function() {
     }
 
     //Then move the bug based on its behavior.
+    //It might be smart to rewrite this based on actual tiles and not pixel offsets.
     switch(this.action){
         case 'moveLeft':
-            this.x -= TILE_SIZE;
+            this.bugTile[0] -= 1;
             break;
         case 'moveRight':
-            this.x += TILE_SIZE;
+            this.bugTile[0] += 1;
             break;
         case 'moveUp':
-            this.y -= TILE_SIZE;
+            this.bugTile[1] -= 1;
             break;
         case 'moveDown':
-            this.y += TILE_SIZE;
+            this.bugTile[1] += 1;
             break;
         default:
             break;
     }
 
-    this.bugTile = getTile(this.x, this.y); //Updates our derivative.
+    //this.bugTile = getTile(this.x, this.y); //Updates our derivative.
 }

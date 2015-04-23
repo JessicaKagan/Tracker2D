@@ -284,7 +284,8 @@ function paintMiniMap(){
 }
 
 function moveViewingField(X,Y) {
-    //Where the user clicked becomes the center of the view.
+    //Where the user clicked becomes the leftmost corner of the view.
+    //Change this so it goes for the center, instead.
     //If this means part of the view would go offscreen, center as close to the edge as possible.
     if(X + FIELD_SIZE[0] > FILE_SIZE[0]) {
         X = FILE_SIZE[0] - FIELD_SIZE[0];
