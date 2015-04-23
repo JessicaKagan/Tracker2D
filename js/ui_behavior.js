@@ -172,7 +172,7 @@ function loadFile() {
     if(encodedContent !== undefined) {
         encodedContent = window.atob(encodedContent);
     }
-    console.log(encodedContent);
+    //console.log(encodedContent);
     var loadingWorkArray = encodedContent.split("\n");
     var loadDimensions = loadingWorkArray[0].split(",");
     
@@ -184,14 +184,14 @@ function loadFile() {
             var currentIndex = (j*loadDimensions[1]) + i; //Flow control seems to be right.
 
             if(loadingWorkArray[currentIndex + 1] !== "undefined") {
-                console.log(j + " , " + i);
+                //console.log(j + " , " + i);
                 var currentTile = loadingWorkArray[currentIndex + 1].split(",");
                 fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
                                                currentTile[2],currentTile[3],
                                                currentTile[4],currentTile[5],
                                                currentTile[6]);
 
-                console.log(fieldContents[j][i]);
+                //console.log(fieldContents[j][i]);
             } else fieldContents[j][i] = undefined;
         }
     }
@@ -201,11 +201,9 @@ function loadFile() {
     author = loadingWorkArray[loadingWorkArray.length - 3];
     songDescription = loadingWorkArray[loadingWorkArray.length - 2];
     //We need to add bug parameters to this format. Here's another kludge. Don't you love kludging?
-    bugList[0].x = 80; 
-    bugList[0].y = 24;
+    bugList[0].bugTile = [1,1];
     bugList[0].action = "moveRight";
-    bugList[1].x = 80; 
-    bugList[1].y = 72;
+    bugList[1].bugTile = [1,3];
     bugList[1].action = "moveRight";
 }
 
