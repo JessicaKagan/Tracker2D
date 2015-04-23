@@ -86,7 +86,8 @@ function init() {
     ctx.fillStyle = "#BBBBBB";
 
     //Set up the UI.
-    document.addEventListener("click", interact);
+    var bindCanvas = document.getElementById("canvas");
+    bindCanvas.addEventListener("click", interact); //Binding to the canvas instead of the entire document fixes some strange bugs.
     pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
     //Setting up text input. Functionalize?
     //There should be options in this section to skip various sorts of input.
@@ -168,7 +169,7 @@ function interact(e) {
     }
     if(cursorY >= 540 && cursorY <= 600 && cursorX >= 80) { 
         console.log("BOTTOM_HORIZONTAL_BAR");
-        //UI buttons on 
+        //UI buttons on the bottom horizontal bar.
         if(cursorY >= 576 && cursorX < 104) { 
             console.log("PAUSE_PLAY_BUTTON_AREA");
             if(pauseState == true || undefined) { pauseState = false; }
@@ -418,7 +419,7 @@ function render(){
     }
     //Painting squares! From an MVC stance this is the "view", I guess.
     //paintTile eventually needs to choose colors first based on tile properties, and then a subset of it based on user's viewmode.
-    //Tiles need to eventually be extended with a user defined color value. 
+    //Tiles in the top row do not display properly. 
     for(var i = 0; i < (FIELD_SIZE[0]); ++i){
         for(var j = 1; j < (FIELD_SIZE[1]); ++j){
             if(typeof fieldContents[i + fieldOffset[0]][j + fieldOffset[1]] === 'object'){

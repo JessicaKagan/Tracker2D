@@ -283,19 +283,27 @@ function paintMiniMap(){
     ctx.putImageData(miniMapImage, 8, 8);
 }
 
+//This should be extended so that the user can scroll by clicking and dragging.
 function moveViewingField(X,Y) {
+    //Adjust what the user put in to centralize it.
+    var adjustedX = X - Math.floor(FIELD_SIZE[0]/2);
+    var adjustedY = Y - Math.floor(FIELD_SIZE[1]/2);
+
     //Where the user clicked becomes the leftmost corner of the view.
     //Change this so it goes for the center, instead.
     //If this means part of the view would go offscreen, center as close to the edge as possible.
-    if(X + FIELD_SIZE[0] > FILE_SIZE[0]) {
-        X = FILE_SIZE[0] - FIELD_SIZE[0];
-        console.log(X);
-    } 
-    if(Y + FIELD_SIZE[1] > FILE_SIZE[1]) {
-        Y = FILE_SIZE[1] - FIELD_SIZE[1];
-        console.log(Y);
+    if(adjustedX + FIELD_SIZE[0] > FILE_SIZE[0]) {
+        adjustedX = FILE_SIZE[0] - FIELD_SIZE[0]; 
+    } else if(adjustedX < 0) {
+        adjustedX = 0;
+    }
 
-    } 
-    fieldOffset = [X,Y];
+    if(adjustedY + FIELD_SIZE[1] > FILE_SIZE[1]) {
+        adjustedY = FILE_SIZE[1] - FIELD_SIZE[1];
+    } else if(adjustedY < 0) {
+        adjustedY = 0;
+    }
+
+    fieldOffset = [adjustedX,adjustedY];
     console.log(fieldOffset);
 }
