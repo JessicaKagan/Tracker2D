@@ -256,10 +256,28 @@ function getBug(bugVal){
 }
 
 //Paints the minimap in the lower left corner. 
+//The user will be able to scroll around by clicking and dragging on the thing.
 function paintMiniMap(){
+    var currentMiniMapPixel;
+    var miniMapImage = ctx.createImageData(FILE_SIZE[0], FILE_SIZE[1]);
+    //This is a one-dimensional array that needs to be mapped to a 2D one, and each pixel takes up 4 values (RGBA)
     for(var i = 0; i < FILE_SIZE[0]; ++i ){
         for(var j = 0; j < FILE_SIZE[1]; ++j ){
-        
+            var miniMapIndex = ((j*FILE_SIZE[1] + i)* 4); 
+            //Build our image. For now, we use grey pixels, but we'll add color here when it's in the actual field.
+            if(fieldContents[i][j] !== undefined) {
+                miniMapImage.data[miniMapIndex + 0] = 64;
+                miniMapImage.data[miniMapIndex + 1] = 64;
+                miniMapImage.data[miniMapIndex + 2] = 64;
+                miniMapImage.data[miniMapIndex + 3] = 255;
+            } else {
+                miniMapImage.data[miniMapIndex + 0] = 255;
+                miniMapImage.data[miniMapIndex + 1] = 255;
+                miniMapImage.data[miniMapIndex + 2] = 255;
+                miniMapImage.data[miniMapIndex + 3] = 255;
+            }
         }
     }
+    //Paint the image once it's complete.
+    ctx.putImageData(miniMapImage, 4, 4);
 }
