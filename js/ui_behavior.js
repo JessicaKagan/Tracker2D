@@ -7,7 +7,6 @@
 */
 
 /*
-    Short term important stuff: Save, load, copy, paste, general rectangle-based selector.
     Medium term useful thing: Extrapolation feature.
 */
 
@@ -21,6 +20,8 @@ var tileBuffer; //An array representing a rectangle of selected tiles.
 var saveContent; //A string representing the contents of the map.
 var encodedContent; //Stores the base64 equivalent of saveContent.
 var selectBoxCoords = new Array(4); //Stores two coordinate pairs.
+
+var fieldOffset = [0,0] //Changed via interaction with the minimap, used to decide which part of the field's showing.
 
 var bottomUIButton = function(coords) {
     this.coords = coords;
@@ -279,5 +280,21 @@ function paintMiniMap(){
         }
     }
     //Paint the image once it's complete.
-    ctx.putImageData(miniMapImage, 4, 4);
+    ctx.putImageData(miniMapImage, 8, 8);
+}
+
+function moveViewingField(X,Y) {
+    //Where the user clicked becomes the center of the view.
+    //If this means part of the view would go offscreen, center as close to the edge as possible.
+    if(X + FIELD_SIZE[0] > FILE_SIZE[0]) {
+        X = FILE_SIZE[0] - FIELD_SIZE[0];
+        console.log(X);
+    } 
+    if(Y + FIELD_SIZE[1] > FILE_SIZE[1]) {
+        Y = FILE_SIZE[1] - FIELD_SIZE[1];
+        console.log(Y);
+
+    } 
+    fieldOffset = [X,Y];
+    console.log(fieldOffset);
 }

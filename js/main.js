@@ -18,10 +18,10 @@ var MOVEBUG_BUTTON_AREA = [224,576,24,24];
 var SAVE_BUTTON_AREA = [752,576,24,24];
 var LOAD_BUTTON_AREA = [776,576,24,24];
 
-var fieldContents = new Array(30);
+var fieldContents = new Array(FILE_SIZE[0]);
 //Everything is undefined by default.
 for(var i = 0; i < FILE_SIZE[0]; ++i) {
-    fieldContents[i] = new Array(23);
+    fieldContents[i] = new Array(FILE_SIZE[1]);
 }
 
 //var fieldBackup = fieldContents; //When we implement saving, this will come in handy. We'll need a header, too.
@@ -158,7 +158,14 @@ function interact(e) {
     var cursorY = e.pageY - $('#canvas').offset().top;
     //Displays debug messages for now based on where you click.
     //When we make more, we'll need some sort of 2D switch statement, because this is just getting ugly.
-    if(cursorX <= 80 && cursorX > 0) { console.log("LEFT_VERTICAL_BAR"); }
+    if(cursorX <= 80 && cursorX > 0) { 
+        console.log("LEFT_VERTICAL_BAR"); 
+        //Minimap usage.
+        if(cursorX >= 8 && cursorX <= 72 && cursorY >=8 && cursorY <= 72) {
+            console.log("MINIMAP");
+            moveViewingField((cursorX - 8),(cursorY - 8)); //Compensating for the offsets.
+        }
+    }
     if(cursorY >= 540 && cursorY <= 600 && cursorX >= 80) { 
         console.log("BOTTOM_HORIZONTAL_BAR");
         //UI buttons on 
@@ -252,8 +259,8 @@ function interact(e) {
                     //Paste doesn't work if there's no tilebuffer, or if the tilebuffer is too large.
                         if(tileBuffer !== undefined) {
                             //There might be other conditions; I'll implement them if I can think of them.
-                            if(tileBuffer.length !== FILE_SIZE[0] ||
-                               tileBuffer[0].length !== FILE_SIZE[1]) {
+                            if(tileBuffer.length !== FIELD_SIZE[0] ||
+                               tileBuffer[0].length !== FIELD_SIZE[1]) {
                                 //We include offset for where the user clicked.
                                 pasteBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3], 
                                             currentTile[0], currentTile[1]);
@@ -411,8 +418,8 @@ function render(){
     //Painting squares! From an MVC stance this is the "view", I guess.
     //paintTile eventually needs to choose colors first based on tile properties, and then a subset of it based on user's viewmode.
     //Tiles need to eventually be extended with a user defined color value. 
-    for(var i = 0; i < FILE_SIZE[0]; ++i){
-        for(var j = 0; j < FILE_SIZE[1]; ++j){
+    for(var i = 0; i < (FIELD_SIZE[0] + fieldOffset[0]); ++i){
+        for(var j = 0; j < (FIELD_SIZE[1] + fieldOffset[1]); ++j){
             if(typeof fieldContents[i][j] === 'object'){
                 //console.log(fieldContents[i][j].note);
                 var currentColor = "#444444";
