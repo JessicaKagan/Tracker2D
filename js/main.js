@@ -1,7 +1,7 @@
-//All the glue that holds this project together.    
-
+//All the glue that holds this project together. 
 //UI constants:
-var FILE_SIZE = [30,23]; //This is how many tiles are on the screen right now. It will eventually change.
+var FILE_SIZE = [64,64]; //Starting the expansion process! This will eventually be something you can alter.
+var FIELD_SIZE = [30,23]; //The amount of horizontal and vertical tiles in the view.
 var TILE_SIZE = 24; //This is more cumbersome early on, but I will eventually need to implement zooming, and this might help
 var LEFT_VERTICAL_BAR = [0,0,80,800];
 var BOTTOM_HORIZONTAL_BAR = [80,552,720,48];
@@ -53,7 +53,6 @@ bugImage2.src = 'images/placeholder_bug_2.png';
 for(var i = 0; i < UIImages.length; i++) {
     UIImages[i] = new Image();
 }
-
 for(var i = 0; i < tileOverlayImages.length; i++) {
     tileOverlayImages[i] = new Image();
 }
@@ -90,6 +89,7 @@ function init() {
     document.addEventListener("click", interact);
     pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
     //Setting up text input. Functionalize?
+    //There should be options in this section to skip various sorts of input.
     $('#pitchInput').keydown(function(event){
         if (event.keyCode == 13) {
             if($('#pitchInput').val() <= 72 && $('#pitchInput').val() > 0) { currentPitch = $('#pitchInput').val();}
@@ -429,6 +429,7 @@ function render(){
 
     //4. UI Elements that don't use HTML (those that do are handled seperately)
     drawButtons();
+    paintMiniMap();
   
 }
 

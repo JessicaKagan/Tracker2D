@@ -162,6 +162,7 @@ function saveFile() {
     //It will be some time before we can actually get this to a user.
 }
 
+//Will need rebuilding to work with large files.
 function loadFile() {
     pauseState = true;
     closeLoadWindow();
@@ -252,4 +253,13 @@ function getBug(bugVal){
         } 
     }
 
+}
+
+//Paints the minimap in the lower left corner. 
+function paintMiniMap(){
+    for(var i = 0; i < FILE_SIZE[0]; ++i ){
+        for(var j = 0; j < FILE_SIZE[1]; ++j ){
+        
+        }
+    }
 }
