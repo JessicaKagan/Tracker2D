@@ -223,7 +223,7 @@ function getBug(bugVal){
     pauseState = true; //If the user starts putting bugs in storage, it might play havoc with playback.
     console.log(bugList[bugVal]);
     console.log(getBugHTML);
-    if(bugList[bugVal].inStorage === false) { 
+    if(bugList[bugVal].inStorage === false && bugList[bugVal] !== undefined) { 
         bugList[bugVal].inStorage = true;
         
         //Functionalize this, so that if a bug starts off in storage, it reflects properly in the storage HTML.

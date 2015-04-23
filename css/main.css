@@ -120,6 +120,31 @@ select {
     left: 48px;
 }
 
+#bugStorageUnit3 {
+    top: 90px;
+    left: 8px;
+}
+#bugStorageUnit4 {
+    top: 90px;
+    left: 48px;
+}
+#bugStorageUnit5 {
+    top: 120px;
+    left: 8px;
+}
+#bugStorageUnit6 {
+    top: 120px;
+    left: 48px;
+}
+#bugStorageUnit7 {
+    top: 150px;
+    left: 8px;
+}
+#bugStorageUnit8 {
+    top: 150px;
+    left: 48px;
+}
+
 .bugHoldingPen {
     position: absolute;
     width: 24px;
