@@ -12,11 +12,11 @@
             <canvas id="canvas"  width="800px" height="600px">If you can see this, Canvas failed. Try reloading or upgrading your browser.</canvas>
                 <div id="UIShifter" class="UIInputBox">
                     <p>Pitch</p>
-                    <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="pitchInput"></input>
+                    <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="pitchInput" value="36"></input>
                 </div>
                 <div id="UIShifter2" class="UIInputBox">
                     <p>Instrument</p>
-                    <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="instrumentInput"></input>
+                    <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="instrumentInput" value="0"></input>
                 </div>
                 <div id="UIShifter3" class="UIInputBox">
                     <p>Audio FX</p>
@@ -87,6 +87,7 @@
     <script src="js/soundset.js"></script> <!--Defines instruments and their properties.--> 
     <script src="js/bugs.js"></script> <!--Bugs represent musicians and execute tile instructions when they move over them-->
     <script src="js/song_properties.js"></script> <!--Governs some aspects of playback logic and will eventually link to file saving/IO-->
+    <script src="js/keyboard_shortcuts.js"></script> <!--Useful UI enhancements live here.-->
     <script src="js/ui_behavior.js"></script> <!--Once I start adding buttons to the interface, this will keep an eye on them.-->
     <script src="js/image_loader.js"></script> <!--To reduce clutter, all the defined images live here.-->
     <script src="js/main.js"></script> <!--Basic engine logic and anything that hasn't been moved to a separate file-->

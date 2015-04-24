@@ -81,28 +81,28 @@ select {
 }
 
 #UIShifter {
-    top: 100px;
+    top: 80px;
 }
 
 #UIShifter2 {
-    top: 150px;
+    top: 120px;
 }
 
 #UIShifter3 {
-    top: 200px;
+    top: 160px;
 }
 
 #UIShifter4 {
-    top: 250px;
+    top: 200px;
 }
 
 #UIShifter5 {
-    top: 270px;
+    top: 220px;
 }
 
 #bugStorage {
     position: absolute;
-    top: 320px;
+    top: 300px;
     color: white;
     width: 80px;
     font-family: Tahoma, sans-serif;

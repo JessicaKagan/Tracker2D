@@ -32,6 +32,10 @@ var selectBoxStage, moveBugStage, selectedBug;
 //For synch.
 var lastTime, updateFrequency, timeToUpdate;
 
+//Used in keyboard_shortcuts to adjust currentPitch;
+var scaleNote = 0;
+var currentOctave = 3;
+
 var currentPitch = 36;
 var currentInstrument = 0;
 var currentDSPValue = 0;
@@ -88,8 +92,12 @@ function init() {
     //Set up the UI.
     var bindCanvas = document.getElementById("canvas");
     bindCanvas.addEventListener("click", interact); //Binding to the canvas instead of the entire document fixes some strange bugs.
+    
+    //Set up keyboard shortcuts.
+    hookKeyboard();
+
     pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
-    //Setting up text input. Functionalize?
+    //Setting up text input. Functionalize, or at least move to a seperate file.
     //There should be options in this section to skip various sorts of input.
     $('#pitchInput').keydown(function(event){
         if (event.keyCode == 13) {
