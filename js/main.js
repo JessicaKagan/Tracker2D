@@ -46,19 +46,19 @@ var tileOverlayImages = new Array(5); //Used for flow control.
 
 
 //Define a bug array.
-var bugList = new Array(2);
-//Move these to image_loader.js
-var bugImage = new Image();
-var bugImage2 = new Image();
-bugImage.src = 'images/placeholder_bug.png';
-bugImage2.src = 'images/placeholder_bug_2.png';
+var bugList = new Array(8);
+var bugImages = new Array(8);
 
-//Needs generalization.
+//Initialize the image arrays properly.
 for(var i = 0; i < UIImages.length; i++) {
     UIImages[i] = new Image();
 }
-for(var i = 0; i < tileOverlayImages.length; i++) {
+for(var i = 0; i < bugImages.length; i++) {
     tileOverlayImages[i] = new Image();
+}
+
+for(var i = 0; i < bugImages.length; i++) {
+    bugImages[i] = new Image();
 }
 
 getImages(); //See image_loader.js
@@ -149,9 +149,19 @@ function init() {
     });
     //Left bar menu stuff ends here.
 
-    //Defines two bugs.
-    bugList[0] = new Bug(bugImage, 1,1,'moveRight','George', false);
-    bugList[1] = new Bug(bugImage2, 1,3,'moveRight','Steve', false);
+    //Define the bugs. The names are just for the heck of it.
+    bugList[0] = new Bug(bugImages[0], 1,1,'moveRight','George', false);
+    bugList[1] = new Bug(bugImages[1], 1,3,'moveRight','Steve', false);
+    bugList[2] = new Bug(bugImages[2], 1,5,'moveRight','Edgar', false);
+    bugList[3] = new Bug(bugImages[3], 1,7,'moveRight','Armripper Bludgeonface', false);    
+    bugList[4] = new Bug(bugImages[4], 1,9,'moveRight','Mary', false);
+    bugList[5] = new Bug(bugImages[5], 1,11,'moveRight','Jessica', false);
+    bugList[6] = new Bug(bugImages[6], 1,13,'moveRight','Aedryn', false);
+    bugList[7] = new Bug(bugImages[7], 1,15,'moveRight','Asami', false);
+    //Kludge to, by default, put all but the first two bugs in storage.
+    for(var i = 2; i < bugList.length; ++i) {
+        getBug(i);
+    }
 
     lastTime = Date.now();
     updateFrequency = 12.5/TEMPO; //Currently, 8 'ticks' every beat?

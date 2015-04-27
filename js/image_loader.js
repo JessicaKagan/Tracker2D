@@ -17,4 +17,13 @@ function getImages() {
     UIImages[7].src = 'images/paste_button.png';
     UIImages[8].src = 'images/query_button.png';
     UIImages[9].src = 'images/move_bug_button.png';
+
+    bugImages[0].src = 'images/placeholder_bug.png';
+    bugImages[1].src = 'images/placeholder_bug_2.png';
+    bugImages[2].src = 'images/placeholder_bug_3.png';
+    bugImages[3].src = 'images/placeholder_bug_4.png';    
+    bugImages[4].src = 'images/placeholder_bug.png'; //Make more bug images!
+    bugImages[5].src = 'images/placeholder_bug_2.png';
+    bugImages[6].src = 'images/placeholder_bug_3.png';
+    bugImages[7].src = 'images/placeholder_bug_4.png';
 }

@@ -136,7 +136,7 @@ function saveFile() {
     pauseState = true;
     fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1], 'save');
     if(tileBuffer === fieldContents) { 
-        console.log("We're ready to save now."); 
+        //console.log("We're ready to save now."); 
     } else { console.log("Something went wrong in saveFile() or fillBuffer(). Real error trapping later."); }
     //Bake everything into a string.
     saveContent = "";
@@ -233,6 +233,24 @@ function getBug(bugVal){
                 break;
             case 1:
                 $('#bugStorageUnit2').html(getBugHTML);
+                break;            
+            case 2:
+                $('#bugStorageUnit3').html(getBugHTML);
+                break;
+            case 3:
+                $('#bugStorageUnit4').html(getBugHTML);
+                break;            
+            case 4:
+                $('#bugStorageUnit5').html(getBugHTML);
+                break;
+            case 5:
+                $('#bugStorageUnit6').html(getBugHTML);
+                break;            
+            case 6:
+                $('#bugStorageUnit7').html(getBugHTML);
+                break;
+            case 7:
+                $('#bugStorageUnit8').html(getBugHTML);
                 break;
             default:
                 break;
