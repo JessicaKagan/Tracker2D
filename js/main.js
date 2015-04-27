@@ -493,6 +493,8 @@ function paintTile(tileX, tileY, color){
                 break;
         }
     }
+    //A warning about stored bugs will be handled in the same way.
+
 
 
 

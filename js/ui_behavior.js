@@ -204,7 +204,19 @@ function loadFile() {
     bugList[0].bugTile = [1,1];
     bugList[0].action = "moveRight";
     bugList[1].bugTile = [1,3];
-    bugList[1].action = "moveRight";
+    bugList[1].action = "moveRight";    
+    bugList[2].bugTile = [1,5];
+    bugList[2].action = "moveRight";    
+    bugList[3].bugTile = [1,7];
+    bugList[3].action = "moveRight";    
+    bugList[4].bugTile = [1,9];
+    bugList[4].action = "moveRight";    
+    bugList[5].bugTile = [1,11];
+    bugList[5].action = "moveRight";    
+    bugList[6].bugTile = [1,13];
+    bugList[6].action = "moveRight";    
+    bugList[7].bugTile = [1,15];
+    bugList[7].action = "moveRight";
 }
 
 function closeSaveWindow(){
@@ -258,12 +270,31 @@ function getBug(bugVal){
 
     } else if(bugList[bugVal].inStorage === true) {
         bugList[bugVal].inStorage = false;
+        //Inefficient, but the expression to do this on one line would be hell for other coders to interpret.
         switch(bugVal) {
             case 0:
                 $('#bugStorageUnit1').html('<button type="button" onclick="getBug(0)">1</button>');
                 break;
             case 1:
                 $('#bugStorageUnit2').html('<button type="button" onclick="getBug(1)">2</button>');
+                break;
+            case 2:
+                $('#bugStorageUnit3').html('<button type="button" onclick="getBug(2)">3</button>');
+                break;
+            case 3:
+                $('#bugStorageUnit4').html('<button type="button" onclick="getBug(3)">4</button>');
+                break;            
+            case 4:
+                $('#bugStorageUnit5').html('<button type="button" onclick="getBug(4)">5</button>');
+                break;
+            case 5:
+                $('#bugStorageUnit6').html('<button type="button" onclick="getBug(5)">6</button>');
+                break;            
+            case 6:
+                $('#bugStorageUnit7').html('<button type="button" onclick="getBug(6)">7</button>');
+                break;            
+            case 7:
+                $('#bugStorageUnit8').html('<button type="button" onclick="getBug(7)">8</button>');
                 break;
             default:
                 break;
