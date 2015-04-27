@@ -15,6 +15,9 @@ var PASTE_BUTTON_AREA = [176,576,24,24];
 var QUERY_BUTTON_AREA = [200,576,24,24];
 var MOVEBUG_BUTTON_AREA = [224,576,24,24];
 
+var STOREBUG_BUTTON_AREA = [680,576,24,24];
+var RESTOREBUG_BUTTON_AREA = [704,576,24,24];
+
 var SAVE_BUTTON_AREA = [752,576,24,24];
 var LOAD_BUTTON_AREA = [776,576,24,24];
 
@@ -41,7 +44,7 @@ var currentInstrument = 0;
 var currentDSPValue = 0;
 var currentDSP = "none";
 var currentFlowControl = "none";
-var UIImages = new Array(10);
+var UIImages = new Array(12);
 var tileOverlayImages = new Array(5); //Used for flow control.
 
 
@@ -72,7 +75,7 @@ var ctx = canvas.getContext("2d");
 
 
 //Kludge. Rewrite this to start after making sure all the images actually loaded.
-UIImages[(UIImages.length - 1)].onload = function() {
+bugImages[(bugImages.length - 1)].onload = function() {
     init();
 }
 
@@ -162,6 +165,8 @@ function init() {
     for(var i = 2; i < bugList.length; ++i) {
         getBug(i);
     }
+    //Populating this will prevent unsolicited load errors.
+    storeBugPositions();
 
     lastTime = Date.now();
     updateFrequency = 12.5/TEMPO; //Currently, 8 'ticks' every beat?
@@ -213,6 +218,12 @@ function interact(e) {
             console.log("MOVE_BUG_BUTTON_AREA");
             selectedTool = "moveBug";
             moveBugStage = 1; //Like selecting a box, this is a two step process.
+        } else if(cursorY >= 576 && cursorX >= 680 && cursorX < 704) {
+            console.log('STOREBUG_BUTTON_AREA');
+            storeBugPositions();
+        } else if(cursorY >= 576 && cursorX >= 704 && cursorX < 728) {
+            console.log('RESTOREBUG_BUTTON_AREA');
+            restoreBugPositions();
         } else if(cursorY >= 576 && cursorX >= 752 && cursorX < 776) {
             console.log('SAVE_BUTTON_AREA');
             if($("#loadExport").hasClass("currentlyHidden") === true) { saveFile(); } //Kludge against UI clash.
@@ -220,10 +231,6 @@ function interact(e) {
             console.log('LOAD_BUTTON_AREA');
             if($("#saveExport").hasClass("currentlyHidden") === true) { $("#loadExport").removeClass("currentlyHidden"); }
         }
-        //Idea for 'scrolling' - Have a 48x48 low precision miniature of the entire field.
-        //Try to center on an area corresponding to where the user clicks.
-        //If not possible, move the 'camera' gradually towards the center until this can be done before centering.
-        //Possibly overlay a translucent rectangle indicating boundaries.
     }
     //If we're inside the playfield, convert the coordinates to a tile.
     //The logic for this is going to become a great deal more complex with time, I think.
@@ -320,8 +327,7 @@ function interact(e) {
     }
 }
 
-//Graphics functions.
-//It might be wise to make these subfunctions of something tile related.
+//Graphics functions. It might be wise to make these subfunctions of something tile related.
 //fieldOffset changes the logic!
 function getTile(x,y) {
     var tileX = Math.floor((x - 80)/TILE_SIZE) + fieldOffset[0];

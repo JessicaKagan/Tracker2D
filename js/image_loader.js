@@ -17,6 +17,8 @@ function getImages() {
     UIImages[7].src = 'images/paste_button.png';
     UIImages[8].src = 'images/query_button.png';
     UIImages[9].src = 'images/move_bug_button.png';
+    UIImages[10].src = 'images/store_bugs_button.png';
+    UIImages[11].src = 'images/restore_bugs_button.png';
     //Maybe someone will make more detailed and complex bug images.
     bugImages[0].src = 'images/placeholder_bug.png';
     bugImages[1].src = 'images/placeholder_bug_2.png';

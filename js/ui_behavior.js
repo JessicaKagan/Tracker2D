@@ -12,16 +12,18 @@
 
 var isOverlayShowing = false; //Used to handle some pointer events CSS.
 var pauseState = true;
-//We can add a bunch more. Use these to label buttons?
 //singleStep executes a single update and then pauses.
+//Labels for all tools that require clicking on the field. Not in use yet.
 var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','singleStep']; 
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var tileBuffer; //An array representing a rectangle of selected tiles.
 var saveContent; //A string representing the contents of the map.
 var encodedContent; //Stores the base64 equivalent of saveContent.
 var selectBoxCoords = new Array(4); //Stores two coordinate pairs.
-
 var fieldOffset = [0,0] //Changed via interaction with the minimap, used to decide which part of the field's showing.
+
+var storedBugPositions = new Array(24); //Stores 8 triples, representing bug coordinates and commands.
+var numberOfPropertiesSaved = storedBugPositions.length + AMOUNT_OF_SONG_PROPERTIES; //Simplifies some saveload logic
 
 var bottomUIButton = function(coords) {
     this.coords = coords;
@@ -39,13 +41,15 @@ var drawButtons = function() {
     //Pause button with 2 states
     if(pauseState == false) { ctx.drawImage(UIImages[0],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
     else if(pauseState == true) { ctx.drawImage(UIImages[1],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
-
-    ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]); //Pencil
-    ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]); //Eraser
-    ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]); //Box select
-    ctx.drawImage(UIImages[7],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]); //Paste
-    ctx.drawImage(UIImages[8],QUERY_BUTTON_AREA[0],QUERY_BUTTON_AREA[1]); //Query
-    ctx.drawImage(UIImages[9],MOVEBUG_BUTTON_AREA[0],MOVEBUG_BUTTON_AREA[1]); //Move Bug
+    //Most buttons, though, do not change function when clicked.
+    ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[7],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[8],QUERY_BUTTON_AREA[0],QUERY_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[9],MOVEBUG_BUTTON_AREA[0],MOVEBUG_BUTTON_AREA[1]);     
+    ctx.drawImage(UIImages[10],STOREBUG_BUTTON_AREA[0],STOREBUG_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[11],RESTOREBUG_BUTTON_AREA[0],RESTOREBUG_BUTTON_AREA[1]); 
 
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
@@ -231,14 +235,14 @@ function closeLoadWindow(){
 function getBug(bugVal){
     var getBugHTML = "";
     pauseState = true; //If the user starts putting bugs in storage, it might play havoc with playback.
-    console.log(bugList[bugVal]);
-    console.log(getBugHTML);
+    //console.log(bugList[bugVal]);
+    //console.log(getBugHTML);
     if(bugList[bugVal].inStorage === false && bugList[bugVal] !== undefined) { 
         bugList[bugVal].inStorage = true;
         
         //Functionalize this, so that if a bug starts off in storage, it reflects properly in the storage HTML.
         getBugHTML = '<button type="button" onclick="getBug(' + bugVal + ')">' + bugList[bugVal].image.outerHTML + '</button>';
-        console.log(getBugHTML);
+        //console.log(getBugHTML);
         switch(bugVal) {
             case 0:
                 $('#bugStorageUnit1').html(getBugHTML);
@@ -353,4 +357,31 @@ function moveViewingField(X,Y) {
 
     fieldOffset = [adjustedX,adjustedY];
     console.log(fieldOffset);
+}
+
+function storeBugPositions() {
+    pauseState = true;
+    for(var i = 0; i < storedBugPositions.length; i+=3){
+        storedBugPositions[i] = bugList[(i/3)].bugTile[0];
+        storedBugPositions[i+1] = bugList[(i/3)].bugTile[1];
+        storedBugPositions[i+2] = bugList[(i/3)].action;
+    }
+    //console.log(storedBugPositions);
+    console.log("Bug positions stored");
+
+}
+
+function restoreBugPositions() {
+    pauseState = true;
+    if(storedBugPositions === [] || storedBugPositions.length !== 24) {
+        console.log("Stored bug positions are glitchy.");
+        return;
+    } else {
+        for(var i = 0; i < storedBugPositions.length; i+=3){
+            //This is literally the opposite of what we do in storeBugPositions();
+            bugList[(i/3)].bugTile[0] = storedBugPositions[i];
+            bugList[(i/3)].bugTile[1] = storedBugPositions[i+1];
+            bugList[(i/3)].action = storedBugPositions[i+2];
+        }
+    }
 }
