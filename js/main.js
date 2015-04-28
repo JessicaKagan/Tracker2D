@@ -101,7 +101,8 @@ function init() {
 
     pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
     //Setting up text input. Functionalize, or at least move to a seperate file.
-    //There should be options in this section to skip various sorts of input.
+    //Pitch text input's been disabled for now, since you can use the QWERTY row and +- to toy with your pitches.
+    /*
     $('#pitchInput').keydown(function(event){
         if (event.keyCode == 13) {
             if($('#pitchInput').val() <= 72 && $('#pitchInput').val() > 0) { currentPitch = $('#pitchInput').val();}
@@ -113,6 +114,7 @@ function init() {
             //$('#pitchInput').val('');
         }
     })
+*/
     //Definitely functionalize. This handles instruments.
     $('#instrumentInput').keydown(function(event){
         if (event.keyCode == 13) {

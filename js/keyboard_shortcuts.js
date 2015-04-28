@@ -1,6 +1,8 @@
 function hookKeyboard(){
     $(window).keypress(function(e){
-        var keyboardInput = event.keyCode;
+        //Keyboard input doesn't seem to work in Firefox!
+        //Might need different logic based on browser ID here.
+        var keyboardInput = (e.charCode) ? e.charCode : ((e.which) ? e.which : e.keyCode);
         console.log(keyboardInput);
         switch(keyboardInput){
             case 61:
