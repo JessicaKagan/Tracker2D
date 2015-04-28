@@ -52,14 +52,6 @@ Bug.prototype.updateBug = function() {
         }
     }
 
-    //If the bug is about to leave the map, make it turn around.
-    //Based on tiles, in the hopes of scaling gracefully to larger maps.
-    if((this.bugTile[0] + 1) >= FILE_SIZE[0] && this.action === 'moveRight') { this.action = 'moveLeft'; }
-    if(this.bugTile[0] === 0 && this.action === 'moveLeft') { this.action = 'moveRight'; }
-    if((this.bugTile[1] + 1) >= FILE_SIZE[1] && this.action === 'moveDown') { this.action = 'moveUp'; }
-    if(this.bugTile[1] === 0 && this.action === 'moveUp') { this.action = 'moveDown'; }
-
-
     //Change the behavior of the bug based on what it's standing on.
     if(fieldContents[this.bugTile[0]][this.bugTile[1]] != undefined){
         switch(fieldContents[this.bugTile[0]][this.bugTile[1]].flowEffect){
@@ -81,6 +73,13 @@ Bug.prototype.updateBug = function() {
                 break;
         }
     }
+
+    //If the bug is about to leave the map, make it turn around.
+    //Based on tiles, in the hopes of scaling gracefully to larger maps.
+    if((this.bugTile[0] + 1) >= FILE_SIZE[0] && this.action === 'moveRight') { this.action = 'moveLeft'; }
+    if(this.bugTile[0] === 0 && this.action === 'moveLeft') { this.action = 'moveRight'; }
+    if((this.bugTile[1] + 1) >= FILE_SIZE[1] && this.action === 'moveDown') { this.action = 'moveUp'; }
+    if(this.bugTile[1] === 0 && this.action === 'moveUp') { this.action = 'moveDown'; }
 
     //Then move the bug based on its behavior.
     //It might be smart to rewrite this based on actual tiles and not pixel offsets.

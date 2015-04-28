@@ -22,7 +22,7 @@ var encodedContent; //Stores the base64 equivalent of saveContent.
 var selectBoxCoords = new Array(4); //Stores two coordinate pairs.
 var fieldOffset = [0,0] //Changed via interaction with the minimap, used to decide which part of the field's showing.
 
-var storedBugPositions = new Array(24); //Stores 8 triples, representing bug coordinates and commands.
+var storedBugPositions = new Array(32); //Stores 8 quadruples, representing bug coordinates and commands, and storage status.
 var numberOfPropertiesSaved = storedBugPositions.length + AMOUNT_OF_SONG_PROPERTIES; //Simplifies some saveload logic
 
 var bottomUIButton = function(coords) {
@@ -158,8 +158,14 @@ function saveFile() {
         }
 
     }
+    //Dump the bug properties! Extends the file by 32 lines.
+    for(var i = 0; i < storedBugPositions.length; ++i) {
+        saveContent += storedBugPositions[i] + '\n';
+    }
+
     //Dump song properties next.
     saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n';
+    console.log(saveContent);
     //Convert the entire thing to base64.
     encodedContent = window.btoa(saveContent);
     $("#saveText").html(encodedContent);
@@ -179,7 +185,8 @@ function loadFile() {
     //console.log(encodedContent);
     var loadingWorkArray = encodedContent.split("\n");
     var loadDimensions = loadingWorkArray[0].split(",");
-    
+    var tileLength = loadDimensions[0]*loadDimensions[1];
+    //console.log(loadingWorkArray.length);
     //console.log(loadDimensions);
     //1 to (max index - 4) for now
     //Dump the tiles to fieldContents.
@@ -199,12 +206,23 @@ function loadFile() {
             } else fieldContents[j][i] = undefined;
         }
     }
+    //Load bug properties. There's a serious offset here; might need tweaking.
+    for(var i = 0; i < (loadingWorkArray.length - tileLength - AMOUNT_OF_SONG_PROPERTIES - 4); i+=4){
+        //console.log(loadingWorkArray[i + tileLength + 1]);
+        bugList[(i/4)].bugTile[0] = loadingWorkArray[i + tileLength + 1];
+        bugList[(i/4)].bugTile[1] = loadingWorkArray[i + tileLength + 2];
+        bugList[(i/4)].action = loadingWorkArray[i + tileLength + 3];
+        //bugList[(i/4)].inStorage = loadingWorkArray[i + tileLength + 4];
+        console.log(bugList[i/4]);
+    }
+
     //We can still make song properties work. This will require editing in the future.
     TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
     //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
     author = loadingWorkArray[loadingWorkArray.length - 3];
     songDescription = loadingWorkArray[loadingWorkArray.length - 2];
     //We need to add bug parameters to this format. Here's another kludge. Don't you love kludging?
+    /*
     bugList[0].bugTile = [1,1];
     bugList[0].action = "moveRight";
     bugList[1].bugTile = [1,3];
@@ -221,11 +239,11 @@ function loadFile() {
     bugList[6].action = "moveRight";    
     bugList[7].bugTile = [1,15];
     bugList[7].action = "moveRight";
+    */
 }
 
 function closeSaveWindow(){
     setTimeout(function() {$("#saveExport").addClass("currentlyHidden");}, 50);
-
 }
 
 function closeLoadWindow(){
@@ -361,10 +379,11 @@ function moveViewingField(X,Y) {
 
 function storeBugPositions() {
     pauseState = true;
-    for(var i = 0; i < storedBugPositions.length; i+=3){
-        storedBugPositions[i] = bugList[(i/3)].bugTile[0];
-        storedBugPositions[i+1] = bugList[(i/3)].bugTile[1];
-        storedBugPositions[i+2] = bugList[(i/3)].action;
+    for(var i = 0; i < storedBugPositions.length; i+=4){
+        storedBugPositions[i] = bugList[(i/4)].bugTile[0];
+        storedBugPositions[i+1] = bugList[(i/4)].bugTile[1];
+        storedBugPositions[i+2] = bugList[(i/4)].action;
+        storedBugPositions[i+3] = bugList[(i/4)].inStorage;
     }
     //console.log(storedBugPositions);
     console.log("Bug positions stored");
@@ -373,15 +392,17 @@ function storeBugPositions() {
 
 function restoreBugPositions() {
     pauseState = true;
-    if(storedBugPositions === [] || storedBugPositions.length !== 24) {
+    if(storedBugPositions === [] || storedBugPositions.length !== 32) {
         console.log("Stored bug positions are glitchy.");
         return;
     } else {
-        for(var i = 0; i < storedBugPositions.length; i+=3){
-            //This is literally the opposite of what we do in storeBugPositions();
-            bugList[(i/3)].bugTile[0] = storedBugPositions[i];
-            bugList[(i/3)].bugTile[1] = storedBugPositions[i+1];
-            bugList[(i/3)].action = storedBugPositions[i+2];
+        for(var i = 0; i < storedBugPositions.length; i+=4){
+            //This is literally the opposite of what we do in storeBugPositions().
+            bugList[(i/4)].bugTile[0] = storedBugPositions[i];
+            bugList[(i/4)].bugTile[1] = storedBugPositions[i+1];
+            bugList[(i/4)].action = storedBugPositions[i+2];
+            bugList[(i/4)].inStorage = storedBugPositions[i+3];
         }
+
     }
 }
