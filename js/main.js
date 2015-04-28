@@ -154,18 +154,18 @@ function init() {
     });
     //Left bar menu stuff ends here.
 
-    //Define the bugs. The names are just for the heck of it.
+    //Define the bugs. The names are for flavor.
     bugList[0] = new Bug(bugImages[0], 1,1,'moveRight','George', false);
     bugList[1] = new Bug(bugImages[1], 1,3,'moveRight','Steve', false);
-    bugList[2] = new Bug(bugImages[2], 1,5,'moveRight','Edgar', false);
-    bugList[3] = new Bug(bugImages[3], 1,7,'moveRight','Armripper Bludgeonface', false);    
-    bugList[4] = new Bug(bugImages[4], 1,9,'moveRight','Mary', false);
-    bugList[5] = new Bug(bugImages[5], 1,11,'moveRight','Jessica', false);
-    bugList[6] = new Bug(bugImages[6], 1,13,'moveRight','Aedryn', false);
-    bugList[7] = new Bug(bugImages[7], 1,15,'moveRight','Asami', false);
-    //Kludge to, by default, put all but the first two bugs in storage.
-    for(var i = 2; i < bugList.length; ++i) {
-        getBug(i);
+    bugList[2] = new Bug(bugImages[2], 1,5,'moveRight','Edgar', true);
+    bugList[3] = new Bug(bugImages[3], 1,7,'moveRight','Armripper Bludgeonface', true);    
+    bugList[4] = new Bug(bugImages[4], 1,9,'moveRight','Mary', true);
+    bugList[5] = new Bug(bugImages[5], 1,11,'moveRight','Jessica', true);
+    bugList[6] = new Bug(bugImages[6], 1,13,'moveRight','Aedryn', true);
+    bugList[7] = new Bug(bugImages[7], 1,15,'moveRight','Asami', true);
+    //Puts bugs in storage as needed.
+    for(var i = 0; i < bugList.length; ++i) {
+        checkBug(i);
     }
     //Populating this will prevent unsolicited load errors.
     storeBugPositions();

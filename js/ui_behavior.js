@@ -127,6 +127,9 @@ function respondToQuery(X, Y) {
              bugList[i].bugTile[1] === Y) { 
             queryResponse += "<p>Bug name: " + bugList[i].name + "<p>";
             queryResponse += "<p>Current behavior: " + bugList[i].action + "<p>";
+            if(bugList[i].inStorage === true) {
+                queryResponse += "<p>This bug is in storage.</p>";
+            }
             break;
         }
     }
@@ -186,8 +189,6 @@ function loadFile() {
     var loadingWorkArray = encodedContent.split("\n");
     var loadDimensions = loadingWorkArray[0].split(",");
     var tileLength = loadDimensions[0]*loadDimensions[1];
-    //console.log(loadingWorkArray.length);
-    //console.log(loadDimensions);
     //1 to (max index - 4) for now
     //Dump the tiles to fieldContents.
     for(var i = 0; i < loadDimensions[0]; ++i){
@@ -195,7 +196,6 @@ function loadFile() {
             var currentIndex = (j*loadDimensions[1]) + i; //Flow control seems to be right.
 
             if(loadingWorkArray[currentIndex + 1] !== "undefined") {
-                //console.log(j + " , " + i);
                 var currentTile = loadingWorkArray[currentIndex + 1].split(",");
                 fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
                                                currentTile[2],currentTile[3],
@@ -209,37 +209,23 @@ function loadFile() {
     //Load bug properties. There's a serious offset here; might need tweaking.
     for(var i = 0; i < (loadingWorkArray.length - tileLength - AMOUNT_OF_SONG_PROPERTIES - 4); i+=4){
         //console.log(loadingWorkArray[i + tileLength + 1]);
-        bugList[(i/4)].bugTile[0] = loadingWorkArray[i + tileLength + 1];
-        bugList[(i/4)].bugTile[1] = loadingWorkArray[i + tileLength + 2];
+        bugList[(i/4)].bugTile[0] = $.parseJSON(loadingWorkArray[i + tileLength + 1]);
+        bugList[(i/4)].bugTile[1] = $.parseJSON(loadingWorkArray[i + tileLength + 2]);
         bugList[(i/4)].action = loadingWorkArray[i + tileLength + 3];
-        //bugList[(i/4)].inStorage = loadingWorkArray[i + tileLength + 4];
-        console.log(bugList[i/4]);
+        bugList[(i/4)].inStorage = $.parseJSON(loadingWorkArray[i + tileLength + 4]);
+        //console.log(bugList[i/4]);
     }
+    //Run the obligatory bug checking loop and store the loaded bug positions in the buffer.
+    for(var i = 0; i < bugList.length; ++i) {
+        checkBug(i);
+    }
+    storeBugPositions();
 
-    //We can still make song properties work. This will require editing in the future.
+    //Song properties are stored at the very end of the file.
     TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
     //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
     author = loadingWorkArray[loadingWorkArray.length - 3];
     songDescription = loadingWorkArray[loadingWorkArray.length - 2];
-    //We need to add bug parameters to this format. Here's another kludge. Don't you love kludging?
-    /*
-    bugList[0].bugTile = [1,1];
-    bugList[0].action = "moveRight";
-    bugList[1].bugTile = [1,3];
-    bugList[1].action = "moveRight";    
-    bugList[2].bugTile = [1,5];
-    bugList[2].action = "moveRight";    
-    bugList[3].bugTile = [1,7];
-    bugList[3].action = "moveRight";    
-    bugList[4].bugTile = [1,9];
-    bugList[4].action = "moveRight";    
-    bugList[5].bugTile = [1,11];
-    bugList[5].action = "moveRight";    
-    bugList[6].bugTile = [1,13];
-    bugList[6].action = "moveRight";    
-    bugList[7].bugTile = [1,15];
-    bugList[7].action = "moveRight";
-    */
 }
 
 function closeSaveWindow(){
@@ -249,6 +235,76 @@ function closeSaveWindow(){
 function closeLoadWindow(){
     setTimeout(function() {$("#loadExport").addClass("currentlyHidden");}, 50);
 }
+
+//checkBug and getBug need to be merged properly.
+//This one just checks the status of the bug without altering it.
+function checkBug(bugVal){
+    var getBugHTML = "";
+    pauseState = true; 
+    if(bugList[bugVal].inStorage === false && bugList[bugVal] !== undefined) { 
+        switch(bugVal) {
+            case 0:
+                $('#bugStorageUnit1').html('<button type="button" onclick="getBug(0)">1</button>');
+                break;
+            case 1:
+                $('#bugStorageUnit2').html('<button type="button" onclick="getBug(1)">2</button>');
+                break;
+            case 2:
+                $('#bugStorageUnit3').html('<button type="button" onclick="getBug(2)">3</button>');
+                break;
+            case 3:
+                $('#bugStorageUnit4').html('<button type="button" onclick="getBug(3)">4</button>');
+                break;            
+            case 4:
+                $('#bugStorageUnit5').html('<button type="button" onclick="getBug(4)">5</button>');
+                break;
+            case 5:
+                $('#bugStorageUnit6').html('<button type="button" onclick="getBug(5)">6</button>');
+                break;            
+            case 6:
+                $('#bugStorageUnit7').html('<button type="button" onclick="getBug(6)">7</button>');
+                break;            
+            case 7:
+                $('#bugStorageUnit8').html('<button type="button" onclick="getBug(7)">8</button>');
+                break;
+            default:
+                break;
+        }
+
+    } else if(bugList[bugVal].inStorage === true) {
+        getBugHTML = '<button type="button" onclick="getBug(' + bugVal + ')">' + bugList[bugVal].image.outerHTML + '</button>';
+        //console.log(getBugHTML);
+        switch(bugVal) {
+            case 0:
+                $('#bugStorageUnit1').html(getBugHTML);
+                break;
+            case 1:
+                $('#bugStorageUnit2').html(getBugHTML);
+                break;            
+            case 2:
+                $('#bugStorageUnit3').html(getBugHTML);
+                break;
+            case 3:
+                $('#bugStorageUnit4').html(getBugHTML);
+                break;            
+            case 4:
+                $('#bugStorageUnit5').html(getBugHTML);
+                break;
+            case 5:
+                $('#bugStorageUnit6').html(getBugHTML);
+                break;            
+            case 6:
+                $('#bugStorageUnit7').html(getBugHTML);
+                break;
+            case 7:
+                $('#bugStorageUnit8').html(getBugHTML);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
 
 function getBug(bugVal){
     var getBugHTML = "";
@@ -403,6 +459,8 @@ function restoreBugPositions() {
             bugList[(i/4)].action = storedBugPositions[i+2];
             bugList[(i/4)].inStorage = storedBugPositions[i+3];
         }
-
+        for(var i = 0; i < bugList.length; ++i) {
+            checkBug(i);
+        }
     }
 }
