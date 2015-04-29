@@ -38,7 +38,6 @@ var lastTime, updateFrequency, timeToUpdate;
 //Used in keyboard_shortcuts to adjust currentPitch;
 var scaleNote = 0;
 var currentOctave = 3;
-
 var currentPitch = 36;
 var currentInstrument = 0;
 var currentDSPValue = 0;
@@ -46,9 +45,9 @@ var currentDSP = "none";
 var currentFlowControl = "none";
 var UIImages = new Array(12);
 var tileOverlayImages = new Array(5); //Used for flow control.
+var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
-
-//Define a bug array.
+//Define the bug arrays.
 var bugList = new Array(8);
 var bugImages = new Array(8);
 
@@ -66,8 +65,19 @@ for(var i = 0; i < bugImages.length; i++) {
 
 getImages(); //See image_loader.js
 
+//Make the buffer array for Web Audio! If we don't have a sound yet, fill with silence.
+//Apparently this can't handle FLACs, so convert to wavs or mp3s?
+var soundArray = new Array(soundSet.length);
+for(var i = 0; i < soundSet.length; ++i){
+    if(soundSet[i] !== undefined){
+        console.log("Test");
+        soundArray[i] = soundSet[i][1]; //If we do have a sound, get its filename from here.
+    } else soundArray[i] = './sounds/00.mp3';
+}
+console.log(soundArray);
+
 var testSoundArray = ['./sounds/Ach.wav','./sounds/OrchestraHit.wav', './sounds/sawtooth.wav'];
-var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
+
 
 //Set up a canvas to draw on. All the drawing functions should be in render() now.
 var canvas = document.getElementById("canvas");
@@ -80,12 +90,14 @@ bugImages[(bugImages.length - 1)].onload = function() {
 }
 
 function init() {
+
+
     //Set up the audio engine and a system for playing sounds.
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     audioEngine = new AudioContext();
-    audioLoader = new BufferLoader(audioEngine, testSoundArray, soundsAreReady);
+    audioLoader = new BufferLoader(audioEngine, soundArray, soundsAreReady);
     audioLoader.load();
-    //Draw the grid.
+    //Move the bottom bar to the render function, at the very least.
     ctx.fillStyle = "#000000";
     ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
     ctx.fillStyle = "#888888";
