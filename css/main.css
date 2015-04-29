@@ -145,6 +145,10 @@ select {
     left: 48px;
 }
 
+#loadScreen {
+    z-index: 9999;
+}
+
 .bugHoldingPen {
     position: absolute;
     width: 24px;

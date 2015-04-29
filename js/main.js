@@ -39,7 +39,7 @@ var lastTime, updateFrequency, timeToUpdate;
 var scaleNote = 0;
 var currentOctave = 3;
 var currentPitch = 36;
-var currentInstrument = 0;
+var currentInstrument = 1;
 var currentDSPValue = 0;
 var currentDSP = "none";
 var currentFlowControl = "none";
@@ -70,11 +70,9 @@ getImages(); //See image_loader.js
 var soundArray = new Array(soundSet.length);
 for(var i = 0; i < soundSet.length; ++i){
     if(soundSet[i] !== undefined){
-        console.log("Test");
         soundArray[i] = soundSet[i][1]; //If we do have a sound, get its filename from here.
     } else soundArray[i] = './sounds/00.mp3';
 }
-console.log(soundArray);
 
 var testSoundArray = ['./sounds/Ach.wav','./sounds/OrchestraHit.wav', './sounds/sawtooth.wav'];
 
@@ -83,20 +81,19 @@ var testSoundArray = ['./sounds/Ach.wav','./sounds/OrchestraHit.wav', './sounds/
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-
-//Kludge. Rewrite this to start after making sure all the images actually loaded.
-bugImages[(bugImages.length - 1)].onload = function() {
-    init();
-}
+//Set up the audio engine and a system for playing sounds.
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+audioEngine = new AudioContext();
+audioLoader = new BufferLoader(audioEngine, soundArray, soundsAreReady);
+audioLoader.load(); //This sequence calls init().
 
 function init() {
+    console.log("Tracker2D needs documentation! Here's a start.");
+    console.log("Valid pitches are from 0-72. Valid instruments are 1, 5, 6, 24, 30, 31.");
+    console.log("Only audio FX that work are bendpitch, lowpass, and highpass. Bendpitch takes values between 0-16; the passes take values from 0-20000.")
+    //Since this running means everything's loading, dispel the load notice.
+    $("#loadScreen").addClass("alwaysHidden");
 
-
-    //Set up the audio engine and a system for playing sounds.
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    audioEngine = new AudioContext();
-    audioLoader = new BufferLoader(audioEngine, soundArray, soundsAreReady);
-    audioLoader.load();
     //Move the bottom bar to the render function, at the very least.
     ctx.fillStyle = "#000000";
     ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
@@ -130,10 +127,10 @@ function init() {
     //Definitely functionalize. This handles instruments.
     $('#instrumentInput').keydown(function(event){
         if (event.keyCode == 13) {
-            if($('#instrumentInput').val() === -1) {currentInstrument = -1 ;}
-            else if($('#instrumentInput').val() < testSoundArray.length) { currentInstrument = $('#instrumentInput').val();}
+            if($('#instrumentInput').val() === 0) {currentInstrument = 0 ;}
+            else if($('#instrumentInput').val() < soundArray.length) { currentInstrument = $('#instrumentInput').val();}
             else { 
-                console.log("There are only " + testSoundArray.length + " instruments right now. Remind me to turn this into a list.");
+                console.log("There are only " + soundArray.length + " instruments right now. Remind me to turn this thing a list.");
                 $('#instrumentInput').val('');
             }
             console.log(currentInstrument);
@@ -364,7 +361,7 @@ function soundsAreReady(soundList) {
     for(var i = 0; i < soundList.length; ++i) {
         soundFont.push(soundList[i]); //We fill up SoundFont with sounds...
     }
-
+    init(); //Program's not going to be much use until the sounds have loaded.
 }
 
 function playSound(buffer, pitch, dspEffect, dspValue) {

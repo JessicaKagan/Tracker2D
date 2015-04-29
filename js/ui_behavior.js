@@ -442,7 +442,7 @@ function storeBugPositions() {
         storedBugPositions[i+3] = bugList[(i/4)].inStorage;
     }
     //console.log(storedBugPositions);
-    console.log("Bug positions stored");
+    //console.log("Bug positions stored");
 
 }
 
