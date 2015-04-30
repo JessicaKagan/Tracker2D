@@ -91,6 +91,7 @@ function init() {
     console.log("Tracker2D needs documentation! Here's a start.");
     console.log("Valid pitches are from 0-72. Valid instruments are 1, 5, 6, 24, 30, 31.");
     console.log("Only audio FX that work are bendpitch, lowpass, and highpass. Bendpitch takes values between 0-16; the passes take values from 0-20000.")
+    console.log("Adjust input pitch with the QWERTY row and +/-, although you'll need a QWERTY layout keyboard for that to really make sense.")
     //Since this running means everything's loading, dispel the load notice.
     $("#loadScreen").addClass("alwaysHidden");
 
@@ -124,7 +125,25 @@ function init() {
         }
     })
 */
-    //Definitely functionalize. This handles instruments.
+    //Populate the instrument menu. The undefined check is VERY important.
+    for(var i = 0; i < soundSet.length; ++i){
+        if(soundSet[i] !== undefined){
+            $('#instrumentInput').append('<option value="' + soundSet[i] + '">' + soundSet[i][0] + '</option>');
+        }
+    }
+    $( "#instrumentInput" ).change(function() {
+        for(var i = 0; i < soundSet.length; ++i){
+            if(soundSet[i] !== undefined){
+                //We should parse the input from the instrument menu so that we can use strict equivalence.
+                if(soundSet[i] == $(this).find('option:selected').attr('value')) {
+                    currentInstrument = i;
+                }
+            }
+        }
+        //currentInstrument = soundSet.indexOf($(this).find('option:selected').attr('value')); //Process to just the number.
+        console.log(currentInstrument);
+    });
+    /*
     $('#instrumentInput').keydown(function(event){
         if (event.keyCode == 13) {
             if($('#instrumentInput').val() === 0) {currentInstrument = 0 ;}
@@ -137,6 +156,7 @@ function init() {
             //$('#instrumentInput').val('');
         }
     })
+    */
     //This handles the audio FX menu.
     for(var i = 0; i < possibleDSPEffects.length; ++i){
         $('#DSPInput').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');

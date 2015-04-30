@@ -147,6 +147,7 @@ select {
 
 #loadScreen {
     z-index: 9999;
+    position: absolute;
 }
 
 .bugHoldingPen {
