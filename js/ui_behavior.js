@@ -14,7 +14,7 @@ var isOverlayShowing = false; //Used to handle some pointer events CSS.
 var pauseState = true;
 //singleStep executes a single update and then pauses.
 //Labels for all tools that require clicking on the field. Not in use yet.
-var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','singleStep']; 
+var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','singleStep','modifyTile']; 
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var tileBuffer; //An array representing a rectangle of selected tiles.
 var saveContent; //A string representing the contents of the map.
@@ -228,6 +228,7 @@ function loadFile() {
     songDescription = loadingWorkArray[loadingWorkArray.length - 2];
 }
 
+//Generalize this. Switch statements and such.
 function closeSaveWindow(){
     setTimeout(function() {$("#saveExport").addClass("currentlyHidden");}, 50);
 }

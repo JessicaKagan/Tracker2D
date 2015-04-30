@@ -17,7 +17,12 @@
                 </div>
                 <div id="UIShifter2" class="UIInputBox">
                     <p>Instrument</p>
+                    <select id="instrumentInput" class="UIShifterInput">
+                        <option value="Test"></option>
+                    </select>
+                    <!--
                     <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="instrumentInput" value="1"></input>
+                    -->
                 </div>
                 <div id="UIShifter3" class="UIInputBox">
                     <p>Audio FX</p>
@@ -74,6 +79,17 @@
                     <div id="loadExport" class="currentlyHidden">
                         <p>Paste in a valid save. <button type="button" id="closeSaveWindow" onClick="loadFile()">Load</button></p>
                         <textarea id="loadText" class="fileIOArea"></textarea>
+                    </div>
+
+                    <!--This will allow you to change tile properties in a more detailed fashion than the leftmenu.-->
+                    <div id="modifyTile" class="currentlyHidden editingWindow">
+                        <p>Add UI elements here</p>
+                        <button class="closeButton">Close Window</button>
+                    </div>
+                    <!--This will allow you to change song properties.-->
+                    <div id="modifySongProperties" class="currentlyHidden editingWindow">
+                        <p>Add UI elements here</p>
+                        <button class="closeButton">Close Window</button>
                     </div>
                     <div id="queryInfo" class="currentlyHidden">
                     </div>
