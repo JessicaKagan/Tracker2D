@@ -36,6 +36,7 @@ var soundFont, audioEngine, audioLoader;
 var selectBoxStage, moveBugStage, selectedBug;
 //For synch.
 var lastTime, updateFrequency, timeToUpdate;
+var tickMultiplier = 12.5;
 
 //Used in keyboard_shortcuts to adjust currentPitch;
 var scaleNote = 0;
@@ -112,7 +113,6 @@ function init() {
     //Set up keyboard shortcuts.
     hookKeyboard();
 
-    pauseUI = new pauseButton(PAUSE_PLAY_BUTTON_AREA);
     //Setting up text input. Functionalize, or at least move to a seperate file.
     //Pitch text input's been disabled for now, since you can use the QWERTY row and +- to toy with your pitches.
     /*
@@ -203,7 +203,7 @@ function init() {
     storeBugPositions();
 
     lastTime = Date.now();
-    updateFrequency = 12.5/TEMPO; //Currently, 8 'ticks' every beat?
+    updateFrequency = tickMultiplier/TEMPO; //Currently, 8 'ticks' every beat?
     timeToUpdate = updateFrequency;
     window.requestAnimationFrame(main);
 }
@@ -441,6 +441,7 @@ function main(){
      * This needs to link partially into the tempo variable. Bug positions only need to update on tempo ticks.
      * However, rendering needs to be as fast and responsive as possible, so it's independent of our timing function.
      */
+    updateFrequency = tickMultiplier/TEMPO; //Recomputing this here will come in handy when the user changes the tempo.
     var now = Date.now();
     var delta = (now - lastTime) / 1000.0;
     lastTime = now;

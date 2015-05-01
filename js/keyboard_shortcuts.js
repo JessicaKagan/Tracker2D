@@ -1,7 +1,8 @@
 function hookKeyboard(){
+
+    //Start with the canvas keys.
     $(window).keypress(function(e){
-        //Keyboard input doesn't seem to work in Firefox!
-        //Might need different logic based on browser ID here.
+        //Multiple cases for multiple browser implementations.
         var keyboardInput = (e.charCode) ? e.charCode : ((e.which) ? e.which : e.keyCode);
         console.log(keyboardInput);
         switch(keyboardInput){
@@ -64,6 +65,28 @@ function hookKeyboard(){
             currentPitch = currentOctave*12 + scaleNote; 
             $('#pitchInput').val(currentPitch);
         }
-       
     });
+
+    //UI hooks for the Song Properties window
+    jQuery('#tempoSpinner').change(function (){
+        console.log(this.value);
+        if(this.value >= 1 && this.value <= 999) {
+            TEMPO = this.value;
+        } else if(this.value < 1 || this.value > 999) {
+            this.value.replace(TEMPO);
+        }
+        //Reset this timing value to recalibrate the main loop.
+        timeToUpdate = 0;
+        updateFrequency = tickMultiplier/TEMPO;
+        
+    });
+
+    //Input sanitization for number only fields. Thanks, Stackoverflow!
+    //http://stackoverflow.com/questions/891696/jquery-what-is-the-best-way-to-restrict-number-only-input-for-textboxes-all
+    jQuery('.numbersOnly').keypress(function (){  
+        this.value = this.value.replace(/[^0-9\.]/g,'');
+        //var testTempo = this.value.parseInt();
+        //console.log(testTempo); 
+    });
+
 }

@@ -223,6 +223,10 @@ function loadFile() {
     storeBugPositions();
     //Song properties are stored at the very end of the file.
     TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
+    console.log(TEMPO);
+    updateFrequency = tickMultiplier/TEMPO; //Important that we derive this value.
+    $("#tempoSpinner").value = TEMPO;
+    //console.log($("#tempoSpinner").value);
     //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
     author = loadingWorkArray[loadingWorkArray.length - 3];
     songDescription = loadingWorkArray[loadingWorkArray.length - 2];
