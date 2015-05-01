@@ -21,6 +21,7 @@ select {
 #box {
     width: 800px;
     height: 600px;
+    font-family: Tahoma, sans-serif;
     border-style: solid;
     border-width: 1px;
     position: absolute;
@@ -71,7 +72,6 @@ select {
     left: 80px;
     width: 160px;
     height: 160px;
-    font-family: Tahoma, sans-serif;
     font-size: 11px;
     background-color: rgba(255,255,255, 0.75);
     border-style: solid;
@@ -105,7 +105,6 @@ select {
     top: 300px;
     color: white;
     width: 80px;
-    font-family: Tahoma, sans-serif;
     font-size: 14px;
     text-align: center;
 }
@@ -150,6 +149,10 @@ select {
     position: absolute;
 }
 
+#modifySongProperties {
+
+}
+
 .bugHoldingPen {
     position: absolute;
     width: 24px;
@@ -177,6 +180,23 @@ select {
     top: 48px;
     width: 474px;
     height: 306px;
+}
+
+/*For areas that allow you to adjust various object properties.*/
+.editingWindow {
+    position: absolute;
+    top: 72px;
+    left: 224px;
+    width: 452px;
+    height: 332px;
+    background-color: rgba(192,192,192, 0.75);
+    color: #000000;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    z-index: 1;
+    overflow-y: scroll;
+    font-size: 12px;
 }
 
 /* A useful fallback if we need to attach event handlers to canvas things?*/

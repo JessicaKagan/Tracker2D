@@ -72,12 +72,15 @@
                 <!--Now for elements that will pop up and take drawing precedence when the user presses a button.-->
                 <div id="canvasUIElements">
                     <div id="saveExport" class="currentlyHidden">
-                        <p>Copy this save data somewhere safe. <button type="button" id="closeSaveWindow" onClick="closeSaveWindow()">Close Window</button></p>
+                        <p>Copy this save data somewhere safe. <button type="button" class="closeWindow" onClick="hideUI()">Close Window</button></p>
                         <textarea id="saveText" class="fileIOArea" readonly></textarea>
                     </div>
                     <!--Add an "exit without loading" button to this control.-->
                     <div id="loadExport" class="currentlyHidden">
-                        <p>Paste in a valid save. <button type="button" id="closeSaveWindow" onClick="loadFile()">Load</button></p>
+                        <p>Paste in a valid save. <button type="button" id="loadFileWindow" onClick="loadFile()">Load</button>
+                        <button type="button" class="closeWindow" onClick="hideUI()">Close Window</button>
+                        </p>
+
                         <textarea id="loadText" class="fileIOArea"></textarea>
                     </div>
 
@@ -88,8 +91,14 @@
                     </div>
                     <!--This will allow you to change song properties.-->
                     <div id="modifySongProperties" class="currentlyHidden editingWindow">
-                        <p>Add UI elements here</p>
-                        <button class="closeButton">Close Window</button>
+                        <button class="closeButton" onClick="hideUI()">Close Window</button>
+                        <br>
+                        <p>Tempo: <input type="number" name="tempo" min="1" max="999" value="100"></p>
+                        <!--
+                        <p>Playfield Size (not implemented yet): <input type="number" name="fieldsize" min="64" max="512" value="64" step="64"></p>
+                        -->
+                        <p>Song Author: <input type="text" name="author"></p>
+                        <p>Song Name: <input type="text" name="songName"></p>
                     </div>
                     <div id="queryInfo" class="currentlyHidden">
                     </div>

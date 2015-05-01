@@ -15,6 +15,8 @@ var PASTE_BUTTON_AREA = [176,576,24,24];
 var QUERY_BUTTON_AREA = [200,576,24,24];
 var MOVEBUG_BUTTON_AREA = [224,576,24,24];
 
+var SONGPROPS_BUTTON_AREA = [632,576,24,24];
+
 var STOREBUG_BUTTON_AREA = [680,576,24,24];
 var RESTOREBUG_BUTTON_AREA = [704,576,24,24];
 
@@ -43,13 +45,14 @@ var currentInstrument = 1;
 var currentDSPValue = 0;
 var currentDSP = "none";
 var currentFlowControl = "none";
-var UIImages = new Array(12);
-var tileOverlayImages = new Array(5); //Used for flow control.
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
+//Image arrays used in image_loader.js
+var UIImages = new Array(13);
+var tileOverlayImages = new Array(5); //Used for flow control.
+var bugImages = new Array(8);
 //Define the bug arrays.
 var bugList = new Array(8);
-var bugImages = new Array(8);
 
 //Initialize the image arrays properly.
 for(var i = 0; i < UIImages.length; i++) {
@@ -249,6 +252,10 @@ function interact(e) {
             console.log("MOVE_BUG_BUTTON_AREA");
             selectedTool = "moveBug";
             moveBugStage = 1; //Like selecting a box, this is a two step process.
+        } else if(cursorY >= 576 && cursorX >= 632 && cursorX < 656) {
+            console.log('SONGPROPS_BUTTON_AREA');
+            hideUI();
+            $("#modifySongProperties").removeClass("currentlyHidden");
         } else if(cursorY >= 576 && cursorX >= 680 && cursorX < 704) {
             console.log('STOREBUG_BUTTON_AREA');
             storeBugPositions();
@@ -257,10 +264,12 @@ function interact(e) {
             restoreBugPositions();
         } else if(cursorY >= 576 && cursorX >= 752 && cursorX < 776) {
             console.log('SAVE_BUTTON_AREA');
-            if($("#loadExport").hasClass("currentlyHidden") === true) { saveFile(); } //Kludge against UI clash.
+            hideUI();
+            saveFile();
         } else if(cursorY >= 576 && cursorX >= 776 && cursorX < 800) {
             console.log('LOAD_BUTTON_AREA');
-            if($("#saveExport").hasClass("currentlyHidden") === true) { $("#loadExport").removeClass("currentlyHidden"); }
+            hideUI();
+            $("#loadExport").removeClass("currentlyHidden");
         }
     }
     //If we're inside the playfield, convert the coordinates to a tile.

@@ -50,6 +50,7 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[9],MOVEBUG_BUTTON_AREA[0],MOVEBUG_BUTTON_AREA[1]);     
     ctx.drawImage(UIImages[10],STOREBUG_BUTTON_AREA[0],STOREBUG_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[11],RESTOREBUG_BUTTON_AREA[0],RESTOREBUG_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[12],SONGPROPS_BUTTON_AREA[0],SONGPROPS_BUTTON_AREA[1]); 
 
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
@@ -176,10 +177,10 @@ function saveFile() {
     //It will be some time before we can actually get this to a user.
 }
 
-//Will need rebuilding to work with large files.
+
 function loadFile() {
     pauseState = true;
-    closeLoadWindow();
+    hideUI();
     //Convert the input from base64. We need to implement error trapping at some point.
     encodedContent = $("#loadText").val();
     if(encodedContent !== undefined) {
@@ -220,7 +221,6 @@ function loadFile() {
         checkBug(i);
     }
     storeBugPositions();
-
     //Song properties are stored at the very end of the file.
     TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
     //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
@@ -228,13 +228,18 @@ function loadFile() {
     songDescription = loadingWorkArray[loadingWorkArray.length - 2];
 }
 
-//Generalize this. Switch statements and such.
-function closeSaveWindow(){
-    setTimeout(function() {$("#saveExport").addClass("currentlyHidden");}, 50);
-}
-
-function closeLoadWindow(){
-    setTimeout(function() {$("#loadExport").addClass("currentlyHidden");}, 50);
+//General UI handling function called whenever the user opens up a UI element through Canvas.
+//The timeouts prevent clicks from bleeding through to other elements.
+function hideUI(){
+    if($("#saveExport").hasClass("currentlyHidden") === false) { 
+        setTimeout(function() {$("#saveExport").addClass("currentlyHidden");}, 50);
+    }
+    if($("#loadExport").hasClass("currentlyHidden") === false) { 
+        setTimeout(function() {$("#loadExport").addClass("currentlyHidden");}, 50);
+    }
+    if($("#modifySongProperties").hasClass("currentlyHidden") === false) { 
+        setTimeout(function() {$("#modifySongProperties").addClass("currentlyHidden");}, 50);
+    }
 }
 
 //checkBug and getBug need to be merged properly.
