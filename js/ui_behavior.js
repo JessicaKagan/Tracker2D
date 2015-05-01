@@ -168,7 +168,7 @@ function saveFile() {
     }
 
     //Dump song properties next.
-    saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n';
+    saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n' + songTitle;
     console.log(saveContent);
     //Convert the entire thing to base64.
     encodedContent = window.btoa(saveContent);
@@ -230,6 +230,7 @@ function loadFile() {
     //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
     author = loadingWorkArray[loadingWorkArray.length - 3];
     songDescription = loadingWorkArray[loadingWorkArray.length - 2];
+    songTitle = loadingWorkArray[loadingWorkArray.length - 1];
 }
 
 //General UI handling function called whenever the user opens up a UI element through Canvas.

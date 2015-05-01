@@ -42,7 +42,7 @@ var tickMultiplier = 12.5;
 var scaleNote = 0;
 var currentOctave = 3;
 var currentPitch = 36;
-var currentInstrument = 1;
+var currentInstrument = 0;
 var currentDSPValue = 0;
 var currentDSP = "none";
 var currentFlowControl = "none";
@@ -134,7 +134,7 @@ function init() {
             $('#instrumentInput').append('<option value="' + soundSet[i] + '">' + soundSet[i][0] + '</option>');
         }
     }
-    $( "#instrumentInput" ).change(function() {
+    $('#instrumentInput').change(function() {
         for(var i = 0; i < soundSet.length; ++i){
             if(soundSet[i] !== undefined){
                 //We should parse the input from the instrument menu so that we can use strict equivalence.
@@ -143,8 +143,9 @@ function init() {
                 }
             }
         }
+        //console.log($('#instrumentInput').val());
         //currentInstrument = soundSet.indexOf($(this).find('option:selected').attr('value')); //Process to just the number.
-        console.log(currentInstrument);
+        //console.log(currentInstrument);
     });
     /*
     $('#instrumentInput').keydown(function(event){
@@ -255,6 +256,11 @@ function interact(e) {
         } else if(cursorY >= 576 && cursorX >= 632 && cursorX < 656) {
             console.log('SONGPROPS_BUTTON_AREA');
             hideUI();
+            //Fill the UI elements with data from the song properties.
+            $("#tempoSpinner").val(TEMPO);
+            $("#authorName").val(author);
+            $("#songName").val(songTitle);
+            $("#songDesc").val(songDescription);
             $("#modifySongProperties").removeClass("currentlyHidden");
         } else if(cursorY >= 576 && cursorX >= 680 && cursorX < 704) {
             console.log('STOREBUG_BUTTON_AREA');

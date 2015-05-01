@@ -18,7 +18,6 @@
                 <div id="UIShifter2" class="UIInputBox">
                     <p>Instrument</p>
                     <select id="instrumentInput" class="UIShifterInput">
-                        <option value="Test"></option>
                     </select>
                     <!--
                     <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="instrumentInput" value="1"></input>
@@ -95,10 +94,11 @@
                         <br>
                         <p>Tempo: <input id = "tempoSpinner" class = "numbersOnly" type="number" name="tempo" min="1" max="999" value="120"></p>
                         <!--
-                        <p>Playfield Size (not implemented yet): <input type="number" name="fieldsize" min="64" max="512" value="64" step="64"></p>
+                        <p>Playfield Size: <input type="number" name="fieldsize" min="64" max="512" value="64" step="64"></p>
                         -->
-                        <p>Song Author: <input type="text" name="author"></p>
-                        <p>Song Name: <input type="text" name="songName"></p>
+                        <p>Song Author: <input type="text" id="authorName"></p>
+                        <p>Song Name: <input type="text" id="songName"></p>
+                        <p>Song Description: <input type="text" id="songDesc"></p>
                     </div>
                     <div id="queryInfo" class="currentlyHidden">
                     </div>

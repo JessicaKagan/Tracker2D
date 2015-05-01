@@ -8,7 +8,8 @@ var PLAYFIELD_SIZE = [64, 128, 256, 512]; //The user will eventually be able to 
 var ZOOM_MULTIPLIER = [1, 2, 4, 8]; //Derived from the playfield size, and will eventually be used for a graphical zoom feature.
 
 //Once these are implemented, it should reflect badly on the user not to put anything at all here when sharing a file.
-var author = "If you see this, the author couldn't be bothered to even claim anonymity.";
+var author = "Nooblet";
+var songTitle = "Noob Song";
 var songDescription = "If you see this, the author couldn't be bothered to say anything about his work.";
 
 //Implement bug starting positions if any.

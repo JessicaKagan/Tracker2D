@@ -89,4 +89,26 @@ function hookKeyboard(){
         //console.log(testTempo); 
     });
 
+    jQuery('#tempoSpinner').change(function (){
+        //console.log(this.value);
+        if(this.value >= 1 && this.value <= 999) {
+            TEMPO = this.value;
+        } else if(this.value < 1 || this.value > 999) {
+            this.value.replace(TEMPO);
+        }
+        //Reset this timing value to recalibrate the main loop.
+        timeToUpdate = 0;
+        updateFrequency = tickMultiplier/TEMPO;
+        
+    });
+    jQuery('#authorName').change(function (){
+        author = this.value;
+    });
+    jQuery('#songName').change(function (){
+        songTitle = this.value;
+    });
+    jQuery('#songDesc').change(function (){
+        songDescription = this.value;
+    });
+
 }
