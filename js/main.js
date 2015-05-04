@@ -15,6 +15,7 @@ var PASTE_BUTTON_AREA = [176,576,24,24];
 var QUERY_BUTTON_AREA = [200,576,24,24];
 var MOVEBUG_BUTTON_AREA = [224,576,24,24];
 
+var EDIT_TILE_BUTTON_AREA = [608,576,24,24];
 var SONGPROPS_BUTTON_AREA = [632,576,24,24];
 
 var STOREBUG_BUTTON_AREA = [680,576,24,24];
@@ -49,7 +50,7 @@ var currentFlowControl = "none";
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(13);
+var UIImages = new Array(14);
 var tileOverlayImages = new Array(5); //Used for flow control.
 var bugImages = new Array(8);
 //Define the bug arrays.
@@ -93,7 +94,6 @@ audioLoader.load(); //This sequence calls init().
 
 function init() {
     console.log("Tracker2D needs documentation! Here's a start.");
-    console.log("Valid pitches are from 0-72. Valid instruments are 1, 5, 6, 24, 30, 31.");
     console.log("Only audio FX that work are bendpitch, lowpass, and highpass. Bendpitch takes values between 0-16; the passes take values from 0-20000.")
     console.log("Adjust input pitch with the QWERTY row and +/-, although you'll need a QWERTY layout keyboard for that to really make sense.")
     //Since this running means everything's loading, dispel the load notice.
@@ -113,21 +113,6 @@ function init() {
     //Set up keyboard shortcuts.
     hookKeyboard();
 
-    //Setting up text input. Functionalize, or at least move to a seperate file.
-    //Pitch text input's been disabled for now, since you can use the QWERTY row and +- to toy with your pitches.
-    /*
-    $('#pitchInput').keydown(function(event){
-        if (event.keyCode == 13) {
-            if($('#pitchInput').val() <= 72 && $('#pitchInput').val() > 0) { currentPitch = $('#pitchInput').val();}
-            else { 
-                console.log("Please input a note between 1 and 72"); 
-                $('#pitchInput').val('');
-            }
-            console.log(currentPitch);
-            //$('#pitchInput').val('');
-        }
-    })
-*/
     //Populate the instrument menu. The undefined check is VERY important.
     for(var i = 0; i < soundSet.length; ++i){
         if(soundSet[i] !== undefined){
@@ -143,24 +128,8 @@ function init() {
                 }
             }
         }
-        //console.log($('#instrumentInput').val());
-        //currentInstrument = soundSet.indexOf($(this).find('option:selected').attr('value')); //Process to just the number.
-        //console.log(currentInstrument);
     });
-    /*
-    $('#instrumentInput').keydown(function(event){
-        if (event.keyCode == 13) {
-            if($('#instrumentInput').val() === 0) {currentInstrument = 0 ;}
-            else if($('#instrumentInput').val() < soundArray.length) { currentInstrument = $('#instrumentInput').val();}
-            else { 
-                console.log("There are only " + soundArray.length + " instruments right now. Remind me to turn this thing a list.");
-                $('#instrumentInput').val('');
-            }
-            console.log(currentInstrument);
-            //$('#instrumentInput').val('');
-        }
-    })
-    */
+
     //This handles the audio FX menu.
     for(var i = 0; i < possibleDSPEffects.length; ++i){
         $('#DSPInput').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
@@ -186,7 +155,6 @@ function init() {
         console.log(currentFlowControl);
     });
     //Left bar menu stuff ends here.
-
     //Define the bugs. The names are for flavor.
     bugList[0] = new Bug(bugImages[0], 1,1,'moveRight','George', false);
     bugList[1] = new Bug(bugImages[1], 1,3,'moveRight','Steve', false);
@@ -253,6 +221,9 @@ function interact(e) {
             console.log("MOVE_BUG_BUTTON_AREA");
             selectedTool = "moveBug";
             moveBugStage = 1; //Like selecting a box, this is a two step process.
+        } else if(cursorY >= 576 && cursorX >= 608 && cursorX < 632) {
+            selectedTool = "editTile";
+            console.log("EDIT_TILE_BUTTON_AREA");
         } else if(cursorY >= 576 && cursorX >= 632 && cursorX < 656) {
             console.log('SONGPROPS_BUTTON_AREA');
             hideUI();
@@ -365,6 +336,11 @@ function interact(e) {
                             bugList[selectedBug].bugTile = getTile(bugList[selectedBug].x,bugList[selectedBug].y);
                         } else console.log("moveBug() in interact() failed.");
                         break;
+                    case "editTile":
+                    //Show the UI.
+                    console.log("Edit this tile");
+                    $("#modifyTile").removeClass("currentlyHidden");
+
                     default:
                         break;
                 }

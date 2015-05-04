@@ -50,7 +50,8 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[9],MOVEBUG_BUTTON_AREA[0],MOVEBUG_BUTTON_AREA[1]);     
     ctx.drawImage(UIImages[10],STOREBUG_BUTTON_AREA[0],STOREBUG_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[11],RESTOREBUG_BUTTON_AREA[0],RESTOREBUG_BUTTON_AREA[1]); 
-    ctx.drawImage(UIImages[12],SONGPROPS_BUTTON_AREA[0],SONGPROPS_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[12],SONGPROPS_BUTTON_AREA[0],SONGPROPS_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[13],EDIT_TILE_BUTTON_AREA[0],EDIT_TILE_BUTTON_AREA[1]); 
 
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
@@ -244,6 +245,9 @@ function hideUI(){
     }
     if($("#modifySongProperties").hasClass("currentlyHidden") === false) { 
         setTimeout(function() {$("#modifySongProperties").addClass("currentlyHidden");}, 50);
+    }
+    if($("#modifyTile").hasClass("currentlyHidden") === false) { 
+        setTimeout(function() {$("#modifyTile").addClass("currentlyHidden");}, 50);
     }
 }
 
