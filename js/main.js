@@ -45,6 +45,7 @@ var currentOctave = 3;
 var currentPitch = 36;
 var currentInstrument = 0;
 var currentDSPValue = 0;
+var currentVolume = 0.6;
 var currentDSP = "none";
 var currentFlowControl = "none";
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
@@ -79,9 +80,6 @@ for(var i = 0; i < soundSet.length; ++i){
     } else soundArray[i] = './sounds/00.mp3';
 }
 
-var testSoundArray = ['./sounds/Ach.wav','./sounds/OrchestraHit.wav', './sounds/sawtooth.wav'];
-
-
 //Set up a canvas to draw on. All the drawing functions should be in render() now.
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
@@ -90,7 +88,7 @@ var ctx = canvas.getContext("2d");
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 audioEngine = new AudioContext();
 audioLoader = new BufferLoader(audioEngine, soundArray, soundsAreReady);
-audioLoader.load(); //This sequence calls init().
+audioLoader.load(); //This sequence calls soundsAreReady when it's done, which calls init().
 
 function init() {
     console.log("Tracker2D needs documentation! Here's a start.");
@@ -262,7 +260,7 @@ function interact(e) {
                 
                 switch(selectedTool){
                     case "pencil":
-                        fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, 0.6, currentDSPValue, 0);
+                        fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, currentVolume, currentDSPValue, 0);
                         break;
                     case "eraser":
                         fieldContents[currentTile[0]][currentTile[1]] = undefined;
@@ -337,7 +335,6 @@ function interact(e) {
                         } else console.log("moveBug() in interact() failed.");
                         break;
                     case "editTile":
-                    //Show the UI.
                     console.log("Edit this tile");
                     $("#modifyTile").removeClass("currentlyHidden");
 
@@ -363,7 +360,7 @@ function convertTiletoPixels(x,y){
     return [pixelX, pixelY];
 }
 
-//Maybe move the audio routines into a seperate file?
+//Maybe move the audio playback routines into a seperate file?
 function soundsAreReady(soundList) {
     console.log("Sounds loaded");
     //console.log(soundList);
@@ -375,14 +372,22 @@ function soundsAreReady(soundList) {
     init(); //Program's not going to be much use until the sounds have loaded.
 }
 
-function playSound(buffer, pitch, dspEffect, dspValue) {
+function playSound(buffer, pitch, dspEffect, dspValue, volume) {
     //console.log(dspEffect + ": " + dspValue);
     var source = audioEngine.createBufferSource();  
     source.buffer = buffer;
     source.playbackRate.value = pitch;
     //console.log(source.playbackRate.value*44100);
+
+    //Volume adjustment is handled before effects are added.
+    var volumeAdjustment = audioEngine.createGain();
+    source.connect(volumeAdjustment);
+    //Very basic error trapping in case we get nasty input that might potentially cause clipping.
+    if(volume >= 0 && volume <= 1) { 
+        volumeAdjustment.gain.value = volume; 
+    } else { volumeAdjustment.gain.value = 0.6; }
+
     //Decide how to handle audio when page isn't visible, see http://www.w3.org/TR/page-visibility/?csw=1
-    
     /*  To extend the sound system to take at least two audio effects at a time, 
      *  we'll need some sort of intermediate filter. (Source -> filter1 -> filter2 -> destination)
      *  Also necessary - a null filter that doesn't do anything that we can pass through as needed.
@@ -392,14 +397,14 @@ function playSound(buffer, pitch, dspEffect, dspValue) {
     switch(dspEffect){
         case 'lowpass':
             var createLowPass = audioEngine.createBiquadFilter();
-            source.connect(createLowPass);
+            volumeAdjustment.connect(createLowPass);
             createLowPass.connect(audioEngine.destination);
             createLowPass.type = 'lowpass';
             createLowPass.frequency.value = dspValue;
             break;
         case 'hipass':
             var createHighPass = audioEngine.createBiquadFilter();
-            source.connect(createHighPass);
+            volumeAdjustment.connect(createHighPass);
             createHighPass.connect(audioEngine.destination);
             createHighPass.type = 'highpass';
             createHighPass.frequency.value = dspValue;
@@ -407,10 +412,10 @@ function playSound(buffer, pitch, dspEffect, dspValue) {
         case 'bendpitch':
             if(dspValue <= 16 && dspValue >= 0) { source.playbackRate.value *= dspValue; } 
             else { console.log('bendpitch only takes values between 0 and 16, for the sake of sanity. Effect not applied.'); }
-            source.connect(audioEngine.destination);
+            volumeAdjustment.connect(audioEngine.destination);
             break;
         default:
-            source.connect(audioEngine.destination);
+            volumeAdjustment.connect(audioEngine.destination);
             break;
     }
     source.start(0);
@@ -452,6 +457,7 @@ function render(){
     //2. Painted tiles
 
     //Draw boundaries between tiles.
+    //This may need adjustment if we implement a zoom feature.
     for(var i = 80; i < FIELD_PIXELS[2]; i += TILE_SIZE) {
         ctx.beginPath();
         ctx.moveTo(i,0);
@@ -522,9 +528,5 @@ function paintTile(tileX, tileY, color){
                 break;
         }
     }
-    //A warning about stored bugs will be handled in the same way.
-
-
-
-
+    //A warning about stored bugs will be handled in the same way. Eventually.
 }

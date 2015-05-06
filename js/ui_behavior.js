@@ -479,3 +479,9 @@ function restoreBugPositions() {
         }
     }
 }
+
+//Takes input from the volume slider.
+function updateInputVolume(volumeNumber) {
+    $("#currentInputVolume").html(volumeNumber); //Adjusts the value.
+    currentVolume = volumeNumber/100;
+}

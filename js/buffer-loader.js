@@ -26,6 +26,7 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
         loader.bufferList[index] = buffer;
         if (++loader.loadCount == loader.urlList.length)
           loader.onload(loader.bufferList);
+        //console.log("Loaded sample " + soundSet[index][0]); //Eventually, this is getting hooked into the preloader.
       },
       function(error) {
         console.error('decodeAudioData error', error);

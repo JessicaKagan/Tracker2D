@@ -35,6 +35,10 @@
                     <p>Flow Control</p>
                     <select class="UIShifterInput" id="controlInput"></select>
                 </div>
+                <div id="UIShifter6" class="UIInputBox">
+                    <p>Input <br>Volume (<span id="currentInputVolume">60</span>%)</p>
+                    <input id="adjustInputVolume" type="range" min="0" max="100" value="60" onchange="updateInputVolume(value)"></input>
+                </div>
                 <!--The user can click these to move bugs in and out of storage.-->
                 <div id="bugStorage">
                     <p>Bug Storage
@@ -86,6 +90,10 @@
                     <!--This will allow you to change tile properties in a more detailed fashion than the leftmenu.-->
                     <div id="modifyTile" class="editingWindow currentlyHidden">
                         <p>Maybe this should be merged with queryInfo and the query Tool.</p>
+                        <p>Pitch: </p>
+                        <p>Instrument: </p>
+                        <p>Audio FX Value: </p>
+                        <p>Flow Control Value: </p>
                         <button class="closeButton" onClick="hideUI()">Close Window</button>
                     </div>
                     <!--This will allow you to change song properties.-->

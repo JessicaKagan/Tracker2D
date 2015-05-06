@@ -13,6 +13,10 @@ input[type="file"] {
     height: 24px;
 }
 
+input[type=range] {
+    width: 50%;
+}
+
 
 select {
     font-size: 10px;
@@ -81,23 +85,29 @@ select {
 }
 
 #UIShifter {
-    top: 80px;
+    top: 75px;
 }
 
 #UIShifter2 {
-    top: 120px;
+    top: 115px;
 }
 
 #UIShifter3 {
-    top: 160px;
+    top: 155px;
 }
 
 #UIShifter4 {
-    top: 200px;
+    top: 195px;
 }
 
 #UIShifter5 {
-    top: 220px;
+    top: 215px;
+}
+
+#UIShifter6 {
+    top: 250px;
+    left: -30px;
+    font-size: 10px;
 }
 
 #bugStorage {

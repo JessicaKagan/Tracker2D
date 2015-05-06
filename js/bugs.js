@@ -47,7 +47,8 @@ Bug.prototype.updateBug = function() {
             playSound(soundFont[fieldContents[this.bugTile[0]][this.bugTile[1]].instrument],
                                 fieldContents[this.bugTile[0]][this.bugTile[1]].note,
                                 fieldContents[this.bugTile[0]][this.bugTile[1]].dspEffect,
-                                fieldContents[this.bugTile[0]][this.bugTile[1]].dspValue
+                                fieldContents[this.bugTile[0]][this.bugTile[1]].dspValue,
+                                fieldContents[this.bugTile[0]][this.bugTile[1]].volume
                                 );
         }
     }

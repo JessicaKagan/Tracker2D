@@ -39,14 +39,9 @@ var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, f
     this.volume = volume;
     this.dspValue = dspValue;
     this.flowValue = flowValue;
-    if(this.volume === undefined) { this.volume = 1; }
+    if(this.volume === undefined) { this.volume = 0.6; }
     if(this.dspValue === undefined) { this.dspValue = 0; }
     if(this.flowValue === undefined) { this.flowValue = 0; }
-
-    //I think this might be residue that needs to be flushed out.
-    function updateValues(note, instrument, dspEffect, flowEffect) {
-        console.log("Not implemented yet");
-    }
 
 }
 
