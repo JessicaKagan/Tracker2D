@@ -362,14 +362,15 @@ function convertTiletoPixels(x,y){
 
 //Maybe move the audio playback routines into a seperate file?
 function soundsAreReady(soundList) {
-    console.log("Sounds loaded");
+    soundsAreReady.called = true;
     //console.log(soundList);
     //Populate soundFont with all the sounds we need.
     soundFont = [];
     for(var i = 0; i < soundList.length; ++i) {
         soundFont.push(soundList[i]); //We fill up SoundFont with sounds...
     }
-    init(); //Program's not going to be much use until the sounds have loaded.
+    $("#initButton").html("Loaded, click to play");
+    //init(); //Program's not going to be much use until the sounds have loaded.
 }
 
 function playSound(buffer, pitch, dspEffect, dspValue, volume) {

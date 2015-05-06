@@ -485,3 +485,12 @@ function updateInputVolume(volumeNumber) {
     $("#currentInputVolume").html(volumeNumber); //Adjusts the value.
     currentVolume = volumeNumber/100;
 }
+
+//Initializes everything, but only works if the soundSet is loaded.
+function loadIfReady(){
+    if(soundsAreReady.called) { init(); }
+    //Otherwise, inform the user. Alert breaks the load routine...
+    //else { alert("Hold on! Tracker2D needs to load all of its samples to function properly."); }
+    
+
+}

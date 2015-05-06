@@ -154,9 +154,14 @@ select {
     left: 48px;
 }
 
-#loadScreen {
+#loadScreen, #initButton {
     z-index: 9999;
     position: absolute;
+}
+
+#initButton {
+    left: 400px;
+    top: 540px;
 }
 
 #modifySongProperties {

@@ -1,3 +1,5 @@
+//From HTML5Rocks and presumably by Boris Smus.
+//Get this file for yourself at http://www.html5rocks.com/en/tutorials/webaudio/intro/
 function BufferLoader(context, urlList, callback) {
   this.context = context;
   this.urlList = urlList;
@@ -26,7 +28,10 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
         loader.bufferList[index] = buffer;
         if (++loader.loadCount == loader.urlList.length)
           loader.onload(loader.bufferList);
-        //console.log("Loaded sample " + soundSet[index][0]); //Eventually, this is getting hooked into the preloader.
+        //Preloader quality of life code for the user. Not included in the original.
+        if(soundsAreReady.called !== true) { 
+          $("#initButton").html(index + "/" + (soundSet.length - 1) + " samples loaded");
+        }
       },
       function(error) {
         console.error('decodeAudioData error', error);

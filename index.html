@@ -8,7 +8,9 @@
     </head>
 
     <body>
-        <div id="loadScreen"><img src ="./images/loading_screen.png" width="800" height="600"></div>
+        <div id="loadScreen"><img src ="./images/loading_screen.png" width="800" height="600">
+        <button id="initButton" type="button" onclick = "loadIfReady()">Loading...</button>
+        </div>
         <div id="box">
             <canvas id="canvas"  width="800px" height="600px">If you can see this, Canvas failed. Try reloading or upgrading your browser.</canvas>
                 <div id="UIShifter" class="UIInputBox">
