@@ -13,10 +13,13 @@ input[type="file"] {
     height: 24px;
 }
 
-input[type=range] {
+input[type="range"] {
     width: 50%;
 }
 
+input[type="submit"] {
+    /*visibility: hidden;*/
+}
 
 select {
     font-size: 10px;
@@ -166,6 +169,15 @@ select {
 
 #modifySongProperties {
 
+}
+
+#facebookButton {
+    position: absolute;
+    top: 568px;
+    left: 6px;
+    width: 24px;
+    height: 24px;
+    background-image: url('/images/facebook_icon.png');
 }
 
 .bugHoldingPen {
