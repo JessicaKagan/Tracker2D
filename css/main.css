@@ -177,7 +177,7 @@ select {
     left: 6px;
     width: 24px;
     height: 24px;
-    background-image: url('./images/facebook_icon.png');
+    padding: 0px;
 }
 
 #helpPage {

@@ -2,7 +2,7 @@
 //UI constants:
 var FILE_SIZE = [64,64]; //Starting the expansion process! This will eventually be something you can alter.
 var FIELD_SIZE = [30,23]; //The amount of horizontal and vertical tiles in the view.
-var TILE_SIZE = 24; //This is more cumbersome early on, but I will eventually need to implement zooming, and this might help
+var TILE_SIZE = 24; //This is more cumbersome early on, but I will eventually need to implement zooming, and this might help.
 var LEFT_VERTICAL_BAR = [0,0,80,800];
 var BOTTOM_HORIZONTAL_BAR = [80,552,720,48];
 var FIELD_PIXELS = [80,0,800,552];
@@ -31,8 +31,6 @@ var fieldContents = new Array(FILE_SIZE[0]);
 for(var i = 0; i < FILE_SIZE[0]; ++i) {
     fieldContents[i] = new Array(FILE_SIZE[1]);
 }
-
-//var fieldBackup = fieldContents; //When we implement saving, this will come in handy. We'll need a header, too.
 
 //Globals for now. Deglobalize as implementation permits. 
 var soundFont, audioEngine, audioLoader; 
@@ -94,8 +92,8 @@ audioLoader.load(); //This sequence calls soundsAreReady when it's done, which c
 
 function init() {
     console.log("Tracker2D needs documentation! Here's a start.");
-    console.log("Only audio FX that work are bendpitch, lowpass, and highpass. Bendpitch takes values between 0-16; the passes take values from 0-20000.")
-    console.log("Adjust input pitch with the QWERTY row and +/-, although you'll need a QWERTY layout keyboard for that to really make sense.")
+    console.log("Only audio FX that work are bendpitch, lowpass, and highpass. Bendpitch takes values between 0-16; the passes take values from 0-20000.");
+    console.log("Adjust input pitch with the QWERTY row and +/-, although you'll need a QWERTY layout keyboard for that to really make sense.");
     //Since this running means everything's loading, dispel the load notice.
     $("#loadScreen").addClass("alwaysHidden");
 
@@ -106,7 +104,7 @@ function init() {
     ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
     ctx.fillStyle = "#BBBBBB";
 
-    //Set up the UI.
+    //Set up HTML5 Canvas.
     var bindCanvas = document.getElementById("canvas");
     bindCanvas.addEventListener("click", interact); //Binding to the canvas instead of the entire document fixes some strange bugs.
     
@@ -178,8 +176,8 @@ function init() {
 }
 
 function interact(e) {
-    //This type of bloc will be used for UI elements that don't have buttons.
-    $("#queryInfo").addClass("currentlyHidden");
+    //queryInfo's hide routine probably needs to be merged with the rest of hideUI().
+    $("#queryInfo").addClass("currentlyHidden"); 
 
     var cursorX = e.pageX - $('#canvas').offset().left;
     var cursorY = e.pageY - $('#canvas').offset().top;
