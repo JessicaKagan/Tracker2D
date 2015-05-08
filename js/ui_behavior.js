@@ -114,7 +114,7 @@ function respondToQuery(X, Y) {
         //We iterate through the tile properties.
         if(fieldContents[X][Y].note !== undefined ) { queryResponse += "<p>Pitch: " + Math.floor(fieldContents[X][Y].note * 44100);}
         else { queryResponse += "Does not reference a pitch."; }
-        queryResponse += "<p> Instrument: " +  fieldContents[X][Y].instrument + "</p>";
+        queryResponse += "<p> Instrument: " +  soundSet[fieldContents[X][Y].instrument][0] + "</p>";
         queryResponse += "<p> Audio Effect: " +  fieldContents[X][Y].dspEffect + "</p>";
         queryResponse += "<p> Audio Effect Parameter: " +  fieldContents[X][Y].dspValue + "</p>";        
         queryResponse += "<p> Flow Effect: " +  fieldContents[X][Y].flowEffect + "</p>";

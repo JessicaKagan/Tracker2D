@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Simtunes Clone</title>
+        <link rel="stylesheet" href="css/manual.css">
+    </head>
+    <body>
+        <h1>MANUAL FOR TRACKER2D</h1>
+        <p id ="invisibleText">Please finish this help file.</p>
+        <p>The most basic tutorial follows:</p>
+        <ol>
+        <li> Select an instrument from the instrument menu. </li>
+        <li> The QWERTY row on a standard keyboard represents a Western chromatic scale; press any key there to select a note; plus and minus allow you to adjust your octave. </li>
+        <li> When the "PEN" tool is selected (which it is when you first load up the application), clicking on a square will put instructions on the tile based on the parameters on the left. </li>
+        <li> Once you have some instructions painted on the screen, press the play button in the lower left to get the bugs moving. Whenever they move over a grey tile, they'll play sounds based on the instructions in the tile. </li>
+        </ol>
+        <h2>UI FUNCTIONS</h2>
+        <p>We need text here!</p>
+        <hr>
+        <h2>The Field</h2>
+        <p>This is literally where the music happens. The way the UI is currently set up, you can see a 30*23 'slice' of the entire field (although this may change if we implement a zoom feature).</p><br>
+        <hr>
+        <h2>The Left Bar</h2>
+        <p>This uses HTML5-based controls. From top to bottom, the following functions are available: <br>
+        <strong>Minimap</strong>: This shows a small view of the entire field. Clicking anywhere on it will move your view to a different part of the field. <br>
+        (more)
+        </p>
+        <hr>
+        <h2>The Bottom Bar</h2>  
+        <p> This uses jQuery controls and HTML5 Canvas for icons. From left to right: <br>
+        <strong>Play/Pause Button</strong>: Changes state when clicked. Clicking it when it shows the play icon will the bugs to move. Clicking it when it shows the pause icon will cause the bugs to stop moving. Please note that attempting to use many other tools will pause playback.<br>
+        <strong>Pen</strong>: Click on a tile in the field, and it will put the musical instructions you've selected in the left bar onto that tile.<br>
+        <strong>Eraser</strong>: The eraser removes musical instructions from tiles that you click on.<br>
+        (more)
+        </p>      
+    </body>
+</html>

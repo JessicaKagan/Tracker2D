@@ -177,7 +177,14 @@ select {
     left: 6px;
     width: 24px;
     height: 24px;
-    background-image: url('/images/facebook_icon.png');
+    background-image: url('./images/facebook_icon.png');
+}
+
+#helpPage {
+    position: absolute;
+    top: 72px;
+    left: 200px;
+    z-index: 1;
 }
 
 .bugHoldingPen {
