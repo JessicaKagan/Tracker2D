@@ -52,6 +52,7 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[11],RESTOREBUG_BUTTON_AREA[0],RESTOREBUG_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[12],SONGPROPS_BUTTON_AREA[0],SONGPROPS_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[13],EDIT_TILE_BUTTON_AREA[0],EDIT_TILE_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[14],HELP_BUTTON_AREA[0],HELP_BUTTON_AREA[1]); 
 
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
@@ -248,6 +249,9 @@ function hideUI(){
     }
     if($("#modifyTile").hasClass("currentlyHidden") === false) { 
         setTimeout(function() {$("#modifyTile").addClass("currentlyHidden");}, 50);
+    }
+    if($("#helpPage").hasClass("currentlyHidden") === false) { 
+        setTimeout(function() {$("#helpPage").addClass("currentlyHidden");}, 50);
     }
 }
 

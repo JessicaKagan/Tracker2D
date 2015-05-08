@@ -15,6 +15,8 @@ var PASTE_BUTTON_AREA = [176,576,24,24];
 var QUERY_BUTTON_AREA = [200,576,24,24];
 var MOVEBUG_BUTTON_AREA = [224,576,24,24];
 
+var HELP_BUTTON_AREA = [560,576,24,24];
+
 var EDIT_TILE_BUTTON_AREA = [608,576,24,24];
 var SONGPROPS_BUTTON_AREA = [632,576,24,24];
 
@@ -51,7 +53,7 @@ var currentFlowControl = "none";
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(14);
+var UIImages = new Array(15);
 var tileOverlayImages = new Array(5); //Used for flow control.
 var bugImages = new Array(8);
 //Define the bug arrays.
@@ -219,6 +221,12 @@ function interact(e) {
             console.log("MOVE_BUG_BUTTON_AREA");
             selectedTool = "moveBug";
             moveBugStage = 1; //Like selecting a box, this is a two step process.
+        } else if(cursorY >= 576 && cursorX >= 560 && cursorX < 588) {
+            console.log("HELP_BUTTON_AREA");
+            hideUI();
+            if($("#helpPage").hasClass("currentlyHidden") === true){
+                $("#helpPage").removeClass("currentlyHidden");
+            }
         } else if(cursorY >= 576 && cursorX >= 608 && cursorX < 632) {
             selectedTool = "editTile";
             console.log("EDIT_TILE_BUTTON_AREA");
