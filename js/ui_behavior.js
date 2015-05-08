@@ -411,9 +411,10 @@ function paintMiniMap(){
             var miniMapIndex = ((j*FILE_SIZE[1] + i)* 4); 
             //Build our image. For now, we use grey pixels, but we'll add color here when it's in the actual field.
             if(fieldContents[i][j] !== undefined) {
-                miniMapImage.data[miniMapIndex + 0] = 64;
-                miniMapImage.data[miniMapIndex + 1] = 64;
-                miniMapImage.data[miniMapIndex + 2] = 64;
+                var miniMapColor = tinycolor(fieldContents[i][j].color).toRgb();
+                miniMapImage.data[miniMapIndex + 0] = miniMapColor.r;
+                miniMapImage.data[miniMapIndex + 1] = miniMapColor.g;
+                miniMapImage.data[miniMapIndex + 2] = miniMapColor.b;
                 miniMapImage.data[miniMapIndex + 3] = 255;
             } else {
                 miniMapImage.data[miniMapIndex + 0] = 255;

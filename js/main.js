@@ -478,15 +478,11 @@ function render(){
         ctx.stroke();
     }
     //Painting squares! From an MVC stance this is the "view", I guess.
-    //paintTile eventually needs to choose colors first based on tile properties, and then a subset of it based on user's viewmode.
-    //Tiles in the top row do not display properly. 
     for(var i = 0; i < (FIELD_SIZE[0]); ++i){
         for(var j = 0; j < (FIELD_SIZE[1]); ++j){
             if(typeof fieldContents[i + fieldOffset[0]][j + fieldOffset[1]] === 'object'){
-                //console.log(fieldContents[i][j].note);
-                var currentColor = "#444444";
-                //console.log(color);
-                paintTile(i,j, currentColor);
+                //Color's been added. See music_instructions.js for more info.
+                paintTile(i,j, fieldContents[i + fieldOffset[0]][j + fieldOffset[1]].color);
             }   
         }
     }

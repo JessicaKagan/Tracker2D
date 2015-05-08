@@ -31,7 +31,7 @@ var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_s
 //Planned extension: Tile color.
 //Possible extension: Tiles that only affect certain bugs. For N bugs we will need 2^N intspace to handle it.
 //For instance: 10000001 would change the behavior of bugs 1 and 8 (equivalent to 129).
-var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, flowValue) {
+var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, flowValue, color) {
     this.note = note; //Note ID to relative pitch conversion now takes place when the tile is instanced, for save-load compatibility
     this.instrument = instrument;
     this.dspEffect = dspEffect;
@@ -42,7 +42,17 @@ var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, f
     if(this.volume === undefined) { this.volume = 0.6; }
     if(this.dspValue === undefined) { this.dspValue = 0; }
     if(this.flowValue === undefined) { this.flowValue = 0; }
-
+    //A basic coloration script using HSL and TinyColor.
+    //Using generic variables for this allows me to switch things around to make different visualizations.
+    //For now, color is derived from tile properties. Eventually, we'll add cosmetic color.
+    var colorInstrumentDerivative = ((this.instrument)/soundSet.length)*360;
+    if(colorInstrumentDerivative >= 360) { colorInstrumentDerivative %= 360; } //Hues above 360 are invalid.
+    //Not 100 because I don't want to get too bright.
+    var colorVolumeDerivative = (this.volume)*80; 
+    var colorPitchDerivative = Math.log2((this.note)*8)*(100/6);
+    this.color = tinycolor("hsl " + colorInstrumentDerivative + 
+                 " " + colorVolumeDerivative +
+                 " " + colorPitchDerivative).toHexString();
 }
 
 //Used in the save function.
