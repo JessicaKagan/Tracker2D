@@ -14,7 +14,7 @@ var isOverlayShowing = false; //Used to handle some pointer events CSS.
 var pauseState = true;
 //singleStep executes a single update and then pauses.
 //Labels for all tools that require clicking on the field. Not in use yet.
-var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','singleStep','modifyTile']; 
+var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','turnBug','singleStep','modifyTile']; 
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var tileBuffer; //An array representing a rectangle of selected tiles.
 var saveContent; //A string representing the contents of the map.
@@ -52,7 +52,8 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[11],RESTOREBUG_BUTTON_AREA[0],RESTOREBUG_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[12],SONGPROPS_BUTTON_AREA[0],SONGPROPS_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[13],EDIT_TILE_BUTTON_AREA[0],EDIT_TILE_BUTTON_AREA[1]); 
-    ctx.drawImage(UIImages[14],HELP_BUTTON_AREA[0],HELP_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[14],HELP_BUTTON_AREA[0],HELP_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[15],TURNBUG_BUTTON_AREA[0],TURNBUG_BUTTON_AREA[1]); 
 
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 

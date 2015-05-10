@@ -22,6 +22,7 @@ function getImages() {
     UIImages[12].src = 'images/song_properties_button.png';
     UIImages[13].src = 'images/edit_tile_button.png';
     UIImages[14].src = 'images/help_button.png';
+    UIImages[15].src = 'images/turn_bug_button.png';
     //Maybe someone will make more detailed and complex bug images.
     bugImages[0].src = 'images/placeholder_bug.png';
     bugImages[1].src = 'images/placeholder_bug_2.png';

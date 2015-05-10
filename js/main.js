@@ -14,6 +14,7 @@ var SELECTBOX_BUTTON_AREA = [152,576,24,24];
 var PASTE_BUTTON_AREA = [176,576,24,24];
 var QUERY_BUTTON_AREA = [200,576,24,24];
 var MOVEBUG_BUTTON_AREA = [224,576,24,24];
+var TURNBUG_BUTTON_AREA = [248,576,24,24];
 
 var HELP_BUTTON_AREA = [560,576,24,24];
 
@@ -51,7 +52,7 @@ var currentFlowControl = "none";
 var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(15);
+var UIImages = new Array(16);
 var tileOverlayImages = new Array(5); //Used for flow control.
 var bugImages = new Array(8);
 //Define the bug arrays.
@@ -219,6 +220,9 @@ function interact(e) {
             console.log("MOVE_BUG_BUTTON_AREA");
             selectedTool = "moveBug";
             moveBugStage = 1; //Like selecting a box, this is a two step process.
+        } else if(cursorY >= 576 && cursorX >= 248 && cursorX < 272) {
+            console.log("TURNBUG_BUTTON_AREA");
+            selectedTool = "turnBug";
         } else if(cursorY >= 576 && cursorX >= 560 && cursorX < 588) {
             console.log("HELP_BUTTON_AREA");
             hideUI();
@@ -332,13 +336,37 @@ function interact(e) {
                             }
                         } else if (moveBugStage === 2) {
                             var newBugCoords = convertTiletoPixels(currentTile[0],currentTile[1]);
-                            //console.log(newBugCoords);
                             //These conversions are redundant, but necessary to make things work.
                             bugList[selectedBug].x = newBugCoords[0];
                             bugList[selectedBug].y = newBugCoords[1];
                             moveBugStage = 1;
                             bugList[selectedBug].bugTile = getTile(bugList[selectedBug].x,bugList[selectedBug].y);
                         } else console.log("moveBug() in interact() failed.");
+                        break;
+                    case "turnBug":
+                        for(var i = 0; i < bugList.length; ++i){
+                                if( (bugList[i].bugTile[0]) === currentTile[0] && 
+                                     bugList[i].bugTile[1] === currentTile[1]) { 
+                                    //console.log(bugList[i].action);
+                                    switch(bugList[i].action) {
+                                        case 'moveLeft':
+                                            bugList[i].action = 'moveUp';
+                                            break;
+                                        case 'moveUp':
+                                            bugList[i].action = 'moveRight';
+                                            break;
+                                        case 'moveRight':
+                                            bugList[i].action = 'moveDown';
+                                            break;
+                                        case 'moveDown':
+                                            bugList[i].action = 'moveLeft';
+                                            break;            
+                                        default:
+                                            break;
+                                    }
+                                }
+                            }
+                        //Check for a bug in the chosen tile; if there is one, rotate its heading 90 degrees clockwise.
                         break;
                     case "editTile":
                     console.log("Edit this tile");
