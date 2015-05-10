@@ -102,9 +102,6 @@ function init() {
     //Move the bottom bar to the render function, at the very least.
     ctx.fillStyle = "#000000";
     ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
-    ctx.fillStyle = "#888888";
-    ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
-    ctx.fillStyle = "#BBBBBB";
 
     //Set up HTML5 Canvas.
     var bindCanvas = document.getElementById("canvas");
@@ -490,6 +487,10 @@ function render(){
     ctx.clearRect(FIELD_PIXELS[0],FIELD_PIXELS[1],FIELD_PIXELS[2],FIELD_PIXELS[3]); //Use this to refresh everything.
     //Render things in this order:
     //1. Background (Probably doesn't need to be redrawn very often)
+    //This is just the bottom part of the UI, actually.
+    ctx.fillStyle = "#888888";
+    ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
+    ctx.fillStyle = "#BBBBBB";
     //2. Painted tiles
 
     //Draw boundaries between tiles.
