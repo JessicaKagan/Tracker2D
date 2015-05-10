@@ -23,11 +23,28 @@ var Bug = function(image, x,y, action,name, inStorage){
 
 Bug.prototype.drawBug = function(){
     //This might not need to be its own function unless we can change the bug stuff?
-    //Make actual conditional based on the bug being on a viewable tile.
     //Adjust bug drawing routine further!
     var derivedBugTile = [this.bugTile[0] - fieldOffset[0] , this.bugTile[1] - fieldOffset[1]];
     if(derivedBugTile[0] >= 0 && derivedBugTile[1] >= 0) { 
         ctx.drawImage(this.image,(derivedBugTile[0]*24) + 80, (derivedBugTile[1]*24)); 
+        //Bug overlays (currently just to indicate which direction they are moving)
+        currentOverlay = this.action;
+            switch(currentOverlay) {
+                case "moveLeft":
+                ctx.drawImage(tileOverlayImages[5],(derivedBugTile[0]*24) + 80, (derivedBugTile[1]*24));
+                    break;
+                case "moveUp":
+                ctx.drawImage(tileOverlayImages[6],(derivedBugTile[0]*24) + 80, (derivedBugTile[1]*24));
+                    break;
+                case "moveRight":
+                ctx.drawImage(tileOverlayImages[7],(derivedBugTile[0]*24) + 80, (derivedBugTile[1]*24));
+                    break;
+                case "moveDown":
+                ctx.drawImage(tileOverlayImages[8],(derivedBugTile[0]*24) + 80, (derivedBugTile[1]*24));
+                    break;
+                default:
+                    break;
+            }
     }
 
 }

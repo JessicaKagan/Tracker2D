@@ -516,28 +516,10 @@ function render(){
         }
     }
 
-    //3. Bugs
+    //3. Bugs and actual bug overlays.
     for(var i = 0; i < bugList.length; ++i){
         if(bugList[i].inStorage === false) { 
-            bugList[i].drawBug(); //The actual bug images.
-            //Bug overlays (currently just to indicate which direction they are moving)
-            currentOverlay = bugList[i].action;
-            switch(currentOverlay) {
-                case "moveLeft":
-                ctx.drawImage(tileOverlayImages[5],FIELD_PIXELS[0] + (TILE_SIZE*bugList[i].bugTile[0]),FIELD_PIXELS[1] + (TILE_SIZE*bugList[i].bugTile[1]));
-                    break;
-                case "moveUp":
-                ctx.drawImage(tileOverlayImages[6],FIELD_PIXELS[0] + (TILE_SIZE*bugList[i].bugTile[0]),FIELD_PIXELS[1] + (TILE_SIZE*bugList[i].bugTile[1]));
-                    break;
-                case "moveRight":
-                ctx.drawImage(tileOverlayImages[7],FIELD_PIXELS[0] + (TILE_SIZE*bugList[i].bugTile[0]),FIELD_PIXELS[1] + (TILE_SIZE*bugList[i].bugTile[1]));
-                    break;
-                case "moveDown":
-                ctx.drawImage(tileOverlayImages[8],FIELD_PIXELS[0] + (TILE_SIZE*bugList[i].bugTile[0]),FIELD_PIXELS[1] + (TILE_SIZE*bugList[i].bugTile[1]));
-                    break;
-                default:
-                    break;
-            }
+            bugList[i].drawBug(); 
         }   
     }
     //4. UI Elements that don't use HTML (those that do are handled seperately)
