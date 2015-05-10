@@ -53,17 +53,18 @@ var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; 
 
 //Image arrays used in image_loader.js
 var UIImages = new Array(16);
-var tileOverlayImages = new Array(5); //Used for flow control.
+var tileOverlayImages = new Array(9); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.
 var bugList = new Array(8);
 
 //Initialize the image arrays properly.
+for(var i = 0; i < tileOverlayImages.length; i++) {
+    tileOverlayImages[i] = new Image();
+}
+
 for(var i = 0; i < UIImages.length; i++) {
     UIImages[i] = new Image();
-}
-for(var i = 0; i < bugImages.length; i++) {
-    tileOverlayImages[i] = new Image();
 }
 
 for(var i = 0; i < bugImages.length; i++) {
@@ -517,13 +518,31 @@ function render(){
 
     //3. Bugs
     for(var i = 0; i < bugList.length; ++i){
-        if(bugList[i].inStorage === false) { bugList[i].drawBug(); }
+        if(bugList[i].inStorage === false) { 
+            bugList[i].drawBug(); //The actual bug images.
+            //Bug overlays (currently just to indicate which direction they are moving)
+            currentOverlay = bugList[i].action;
+            switch(currentOverlay) {
+                case "moveLeft":
+                ctx.drawImage(tileOverlayImages[5],FIELD_PIXELS[0] + (TILE_SIZE*bugList[i].bugTile[0]),FIELD_PIXELS[1] + (TILE_SIZE*bugList[i].bugTile[1]));
+                    break;
+                case "moveUp":
+                ctx.drawImage(tileOverlayImages[6],FIELD_PIXELS[0] + (TILE_SIZE*bugList[i].bugTile[0]),FIELD_PIXELS[1] + (TILE_SIZE*bugList[i].bugTile[1]));
+                    break;
+                case "moveRight":
+                ctx.drawImage(tileOverlayImages[7],FIELD_PIXELS[0] + (TILE_SIZE*bugList[i].bugTile[0]),FIELD_PIXELS[1] + (TILE_SIZE*bugList[i].bugTile[1]));
+                    break;
+                case "moveDown":
+                ctx.drawImage(tileOverlayImages[8],FIELD_PIXELS[0] + (TILE_SIZE*bugList[i].bugTile[0]),FIELD_PIXELS[1] + (TILE_SIZE*bugList[i].bugTile[1]));
+                    break;
+                default:
+                    break;
+            }
+        }   
     }
-
     //4. UI Elements that don't use HTML (those that do are handled seperately)
     drawButtons();
-    paintMiniMap();
-  
+    paintMiniMap();  
 }
 
 //This is a rendering function, anyways.
@@ -534,7 +553,7 @@ function paintTile(tileX, tileY, color){
                  FIELD_PIXELS[1] + (TILE_SIZE*tileY),
                 (TILE_SIZE*1), 
                 (TILE_SIZE*1));
-    //Add overlays as needed.
+    //Add overlays to tiles as needed.
     var currentOverlay = fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowEffect;
     if(currentOverlay !== "none") {
         switch(currentOverlay) {
@@ -554,10 +573,11 @@ function paintTile(tileX, tileY, color){
             case "freeze":
                 ctx.drawImage(tileOverlayImages[4],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
-
             default:
                 break;
         }
     }
-    //A warning about stored bugs will be handled in the same way. Eventually.
+
+    //currentOverlay = fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowEffect;
+
 }

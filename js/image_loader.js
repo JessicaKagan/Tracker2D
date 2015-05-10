@@ -6,6 +6,10 @@ function getImages() {
     tileOverlayImages[2].src = 'images/east_arrow_overlay.png';
     tileOverlayImages[3].src = 'images/south_arrow_overlay.png';
     tileOverlayImages[4].src = 'images/freeze_overlay.png';
+    tileOverlayImages[5].src = 'images/bug_moveleft_overlay.png';
+    tileOverlayImages[6].src = 'images/bug_moveup_overlay.png';
+    tileOverlayImages[7].src = 'images/bug_moveright_overlay.png';
+    tileOverlayImages[8].src = 'images/bug_movedown_overlay.png';
 
     UIImages[0].src = 'images/pause_button.png';
     UIImages[1].src = 'images/play_button.png';
@@ -23,6 +27,7 @@ function getImages() {
     UIImages[13].src = 'images/edit_tile_button.png';
     UIImages[14].src = 'images/help_button.png';
     UIImages[15].src = 'images/turn_bug_button.png';
+
     //Maybe someone will make more detailed and complex bug images.
     bugImages[0].src = 'images/placeholder_bug.png';
     bugImages[1].src = 'images/placeholder_bug_2.png';
