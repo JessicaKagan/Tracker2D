@@ -45,11 +45,10 @@ var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, f
     //A basic coloration script using HSL and TinyColor.
     //Using generic variables for this allows me to switch things around to make different visualizations.
     //For now, color is derived from tile properties. Eventually, we'll add cosmetic color.
-    var colorInstrumentDerivative = ((this.instrument)/soundSet.length)*360;
+    var colorInstrumentDerivative = ((this.instrument)/128)*360;
     if(colorInstrumentDerivative >= 360) { colorInstrumentDerivative %= 360; } //Hues above 360 are invalid.
-    //Not 100 because I don't want to get too bright.
-    var colorVolumeDerivative = (this.volume)*80; 
-    var colorPitchDerivative = Math.log2((this.note)*8)*(100/6);
+    var colorVolumeDerivative = (this.volume)*100; 
+    var colorPitchDerivative = Math.log2((this.note)*8)*(80/6); //(80/6) instead of (100/6) to improve overlay visibility.
     this.color = tinycolor("hsl " + colorInstrumentDerivative + 
                  " " + colorVolumeDerivative +
                  " " + colorPitchDerivative).toHexString();

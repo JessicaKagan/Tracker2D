@@ -53,7 +53,7 @@ var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; 
 
 //Image arrays used in image_loader.js
 var UIImages = new Array(16);
-var tileOverlayImages = new Array(9); //Used for flow control and anything that needs to be drawn above a bug or tile.
+var tileOverlayImages = new Array(10); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.
 var bugList = new Array(8);
@@ -537,10 +537,10 @@ function paintTile(tileX, tileY, color){
                 (TILE_SIZE*1), 
                 (TILE_SIZE*1));
     //Add overlays to tiles as needed.
-    var currentOverlay = fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowEffect;
-    if(currentOverlay !== "none") {
-        switch(currentOverlay) {
-            //Currently, only turn signals are implemented.
+    var currentOverlay = fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]];
+    //The first layer is for turnsignals.
+    if(currentOverlay.flowEffect !== "none") {
+        switch(currentOverlay.flowEffect) {
             case "turn_west":
                 ctx.drawImage(tileOverlayImages[0],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
@@ -560,7 +560,12 @@ function paintTile(tileX, tileY, color){
                 break;
         }
     }
-
-    //currentOverlay = fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowEffect;
+    //The second layer tells us which part of the soundbank we're looking at.
+    //0-128 is the General MIDI melodic bank and has no extra overlay.
+    //128-174 is the percussion bank and has a little "P" in the top left.
+    //A sound effect bank and a 'synthesizer' bank are planned, but they do not have sounds or overlays yet.
+    if(currentOverlay.instrument > 128 && currentOverlay.instrument < 174) {
+        ctx.drawImage(tileOverlayImages[9],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+    }
 
 }
