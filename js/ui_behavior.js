@@ -1,9 +1,6 @@
 /*
- * Not going to be constructed properly for some time.
- * Two sections, for mouse input and keyboard input.
- * What sorts of each should we recognize?
- * We'll also need states for buttons.
  * Long term thoughts: At some point in the near future, we might want to add a synchronization feature to help people create more complicated interlocking
+ * See this for advice on how to get click and drag: http://simonsarris.com/blog/140-canvas-moving-selectable-shapes
 */
 
 /*
@@ -14,6 +11,7 @@ var isOverlayShowing = false; //Used to handle some pointer events CSS.
 var pauseState = true;
 //singleStep executes a single update and then pauses.
 //Labels for all tools that require clicking on the field. Not in use yet.
+
 var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','turnBug','singleStep','modifyTile']; 
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var tileBuffer; //An array representing a rectangle of selected tiles.
@@ -427,6 +425,12 @@ function paintMiniMap(){
     }
     //Paint the image once it's complete.
     ctx.putImageData(miniMapImage, 8, 8);
+    //Draw an unfilled rectangle over the player's view.
+    //This will make it more apparent that there is a minimap and that the player can use it to look around.
+    ctx.beginPath();
+    ctx.lineWidth = "1";
+    ctx.rect(8 + fieldOffset[0], 8 + fieldOffset[1],FIELD_SIZE[0],FIELD_SIZE[1]);
+    ctx.stroke(); 
 }
 
 //This should be extended so that the user can scroll by clicking and dragging.
@@ -495,7 +499,7 @@ function updateInputVolume(volumeNumber) {
 //Initializes everything, but only works if the soundSet is loaded.
 function loadIfReady(){
     if(soundsAreReady.called) { init(); }
-    //Otherwise, inform the user. Alert breaks the load routine...
+    //Otherwise, inform the user somehow. Alert breaks the load routine...
     //else { alert("Hold on! Tracker2D needs to load all of its samples to function properly."); }
     
 

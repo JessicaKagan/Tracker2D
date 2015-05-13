@@ -6,6 +6,8 @@ function hookKeyboard(){
         var keyboardInput = (e.charCode) ? e.charCode : ((e.which) ? e.which : e.keyCode);
         console.log(keyboardInput);
         switch(keyboardInput){
+            //Pitch adjustment. This should perhaps be disabled when a window requiring text input is open.
+            //It might be good to play the current instrument at the selected pitch when the user triggers hotkeys.
             case 61:
                 if(currentOctave < 5) {
                     currentOctave += 1;

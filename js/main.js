@@ -100,8 +100,7 @@ function init() {
     $("#loadScreen").addClass("alwaysHidden");
 
     //Move the bottom bar to the render function, at the very least.
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
+
 
     //Set up HTML5 Canvas.
     var bindCanvas = document.getElementById("canvas");
@@ -486,8 +485,9 @@ function main(){
 function render(){
     ctx.clearRect(FIELD_PIXELS[0],FIELD_PIXELS[1],FIELD_PIXELS[2],FIELD_PIXELS[3]); //Use this to refresh everything.
     //Render things in this order:
-    //1. Background (Probably doesn't need to be redrawn very often)
-    //This is just the bottom part of the UI, actually.
+    //1. Background (Which didn't have to be redrawn a lot but now does?)
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
     ctx.fillStyle = "#888888";
     ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
     ctx.fillStyle = "#BBBBBB";
@@ -497,13 +497,13 @@ function render(){
     //This may need adjustment if we implement a zoom feature.
     for(var i = 80; i < FIELD_PIXELS[2]; i += TILE_SIZE) {
         ctx.beginPath();
-        ctx.moveTo(i,0);
+        ctx.moveTo(i,0); //Horizontal lines
         ctx.lineTo(i,552);
         ctx.stroke();
     }
     for(var i = 0; i < FIELD_PIXELS[3]; i += TILE_SIZE) {
         ctx.beginPath();
-        ctx.moveTo(0,i);
+        ctx.moveTo(0,i); //Vertical lines
         ctx.lineTo(800,i);
         ctx.stroke();
     }
