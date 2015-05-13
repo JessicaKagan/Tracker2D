@@ -92,30 +92,38 @@ select {
 }
 
 #UIShifter2 {
-    top: 115px;
+    top: 112px;
+}
+
+#instrumentInput {
+    /*overflow: auto;*/
 }
 
 #UIShifter3 {
-    top: 155px;
-}
-
-#UIShifter4 {
     top: 195px;
 }
 
+#UIShifter4 {
+    top: 235px;
+}
+
 #UIShifter5 {
-    top: 215px;
+    top: 255px;
 }
 
 #UIShifter6 {
-    top: 250px;
+    top: 290px;
     left: -30px;
     font-size: 10px;
 }
 
+#adjustInputVolume {
+    padding: 0px;
+}
+
 #bugStorage {
     position: absolute;
-    top: 300px;
+    top: 350px;
     color: white;
     width: 80px;
     font-size: 14px;

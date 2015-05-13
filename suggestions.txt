@@ -11,4 +11,4 @@ Things I know I want to do (which could get very long):
 - Indicate the position of bugs on the minimap, somehow
 
 Things I might do but am not sure about:
-- Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior).
+- Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior.
