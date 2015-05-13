@@ -11,12 +11,17 @@ soundSet[0] = ["00 - Silence", './sounds/00.mp3'];
 soundSet[1] = ["01 - Grand Piano", './sounds/01.mp3']; //Name and reference sound for a simple one-sound instrument.
 soundSet[5] = ["05 - Cheesy DX7", './sounds/05.mp3']; 
 soundSet[6] = ["06 - Harpsichord", './sounds/06.mp3'];
+soundSet[11] = ["11 - Vibraphone", './sounds/11.mp3'];
 soundSet[24] = ["24 - Nylon String Guitar", './sounds/24.mp3']; 
 soundSet[30] = ["30 - Overdriven Guitar", './sounds/30.mp3'];
 soundSet[31] = ["31 - Distorted Guitar", './sounds/31.mp3'];
+soundSet[39] = ["39 - YM2612 Amp Bass", './sounds/39.mp3'];
+soundSet[46] = ["46 - Harp", './sounds/46.mp3'];
 soundSet[48] = ["48 - String Section", './sounds/48.mp3'];
+soundSet[56] = ["56 - Trumpet", './sounds/56.mp3'];
 soundSet[80] = ["80 - Square Waveform", './sounds/80.mp3'];
 soundSet[81] = ["81 - Sawtooth Waveform", './sounds/81.mp3'];
+soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 //Beginning of the percussion map
 soundSet[128] = ["P01 - Acoustic Bass Drum", './sounds/128.mp3'];
 soundSet[131] = ["P04 - Acoustic Snare", './sounds/131.mp3'];
