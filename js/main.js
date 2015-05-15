@@ -520,8 +520,8 @@ function render(){
                tileBuffer[0].length < fieldContents[0].length && selectBoxStage === 1) {
                 if(selectedTool === 'selectBox' || selectedTool === 'paste') {
                 //Check to see if the tile is in the tile buffer.
-                    if(i >= selectBoxCoords[0] && j >= selectBoxCoords[2] &&
-                       i <= selectBoxCoords[1] && j <= selectBoxCoords[3]){
+                    if(i + fieldOffset[0] >= selectBoxCoords[0] && j + fieldOffset[1] >= selectBoxCoords[2] &&
+                       i + fieldOffset[0] <= selectBoxCoords[1] && j + fieldOffset[1] <= selectBoxCoords[3]){
                         //console.log(selectBoxCoords);
                         ctx.fillStyle = 'rgba(0,0,0,0.2)'; //Preps our coloration. 
                         ctx.fillRect(FIELD_PIXELS[0] + (TILE_SIZE*i), 
