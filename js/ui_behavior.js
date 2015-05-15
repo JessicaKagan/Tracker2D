@@ -93,7 +93,7 @@ function fillBuffer(fromX, toX, fromY, toY, command) {
 //currentTile is an optional instruction for interpolation, which will be defined later.
 function pasteBuffer(fromX, toX, fromY, toY, tileX, tileY, currentTile) {
     //This is an overlap paste that replaces all contents.
-    //Maybe we can make a mixpaste later?
+    //Maybe we can make a mixpaste later? It would probably implement a second buffer and a logical inclusive OR (logical disjunction)
     for(var i = 0; i < tileBuffer.length; ++i){
         for(var j = 0; j < tileBuffer[i].length; ++j){
             //Conditional to prevent accidental writes outside the file, which could get crashy.
@@ -144,6 +144,7 @@ function respondToQuery(X, Y) {
 function saveFile() {
     pauseState = true;
     fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1], 'save');
+    selectBoxCoords = [0,0,0,0]; //Clear the selection to prevent a pastebug.
     if(tileBuffer === fieldContents) { 
         //console.log("We're ready to save now."); 
     } else { console.log("Something went wrong in saveFile() or fillBuffer(). Real error trapping later."); }

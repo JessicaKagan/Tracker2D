@@ -513,10 +513,26 @@ function render(){
             if(typeof fieldContents[i + fieldOffset[0]][j + fieldOffset[1]] === 'object'){
                 //Color's been added. See music_instructions.js for more info.
                 paintTile(i,j, fieldContents[i + fieldOffset[0]][j + fieldOffset[1]].color);
-            }   
+            }
+            //Experimental tile buffer overlay that draws a translucent box over the tile buffer.
+            //Reserved for when the user is actively selecting or pasting things.
+            if(tileBuffer !== undefined && tileBuffer.length < fieldContents.length && 
+               tileBuffer[0].length < fieldContents[0].length && selectBoxStage === 1) {
+                if(selectedTool === 'selectBox' || selectedTool === 'paste') {
+                //Check to see if the tile is in the tile buffer.
+                    if(i >= selectBoxCoords[0] && j >= selectBoxCoords[2] &&
+                       i <= selectBoxCoords[1] && j <= selectBoxCoords[3]){
+                        //console.log(selectBoxCoords);
+                        ctx.fillStyle = 'rgba(0,0,0,0.2)'; //Preps our coloration. 
+                        ctx.fillRect(FIELD_PIXELS[0] + (TILE_SIZE*i), 
+                                     FIELD_PIXELS[1] + (TILE_SIZE*j),
+                                    (TILE_SIZE*1), 
+                                    (TILE_SIZE*1));
+                    }
+                }
+            }
         }
     }
-
     //3. Bugs and actual bug overlays.
     for(var i = 0; i < bugList.length; ++i){
         if(bugList[i].inStorage === false) { 
@@ -567,5 +583,4 @@ function paintTile(tileX, tileY, color){
     if(currentOverlay.instrument > 128 && currentOverlay.instrument < 174) {
         ctx.drawImage(tileOverlayImages[9],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
     }
-
 }
