@@ -11,6 +11,7 @@ function getImages() {
     tileOverlayImages[7].src = 'images/bug_moveright_overlay.png';
     tileOverlayImages[8].src = 'images/bug_movedown_overlay.png';
     tileOverlayImages[9].src = 'images/percussion_overlay.png';
+    tileOverlayImages[10].src = 'images/teleporter_overlay.png';
 
     UIImages[0].src = 'images/pause_button.png';
     UIImages[1].src = 'images/play_button.png';

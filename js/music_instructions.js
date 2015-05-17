@@ -23,7 +23,7 @@ for(var i = 1; i < pitchTable.length; ++i){
 //How are we going to combine arbitrary DSP filters on one instrument? 
 //We might need to rebuild the playback routine for this...
 var possibleDSPEffects = ['none','bendpitch', 'arpeggio', 'lowpass', 'hipass', 'resonance', 'stopplayback', 'pauseresume'];
-var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south', 'turn_around', "freeze"];
+var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south', 'turn_around','teleport', 'freeze'];
 //To be implemented: "teleport" and "counter". 'Counter' will turn into another tile after a bug steps on it enough.
 //Also: "random_tile", which will send the bug to a random tile within a user defined range.
 
@@ -42,9 +42,9 @@ var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, f
     if(this.dspValue === undefined) { this.dspValue = 0; }
     if(this.flowValue === undefined) { this.flowValue = 0; }
     this.color = this.updateColor();
-    //xPointer and yPointer have to be set after the tile is instanced through the tile editing window.
-    this.xPointer = undefined;
-    this.yPointer = undefined;
+    //xPointer and yPointer have to be set after the tile is instanced through the tile editing window, but they default to 0,0.
+    this.xPointer = 0;
+    this.yPointer = 0;
 
 }
 
@@ -60,7 +60,6 @@ Tile.prototype.updateColor = function updateColor() {
     this.color = tinycolor("hsl " + colorInstrumentDerivative + 
                  " " + colorVolumeDerivative +
                  " " + colorPitchDerivative).toHexString();
-    console.log(this.color);
     return this.color;
 }
 
@@ -72,6 +71,8 @@ Tile.prototype.toString = function exportTile() {
                        this.flowEffect + "," + 
                        this.volume  + "," + 
                        this.dspValue + "," + 
-                       this.flowValue;
+                       this.flowValue + "," +
+                       this.xPointer + "," +
+                       this.yPointer;
     return tileToString;
 }

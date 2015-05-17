@@ -19,6 +19,7 @@ var Bug = function(image, x,y, action,name, inStorage){
     this.bugTile = [this.x, this.y];
     //this.bugTile = getTile(this.x, this.y);
     this.inStorage = inStorage;
+    this.previousAction = this.action; //In case we need to buffer an action.
 }
 
 Bug.prototype.drawBug = function(){
@@ -71,7 +72,7 @@ Bug.prototype.updateBug = function() {
     }
 
     //Change the behavior of the bug based on what it's standing on.
-    if(fieldContents[this.bugTile[0]][this.bugTile[1]] != undefined){
+    if(fieldContents[this.bugTile[0]][this.bugTile[1]] !== undefined){
         switch(fieldContents[this.bugTile[0]][this.bugTile[1]].flowEffect){
             case "turn_west":
                 this.action = 'moveLeft';
@@ -87,6 +88,11 @@ Bug.prototype.updateBug = function() {
                 break;
             case "freeze":
                 this.action = 'holdPosition';
+                break;
+            case "teleport": 
+                this.previousAction = this.action;
+                this.action = 'teleportToTile';
+                break;
             default:
                 break;
         }
@@ -100,7 +106,6 @@ Bug.prototype.updateBug = function() {
     if(this.bugTile[1] === 0 && this.action === 'moveUp') { this.action = 'moveDown'; }
 
     //Then move the bug based on its behavior.
-    //It might be smart to rewrite this based on actual tiles and not pixel offsets.
     switch(this.action){
         case 'moveLeft':
             this.bugTile[0] -= 1;
@@ -114,9 +119,16 @@ Bug.prototype.updateBug = function() {
         case 'moveDown':
             this.bugTile[1] += 1;
             break;
+        case 'teleportToTile':
+            //Special case.
+            if(fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer !== undefined && 
+               fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer !== undefined){
+                this.bugTile = [fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer , fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer]; 
+                this.action = this.previousAction; //Restore the previous action once we have teleported the bug.
+            }
+            break;
         default:
             break;
     }
-
     //this.bugTile = getTile(this.x, this.y); //Updates our derivative.
 }

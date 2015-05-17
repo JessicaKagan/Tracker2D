@@ -53,7 +53,7 @@ var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; 
 
 //Image arrays used in image_loader.js
 var UIImages = new Array(16);
-var tileOverlayImages = new Array(10); //Used for flow control and anything that needs to be drawn above a bug or tile.
+var tileOverlayImages = new Array(11); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.
 var bugList = new Array(8);
@@ -376,15 +376,24 @@ function interact(e) {
                                 //The tile's frequency multiplier needs to be converted to the correct pitch before we can use this.
                                 $("#modifyTilePitchSpinner").val(fieldContents[currentTile[0]][currentTile[1]].note);
                             }
-                            if(fieldContents[currentTile[0]][currentTile[1]].note !== undefined) {  
+                            if(fieldContents[currentTile[0]][currentTile[1]].instrument !== undefined) {  
                                 $("#modifyTileInstrumentSpinner").val(fieldContents[currentTile[0]][currentTile[1]].instrument);
                             }
+                            if(fieldContents[currentTile[0]][currentTile[1]].xPointer !== undefined) {
+                                $("#modifyPointerTileX").val(fieldContents[currentTile[0]][currentTile[1]].xPointer)
+                            } 
+                            if(fieldContents[currentTile[0]][currentTile[1]].yPointer !== undefined) {
+                                $("#modifyPointerTileY").val(fieldContents[currentTile[0]][currentTile[1]].yPointer)
+                            }
+                        //If the tile's undefined, we need some default values!
                         } else {
                             $("#modifyTilePitchSpinner").val(36);
-                            $("#modifyTileInstrumentSpinner").val(0);    
+                            $("#modifyTileInstrumentSpinner").val(0);
+                            $("#modifyPointerTileX").val(0);
+                            $("#modifyPointerTileY").val(0);
                         }
 
-                        //Then show the user.
+                        //Then show the window to the user.
                         $("#modifyTile").removeClass("currentlyHidden");
                         break;
                     default:
@@ -589,6 +598,9 @@ function paintTile(tileX, tileY, color){
                 break;
             case "freeze":
                 ctx.drawImage(tileOverlayImages[4],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;
+            case "teleport":
+                ctx.drawImage(tileOverlayImages[10],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
             default:
                 break;

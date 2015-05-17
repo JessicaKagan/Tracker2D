@@ -119,6 +119,7 @@ function respondToQuery(X, Y) {
         queryResponse += "<p> Flow Effect: " +  fieldContents[X][Y].flowEffect + "</p>";
         //queryResponse += "<p> Flow Effect Parameter: " +  fieldContents[X][Y].flowValue + "</p>"; //Uncomment when relevant.
         queryResponse += "<p> Volume: " + (fieldContents[X][Y].volume * 100) + "%</p>";
+        queryResponse += "<p> Points to this tile: " + fieldContents[X][Y].xPointer + " , " + fieldContents[X][Y].yPointer + "</p>";
     } else queryResponse += "No data in this tile.";
     //If there's a bug here, describe the one on top. This assumes that bugs should be allowed to overlap...
     for(var i = 0; i < bugList.length; ++i){
@@ -139,7 +140,7 @@ function respondToQuery(X, Y) {
     $('#queryInfo').html(queryResponse);
 }
 
-//This needs to be extended with more properties and the desired bug (musician) values.
+//Under constant extension.
 function saveFile() {
     pauseState = true;
     fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1], 'save');
@@ -202,7 +203,8 @@ function loadFile() {
                 fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
                                                currentTile[2],currentTile[3],
                                                currentTile[4],currentTile[5],
-                                               currentTile[6]);
+                                               currentTile[6],
+                                               currentTile[7],currentTile[8]);
 
                 //console.log(fieldContents[j][i]);
             } else fieldContents[j][i] = undefined;

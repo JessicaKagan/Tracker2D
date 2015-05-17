@@ -121,7 +121,7 @@ function hookKeyboard(){
         } else if(this.value < 0 || this.value > FILE_SIZE[0]) {
             this.value.replace(xPointer);
         }
-        console.log(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]]);   
+        //console.log(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].xPointer);   
     });
     jQuery('#modifyPointerTileY').change(function (){
         if(this.value >= 0 && this.value <= FILE_SIZE[1]) {
@@ -129,7 +129,7 @@ function hookKeyboard(){
         } else if(this.value < 0 || this.value > FILE_SIZE[1]) {
             this.value.replace(yPointer);
         }
-        console.log(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]]);   
+        //console.log(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].yPointer);   
     });
 
 
