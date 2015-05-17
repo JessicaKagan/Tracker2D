@@ -344,7 +344,7 @@ function interact(e) {
                         for(var i = 0; i < bugList.length; ++i){
                                 if( (bugList[i].bugTile[0]) === currentTile[0] && 
                                      bugList[i].bugTile[1] === currentTile[1]) { 
-                                    //console.log(bugList[i].action);
+                                    //Check for a bug in the chosen tile; if there is one, rotate its heading 90 degrees clockwise.
                                     switch(bugList[i].action) {
                                         case 'moveLeft':
                                             bugList[i].action = 'moveUp';
@@ -363,12 +363,27 @@ function interact(e) {
                                     }
                                 }
                             }
-                        //Check for a bug in the chosen tile; if there is one, rotate its heading 90 degrees clockwise.
+                        
                         break;
                     case "editTile":
-                    console.log("Edit this tile");
-                    $("#modifyTile").removeClass("currentlyHidden");
+                        $("#modifyTileTarget").html(currentTile[0] + " , " + currentTile[1]);
+                        //Fill the window with the values from the tile if relevant. Substitute defaults if it's empty.
+                        if(fieldContents[currentTile[0]][currentTile[1]] !== undefined) {                     
+                            if(fieldContents[currentTile[0]][currentTile[1]].note !== undefined) {
+                                //The tile's frequency multiplier needs to be converted to the correct pitch before we can use this.
+                                $("#modifyTilePitchSpinner").val(fieldContents[currentTile[0]][currentTile[1]].note);
+                            }
+                            if(fieldContents[currentTile[0]][currentTile[1]].note !== undefined) {  
+                                $("#modifyTileInstrumentSpinner").val(fieldContents[currentTile[0]][currentTile[1]].instrument);
+                            }
+                        } else {
+                            $("#modifyTilePitchSpinner").val(36);
+                            $("#modifyTileInstrumentSpinner").val(0);    
+                        }
 
+                        //Then show the user.
+                        $("#modifyTile").removeClass("currentlyHidden");
+                        break;
                     default:
                         break;
                 }
@@ -523,7 +538,7 @@ function render(){
                     if(i + fieldOffset[0] >= selectBoxCoords[0] && j + fieldOffset[1] >= selectBoxCoords[2] &&
                        i + fieldOffset[0] <= selectBoxCoords[1] && j + fieldOffset[1] <= selectBoxCoords[3]){
                         //console.log(selectBoxCoords);
-                        ctx.fillStyle = 'rgba(0,0,0,0.2)'; //Preps our coloration. 
+                        ctx.fillStyle = 'rgba(0,0,0,0.2)'; //Preps the overlay. 
                         ctx.fillRect(FIELD_PIXELS[0] + (TILE_SIZE*i), 
                                      FIELD_PIXELS[1] + (TILE_SIZE*j),
                                     (TILE_SIZE*1), 

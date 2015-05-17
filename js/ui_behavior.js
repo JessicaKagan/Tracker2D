@@ -88,8 +88,7 @@ function fillBuffer(fromX, toX, fromY, toY, command) {
     }
 }
 
-//toX and toY are derived from the size of tileBuffer.
-//TileX and tileY are where the user clicked.
+//toX and toY are derived from the size of tileBuffer. TileX and tileY are where the user clicked.
 //currentTile is an optional instruction for interpolation, which will be defined later.
 function pasteBuffer(fromX, toX, fromY, toY, tileX, tileY, currentTile) {
     //This is an overlap paste that replaces all contents.

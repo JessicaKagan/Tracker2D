@@ -1,14 +1,17 @@
 Suggestions people have made:
 - Full fledged reset button (reverting both bugs and tiles to saved data) - definitely will be implemented
-- Progress display (A naive one that just displays the amount of updates will be possible, but calculating the length of the song in advance could be difficult and hard to make performant)
-- Scroll bars (Where? I definitely want to put them on the menus; the minimap needs to draw a rectangle representing the view field)
-- Overall UI simplification and clarification (Potentially hard, but it has to be done)
+- Progress display (A naive one that just displays the amount of updates since a reset will be possible, but calculating the length of the song in advance could be difficult and hard to make performant)
+- Overall UI simplification and clarification (Potentially hard, but always being done.)
 
 Things I know I want to do (which could get very long):
-- Actually show the tile buffer (as filled up by the select tool) somehow, like a translucent overlay
-- Indicate current part of the window on the minimap
+
 - Fill up the soundset and keep sample quality as high as possible within a 20 MB limit
-- Indicate the position of bugs on the minimap, somehow
+- Indicate the position of bugs on the minimap, somehow (Hard to do in 64x64 confines)
 
 Things I might do but am not sure about:
-- Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior.
+- Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior. (Up to 36 checks per second? Divergent series.)
+
+Suggestions that have already been implemented:
+- Actually show the tile buffer (as filled up by the select tool) somehow, like a translucent overlay
+- Indicate current part of the window on the minimap
+- Scroll bars on the instrument list

@@ -239,6 +239,7 @@ select {
     z-index: 1;
     overflow-y: scroll;
     font-size: 12px;
+    font-family: Tahoma, sans-serif;
 }
 
 /* A useful fallback if we need to attach event handlers to canvas things?*/

@@ -89,7 +89,7 @@
                         <p>Copy this save data somewhere safe. <button type="button" class="closeWindow" onClick="hideUI()">Close Window</button></p>
                         <textarea id="saveText" class="fileIOArea" readonly></textarea>
                     </div>
-                    <!--Add an "exit without loading" button to this control.-->
+
                     <div id="loadExport" class="currentlyHidden">
                         <p>Paste in a valid save. <button type="button" id="loadFileWindow" onClick="loadFile()">Load</button>
                         <button type="button" class="closeWindow" onClick="hideUI()">Close Window</button>
@@ -98,11 +98,13 @@
                         <textarea id="loadText" class="fileIOArea"></textarea>
                     </div>
 
-                    <!--This will allow you to change tile properties in a more detailed fashion than the leftmenu.-->
+                    <!--This will allow you to change tile properties in a more detailed fashion than the leftmenu. Absolute highest priority at the moment.-->
                     <div id="modifyTile" class="editingWindow currentlyHidden">
-                        <p>Maybe this should be merged with queryInfo and the query Tool.</p>
-                        <p>Pitch: </p>
-                        <p>Instrument: </p>
+                        <p>Maybe this should be merged with queryInfo and the query Tool. Indicate to the user that you have to click on a tile in order to activate this tool!</p> <br>
+                        <p>Currently editing tile: <span id="modifyTileTarget"></span></p> <br>
+                        <p>Pitch (Readonly for now): <input id = "modifyTilePitchSpinner" class = "numbersOnly" readonly type="number" name="pitch" min="0" max="71" value="36"></p></p>
+                        <!--Instrument max needs to be changed programmatically.-->
+                        <p>Instrument: <input id = "modifyTileInstrumentSpinner" class = "numbersOnly" type="number" name="Instrument" min="0" max="175" value="1"></p></p></p>
                         <p>Audio FX Value: </p>
                         <p>Flow Control Value: </p>
                         <button class="closeButton" onClick="hideUI()">Close Window</button>
