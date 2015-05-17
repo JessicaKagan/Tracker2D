@@ -140,7 +140,7 @@ function respondToQuery(X, Y) {
     $('#queryInfo').html(queryResponse);
 }
 
-//Under constant extension.
+//Under constant extension. Doesn't save tile pointers properly yet.
 function saveFile() {
     pauseState = true;
     fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1], 'save');
@@ -203,7 +203,7 @@ function loadFile() {
                 fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
                                                currentTile[2],currentTile[3],
                                                currentTile[4],currentTile[5],
-                                               currentTile[6],
+                                               currentTile[6],undefined,
                                                currentTile[7],currentTile[8]);
 
                 //console.log(fieldContents[j][i]);

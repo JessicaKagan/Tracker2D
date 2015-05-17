@@ -43,8 +43,8 @@ var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, f
     if(this.flowValue === undefined) { this.flowValue = 0; }
     this.color = this.updateColor();
     //xPointer and yPointer have to be set after the tile is instanced through the tile editing window, but they default to 0,0.
-    this.xPointer = 0;
-    this.yPointer = 0;
+    if(xPointer !== undefined) { this.xPointer = xPointer; } else { this.xPointer = 0; }
+    if(yPointer !== undefined) { this.yPointer = yPointer; } else { this.yPointer = 0; }
 
 }
 

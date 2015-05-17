@@ -57,7 +57,7 @@ Bug.prototype.updateBug = function() {
     //this.bugTile = getTile(this.x, this.y); //Updates our derivative.
 
     //Play sounds BEFORE attempting to move the bug.
-    if(fieldContents[this.bugTile[0]][this.bugTile[1]] != undefined){
+    if(fieldContents[this.bugTile[0]][this.bugTile[1]] !== undefined){
         //Right now, sounds have separate playback routines if they have effects.
         //Frozen bugs only play their tile's sound once. Anything else would be detrimental to your sanity.
         if(fieldContents[this.bugTile[0]][this.bugTile[1]].instrument != -1 && this.action !== "holdPosition"){
@@ -123,8 +123,11 @@ Bug.prototype.updateBug = function() {
             //Special case.
             if(fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer !== undefined && 
                fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer !== undefined){
-                this.bugTile = [fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer , fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer]; 
+                this.bugTile = [parseInt(fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer) , 
+                                parseInt(fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer)]; 
+                console.log(this.bugTile);
                 this.action = this.previousAction; //Restore the previous action once we have teleported the bug.
+                console.log(this.action + " , " + this.previousAction);
             }
             break;
         default:
