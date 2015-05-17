@@ -102,12 +102,15 @@
                     <div id="modifyTile" class="editingWindow currentlyHidden">
                         <p>Maybe this should be merged with queryInfo and the query Tool. Indicate to the user that you have to click on a tile in order to activate this tool!</p> <br>
                         <p>Currently editing tile: <span id="modifyTileTarget"></span></p> <br>
-                        <p>Pitch (Readonly for now): <input id = "modifyTilePitchSpinner" class = "numbersOnly" readonly type="number" name="pitch" min="0" max="71" value="36"></p></p>
+                        <p>Pitch (Readonly for now): <input id = "modifyTilePitchSpinner" class = "numbersOnly" readonly type="number" name="pitch" min="0" max="71" value="36"></input></p>
                         <!--Instrument max needs to be changed programmatically.-->
-                        <p>Instrument: <input id = "modifyTileInstrumentSpinner" class = "numbersOnly" type="number" name="Instrument" min="0" max="175" value="1"></p></p></p>
-                        <p>Audio FX Value: </p>
-                        <p>Flow Control Value: </p>
-                        <p>Points To Tile: </p>
+                        <p>Instrument: <input id = "modifyTileInstrumentSpinner" class = "numbersOnly" type="number" name="Instrument" min="0" max="175" value="1"></input></p>
+                        <p>Audio FX Value (Not implemented yet): </p>
+                        <p>Flow Control Value (Not implemented yet): </p><br>
+                        <p>Points to the tile at these coordinates:<br>
+                            <input id = "modifyPointerTileX" class = "numbersOnly" type="number" name="Instrument" min="0" max="512" value="0">X</input><br>
+                            <input id = "modifyPointerTileY" class = "numbersOnly" type="number" name="Instrument" min="0" max="512" value="0">Y</input>
+                        </p>
                         <button class="closeButton" onClick="hideUI()">Close Window</button>
                     </div>
                     <!--This will allow you to change song properties.-->

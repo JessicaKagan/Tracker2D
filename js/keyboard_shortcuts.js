@@ -92,19 +92,7 @@ function hookKeyboard(){
         updateFrequency = tickMultiplier/TEMPO;
         
     });
-    //Instrument adjuster in Tile Properties
-    jQuery('#modifyTileInstrumentSpinner').change(function (){
-        //currentlyEditedTile gets around scoping...
-        if(this.value >= 0 && this.value <= soundSet.length) {
-            fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].instrument = parseInt(this.value);
-        } else if(this.value < 0 || this.value > soundSet.length) {
-            this.value.replace(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].instrument);
-        }
-        fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].updateColor();
-        console.log(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]]);
-        
-        
-    });
+
     jQuery('#authorName').change(function (){
         author = this.value;
     });
@@ -114,5 +102,37 @@ function hookKeyboard(){
     jQuery('#songDesc').change(function (){
         songDescription = this.value;
     });
+
+    //Instrument adjuster in Tile Properties
+    jQuery('#modifyTileInstrumentSpinner').change(function (){
+        //currentlyEditedTile gets around scoping...
+        if(this.value >= 0 && this.value <= soundSet.length) {
+            fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].instrument = parseInt(this.value);
+        } else if(this.value < 0 || this.value > soundSet.length) {
+            this.value.replace(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].instrument);
+        }
+        fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].updateColor();
+        //console.log(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]]);   
+    });
+    //Pointer adjusters for much the same purpose.
+    jQuery('#modifyPointerTileX').change(function (){
+        if(this.value >= 0 && this.value <= FILE_SIZE[0]) {
+            fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].xPointer = parseInt(this.value);
+        } else if(this.value < 0 || this.value > FILE_SIZE[0]) {
+            this.value.replace(xPointer);
+        }
+        console.log(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]]);   
+    });
+    jQuery('#modifyPointerTileY').change(function (){
+        if(this.value >= 0 && this.value <= FILE_SIZE[1]) {
+            fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].yPointer = parseInt(this.value);
+        } else if(this.value < 0 || this.value > FILE_SIZE[1]) {
+            this.value.replace(yPointer);
+        }
+        console.log(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]]);   
+    });
+
+
+
 
 }
