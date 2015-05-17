@@ -69,21 +69,9 @@ function hookKeyboard(){
         }
     });
 
-    //UI hooks for the Song Properties window
-    jQuery('#tempoSpinner').change(function (){
-        console.log(this.value);
-        if(this.value >= 1 && this.value <= 999) {
-            TEMPO = this.value;
-        } else if(this.value < 1 || this.value > 999) {
-            this.value.replace(TEMPO);
-        }
-        //Reset this timing value to recalibrate the main loop.
-        timeToUpdate = 0;
-        updateFrequency = tickMultiplier/TEMPO;
-        
-    });
+    
 
-    //Input sanitization for number only fields. Thanks, Stackoverflow!
+    //Input sanitization for number only fields ("spinners"). Thanks, Stackoverflow!
     //http://stackoverflow.com/questions/891696/jquery-what-is-the-best-way-to-restrict-number-only-input-for-textboxes-all
     jQuery('.numbersOnly').keypress(function (){  
         this.value = this.value.replace(/[^0-9\.]/g,'');
@@ -91,6 +79,7 @@ function hookKeyboard(){
         //console.log(testTempo); 
     });
 
+    //UI hooks for the Song Properties and Tile Properties windows
     jQuery('#tempoSpinner').change(function (){
         //console.log(this.value);
         if(this.value >= 1 && this.value <= 999) {
@@ -98,9 +87,22 @@ function hookKeyboard(){
         } else if(this.value < 1 || this.value > 999) {
             this.value.replace(TEMPO);
         }
-        //Reset this timing value to recalibrate the main loop.
+        //Reset this timing value to recalibrate the main loop on tempo change.
         timeToUpdate = 0;
         updateFrequency = tickMultiplier/TEMPO;
+        
+    });
+    //Instrument adjuster in Tile Properties
+    jQuery('#modifyTileInstrumentSpinner').change(function (){
+        //currentlyEditedTile gets around scoping...
+        if(this.value >= 0 && this.value <= soundSet.length) {
+            fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].instrument = parseInt(this.value);
+        } else if(this.value < 0 || this.value > soundSet.length) {
+            this.value.replace(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].instrument);
+        }
+        fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].updateColor();
+        console.log(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]]);
+        
         
     });
     jQuery('#authorName').change(function (){

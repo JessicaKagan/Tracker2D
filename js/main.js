@@ -35,7 +35,7 @@ for(var i = 0; i < FILE_SIZE[0]; ++i) {
 
 //Globals for now. Deglobalize as implementation permits. 
 var soundFont, audioEngine, audioLoader; 
-var selectBoxStage, moveBugStage, selectedBug;
+var selectBoxStage, moveBugStage, selectedBug, currentlyEditedTile;
 //For synch.
 var lastTime, updateFrequency, timeToUpdate;
 var tickMultiplier = 12.5;
@@ -366,6 +366,9 @@ function interact(e) {
                         
                         break;
                     case "editTile":
+                        //currentlyEditedTile is used when we need global scope. Probably not optimal.
+                        currentlyEditedTile = currentTile; 
+
                         $("#modifyTileTarget").html(currentTile[0] + " , " + currentTile[1]);
                         //Fill the window with the values from the tile if relevant. Substitute defaults if it's empty.
                         if(fieldContents[currentTile[0]][currentTile[1]] !== undefined) {                     

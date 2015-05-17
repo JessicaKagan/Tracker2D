@@ -42,6 +42,12 @@ var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, f
     if(this.volume === undefined) { this.volume = 0.6; }
     if(this.dspValue === undefined) { this.dspValue = 0; }
     if(this.flowValue === undefined) { this.flowValue = 0; }
+    this.color = this.updateColor();
+
+}
+
+//Eventually add a 4th parameter to choose the visualization method?
+Tile.prototype.updateColor = function updateColor() {
     //A basic coloration script using HSL and TinyColor.
     //Using generic variables for this allows me to switch things around to make different visualizations.
     //For now, color is derived from tile properties. Eventually, we'll add cosmetic color.
@@ -52,6 +58,8 @@ var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, f
     this.color = tinycolor("hsl " + colorInstrumentDerivative + 
                  " " + colorVolumeDerivative +
                  " " + colorPitchDerivative).toHexString();
+    console.log(this.color);
+    return this.color;
 }
 
 //Used in the save function.
