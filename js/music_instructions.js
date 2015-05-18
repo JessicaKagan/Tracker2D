@@ -23,8 +23,8 @@ for(var i = 1; i < pitchTable.length; ++i){
 //How are we going to combine arbitrary DSP filters on one instrument? 
 //We might need to rebuild the playback routine for this...
 var possibleDSPEffects = ['none','bendpitch', 'arpeggio', 'lowpass', 'hipass', 'resonance', 'stopplayback', 'pauseresume'];
-var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south', 'turn_around','teleport', 'freeze'];
-//To be implemented: "teleport" and "counter". 'Counter' will turn into another tile after a bug steps on it enough.
+var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south', 'counter','teleport', 'freeze'];
+//To be implemented: 'Counter' will turn into another tile after a bug steps on it enough.
 //Also: "random_tile", which will send the bug to a random tile within a user defined range.
 
 
@@ -55,7 +55,7 @@ Tile.prototype.updateColor = function updateColor() {
     //For now, color is derived from tile properties. Eventually, we'll add cosmetic color.
     var colorInstrumentDerivative = ((this.instrument)/128)*360;
     if(colorInstrumentDerivative >= 360) { colorInstrumentDerivative %= 360; } //Hues above 360 are invalid.
-    var colorVolumeDerivative = (this.volume)*100; 
+    var colorVolumeDerivative = (this.volume)*100; //Saturation.
     var colorPitchDerivative = Math.log2((this.note)*8)*(80/6); //(80/6) instead of (100/6) to improve overlay visibility.
     this.color = tinycolor("hsl " + colorInstrumentDerivative + 
                  " " + colorVolumeDerivative +

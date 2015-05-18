@@ -378,6 +378,9 @@ function interact(e) {
                             }
                             if(fieldContents[currentTile[0]][currentTile[1]].instrument !== undefined) {  
                                 $("#modifyTileInstrumentSpinner").val(fieldContents[currentTile[0]][currentTile[1]].instrument);
+                            }                            
+                            if(fieldContents[currentTile[0]][currentTile[1]].flowValue !== undefined) {  
+                                $("#modifyTileInstrumentSpinner").val(fieldContents[currentTile[0]][currentTile[1]].flowValue);
                             }
                             if(fieldContents[currentTile[0]][currentTile[1]].xPointer !== undefined) {
                                 $("#modifyPointerTileX").val(fieldContents[currentTile[0]][currentTile[1]].xPointer)
@@ -389,6 +392,7 @@ function interact(e) {
                         } else {
                             $("#modifyTilePitchSpinner").val(36);
                             $("#modifyTileInstrumentSpinner").val(0);
+                            $("#modifyTileFlowSpinner").val(0);
                             $("#modifyPointerTileX").val(0);
                             $("#modifyPointerTileY").val(0);
                         }
@@ -601,6 +605,16 @@ function paintTile(tileX, tileY, color){
                 break;
             case "teleport":
                 ctx.drawImage(tileOverlayImages[10],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;
+            case "counter":
+                ctx.font = "10px Tahoma";
+                ctx.fillStyle = "#FFFFFF"; 
+                //For contrast.
+                if(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].note > 1) { 
+                    ctx.fillStyle = "#000000";
+                }
+                ctx.fillText(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue, FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 2, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 16, 22);
+                ctx.fillText(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue, FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 1, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 16, 22);
                 break;
             default:
                 break;

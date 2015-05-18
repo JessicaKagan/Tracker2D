@@ -71,7 +71,7 @@ Bug.prototype.updateBug = function() {
         }
     }
 
-    //Change the behavior of the bug based on what it's standing on.
+    //Change the behavior of the bug based on what it's standing on. Counter is an exception that changes the field instead.
     if(fieldContents[this.bugTile[0]][this.bugTile[1]] !== undefined){
         switch(fieldContents[this.bugTile[0]][this.bugTile[1]].flowEffect){
             case "turn_west":
@@ -93,6 +93,23 @@ Bug.prototype.updateBug = function() {
                 this.previousAction = this.action;
                 this.action = 'teleportToTile';
                 break;
+            case "counter":
+            //Counters are cool. Bugs decrement them until they hit 0 and turn into whatever tile they point to.
+            //The pointer tile can change during execution, too. 
+            //Maybe we should add an incrementer element for more programmatic modification.
+                if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue > 0) {
+                    fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue -= 1;
+                    break;
+                }
+                if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue === 0) {
+                    //First, get the tile we're pointing to. This is monstrously ugly, by the way.
+                    //We're using the coordinates stored here to copy the ENTIRE tile (not just its coordinates) into memory.
+                    var XCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer;
+                    var YCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer;
+                    var copyFromThisTile = fieldContents[XCoord][YCoord];
+                    console.log(copyFromThisTile);
+                    fieldContents[this.bugTile[0]][this.bugTile[1]] = copyFromThisTile;
+                }
             default:
                 break;
         }

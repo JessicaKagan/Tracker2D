@@ -117,7 +117,7 @@ function respondToQuery(X, Y) {
         queryResponse += "<p> Audio Effect: " +  fieldContents[X][Y].dspEffect + "</p>";
         queryResponse += "<p> Audio Effect Parameter: " +  fieldContents[X][Y].dspValue + "</p>";        
         queryResponse += "<p> Flow Effect: " +  fieldContents[X][Y].flowEffect + "</p>";
-        //queryResponse += "<p> Flow Effect Parameter: " +  fieldContents[X][Y].flowValue + "</p>"; //Uncomment when relevant.
+        queryResponse += "<p> Flow Effect Parameter: " +  fieldContents[X][Y].flowValue + "</p>"; //Uncomment when relevant.
         queryResponse += "<p> Volume: " + (fieldContents[X][Y].volume * 100) + "%</p>";
         queryResponse += "<p> Points to this tile: " + fieldContents[X][Y].xPointer + " , " + fieldContents[X][Y].yPointer + "</p>";
     } else queryResponse += "No data in this tile.";
