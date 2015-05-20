@@ -179,6 +179,14 @@ select {
 
 }
 
+#progressCounter {
+    position: absolute;
+    top: 540px;
+    left: 4px;
+    font-size: 10px;
+    color: #FFFFFF;
+}
+
 #facebookButton {
     position: absolute;
     top: 568px;

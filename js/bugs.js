@@ -97,12 +97,13 @@ Bug.prototype.updateBug = function() {
             //Counters are cool. Bugs decrement them until they hit 0 and turn into whatever tile they point to.
             //The pointer tile can change during execution, too. 
             //Maybe we should add an incrementer element for more programmatic modification.
+            //There is a very strange bug where if you copy a tile with a counter, all the pasted counters share decrements.
                 if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue > 0) {
                     fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue -= 1;
                     break;
                 }
                 if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue === 0) {
-                    //First, get the tile we're pointing to. This is monstrously ugly, by the way.
+                    //First, get the tile we're pointing to.
                     //We're using the coordinates stored here to copy the ENTIRE tile (not just its coordinates) into memory.
                     var XCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer;
                     var YCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer;

@@ -224,6 +224,7 @@ function loadFile() {
         checkBug(i);
     }
     storeBugPositions();
+    restoreBugPositions();
     //Song properties are stored at the very end of the file.
     TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
     console.log(TEMPO);
@@ -489,6 +490,9 @@ function restoreBugPositions() {
         for(var i = 0; i < bugList.length; ++i) {
             checkBug(i);
         }
+        //Inform the timer as well. This should be incorporated into a more general reset function.
+        elapsedTime = 0;
+        $("#elapsedTime").html(elapsedTime);
     }
 }
 
@@ -497,12 +501,8 @@ function updateInputVolume(volumeNumber) {
     $("#currentInputVolume").html(volumeNumber); //Adjusts the value.
     currentVolume = volumeNumber/100;
 }
-
-//Initializes everything, but only works if the soundSet is loaded.
+//Initializes everything, but only responds if the soundSet is loaded.
 function loadIfReady(){
     if(soundsAreReady.called) { init(); }
-    //Otherwise, inform the user somehow. Alert breaks the load routine...
-    //else { alert("Hold on! Tracker2D needs to load all of its samples to function properly."); }
-    
-
+    //Otherwise, inform the user somehow. We can't use alert because it breaks the load routine..
 }

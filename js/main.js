@@ -37,7 +37,8 @@ for(var i = 0; i < FILE_SIZE[0]; ++i) {
 var soundFont, audioEngine, audioLoader; 
 var selectBoxStage, moveBugStage, selectedBug, currentlyEditedTile;
 //For synch.
-var lastTime, updateFrequency, timeToUpdate;
+var lastTime, updateFrequency, timeToUpdate; 
+var elapsedTime = 0;
 var tickMultiplier = 12.5;
 
 //Used in keyboard_shortcuts to adjust currentPitch;
@@ -380,7 +381,7 @@ function interact(e) {
                                 $("#modifyTileInstrumentSpinner").val(fieldContents[currentTile[0]][currentTile[1]].instrument);
                             }                            
                             if(fieldContents[currentTile[0]][currentTile[1]].flowValue !== undefined) {  
-                                $("#modifyTileInstrumentSpinner").val(fieldContents[currentTile[0]][currentTile[1]].flowValue);
+                                $("#modifyTileFlowSpinner").val(fieldContents[currentTile[0]][currentTile[1]].flowValue);
                             }
                             if(fieldContents[currentTile[0]][currentTile[1]].xPointer !== undefined) {
                                 $("#modifyPointerTileX").val(fieldContents[currentTile[0]][currentTile[1]].xPointer)
@@ -501,13 +502,19 @@ function main(){
     //When it hits zero, we update.
     if(timeToUpdate <= 0) { 
         if(pauseState == false) { 
-            for(var i = 0; i < bugList.length; ++i){
-            if(bugList[i].inStorage === false) { bugList[i].updateBug(); }
+            for(var i = 0; i < bugList.length; ++i) {
+                if(bugList[i].inStorage === false) { bugList[i].updateBug(); }
             }
+            //Once we've updated positions, update the timer as well.
+            elapsedTime += 1;
+            $("#elapsedTime").html(elapsedTime);
         }
         timeToUpdate = updateFrequency; 
+
     }
+
     render();
+
     window.requestAnimationFrame(main);
     
 
