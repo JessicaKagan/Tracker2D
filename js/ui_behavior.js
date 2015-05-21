@@ -261,7 +261,6 @@ function hideUI(){
 //This one just checks the status of the bug without altering it.
 function checkBug(bugVal){
     var getBugHTML = "";
-    pauseState = true; 
     if(bugList[bugVal].inStorage === false && bugList[bugVal] !== undefined) { 
         switch(bugVal) {
             case 0:
@@ -329,9 +328,7 @@ function checkBug(bugVal){
 
 function getBug(bugVal){
     var getBugHTML = "";
-    pauseState = true; //If the user starts putting bugs in storage, it might play havoc with playback.
-    //console.log(bugList[bugVal]);
-    //console.log(getBugHTML);
+    //I removed the pause statements since those are now handled elsewhere.
     if(bugList[bugVal].inStorage === false && bugList[bugVal] !== undefined) { 
         bugList[bugVal].inStorage = true;
         
@@ -471,11 +468,15 @@ function storeBugPositions() {
     }
     //console.log(storedBugPositions);
     //console.log("Bug positions stored");
-
 }
 
-function restoreBugPositions() {
-    pauseState = true;
+function restoreBugPositions(pauseOnRestore) {
+    //We only want to pause if the calling function requests it. 
+    console.log(pauseOnRestore);
+    if(pauseOnRestore !== true) {  
+        pauseState = false;
+    } else if(pauseOnRestore === true){ pauseState = true; }
+
     if(storedBugPositions === [] || storedBugPositions.length !== 32) {
         console.log("Stored bug positions are glitchy.");
         return;

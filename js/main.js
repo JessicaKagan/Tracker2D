@@ -244,7 +244,7 @@ function interact(e) {
             storeBugPositions();
         } else if(cursorY >= 576 && cursorX >= 704 && cursorX < 728) {
             console.log('RESTOREBUG_BUTTON_AREA');
-            restoreBugPositions();
+            restoreBugPositions(true);
         } else if(cursorY >= 576 && cursorX >= 752 && cursorX < 776) {
             console.log('SAVE_BUTTON_AREA');
             hideUI();
@@ -622,6 +622,10 @@ function paintTile(tileX, tileY, color){
                 }
                 ctx.fillText(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue, FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 2, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 16, 22);
                 ctx.fillText(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue, FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 1, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 16, 22);
+                break;
+            case "revert":
+                //Use a modified version of this icon or something instead!
+                ctx.drawImage(UIImages[11],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
             default:
                 break;

@@ -71,7 +71,7 @@ Bug.prototype.updateBug = function() {
         }
     }
 
-    //Change the behavior of the bug based on what it's standing on. Counter is an exception that changes the field instead.
+    //Change the behavior of the bug, or the entire field based on what the bug is standing on.
     if(fieldContents[this.bugTile[0]][this.bugTile[1]] !== undefined){
         switch(fieldContents[this.bugTile[0]][this.bugTile[1]].flowEffect){
             case "turn_west":
@@ -87,8 +87,10 @@ Bug.prototype.updateBug = function() {
                 this.action = 'moveDown';
                 break;
             case "freeze":
-                this.action = 'holdPosition';
-                break;
+            //Needs more writing in order to prevent the program from pausing one tick later than a freezetile.
+            //There are some questionable interactions, but freeze should only be used at the very end of a song.
+                pauseState = true; 
+                return;
             case "teleport": 
                 this.previousAction = this.action;
                 this.action = 'teleportToTile';
@@ -111,6 +113,10 @@ Bug.prototype.updateBug = function() {
                     console.log(copyFromThisTile);
                     fieldContents[this.bugTile[0]][this.bugTile[1]] = copyFromThisTile;
                 }
+            case "revert":
+            //All bugs after the one that triggers this update. That's not good.
+                restoreBugPositions(false); 
+                return;
             default:
                 break;
         }

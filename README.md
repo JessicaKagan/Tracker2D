@@ -10,6 +10,7 @@ So far, this code runs best on Chrome. Firefox seems to handle it decently as we
 Current bugs:
 - Not enough watchful eyes bleeding at the sight of code errors
 - Copies of counters made with the select and paste tools share their counter state until they hit 0
+- Revert tiles are glitchy and sometimes get ignored by the bugs.
 
 Tracker2D contains some code released under the MIT License. The following block of legalese applies to such:
 
