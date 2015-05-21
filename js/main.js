@@ -5,7 +5,7 @@ var FIELD_SIZE = [30,23]; //The amount of horizontal and vertical tiles in the v
 var TILE_SIZE = 24; //This is more cumbersome early on, but I will eventually need to implement zooming, and this might help.
 var LEFT_VERTICAL_BAR = [0,0,80,800];
 var BOTTOM_HORIZONTAL_BAR = [80,552,720,48];
-var FIELD_PIXELS = [80,0,800,552];
+var FIELD_PIXELS = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
 var PAUSE_PLAY_BUTTON_AREA = [80,576,24,24];
 var PENCIL_BUTTON_AREA = [104,576,24,24];
@@ -36,13 +36,12 @@ for(var i = 0; i < FILE_SIZE[0]; ++i) {
 //Globals for now. Deglobalize as implementation permits. 
 var soundFont, audioEngine, audioLoader; 
 var selectBoxStage, moveBugStage, selectedBug, currentlyEditedTile;
-//For synch.
+//These values are used to run the timer.
 var lastTime, updateFrequency, timeToUpdate; 
 var elapsedTime = 0;
 var tickMultiplier = 12.5;
 
-//Used in keyboard_shortcuts to adjust currentPitch;
-var scaleNote = 0;
+var scaleNote = 0; //Used in keyboard_shortcuts to adjust currentPitch;
 var currentOctave = 3;
 var currentPitch = 36;
 var currentInstrument = 0;
@@ -50,7 +49,6 @@ var currentDSPValue = 0;
 var currentVolume = 0.6;
 var currentDSP = "none";
 var currentFlowControl = "none";
-var fieldBoundaries = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
 //Image arrays used in image_loader.js
 var UIImages = new Array(16);
@@ -75,12 +73,12 @@ for(var i = 0; i < bugImages.length; i++) {
 getImages(); //See image_loader.js
 
 //Make the buffer array for Web Audio! If we don't have a sound yet, fill with silence.
-//Apparently this can't handle FLACs, so convert to wavs or mp3s?
+//Apparently this can't handle FLACs, so convert to wavs, mp3s, or Vorbis?
 var soundArray = new Array(soundSet.length);
 for(var i = 0; i < soundSet.length; ++i){
     if(soundSet[i] !== undefined){
         soundArray[i] = soundSet[i][1]; //If we do have a sound, get its filename from here.
-    } else soundArray[i] = './sounds/00.mp3';
+    } else soundArray[i] = './sounds/00.mp3'; //Otherwise, silence.
 }
 
 //Set up a canvas to draw on. All the drawing functions should be in render() now.
@@ -533,16 +531,17 @@ function render(){
 
     //Draw boundaries between tiles.
     //This may need adjustment if we implement a zoom feature.
-    for(var i = 80; i < FIELD_PIXELS[2]; i += TILE_SIZE) {
+    //Replacing some constants with variables in order to make it easier to rebuild (although readability might be a pain).
+    for(var i = FIELD_PIXELS[0]; i < FIELD_PIXELS[2]; i += TILE_SIZE) {
         ctx.beginPath();
         ctx.moveTo(i,0); //Horizontal lines
-        ctx.lineTo(i,552);
+        ctx.lineTo(i,FIELD_PIXELS[3]);
         ctx.stroke();
     }
-    for(var i = 0; i < FIELD_PIXELS[3]; i += TILE_SIZE) {
+    for(var i = FIELD_PIXELS[1]; i < FIELD_PIXELS[3]; i += TILE_SIZE) {
         ctx.beginPath();
         ctx.moveTo(0,i); //Vertical lines
-        ctx.lineTo(800,i);
+        ctx.lineTo(FIELD_PIXELS[2],i);
         ctx.stroke();
     }
     //Painting squares! From an MVC stance this is the "view", I guess.

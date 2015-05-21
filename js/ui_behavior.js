@@ -97,6 +97,7 @@ function pasteBuffer(fromX, toX, fromY, toY, tileX, tileY, currentTile) {
         for(var j = 0; j < tileBuffer[i].length; ++j){
             //Conditional to prevent accidental writes outside the file, which could get crashy.
             //Horizontal overflows cause errors,  but don't break everything. I still consider this a bug.
+            //tileX and tileY store offsets.
             if((i + tileX) < FILE_SIZE[0] || (j + tileY) < FILE_SIZE[1]) {
                 fieldContents[(i + tileX)][(j + tileY)] = tileBuffer[i][j];
             }
