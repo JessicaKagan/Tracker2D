@@ -256,6 +256,9 @@ function hideUI(){
     if($("#helpPage").hasClass("currentlyHidden") === false) { 
         setTimeout(function() {$("#helpPage").addClass("currentlyHidden");}, 50);
     }
+    if($("#queryInfo").hasClass("currentlyHidden") === false) { 
+        setTimeout(function() {$("#queryInfo").addClass("currentlyHidden");}, 50);
+    } 
 }
 
 //checkBug and getBug need to be merged properly.
