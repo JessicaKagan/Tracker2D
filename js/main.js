@@ -103,8 +103,11 @@ function init() {
 
     //Set up HTML5 Canvas and mouse input. interact() is now in mouse_input.js
     var bindCanvas = document.getElementById("canvas");
-    bindCanvas.addEventListener("click", interact); //Binding to the canvas instead of the entire document fixes some strange bugs.
-    
+    bindCanvas.addEventListener("click", function (e) { interact('click',e) }, false); //Binding to the canvas instead of the entire document fixes some strange bugs.
+    bindCanvas.addEventListener("mousedown",function (e) { interact('mousedown',e) }, false);
+    bindCanvas.addEventListener("mouseup", function (e) { interact('mouseup',e) }, false);
+    bindCanvas.addEventListener("mousemove", function (e) { interact('mousemove',e) }, false);
+
     //Set up keyboard shortcuts.
     hookKeyboard();
 

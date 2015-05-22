@@ -1,6 +1,8 @@
-
+var drawingStatus;
 //This is our mouse listeners go!
-function interact(e) {
+//Needs rewriting in order to take advantage of the new event listeners.
+function interact(action, e) {
+    //console.log(e);
     //queryInfo's hide routine probably needs to be merged with the rest of hideUI().
     $("#queryInfo").addClass("currentlyHidden"); 
 
@@ -8,15 +10,15 @@ function interact(e) {
     var cursorY = e.pageY - $('#canvas').offset().top;
     //Displays debug messages for now based on where you click.
     //When we make more, we'll need some sort of 2D switch statement, because this is just getting ugly.
-    if(cursorX <= 80 && cursorX > 0) { 
+    if(cursorX <= 80 && cursorX > 0 && action === "click") { 
         console.log("LEFT_VERTICAL_BAR"); 
         //Minimap usage.
         if(cursorX >= 8 && cursorX <= 72 && cursorY >=8 && cursorY <= 72) {
             console.log("MINIMAP");
-            moveViewingField((cursorX - 8),(cursorY - 8)); //Compensating for the offsets.
+            moveViewingField((cursorX - 8),(cursorY - 8)); //Compensating for the offsets in the UI.
         }
     }
-    if(cursorY >= 540 && cursorY <= 600 && cursorX >= 80) { 
+    if(cursorY >= 540 && cursorY <= 600 && cursorX >= 80 && action === "click") { 
         console.log("BOTTOM_HORIZONTAL_BAR");
         //UI buttons on the bottom horizontal bar.
         if(cursorY >= 576 && cursorX < 104) { 
@@ -56,6 +58,7 @@ function interact(e) {
         } else if(cursorY >= 576 && cursorX >= 608 && cursorX < 632) {
             selectedTool = "editTile";
             console.log("EDIT_TILE_BUTTON_AREA");
+            hideUI();
         } else if(cursorY >= 576 && cursorX >= 632 && cursorX < 656) {
             console.log('SONGPROPS_BUTTON_AREA');
             hideUI();
@@ -84,93 +87,112 @@ function interact(e) {
     //If we're inside the playfield, convert the coordinates to a tile.
     //The logic for this is going to become a great deal more complex with time, I think.
     if(cursorX >= 80 && cursorX <= 800 && cursorY >= 0 && cursorY <= 540){
-        console.log("In the playfield");
+        //console.log("In the playfield");
         var currentTile = getTile(cursorX, cursorY);
-        console.log(currentTile);
+        //console.log(currentTile);
         
         //This statement reduces painting with UI elements open; timeouts handle the rest.
+        //Update it for the new UI elements.
             if($("#saveExport").hasClass("currentlyHidden") === true &&
                $("#loadExport").hasClass("currentlyHidden") === true){
                 
                 switch(selectedTool){
                     case "pencil":
-                        fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, currentVolume, currentDSPValue, 0);
+                        setDrawingStatus();
+                        if(drawingStatus === true){
+                            fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, currentVolume, currentDSPValue, 0);
+                        }
                         break;
                     case "eraser":
-                        fieldContents[currentTile[0]][currentTile[1]] = undefined;
+                        setDrawingStatus();
+                        if(drawingStatus === true){
+                            fieldContents[currentTile[0]][currentTile[1]] = undefined;
+                        }
                         break;
                     case "selectBox":
-                        if(selectBoxStage === 1) {
-                            //Get the first pair for the buffer.
-                            selectBoxCoords[0] = currentTile[0];
-                            selectBoxCoords[2] = currentTile[1];
-                            selectBoxStage = 2;
-                            alert("Placeholder for a better way to tell you that you need to select a second tile now. I'd close this with the Enter key if I were you, because we might have a clickthrough problem otherwise.");
-                        } else if(selectBoxStage === 2) {
-                            //A second click gets the second pair. 
-                            selectBoxCoords[1] = currentTile[0];
-                            selectBoxCoords[3] = currentTile[1];
-                            /* If the user selected something above or to the left of their first selection,
-                             * swap the coordinates. X values first, then Y.
-                             * This uses a functional but inelegant temporary swapping variable.
-                             */
-                            if(selectBoxCoords[0] > selectBoxCoords[1]) {
-                                var selectBoxBuffer = selectBoxCoords[0];
-                                selectBoxCoords[0] = selectBoxCoords[1];
-                                selectBoxCoords[1] = selectBoxBuffer;
-                            }
-                            if(selectBoxCoords[2] > selectBoxCoords[3]) {
-                                var selectBoxBuffer = selectBoxCoords[2];
-                                selectBoxCoords[2] = selectBoxCoords[3];
-                                selectBoxCoords[3] = selectBoxBuffer;
-                            }
-                            //Finally, we send these coords to the buffer filler.
-                            fillBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3],'selectBox');
-                            //And this allows the user to select something again.
-                            selectBoxStage = 1;
-                        } else console.log("selectBox() in interact() failed.");
+                        if(action === "click") {
+                            if(selectBoxStage === 1) {
+                                //Get the first pair for the buffer.
+                                selectBoxCoords[0] = currentTile[0];
+                                selectBoxCoords[2] = currentTile[1];
+                                selectBoxStage = 2;
+                                alert("Placeholder for a better way to tell you that you need to select a second tile now. I'd close this with the Enter key if I were you, because we might have a clickthrough problem otherwise.");
+                            } else if(selectBoxStage === 2) {
+                                //A second click gets the second pair. 
+                                selectBoxCoords[1] = currentTile[0];
+                                selectBoxCoords[3] = currentTile[1];
+                                /* If the user selected something above or to the left of their first selection,
+                                 * swap the coordinates. X values first, then Y.
+                                 * This uses a functional but inelegant temporary swapping variable.
+                                 */
+                                if(selectBoxCoords[0] > selectBoxCoords[1]) {
+                                    var selectBoxBuffer = selectBoxCoords[0];
+                                    selectBoxCoords[0] = selectBoxCoords[1];
+                                    selectBoxCoords[1] = selectBoxBuffer;
+                                }
+                                if(selectBoxCoords[2] > selectBoxCoords[3]) {
+                                    var selectBoxBuffer = selectBoxCoords[2];
+                                    selectBoxCoords[2] = selectBoxCoords[3];
+                                    selectBoxCoords[3] = selectBoxBuffer;
+                                }
+                                //Finally, we send these coords to the buffer filler.
+                                fillBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3],'selectBox');
+                                //And this allows the user to select something again.
+                                selectBoxStage = 1;
+                            } else console.log("selectBox() in interact() failed.");
+                        }
                         break;
                     case "paste":
-                    //Paste doesn't work if there's no tilebuffer, or if the tilebuffer is too large.
-                        if(tileBuffer !== undefined) {
-                            //There might be other conditions; I'll implement them if I can think of them.
-                            if(tileBuffer.length !== FIELD_SIZE[0] ||
-                               tileBuffer[0].length !== FIELD_SIZE[1]) {
-                                //We include offset for where the user clicked.
-                                pasteBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3], 
-                                            currentTile[0], currentTile[1]);
-                            } else { console.log("Can't paste that. It's too damn big!")};
-                        } else { console.log("Select something first, then try pasting it.");} 
+                    //For now, you can use a paste as a brush, which can actually look kind of cool.
+                        setDrawingStatus();
+                        if(drawingStatus === true){
+                        //Paste doesn't work if there's no tilebuffer, or if the tilebuffer is too large.
+                            if(tileBuffer !== undefined) {
+                                //There might be other conditions; I'll implement them if I can think of them.
+                                if(tileBuffer.length !== FIELD_SIZE[0] ||
+                                   tileBuffer[0].length !== FIELD_SIZE[1]) {
+                                    //We include offset for where the user clicked.
+                                    pasteBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3], 
+                                                currentTile[0], currentTile[1]);
+                                } else { console.log("Can't paste that. It's too damn big!")};
+                            } else { console.log("Select something first, then try pasting it.");}
+                        } 
                         break;
                     case "query":
                         $("#queryInfo").removeClass("currentlyHidden");
                         respondToQuery(currentTile[0],currentTile[1]);
                         break;
                     case "moveBug":
-                    //Only try to move a bug if the user selected one.
-                        if(moveBugStage === 1) {
-                            for(var i = 0; i < bugList.length; ++i){
-                                if((bugList[i].bugTile[0]) === currentTile[0] && 
-                                    bugList[i].bugTile[1] === currentTile[1]) {
-                                    selectedBug = i;
-                                    pauseState = true; //I recommend against trying to move bugs during playback, though.
-                                    moveBugStage = 2;
-                                    alert("Now click where in the field you want to move the bug. This won't work if you try to scroll the field first.");
+                    //Move bug should eventually be upgraded to support click and drag like the pen and eraser features.
+                        pauseState = true; //I recommend against trying to move bugs during playback.
+                        if(action === "click") {
+                            if(moveBugStage === 1) {
+                                for(var i = 0; i < bugList.length; ++i){
+                                    if((bugList[i].bugTile[0]) === currentTile[0] && 
+                                        bugList[i].bugTile[1] === currentTile[1]) {
+                                        selectedBug = i;
+                                        moveBugStage = 2;
+                                        alert("Now click where in the field you want to move the bug. This won't work if you try to scroll the field first.");
+                                    }
                                 }
+                            } else if (moveBugStage === 2) {
+                                var newBugCoords = convertTiletoPixels(currentTile[0],currentTile[1]);
+                                //These conversions are redundant, but necessary to make things work.
+                                bugList[selectedBug].x = newBugCoords[0];
+                                bugList[selectedBug].y = newBugCoords[1];
+                                moveBugStage = 1;
+                                bugList[selectedBug].bugTile = getTile(bugList[selectedBug].x,bugList[selectedBug].y);
+                            } else {
+                                console.log("moveBug() in interact() failed.");
+                                moveBugStage = 1;
                             }
-                        } else if (moveBugStage === 2) {
-                            var newBugCoords = convertTiletoPixels(currentTile[0],currentTile[1]);
-                            //These conversions are redundant, but necessary to make things work.
-                            bugList[selectedBug].x = newBugCoords[0];
-                            bugList[selectedBug].y = newBugCoords[1];
-                            moveBugStage = 1;
-                            bugList[selectedBug].bugTile = getTile(bugList[selectedBug].x,bugList[selectedBug].y);
-                        } else console.log("moveBug() in interact() failed.");
+                        }
                         break;
                     case "turnBug":
                         for(var i = 0; i < bugList.length; ++i){
                                 if( (bugList[i].bugTile[0]) === currentTile[0] && 
-                                     bugList[i].bugTile[1] === currentTile[1]) { 
+                                     bugList[i].bugTile[1] === currentTile[1] &&
+                                     action === "click") { 
                                     //Check for a bug in the chosen tile; if there is one, rotate its heading 90 degrees clockwise.
                                     switch(bugList[i].action) {
                                         case 'moveLeft':
@@ -194,43 +216,52 @@ function interact(e) {
                         break;
                     case "editTile":
                         //currentlyEditedTile is used when we need global scope. Probably not optimal.
-                        currentlyEditedTile = currentTile; 
-
-                        $("#modifyTileTarget").html(currentTile[0] + " , " + currentTile[1]);
-                        //Fill the window with the values from the tile if relevant. Substitute defaults if it's empty.
-                        if(fieldContents[currentTile[0]][currentTile[1]] !== undefined) {                     
-                            if(fieldContents[currentTile[0]][currentTile[1]].note !== undefined) {
+                        if(action === "click") {
+                            currentlyEditedTile = currentTile; 
+                            $("#modifyTileTarget").html(currentTile[0] + " , " + currentTile[1]);
+                            //Fill the window with the values from the tile if relevant. Substitute defaults if it's empty.
+                            if(fieldContents[currentTile[0]][currentTile[1]] !== undefined) {                     
+                                if(fieldContents[currentTile[0]][currentTile[1]].note !== undefined) {
                                 //The tile's frequency multiplier needs to be converted to the correct pitch before we can use this.
-                                $("#modifyTilePitchSpinner").val(fieldContents[currentTile[0]][currentTile[1]].note);
+                                    $("#modifyTilePitchSpinner").val(fieldContents[currentTile[0]][currentTile[1]].note);
+                                }
+                                if(fieldContents[currentTile[0]][currentTile[1]].instrument !== undefined) {  
+                                    $("#modifyTileInstrumentSpinner").val(fieldContents[currentTile[0]][currentTile[1]].instrument);
+                                }                            
+                                if(fieldContents[currentTile[0]][currentTile[1]].flowValue !== undefined) {  
+                                    $("#modifyTileFlowSpinner").val(fieldContents[currentTile[0]][currentTile[1]].flowValue);
+                                }
+                                if(fieldContents[currentTile[0]][currentTile[1]].xPointer !== undefined) {
+                                    $("#modifyPointerTileX").val(fieldContents[currentTile[0]][currentTile[1]].xPointer)
+                                } 
+                                if(fieldContents[currentTile[0]][currentTile[1]].yPointer !== undefined) {
+                                    $("#modifyPointerTileY").val(fieldContents[currentTile[0]][currentTile[1]].yPointer)
+                                }
+                            //If the tile's undefined, we need some default values!
+                            } else {
+                                $("#modifyTilePitchSpinner").val(36);
+                                $("#modifyTileInstrumentSpinner").val(0);
+                                $("#modifyTileFlowSpinner").val(0);
+                                $("#modifyPointerTileX").val(0);
+                                $("#modifyPointerTileY").val(0);
                             }
-                            if(fieldContents[currentTile[0]][currentTile[1]].instrument !== undefined) {  
-                                $("#modifyTileInstrumentSpinner").val(fieldContents[currentTile[0]][currentTile[1]].instrument);
-                            }                            
-                            if(fieldContents[currentTile[0]][currentTile[1]].flowValue !== undefined) {  
-                                $("#modifyTileFlowSpinner").val(fieldContents[currentTile[0]][currentTile[1]].flowValue);
-                            }
-                            if(fieldContents[currentTile[0]][currentTile[1]].xPointer !== undefined) {
-                                $("#modifyPointerTileX").val(fieldContents[currentTile[0]][currentTile[1]].xPointer)
-                            } 
-                            if(fieldContents[currentTile[0]][currentTile[1]].yPointer !== undefined) {
-                                $("#modifyPointerTileY").val(fieldContents[currentTile[0]][currentTile[1]].yPointer)
-                            }
-                        //If the tile's undefined, we need some default values!
-                        } else {
-                            $("#modifyTilePitchSpinner").val(36);
-                            $("#modifyTileInstrumentSpinner").val(0);
-                            $("#modifyTileFlowSpinner").val(0);
-                            $("#modifyPointerTileX").val(0);
-                            $("#modifyPointerTileY").val(0);
+                            //Then show the window to the user.
+                            $("#modifyTile").removeClass("currentlyHidden");
                         }
-
-                        //Then show the window to the user.
-                        $("#modifyTile").removeClass("currentlyHidden");
                         break;
                     default:
                         break;
                 }
             }
-        console.log(fieldContents[currentTile[0]][currentTile[1]]);
+        //console.log(fieldContents[currentTile[0]][currentTile[1]]);
+    }
+    //Used for the pen and eraser tools and anything with a standard draw mechanism.
+    function setDrawingStatus(){
+        if(action === 'mousedown') {
+            drawingStatus = true;
+        } else if (action === 'mouseup') {
+            drawingStatus = false;
+        }
     }
 }
+
