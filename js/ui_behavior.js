@@ -9,6 +9,7 @@
 
 var isOverlayShowing = false; //Used to handle some pointer events CSS.
 var pauseState = true;
+var pasteStyle = 1 //1 is an overwrite paste, 2 is mixpaste.
 //singleStep executes a single update and then pauses.
 //Labels for all tools that require clicking on the field. Not in use yet.
 
@@ -43,7 +44,11 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]); 
-    ctx.drawImage(UIImages[7],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]); 
+    //Draw a different paste button based on which type of paste is selected in the options pages.
+    if(pasteStyle === 1){
+        ctx.drawImage(UIImages[7],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]);
+    } else if(pasteStyle === 2){ ctx.drawImage(UIImages[16],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]); } //Mixpaste.
+
     ctx.drawImage(UIImages[8],QUERY_BUTTON_AREA[0],QUERY_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[9],MOVEBUG_BUTTON_AREA[0],MOVEBUG_BUTTON_AREA[1]);     
     ctx.drawImage(UIImages[10],STOREBUG_BUTTON_AREA[0],STOREBUG_BUTTON_AREA[1]); 
@@ -92,14 +97,23 @@ function fillBuffer(fromX, toX, fromY, toY, command) {
 //currentTile is an optional instruction for interpolation, which will be defined later.
 function pasteBuffer(fromX, toX, fromY, toY, tileX, tileY, currentTile) {
     //This is an overlap paste that replaces all contents.
-    //Maybe we can make a mixpaste later? It would probably implement a second buffer and a logical inclusive OR (logical disjunction)
+    //The switch statement isn't as terse as it could be, but it's more readable and extensible in case we actually need more special pastes.
     for(var i = 0; i < tileBuffer.length; ++i){
         for(var j = 0; j < tileBuffer[i].length; ++j){
             //Conditional to prevent accidental writes outside the file, which could get crashy.
             //Horizontal overflows cause errors,  but don't break everything. I still consider this a bug.
             //tileX and tileY store offsets.
             if((i + tileX) < FILE_SIZE[0] || (j + tileY) < FILE_SIZE[1]) {
-                fieldContents[(i + tileX)][(j + tileY)] = tileBuffer[i][j];
+                switch(pasteStyle){
+                    case 1: // Simplistic overwrite paste.
+                        fieldContents[(i + tileX)][(j + tileY)] = tileBuffer[i][j];
+                        break; 
+                    case 2: // More complicated mixpaste that doesn't overwrite occupied tiles with undefined ones.
+                        if(fieldContents[(i + tileX)][(j + tileY)] instanceof Tile === false){
+                            fieldContents[(i + tileX)][(j + tileY)] = tileBuffer[i][j];
+                        } else break;
+                        break;
+                } 
             }
         }
     }
@@ -506,6 +520,18 @@ function updateInputVolume(volumeNumber) {
     $("#currentInputVolume").html(volumeNumber); //Adjusts the value.
     currentVolume = volumeNumber/100;
 }
+
+//Switches between overwrite and mixpaste. 
+function changePasteStyle() {
+    if(pasteStyle === 1) {
+        pasteStyle = 2;
+        $("#selectPasteStyle").html("Change from Mix to Overwrite");
+    } else if(pasteStyle === 2){
+        pasteStyle = 1;
+        $("#selectPasteStyle").html("Change from Overwrite to Mix");
+    }
+}
+
 //Initializes everything, but only responds if the soundSet is loaded.
 function loadIfReady(){
     if(soundsAreReady.called) { init(); }

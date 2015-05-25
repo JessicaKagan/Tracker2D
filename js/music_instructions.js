@@ -1,11 +1,12 @@
 /* This file defines the instructions and parameters on every tile.
- * Currently the following are planned:
+ * Currently the following are available:
  * 1. Note indicator
  * 2. Instrument indicator
  * 3. Audio effects (DSP stuff, the names of which will alias to various audio functions)
  * 4. Flow control effects (Things like teleports, turn signals, etc.)
  *
- * In the future, I might add various art features to style the look of a tile without changing its function.
+ * There are various overlays and coloring techniques used to distinguish tiles based on their contents.
+ * However, most of them are handled by the render() function in main.js. 
  *
  * TODO: Look at https://github.com/corbanbrook/dsp.js/
  */

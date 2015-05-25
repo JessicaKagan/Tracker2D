@@ -51,7 +51,7 @@ var currentDSP = "none";
 var currentFlowControl = "none";
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(16);
+var UIImages = new Array(17);
 var tileOverlayImages = new Array(11); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.
