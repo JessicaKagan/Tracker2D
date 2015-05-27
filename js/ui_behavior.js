@@ -239,7 +239,7 @@ function loadFile() {
         checkBug(i);
     }
     storeBugPositions();
-    restoreBugPositions();
+    restoreBugPositions(true); //The program will pause when the bugs have been restored to their positions.
     //Song properties are stored at the very end of the file.
     TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
     console.log(TEMPO);
@@ -343,16 +343,25 @@ function checkBug(bugVal){
     }
 }
 
+function getBug(bugVal, edit){
+    if(edit !== true && edit !== false){ edit = false; } //Error trapping.
+    var getBugHTML = '<button type="button" onclick="getBug(' + bugVal + ',true)">' + bugList[bugVal].image.outerHTML + '</button>';
+    if(bugList[bugVal].inStorage === false && bugList[bugVal] !== undefined) {
+        if(edit === true){
+            bugList[bugVal].inStorage = true;
+            //getBugHTML = '<button type="button" onclick="getBug(' + bugVal + ',true)">' + bugList[bugVal].image.outerHTML + '</button>';
+            //console.log(getBugHTML);
+            moveToStorage(bugVal);
+        } else if (edit === false) { moveFromStorage(bugVal); }
 
-function getBug(bugVal){
-    var getBugHTML = "";
-    //I removed the pause statements since those are now handled elsewhere.
-    if(bugList[bugVal].inStorage === false && bugList[bugVal] !== undefined) { 
-        bugList[bugVal].inStorage = true;
-        
-        //Functionalize this, so that if a bug starts off in storage, it reflects properly in the storage HTML.
-        getBugHTML = '<button type="button" onclick="getBug(' + bugVal + ')">' + bugList[bugVal].image.outerHTML + '</button>';
-        //console.log(getBugHTML);
+    } else if(bugList[bugVal].inStorage === true) {
+        if(edit === true){
+            bugList[bugVal].inStorage = false;
+            moveFromStorage(bugVal);
+        } else if (edit === false) { moveToStorage(bugVal); } //Something's buggy here.
+    }
+    //Local functions that should only be called within getBug.
+    function moveToStorage(bugVal){
         switch(bugVal) {
             case 0:
                 $('#bugStorageUnit1').html(getBugHTML);
@@ -381,44 +390,40 @@ function getBug(bugVal){
             default:
                 break;
         }
-
-    } else if(bugList[bugVal].inStorage === true) {
-        bugList[bugVal].inStorage = false;
-        //Inefficient, but the expression to do this on one line would be hell for other coders to interpret.
+    }
+    function moveFromStorage(bugVal){
         switch(bugVal) {
             case 0:
-                $('#bugStorageUnit1').html('<button type="button" onclick="getBug(0)">1</button>');
+                $('#bugStorageUnit1').html('<button type="button" onclick="getBug(0,true)">1</button>');
                 break;
             case 1:
-                $('#bugStorageUnit2').html('<button type="button" onclick="getBug(1)">2</button>');
+                $('#bugStorageUnit2').html('<button type="button" onclick="getBug(1,true)">2</button>');
                 break;
             case 2:
-                $('#bugStorageUnit3').html('<button type="button" onclick="getBug(2)">3</button>');
+                $('#bugStorageUnit3').html('<button type="button" onclick="getBug(2,true)">3</button>');
                 break;
             case 3:
-                $('#bugStorageUnit4').html('<button type="button" onclick="getBug(3)">4</button>');
+                $('#bugStorageUnit4').html('<button type="button" onclick="getBug(3,true)">4</button>');
                 break;            
             case 4:
-                $('#bugStorageUnit5').html('<button type="button" onclick="getBug(4)">5</button>');
+                $('#bugStorageUnit5').html('<button type="button" onclick="getBug(4,true)">5</button>');
                 break;
             case 5:
-                $('#bugStorageUnit6').html('<button type="button" onclick="getBug(5)">6</button>');
+                $('#bugStorageUnit6').html('<button type="button" onclick="getBug(5,true)">6</button>');
                 break;            
             case 6:
-                $('#bugStorageUnit7').html('<button type="button" onclick="getBug(6)">7</button>');
+                $('#bugStorageUnit7').html('<button type="button" onclick="getBug(6,true)">7</button>');
                 break;            
             case 7:
-                $('#bugStorageUnit8').html('<button type="button" onclick="getBug(7)">8</button>');
+                $('#bugStorageUnit8').html('<button type="button" onclick="getBug(7,true)">8</button>');
                 break;
             default:
                 break;
-        } 
+        }
     }
-
 }
 
-//Paints the minimap in the lower left corner. 
-//The user will be able to scroll around by clicking and dragging on the thing.
+//Paints the minimap in the upper left corner.
 function paintMiniMap(){
     var currentMiniMapPixel;
     var miniMapImage = ctx.createImageData(FILE_SIZE[0], FILE_SIZE[1]);
@@ -451,6 +456,7 @@ function paintMiniMap(){
     ctx.stroke(); 
 }
 
+//Used for the minimap.
 //This should be extended so that the user can scroll by clicking and dragging.
 function moveViewingField(X,Y) {
     //Adjust what the user put in to centralize it.
@@ -507,7 +513,7 @@ function restoreBugPositions(pauseOnRestore) {
             bugList[(i/4)].inStorage = storedBugPositions[i+3];
         }
         for(var i = 0; i < bugList.length; ++i) {
-            checkBug(i);
+            getBug(i,false);
         }
         //Inform the timer as well. This should be incorporated into a more general reset function.
         elapsedTime = 0;

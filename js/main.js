@@ -44,7 +44,7 @@ var tickMultiplier = 12.5;
 var scaleNote = 0; //Used in keyboard_shortcuts to adjust currentPitch;
 var currentOctave = 3;
 var currentPitch = 36;
-var currentInstrument = 0;
+var currentInstrument = 1;
 var currentDSPValue = 0;
 var currentVolume = 0.6;
 var currentDSP = "none";
@@ -164,7 +164,7 @@ function init() {
     bugList[7] = new Bug(bugImages[7], 1,15,'moveRight','Asami', true);
     //Puts bugs in storage as needed.
     for(var i = 0; i < bugList.length; ++i) {
-        checkBug(i);
+        getBug(i, false);
     }
     //Populating this will prevent unsolicited load errors.
     storeBugPositions();
