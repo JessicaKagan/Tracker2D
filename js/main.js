@@ -250,7 +250,7 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
             volumeAdjustment.connect(audioEngine.destination);
             break;
     }
-    source.start(0);
+    source.start(0); //Add the ability to start later in a sound or end it prematurely. Somehow.
     //Write a conditional that allows us to cut off a sound if we have a certain DSP effect.
 }
 

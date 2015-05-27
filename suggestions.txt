@@ -7,6 +7,7 @@ Things I know I want to do (which could get very long):
 - Fill up the soundset and keep sample quality as high as possible within a 20 MB limit
 - Indicate the position of bugs on the minimap, somehow (Hard to do in 64x64 confines)
 - Add Web MIDI API support to allow instrument input
+- Functions to rotate and flip a selection (presumably only in intervals of 90 degrees)
 
 Things I might do but am not sure about:
 - Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior. (Up to 36 checks per second? Divergent series.)

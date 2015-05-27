@@ -5,6 +5,7 @@ function hookKeyboard(){
         //Multiple cases for multiple browser implementations.
         var keyboardInput = (e.charCode) ? e.charCode : ((e.which) ? e.which : e.keyCode);
         console.log(keyboardInput);
+        var pressedNoteKey = true;
         switch(keyboardInput){
             //Pitch adjustment. This should perhaps be disabled when a window requiring text input is open.
             //It might be good to play the current instrument at the selected pitch when the user triggers hotkeys.
@@ -61,11 +62,17 @@ function hookKeyboard(){
                 scaleNote = 11;
                 break;
             default:
+                pressedNoteKey = false; 
                 break;   
         }
         if(keyboardInput !== 61 && keyboardInput !== 45) { 
             currentPitch = currentOctave*12 + scaleNote; 
             $('#pitchInput').val(currentPitch);
+            //UI function to demonstrate sounds to the user.
+            //Make this optional.
+            if(pressedNoteKey === true){
+                playSound(soundFont[currentInstrument],pitchTable[currentPitch],currentDSP,currentDSPValue,currentVolume);
+            };
         }
     });
 
