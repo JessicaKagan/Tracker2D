@@ -39,7 +39,8 @@ var selectBoxStage, moveBugStage, selectedBug, currentlyEditedTile;
 //These values are used to run the timer.
 var lastTime, updateFrequency, timeToUpdate; 
 var elapsedTime = 0;
-var tickMultiplier = 12.5;
+var TICK_MULTIPLIER = 12.5;
+var estimatedSongLength; //Not implemented yet.
 
 var scaleNote = 0; //Used in keyboard_shortcuts to adjust currentPitch;
 var currentOctave = 3;
@@ -49,6 +50,7 @@ var currentDSPValue = 0;
 var currentVolume = 0.6;
 var currentDSP = "none";
 var currentFlowControl = "none";
+
 
 //Image arrays used in image_loader.js
 var UIImages = new Array(17);
@@ -170,7 +172,7 @@ function init() {
     storeBugPositions();
 
     lastTime = Date.now();
-    updateFrequency = tickMultiplier/TEMPO; //Currently, 8 'ticks' every beat?
+    updateFrequency = TICK_MULTIPLIER/TEMPO; //Currently, 8 'ticks' every beat?
     timeToUpdate = updateFrequency;
     window.requestAnimationFrame(main);
 }
@@ -258,7 +260,7 @@ function main(){
      * This needs to link partially into the tempo variable. Bug positions only need to update on tempo ticks.
      * However, rendering needs to be as fast and responsive as possible, so it's independent of our timing function.
      */
-    updateFrequency = tickMultiplier/TEMPO; //Recomputing this here will come in handy when the user changes the tempo.
+    updateFrequency = TICK_MULTIPLIER/TEMPO; //Recomputing this here will come in handy when the user changes the tempo.
     var now = Date.now();
     var delta = (now - lastTime) / 1000.0;
     lastTime = now;

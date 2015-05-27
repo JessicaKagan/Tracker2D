@@ -89,7 +89,7 @@ function hookKeyboard(){
         }
         //Reset this timing value to recalibrate the main loop on tempo change.
         timeToUpdate = 0;
-        updateFrequency = tickMultiplier/TEMPO;
+        updateFrequency = TICK_MULTIPLIER/TEMPO;
         
     });
 

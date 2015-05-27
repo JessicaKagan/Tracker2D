@@ -24,19 +24,8 @@ var fieldOffset = [0,0] //Changed via interaction with the minimap, used to deci
 var storedBugPositions = new Array(32); //Stores 8 quadruples, representing bug coordinates and commands, and storage status.
 var numberOfPropertiesSaved = storedBugPositions.length + AMOUNT_OF_SONG_PROPERTIES; //Simplifies some saveload logic
 
-var bottomUIButton = function(coords) {
-    this.coords = coords;
-}
-
-//Deprecate this?
-var pauseButton = function(coords) {
-    this.coords = coords;
-}
-
-//See main.js for the UI images, although maybe we should move that here.
-//Extend this to draw all buttons?
+//See main.js for the UI images, although maybe we should move this to the rendering bloc.
 var drawButtons = function() {
-
     //Pause button with 2 states
     if(pauseState == false) { ctx.drawImage(UIImages[0],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
     else if(pauseState == true) { ctx.drawImage(UIImages[1],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
@@ -243,7 +232,7 @@ function loadFile() {
     //Song properties are stored at the very end of the file.
     TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
     console.log(TEMPO);
-    updateFrequency = tickMultiplier/TEMPO; //Important that we derive this value.
+    updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
     $("#tempoSpinner").value = TEMPO;
     //console.log($("#tempoSpinner").value);
     //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
@@ -542,4 +531,15 @@ function changePasteStyle() {
 function loadIfReady(){
     if(soundsAreReady.called) { init(); }
     //Otherwise, inform the user somehow. We can't use alert because it breaks the load routine..
+}
+
+function estimateSongLength(){
+    console.log("Not implemented yet");
+    //This should only attempt to estimate the song's length if there are definite end conditions.
+    //For now, this means either a freeze or revert tile is on the field.
+    //Two ways to go about this that might be combined:
+    //1. Simulate X moves into the future without actually playing their sounds.
+    //2. Set the 'maximum' length when a bug moves over such a tile.
+    //Self-modifying tracks with complicated counters and teleporters and such aren't going to be easy to measure.
+    //This might get into the halting problem, you know?
 }
