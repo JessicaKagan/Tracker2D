@@ -15,7 +15,6 @@ var pasteStyle = 1 //1 is an overwrite paste, 2 is mixpaste.
 
 var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','turnBug','singleStep','modifyTile']; 
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
-var tileBuffer; //An array representing a rectangle of selected tiles.
 var saveContent; //A string representing the contents of the map.
 var encodedContent; //Stores the base64 equivalent of saveContent.
 var selectBoxCoords = new Array(4); //Stores two coordinate pairs.
@@ -57,28 +56,44 @@ var drawButtons = function() {
 
 }
 
-function fillBuffer(fromX, toX, fromY, toY, command) {
+var TileBuffer = function(fromX, toX, fromY, toY) {
+    if(fromX === undefined){ this.fromX = 0; } else { this.fromX = fromX; }
+    if(fromX === undefined){ this.fromY = 0; } else { this.fromY = fromY; }
+    if(toX === undefined){ this.toX = fieldContents.length; } else { this.toX = toX; }
+    if(toY === undefined){ this.toY = fieldContents[0].length; } else { this.toY = toY; }
+    this.array = new Array((toX - fromX) + 1);
+    for(var i = 0; i < this.array.length; ++i) {
+            this.array[i] = new Array((toY - fromY) + 1);
+    }
+
+}
+
+TileBuffer.prototype.fillBuffer = function(fromX, toX, fromY, toY, fillCommand) {
+    this.fromX = fromX;
+    this.fromY = fromY;
+    this.toX = toX;
+    this.toY = toY;
     //Stores a rectangle of tiles (a subset of the entire field). 
     //When saving, it fills up with the entire field. Otherwise, it probably covers a bit less.
     console.log("Filling the buffer");
-    switch(command) {
+    switch(fillCommand) {
         case 'save':
-            tileBuffer = fieldContents;
+            this.array = fieldContents;
             //console.log(tileBuffer);
             break;
         case 'selectBox':
             //In this case, tileBuffer has to actually be defined.
-            tileBuffer = new Array((toX - fromX) + 1);
-            for(var i = 0; i < tileBuffer.length; ++i) {
-                tileBuffer[i] = new Array((toY - fromY) + 1);
+            this.array = new Array((toX - fromX) + 1);
+            for(var i = 0; i < this.array.length; ++i) {
+                this.array[i] = new Array((toY - fromY) + 1);
             }
             //Only then can it be populated properly.
-            for(var i = 0; i < tileBuffer.length; ++i){
-                for(var j = 0; j < tileBuffer[i].length; ++j){
-                    tileBuffer[i][j] = fieldContents[fromX + i][fromY + j];
+            for(var i = 0; i < this.array.length; ++i){
+                for(var j = 0; j < this.array[i].length; ++j){
+                    this.array[i][j] = fieldContents[fromX + i][fromY + j];
                 }
             }
-            console.log(tileBuffer);
+            console.log(this.array);
             break;
         default:
             break;
@@ -86,23 +101,22 @@ function fillBuffer(fromX, toX, fromY, toY, command) {
 }
 
 //toX and toY are derived from the size of tileBuffer. TileX and tileY are where the user clicked.
-//currentTile is an optional instruction for interpolation, which will be defined later.
-function pasteBuffer(fromX, toX, fromY, toY, tileX, tileY, currentTile) {
+TileBuffer.prototype.pasteBuffer = function(fromX, toX, fromY, toY, tileX, tileY) {
     //This is an overlap paste that replaces all contents.
     //The switch statement isn't as terse as it could be, but it's more readable and extensible in case we actually need more special pastes.
-    for(var i = 0; i < tileBuffer.length; ++i){
-        for(var j = 0; j < tileBuffer[i].length; ++j){
+    for(var i = 0; i < defaultBuffer.array.length; ++i){
+        for(var j = 0; j < defaultBuffer.array[i].length; ++j){
             //Conditional to prevent accidental writes outside the file, which could get crashy.
             //Horizontal overflows cause errors,  but don't break everything. I still consider this a bug.
             //tileX and tileY store offsets.
             if((i + tileX) < FILE_SIZE[0] || (j + tileY) < FILE_SIZE[1]) {
                 switch(pasteStyle){
                     case 1: // Simplistic overwrite paste.
-                        fieldContents[(i + tileX)][(j + tileY)] = tileBuffer[i][j];
+                        fieldContents[(i + tileX)][(j + tileY)] = defaultBuffer.array[i][j];
                         break; 
                     case 2: // More complicated mixpaste that doesn't overwrite occupied tiles with undefined ones.
                         if(fieldContents[(i + tileX)][(j + tileY)] instanceof Tile === false){
-                            fieldContents[(i + tileX)][(j + tileY)] = tileBuffer[i][j];
+                            fieldContents[(i + tileX)][(j + tileY)] = defaultBuffer.array[i][j];
                         } else break;
                         break;
                 } 
@@ -111,8 +125,43 @@ function pasteBuffer(fromX, toX, fromY, toY, tileX, tileY, currentTile) {
     }
 }
 
-function transformBuffer(operation){
-    
+TileBuffer.prototype.transformBuffer = function(transformCommand){
+    //Initialize by updating the buffer with our current contents; break if this does nothing.
+    defaultBuffer.fillBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3],'selectBox');
+    if(defaultBuffer.array === undefined) { 
+        console.log("It's empty");
+        return;
+    } else {
+        var transformContents = new Array(defaultBuffer.array.length);
+        for(var i = 0; i < transformContents.length; ++i) {
+            transformContents[i] = new Array(defaultBuffer.array[i].length);
+        }
+        //Then transform the array.
+        switch(transformCommand){
+            case "horizontalFlip":
+                for(var i = 0; i < defaultBuffer.array.length; ++i){
+                    for(var j = 0; j < defaultBuffer.array[i].length; ++j){
+                        transformContents[i][j] = defaultBuffer.array[(defaultBuffer.array.length - i) - 1][j]
+                    }
+                }
+                break;
+            case "verticalFlip":
+                for(var i = 0; i < defaultBuffer.array.length; ++i){
+                    for(var j = 0; j < defaultBuffer.array[i].length; ++j){
+                        transformContents[i][j] = defaultBuffer.array[i][(defaultBuffer.array.length - j) - 1]
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        //console.log(transformContents);
+        //Then paste it onto the field.
+        defaultBuffer.array = transformContents;
+        //This should be implicitly an overwrite at the same place we started.
+        pasteStyle = 1;
+        defaultBuffer.pasteBuffer(this.fromX, this.fromY, this.toX, this.toY, this.fromX, this.fromY);
+    }
 }
 
 //Prettyprints some data to the queryInfo div, which should only show up when the query tool's selected.
@@ -154,9 +203,9 @@ function respondToQuery(X, Y) {
 //Under constant extension. Doesn't save tile pointers properly yet.
 function saveFile() {
     pauseState = true;
-    fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1], 'save');
+    defaultBuffer.fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1], 'save');
     selectBoxCoords = [0,0,0,0]; //Clear the selection to prevent a pastebug.
-    if(tileBuffer === fieldContents) { 
+    if(defaultBuffer.array === fieldContents) { 
         //console.log("We're ready to save now."); 
     } else { console.log("Something went wrong in saveFile() or fillBuffer(). Real error trapping later."); }
     //Bake everything into a string.
@@ -166,10 +215,10 @@ function saveFile() {
     saveContent += FILE_SIZE[0] + "," + FILE_SIZE[1] + '\n';
 
     //Dump all tiles to a string. Parses top to bottom before moving left to right.
-    for(var i = 0; i < tileBuffer.length; ++i){
-        for(var j = 0; j < tileBuffer[i].length; ++j){
-            if(tileBuffer[i][j] !== undefined) { 
-                saveContent += tileBuffer[i][j].toString();
+    for(var i = 0; i < defaultBuffer.array.length; ++i){
+        for(var j = 0; j < defaultBuffer.array[i].length; ++j){
+            if(defaultBuffer.array[i][j] !== undefined) { 
+                saveContent += defaultBuffer.array[i][j].toString();
             } else saveContent += "undefined"; //In the load function, lines with only the word "undefined" on them will not become tiles.
             saveContent += '\n';
         }

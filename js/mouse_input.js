@@ -1,4 +1,4 @@
-var drawingStatus;
+var drawingStatus, currentTile;
 //This is our mouse listeners go!
 //Needs rewriting in order to take advantage of the new event listeners.
 function interact(action, e) {
@@ -41,10 +41,10 @@ function interact(action, e) {
             selectedTool = "paste";  
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 152 && cursorX < 176) {
             console.log("HORIFLIP_BUTTON_AREA"); 
-            selectedTool = "horizontalFlip";
+            defaultBuffer.transformBuffer("horizontalFlip");
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 176 && cursorX < 200) { 
             console.log("VERTFLIP_BUTTON_AREA"); 
-            selectedTool = "verticalFlip";
+            defaultBuffer.transformBuffer("verticalFlip");
         } else if(cursorY >= 576 && cursorX >= 200 && cursorX < 224) {
             console.log("QUERY_BUTTON_AREA");
             selectedTool = "query";
@@ -94,7 +94,7 @@ function interact(action, e) {
     //The logic for this is going to become a great deal more complex with time, I think.
     if(cursorX >= 80 && cursorX <= 800 && cursorY >= 0 && cursorY <= 540){
         //console.log("In the playfield");
-        var currentTile = getTile(cursorX, cursorY);
+        currentTile = getTile(cursorX, cursorY);
         //console.log(currentTile);
         
         //This statement reduces painting with UI elements open; timeouts handle the rest.
@@ -142,7 +142,7 @@ function interact(action, e) {
                                     selectBoxCoords[3] = selectBoxBuffer;
                                 }
                                 //Finally, we send these coords to the buffer filler.
-                                fillBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3],'selectBox');
+                                defaultBuffer.fillBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3],'selectBox');
                                 //And this allows the user to select something again.
                                 selectBoxStage = 1;
                             } else console.log("selectBox() in interact() failed.");
@@ -153,12 +153,12 @@ function interact(action, e) {
                         setDrawingStatus();
                         if(drawingStatus === true){
                         //Paste doesn't work if there's no tilebuffer, or if the tilebuffer is too large.
-                            if(tileBuffer !== undefined) {
+                            if(defaultBuffer.array !== undefined) {
                                 //There might be other conditions; I'll implement them if I can think of them.
-                                if(tileBuffer.length !== FIELD_SIZE[0] ||
-                                   tileBuffer[0].length !== FIELD_SIZE[1]) {
+                                if(defaultBuffer.array.length !== FIELD_SIZE[0] ||
+                                   defaultBuffer.array.length !== FIELD_SIZE[1]) {
                                     //We include offset for where the user clicked.
-                                    pasteBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3], 
+                                    defaultBuffer.pasteBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3], 
                                                 currentTile[0], currentTile[1]);
                                 } else { console.log("Can't paste that. It's too damn big!")};
                             } else { console.log("Select something first, then try pasting it.");}
@@ -254,10 +254,6 @@ function interact(action, e) {
                             //Then show the window to the user.
                             $("#modifyTile").removeClass("currentlyHidden");
                         }
-                        break;
-                    case 'horizontalFlip':
-                        break;
-                    case 'verticalFlip';
                         break;
                     default:
                         break;

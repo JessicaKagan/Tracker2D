@@ -38,7 +38,7 @@ for(var i = 0; i < FILE_SIZE[0]; ++i) {
 }
 
 //Globals for now. Deglobalize as implementation permits. 
-var soundFont, audioEngine, audioLoader; 
+var soundFont, audioEngine, audioLoader, defaultBuffer; 
 var selectBoxStage, moveBugStage, selectedBug, currentlyEditedTile;
 //These values are used to run the timer.
 var lastTime, updateFrequency, timeToUpdate; 
@@ -175,6 +175,11 @@ function init() {
     //Populating this will prevent unsolicited load errors.
     storeBugPositions();
 
+    //Create the buffer.
+    defaultBuffer = new TileBuffer(0,0,0,0);
+    console.log(defaultBuffer);
+
+    //Create timing information, and then begin the mainloop.
     lastTime = Date.now();
     updateFrequency = TICK_MULTIPLIER/TEMPO; //Currently, 8 'ticks' every beat?
     timeToUpdate = updateFrequency;
@@ -327,8 +332,8 @@ function render(){
             }
             //Experimental tile buffer overlay that draws a translucent box over the tile buffer.
             //Reserved for when the user is actively selecting or pasting things.
-            if(tileBuffer !== undefined && tileBuffer.length < fieldContents.length && 
-               tileBuffer[0].length < fieldContents[0].length && selectBoxStage === 1) {
+            if(defaultBuffer.array !== undefined && defaultBuffer.array.length < fieldContents.length && 
+               defaultBuffer.array[0].length < fieldContents[0].length && selectBoxStage === 1) {
                 if(selectedTool === 'selectBox' || selectedTool === 'paste') {
                 //Check to see if the tile is in the tile buffer.
                     if(i + fieldOffset[0] >= selectBoxCoords[0] && j + fieldOffset[1] >= selectBoxCoords[2] &&
