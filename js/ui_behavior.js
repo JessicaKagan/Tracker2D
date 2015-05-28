@@ -32,7 +32,10 @@ var drawButtons = function() {
     //Most buttons, though, do not change function when clicked.
     ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]); 
-    ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]);
+    //Actually putting the second menu row to use.
+    ctx.drawImage(UIImages[17],HORIFLIP_BUTTON_AREA[0],HORIFLIP_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[18],VERTFLIP_BUTTON_AREA[0],VERTFLIP_BUTTON_AREA[1]);
     //Draw a different paste button based on which type of paste is selected in the options pages.
     if(pasteStyle === 1){
         ctx.drawImage(UIImages[7],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]);
@@ -106,6 +109,10 @@ function pasteBuffer(fromX, toX, fromY, toY, tileX, tileY, currentTile) {
             }
         }
     }
+}
+
+function transformBuffer(operation){
+    
 }
 
 //Prettyprints some data to the queryInfo div, which should only show up when the query tool's selected.

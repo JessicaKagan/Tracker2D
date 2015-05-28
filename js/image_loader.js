@@ -29,7 +29,9 @@ function getImages() {
     UIImages[13].src = 'images/edit_tile_button.png';
     UIImages[14].src = 'images/help_button.png';
     UIImages[15].src = 'images/turn_bug_button.png';
-    UIImages[16].src = 'images/mixpaste_button.png';
+    UIImages[16].src = 'images/mixpaste_button.png'; 
+    UIImages[17].src = 'images/horizontal_flip_button.png'; 
+    UIImages[18].src = 'images/vertical_flip_button.png';
 
     //Maybe someone will make more detailed and complex bug images.
     bugImages[0].src = 'images/placeholder_bug.png';

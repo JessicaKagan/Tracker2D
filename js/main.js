@@ -12,6 +12,10 @@ var PENCIL_BUTTON_AREA = [104,576,24,24];
 var ERASER_BUTTON_AREA = [128,576,24,24];
 var SELECTBOX_BUTTON_AREA = [152,576,24,24];
 var PASTE_BUTTON_AREA = [176,576,24,24];
+
+var HORIFLIP_BUTTON_AREA = [152,552,24,24];
+var VERTFLIP_BUTTON_AREA = [176,552,24,24];
+
 var QUERY_BUTTON_AREA = [200,576,24,24];
 var MOVEBUG_BUTTON_AREA = [224,576,24,24];
 var TURNBUG_BUTTON_AREA = [248,576,24,24];
@@ -53,7 +57,7 @@ var currentFlowControl = "none";
 
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(17);
+var UIImages = new Array(19);
 var tileOverlayImages = new Array(11); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.

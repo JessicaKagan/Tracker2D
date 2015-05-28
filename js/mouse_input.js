@@ -38,7 +38,13 @@ function interact(action, e) {
             selectBoxStage = 1; //Start the selection process.
         } else if(cursorY >= 576 && cursorX >= 176 && cursorX < 200) {
             console.log("PASTE_BUTTON_AREA");
-            selectedTool = "paste";
+            selectedTool = "paste";  
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 152 && cursorX < 176) {
+            console.log("HORIFLIP_BUTTON_AREA"); 
+            selectedTool = "horizontalFlip";
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 176 && cursorX < 200) { 
+            console.log("VERTFLIP_BUTTON_AREA"); 
+            selectedTool = "verticalFlip";
         } else if(cursorY >= 576 && cursorX >= 200 && cursorX < 224) {
             console.log("QUERY_BUTTON_AREA");
             selectedTool = "query";
@@ -248,6 +254,10 @@ function interact(action, e) {
                             //Then show the window to the user.
                             $("#modifyTile").removeClass("currentlyHidden");
                         }
+                        break;
+                    case 'horizontalFlip':
+                        break;
+                    case 'verticalFlip';
                         break;
                     default:
                         break;
