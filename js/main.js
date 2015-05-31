@@ -58,7 +58,7 @@ var currentFlowControl = "none";
 
 //Image arrays used in image_loader.js
 var UIImages = new Array(19);
-var tileOverlayImages = new Array(11); //Used for flow control and anything that needs to be drawn above a bug or tile.
+var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.
 var bugList = new Array(8);
@@ -404,6 +404,9 @@ function paintTile(tileX, tileY, color){
             case "revert":
                 //Use a modified version of this icon or something instead!
                 ctx.drawImage(UIImages[11],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;
+            case "incrementer":
+                ctx.drawImage(tileOverlayImages[11],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
             default:
                 break;

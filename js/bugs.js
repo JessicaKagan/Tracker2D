@@ -98,7 +98,6 @@ Bug.prototype.updateBug = function() {
             case "counter":
             //Counters are cool. Bugs decrement them until they hit 0 and turn into whatever tile they point to.
             //The pointer tile can change during execution, too. 
-            //Maybe we should add an incrementer element for more programmatic modification.
             //There is a very strange bug where if you copy a tile with a counter, all the pasted counters share decrements.
                 if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue > 0) {
                     fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue -= 1;
@@ -110,9 +109,22 @@ Bug.prototype.updateBug = function() {
                     var XCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer;
                     var YCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer;
                     var copyFromThisTile = fieldContents[XCoord][YCoord];
-                    console.log(copyFromThisTile);
+                    //console.log(copyFromThisTile);
                     fieldContents[this.bugTile[0]][this.bugTile[1]] = copyFromThisTile;
                 }
+                break;
+            case "incrementer":
+            //Incrementers increase the value of the counter they point to by 1 every time a bug walks over them.
+            //We start by getting the coordinates.
+                var XCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer;
+                var YCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer;
+                console.log(fieldContents[XCoord][YCoord]);
+                
+                if(fieldContents[XCoord][YCoord].flowValue < 999 && 
+                   fieldContents[XCoord][YCoord].flowEffect === "counter"){
+                    fieldContents[XCoord][YCoord].flowValue += 1;
+                }
+                break;
             case "revert":
             //All bugs after the one that triggers this update. That's not good.
                 restoreBugPositions(false); 

@@ -8,10 +8,12 @@ Things I know I want to do (which could get very long):
 - Indicate the position of bugs on the minimap, somehow (Hard to do in 64x64 confines)
 - Add Web MIDI API support to allow instrument input
 - Functions to rotate and flip a selection (flips implemented, 90 degree rotation still necessary)
-- Implement an eyedropper tool
+- Implement an eyedropper tool (differentiated from copypaste by also cloning a tile's properties to your pen)
+- Implement the promised upgrades to field size (which will require a more robust file I/O solution than copypasting extremely long. See http://updates.html5rocks.com/2011/08/Saving-generated-files-on-the-client-side)
 
 Things I might do but am not sure about:
 - Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior. (Up to 36 checks per second? Divergent series.)
+- A basic scripting language to allow for arbitrarily complicated conditional code and such on the field (potentially very difficult and time consuming, besides ballooning file sizes). 
 
 Suggestions that have already been implemented:
 - Actually show the tile buffer (as filled up by the select tool) somehow, like a translucent overlay
