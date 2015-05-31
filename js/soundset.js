@@ -8,9 +8,14 @@
 //Are there any other parameters that might come in handy?
 var soundSet = new Array(175); //128 sounds for the general MIDI instruments, 46 more for the base percussion map; index 0 is silence.
 soundSet[0] = ["00 - Silence", './sounds/00.mp3'];
-soundSet[1] = ["01 - Grand Piano", './sounds/01.mp3']; //Name and reference sound for a simple one-sound instrument.
-soundSet[5] = ["05 - Cheesy DX7", './sounds/05.mp3']; 
-soundSet[6] = ["06 - Harpsichord", './sounds/06.mp3'];
+soundSet[1] = ["01 - Grand Piano", './sounds/01.ogg']; //Name and reference sound for a simple one-sound instrument.
+soundSet[2] = ["02 - Bright Piano", './sounds/02.ogg']; 
+soundSet[3] = ["03 - Ultrabright Piano", './sounds/03.ogg']; 
+soundSet[4] = ["04 - Honky-Tonk", './sounds/04.ogg'];
+soundSet[5] = ["05 - Rhodes", './sounds/05.ogg']; 
+soundSet[6] = ["06 - Cheesy DX7", './sounds/06.ogg'];
+soundSet[7] = ["07 - Harpsichord", './sounds/07.ogg']; 
+soundSet[8] = ["08 - Clavinet", './sounds/08.ogg'];  
 soundSet[11] = ["11 - Vibraphone", './sounds/11.mp3'];
 soundSet[24] = ["24 - Nylon String Guitar", './sounds/24.mp3']; 
 soundSet[30] = ["30 - Overdriven Guitar", './sounds/30.mp3'];

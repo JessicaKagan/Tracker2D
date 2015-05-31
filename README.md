@@ -3,7 +3,7 @@ A step sequencer that uses a 2D space metaphor like Simtunes. "Bugs" move over a
 
 This program is in alpha. While the program is far from complete, there is enough functionality implemented that you could actually create listenable music with it.
 
-Currently, this software uses jQuery 2.1.3, the Web Audio API, and eventually the HTML File API.. More acknowledgements as I add things. It also uses XMLHTTPRequest type things, so you won't be able to run it locally unless you have server software like XAMPP set up. Making it work without that will probably require a major refactoring and the replacement of various crucial libraries.
+Currently, this software uses jQuery 2.1.3, the Web Audio API, and eventually the HTML File API.. More acknowledgements as I add things. It also uses XMLHTTPRequest type things, so you won't be able to run it locally unless you have server software like XAMPP set up. Making it work without that will probably require a major refactoring and the replacement of various crucial libraries. I also intend to use Vorbis to supply audio, so make sure your browser supports that.
 
 So far, this code runs best on Chrome. Firefox seems to handle it decently as well, but there are some issues with visual alignment that eventually need to be handled.
 
