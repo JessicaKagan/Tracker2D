@@ -145,6 +145,7 @@ TileBuffer.prototype.transformBuffer = function(transformCommand){
                     }
                 }
                 break;
+            //This is bugged.
             case "verticalFlip":
                 for(var i = 0; i < defaultBuffer.array.length; ++i){
                     for(var j = 0; j < defaultBuffer.array[i].length; ++j){

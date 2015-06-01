@@ -27,8 +27,17 @@ soundSet[13] = ["13 - Marimba", './sounds/13.ogg'];
 soundSet[14] = ["14 - Xylophone", './sounds/14.ogg'];
 soundSet[15] = ["15 - Tubular Bells", './sounds/15.ogg']; 
 soundSet[16] = ["16 - Dulcimer", './sounds/16.ogg'];
+//Organ
+soundSet[17] = ["17 - Drawbar Organ", './sounds/17.ogg'];
+soundSet[18] = ["18 - Percussive Organ", './sounds/18.ogg']; 
+soundSet[19] = ["19 - Rock Organ", './sounds/19.ogg']; 
+soundSet[20] = ["20 - Church Organ", './sounds/20.ogg']; 
+soundSet[21] = ["21 - Reed Organ", './sounds/21.ogg']; 
+soundSet[22] = ["22 - Accordion", './sounds/22.ogg'];
+soundSet[23] = ["23 - Harmonica", './sounds/23.ogg']; 
+soundSet[24] = ["24 - Tangoccordion", './sounds/24.ogg'];
 
-soundSet[24] = ["24 - Nylon String Guitar", './sounds/24.mp3']; 
+soundSet[25] = ["25 - Nylon String Guitar", './sounds/24.mp3']; 
 soundSet[30] = ["30 - Overdriven Guitar", './sounds/30.mp3'];
 soundSet[31] = ["31 - Distorted Guitar", './sounds/31.mp3'];
 soundSet[39] = ["39 - YM2612 Amp Bass", './sounds/39.mp3'];
@@ -40,7 +49,7 @@ soundSet[81] = ["81 - Sawtooth Waveform", './sounds/81.mp3'];
 soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 //These headercomments will be expanded as I get to them.
 
-//Organ
+
 //Guitar
 //Bass
 //Strings
