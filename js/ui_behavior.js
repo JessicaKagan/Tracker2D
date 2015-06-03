@@ -479,18 +479,33 @@ function getBug(bugVal, edit){
 //Paints the minimap in the upper left corner.
 function paintMiniMap(){
     var currentMiniMapPixel;
-    var miniMapImage = ctx.createImageData(FILE_SIZE[0], FILE_SIZE[1]);
-    //This is a one-dimensional array that needs to be mapped to a 2D one, and each pixel takes up 4 values (RGBA)
-    for(var i = 0; i < FILE_SIZE[0]; ++i ){
-        for(var j = 0; j < FILE_SIZE[1]; ++j ){
-            var miniMapIndex = ((j*FILE_SIZE[1] + i)* 4); 
+    var miniMapImage = ctx.createImageData(64, 64); //Constant size, with zoom based on file_size.
+    var miniMapContents = new Array(64);
+    //Make a separate array with our color data and pixels.
+
+    for(var i = 0; i < 64; ++i){
+        miniMapContents[i] = new Array(64);
+        for(var j = 0; j < 64; ++j) {
+            if(fieldContents[i*PLAYFIELD_SIZE][j*PLAYFIELD_SIZE] !== undefined){
+                miniMapContents[i][j] = tinycolor(fieldContents[i*PLAYFIELD_SIZE][j*PLAYFIELD_SIZE].color).toRgb();
+            }
+        }
+    }
+
+    //tinycolor(variable).toRgb();
+
+    //miniMapImage is a one-dimensional array that needs to be mapped to a 2D one, and each pixel takes up 4 values (RGBA)
+    //When large fields are implemented, we need to multiply some of these fields by the multipliers.
+    for(var i = 0; i < 64; ++i){
+        for(var j = 0; j < 64; ++j){
+            var miniMapIndex = ((j*64 + i)) * 4; //Multiply or divide by undetermined value
             //Build our image. For now, we use grey pixels, but we'll add color here when it's in the actual field.
-            if(fieldContents[i][j] !== undefined) {
-                var miniMapColor = tinycolor(fieldContents[i][j].color).toRgb();
-                miniMapImage.data[miniMapIndex + 0] = miniMapColor.r;
-                miniMapImage.data[miniMapIndex + 1] = miniMapColor.g;
-                miniMapImage.data[miniMapIndex + 2] = miniMapColor.b;
-                miniMapImage.data[miniMapIndex + 3] = 255;
+            //Maybe we can use transparencies effectively at higher zoom levels.
+            if(miniMapContents[i][j] !== undefined) {
+                miniMapImage.data[miniMapIndex + 0] = miniMapContents[i][j].r;
+                miniMapImage.data[miniMapIndex + 1] = miniMapContents[i][j].g;
+                miniMapImage.data[miniMapIndex + 2] = miniMapContents[i][j].b;
+                miniMapImage.data[miniMapIndex + 3] = 255; //(255/PLAYFIELD_SIZE) eventually
             } else {
                 miniMapImage.data[miniMapIndex + 0] = 255;
                 miniMapImage.data[miniMapIndex + 1] = 255;
@@ -505,7 +520,8 @@ function paintMiniMap(){
     //This will make it more apparent that there is a minimap and that the player can use it to look around.
     ctx.beginPath();
     ctx.lineWidth = "1";
-    ctx.rect(8 + fieldOffset[0], 8 + fieldOffset[1],FIELD_SIZE[0],FIELD_SIZE[1]);
+    ctx.rect(8 + (fieldOffset[0]/PLAYFIELD_SIZE), 8 + (fieldOffset[1]/PLAYFIELD_SIZE),
+            (FIELD_SIZE[0]/PLAYFIELD_SIZE),(FIELD_SIZE[1]/PLAYFIELD_SIZE));
     ctx.stroke(); 
 }
 
@@ -513,8 +529,8 @@ function paintMiniMap(){
 //This should be extended so that the user can scroll by clicking and dragging.
 function moveViewingField(X,Y) {
     //Adjust what the user put in to centralize it.
-    var adjustedX = X - Math.floor(FIELD_SIZE[0]/2);
-    var adjustedY = Y - Math.floor(FIELD_SIZE[1]/2);
+    var adjustedX = (X * PLAYFIELD_SIZE) - Math.floor(FIELD_SIZE[0]/2);
+    var adjustedY = (Y * PLAYFIELD_SIZE) - Math.floor(FIELD_SIZE[1]/2);
 
     //Where the user clicked becomes the leftmost corner of the view.
     //Change this so it goes for the center, instead.
@@ -591,7 +607,7 @@ function changePasteStyle() {
     }
 }
 
-//Initializes everything, but only responds if the soundSet is loaded.
+//Initializes everything, but only responds if the soundSet is loaded. Move to main.js?
 function loadIfReady(){
     if(soundsAreReady.called) { init(); }
     //Otherwise, inform the user somehow. We can't use alert because it breaks the load routine..
@@ -606,4 +622,17 @@ function estimateSongLength(){
     //2. Set the 'maximum' length when a bug moves over such a tile.
     //Self-modifying tracks with complicated counters and teleporters and such aren't going to be easy to measure.
     //This might get into the halting problem, you know?
+}
+
+function resizeFile(){
+        //If we're shrinking the map, clean out the areas that will be removed.
+        fieldContents.length = FILE_SIZE[0];
+        //Everything is undefined by default.
+        for(var i = 0; i < fieldContents.length; ++i) {
+            if(fieldContents[i] === undefined){
+                fieldContents[i] = new Array(FILE_SIZE[1]);
+            }
+            fieldContents[i].length = FILE_SIZE[1];
+        }
+
 }

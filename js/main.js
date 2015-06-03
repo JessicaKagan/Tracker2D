@@ -1,6 +1,6 @@
 //All the glue that holds this project together. 
 //UI constants:
-var FILE_SIZE = [64,64]; //Starting the expansion process! This will eventually be something you can alter.
+var FILE_SIZE = [64,64]; //The field is 64*64 at the start, but can be expanded in the song properties.
 var FIELD_SIZE = [30,23]; //The amount of horizontal and vertical tiles in the view.
 var TILE_SIZE = 24; //This is more cumbersome early on, but I will eventually need to implement zooming, and this might help.
 var LEFT_VERTICAL_BAR = [0,0,80,800];
@@ -175,7 +175,7 @@ function init() {
 
     //Create the buffer.
     defaultBuffer = new TileBuffer(0,0,0,0);
-    console.log(defaultBuffer);
+    //console.log(defaultBuffer);
 
     //Create timing information, and then begin the mainloop.
     lastTime = Date.now();

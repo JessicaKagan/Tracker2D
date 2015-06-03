@@ -11,6 +11,7 @@ Things I know I want to do (which could get very long):
 - Implement an eyedropper tool (differentiated from copypaste by also cloning a tile's properties to your pen)
 - Implement the promised upgrades to field size (High priority now that I've improved the save/load functions, will require corresponding improvements to the minimap as well)
 - Zoom feature (Which might need better graphics to really shine and will be complicated to implement.)
+- "Find Bug" feature that centers the camera on a bug (Made particularly useful by upgrades to field size)
 
 Things I might do but am not sure about:
 - Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior. (Up to 36 checks per second? Divergent series.)

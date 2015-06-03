@@ -116,7 +116,9 @@ function hookKeyboard(){
         if(this.value > 512 || this.value < 64 ) { this.value = 64; }
         if(this.value%64 != 0) { this.value = this.value - this.value%64; }
         //Only then do we adjust the filesize, if at all.
-
+        PLAYFIELD_SIZE = this.value/64;
+        FILE_SIZE = [this.value, this.value];
+        resizeFile();
     });
 
     //Instrument adjuster in Tile Properties
