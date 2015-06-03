@@ -201,7 +201,7 @@ function respondToQuery(X, Y) {
     $('#queryInfo').html(queryResponse);
 }
 
-//Under constant extension. Doesn't save tile pointers properly yet.
+//Under constant extension. I think I fixed the pointer saving bug, but send me a message if I didn't.
 function saveFile() {
     pauseState = true;
     defaultBuffer.fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1], 'save');
@@ -233,10 +233,12 @@ function saveFile() {
     //Dump song properties next.
     saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n' + songTitle;
     console.log(saveContent);
-    //Convert the entire thing to base64.
+    var encodeToFile = new Blob([saveContent]); //Eventually we'll remove the pasteload.
+    //Base64 conversion is going to be removed once file loading and saving works.
     encodedContent = window.btoa(saveContent);
     $("#saveText").html(encodedContent);
-    $("#saveExport").removeClass("currentlyHidden")
+    $("#saveExport").removeClass("currentlyHidden");
+    saveAs(encodeToFile, songTitle + ".txt");
     //It will be some time before we can actually get this to a user.
 }
 

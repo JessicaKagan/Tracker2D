@@ -92,7 +92,7 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 //Set up the audio engine and a system for playing sounds.
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
+window.AudioContext = window.AudioContext || window.webkitAudioContext; //The second part is used to support Chrome and Safari.
 audioEngine = new AudioContext();
 audioLoader = new BufferLoader(audioEngine, soundArray, soundsAreReady);
 audioLoader.load(); //This sequence calls soundsAreReady when it's done, which calls init().
@@ -101,12 +101,8 @@ function init() {
     console.log("Tracker2D needs documentation! Here's a start.");
     console.log("Only audio FX that work are bendpitch, lowpass, and highpass. Bendpitch takes values between 0-16; the passes take values from 0-20000.");
     console.log("Adjust input pitch with the QWERTY row and +/-, although you'll need a QWERTY layout keyboard for that to really make sense.");
-    //Since this running means everything's loading, dispel the load notice.
+    //Since this running means everything's loaded, dispel the load notice.
     $("#loadScreen").addClass("alwaysHidden");
-
-    //Move the bottom bar to the render function, at the very least.
-
-
     //Set up HTML5 Canvas and mouse input. interact() is now in mouse_input.js
     var bindCanvas = document.getElementById("canvas");
     bindCanvas.addEventListener("click", function (e) { interact('click',e) }, false); //Binding to the canvas instead of the entire document fixes some strange bugs.

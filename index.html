@@ -94,11 +94,13 @@
                     </div>
 
                     <div id="loadExport" class="currentlyHidden">
-                        <p>Paste in a valid save. <button type="button" id="loadFileWindow" onClick="loadFile()">Load</button>
                         <button type="button" class="closeWindow" onClick="hideUI()">Close Window</button>
-                        </p>
-
-                        <textarea id="loadText" class="fileIOArea"></textarea>
+                        <br><br>
+                        <input type="file" id="loadFileUI" name="tracker2DSave">
+                        <p>Someday, song properties will display here when you load a file.</p>
+                        <br>
+                        <button type="button" id="loadFileWindow" onClick="loadFile()">Load</button>
+                        
                     </div>
 
                     <!--This will allow you to change tile properties in a more detailed fashion than the leftmenu. Absolute highest priority at the moment.-->
@@ -143,7 +145,8 @@
     <script src="js/jquery-2.1.3.min.js"></script>
     <script src="js/buffer-loader.js"></script> <!--From HTML5Rocks. Basic audio loading library.-->
     <script src="js/tinycolor.js"></script> <!--From https://github.com/bgrins/TinyColor. Converts color notation.-->
-
+    <script src="js/FileSaver/FileSaver.js"></script> <!--From https://github.com/eligrey/FileSaver.js. Allows the user to save files locally.-->
+    <!--Libraries end here. The following files are usercode.-->
     <script src="js/music_instructions.js"></script> <!--Handles tiles and what they 'mean'.-->
     <script src="js/soundset.js"></script> <!--Defines instruments and their properties.--> 
     <script src="js/bugs.js"></script> <!--Bugs represent musicians and execute tile instructions when they move over them.-->

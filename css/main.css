@@ -8,9 +8,7 @@ input[type="text"] {
 }
 
 input[type="file"] {
-    font-size: 10px;
-    width: 24px;
-    height: 24px;
+    font-size: 16px;
 }
 
 input[type="range"] {
