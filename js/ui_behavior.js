@@ -16,7 +16,7 @@ var pasteStyle = 1 //1 is an overwrite paste, 2 is mixpaste.
 var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','turnBug','singleStep','modifyTile']; 
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var saveContent; //A string representing the contents of the map.
-var encodedContent; //Stores the base64 equivalent of saveContent.
+var encodedContent; //Stores the base64 equivalent of saveContent. Remove ASAP!
 var selectBoxCoords = new Array(4); //Stores two coordinate pairs.
 var fieldOffset = [0,0] //Changed via interaction with the minimap, used to decide which part of the field's showing.
 
@@ -235,69 +235,81 @@ function saveFile() {
     console.log(saveContent);
     var encodeToFile = new Blob([saveContent]); //Eventually we'll remove the pasteload.
     //Base64 conversion is going to be removed once file loading and saving works.
+    /*
     encodedContent = window.btoa(saveContent);
     $("#saveText").html(encodedContent);
     $("#saveExport").removeClass("currentlyHidden");
+    */
     saveAs(encodeToFile, songTitle + ".txt");
     //It will be some time before we can actually get this to a user.
 }
 
 
-function loadFile() {
+function loadFile(evt) {
     pauseState = true;
     hideUI();
-    //Convert the input from base64. We need to implement error trapping at some point.
-    encodedContent = $("#loadText").val();
-    if(encodedContent !== undefined) {
-        encodedContent = window.atob(encodedContent);
-    }
-    //console.log(encodedContent);
-    var loadingWorkArray = encodedContent.split("\n");
-    var loadDimensions = loadingWorkArray[0].split(",");
-    var tileLength = loadDimensions[0]*loadDimensions[1];
-    //1 to (max index - 4) for now
-    //Dump the tiles to fieldContents.
-    for(var i = 0; i < loadDimensions[0]; ++i){
-        for(var j = 0; j < loadDimensions[1]; ++j) {
-            var currentIndex = (j*loadDimensions[1]) + i; //Flow control seems to be right.
+    //We need to implement error trapping at some point.
+    var file = evt.target.files[0];
+    //Only parse if valid. For now, this just means if the file is a file at all.
+    if(file){
+        var reader = new FileReader();
+        reader.onload = function(e) { 
+            var fileContents = e.target.result;
+            saveContent = fileContents;
+            //Actual save parsing begins here.
+            var loadingWorkArray = saveContent.split("\n");
+            var loadDimensions = loadingWorkArray[0].split(",");
+            var tileLength = loadDimensions[0]*loadDimensions[1];
+            //1 to (max index - 4) for now
+            //Dump the tiles to fieldContents.
+            for(var i = 0; i < loadDimensions[0]; ++i){
+                for(var j = 0; j < loadDimensions[1]; ++j) {
+                    var currentIndex = (j*loadDimensions[1]) + i; //Flow control seems to be right.
 
-            if(loadingWorkArray[currentIndex + 1] !== "undefined") {
-                var currentTile = loadingWorkArray[currentIndex + 1].split(",");
-                fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
-                                               currentTile[2],currentTile[3],
-                                               currentTile[4],currentTile[5],
-                                               currentTile[6],undefined,
-                                               currentTile[7],currentTile[8]);
+                    if(loadingWorkArray[currentIndex + 1] !== "undefined") {
+                        var currentTile = loadingWorkArray[currentIndex + 1].split(",");
+                        fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
+                                                       currentTile[2],currentTile[3],
+                                                       currentTile[4],currentTile[5],
+                                                       currentTile[6],undefined,
+                                                       currentTile[7],currentTile[8]);
 
-                //console.log(fieldContents[j][i]);
-            } else fieldContents[j][i] = undefined;
+                        //console.log(fieldContents[j][i]);
+                    } else fieldContents[j][i] = undefined;
+                }
+            }
+            //Load bug properties. There's a serious offset here; might need tweaking.
+            for(var i = 0; i < (loadingWorkArray.length - tileLength - AMOUNT_OF_SONG_PROPERTIES - 4); i+=4){
+                //console.log(loadingWorkArray[i + tileLength + 1]);
+                bugList[(i/4)].bugTile[0] = $.parseJSON(loadingWorkArray[i + tileLength + 1]);
+                bugList[(i/4)].bugTile[1] = $.parseJSON(loadingWorkArray[i + tileLength + 2]);
+                bugList[(i/4)].action = loadingWorkArray[i + tileLength + 3];
+                bugList[(i/4)].inStorage = $.parseJSON(loadingWorkArray[i + tileLength + 4]);
+                //console.log(bugList[i/4]);
+            }
+            //Run the obligatory bug checking loop and store the loaded bug positions in the buffer.
+            for(var i = 0; i < bugList.length; ++i) {
+                checkBug(i);
+            }
+            storeBugPositions();
+            restoreBugPositions(true); //The program will pause when the bugs have been restored to their positions.
+            //Song properties are stored at the very end of the file.
+            TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
+            console.log(TEMPO);
+            updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
+            $("#tempoSpinner").value = TEMPO;
+            //console.log($("#tempoSpinner").value);
+            //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
+            author = loadingWorkArray[loadingWorkArray.length - 3];
+            songDescription = loadingWorkArray[loadingWorkArray.length - 2];
+            songTitle = loadingWorkArray[loadingWorkArray.length - 1];
         }
+        reader.readAsText(file);
+    } else {
+        alert("File load failed for some reason.");
+        return;
     }
-    //Load bug properties. There's a serious offset here; might need tweaking.
-    for(var i = 0; i < (loadingWorkArray.length - tileLength - AMOUNT_OF_SONG_PROPERTIES - 4); i+=4){
-        //console.log(loadingWorkArray[i + tileLength + 1]);
-        bugList[(i/4)].bugTile[0] = $.parseJSON(loadingWorkArray[i + tileLength + 1]);
-        bugList[(i/4)].bugTile[1] = $.parseJSON(loadingWorkArray[i + tileLength + 2]);
-        bugList[(i/4)].action = loadingWorkArray[i + tileLength + 3];
-        bugList[(i/4)].inStorage = $.parseJSON(loadingWorkArray[i + tileLength + 4]);
-        //console.log(bugList[i/4]);
-    }
-    //Run the obligatory bug checking loop and store the loaded bug positions in the buffer.
-    for(var i = 0; i < bugList.length; ++i) {
-        checkBug(i);
-    }
-    storeBugPositions();
-    restoreBugPositions(true); //The program will pause when the bugs have been restored to their positions.
-    //Song properties are stored at the very end of the file.
-    TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
-    console.log(TEMPO);
-    updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
-    $("#tempoSpinner").value = TEMPO;
-    //console.log($("#tempoSpinner").value);
-    //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
-    author = loadingWorkArray[loadingWorkArray.length - 3];
-    songDescription = loadingWorkArray[loadingWorkArray.length - 2];
-    songTitle = loadingWorkArray[loadingWorkArray.length - 1];
+    
 }
 
 //General UI handling function called whenever the user opens up a UI element through Canvas.

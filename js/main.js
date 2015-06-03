@@ -95,7 +95,7 @@ var ctx = canvas.getContext("2d");
 window.AudioContext = window.AudioContext || window.webkitAudioContext; //The second part is used to support Chrome and Safari.
 audioEngine = new AudioContext();
 audioLoader = new BufferLoader(audioEngine, soundArray, soundsAreReady);
-audioLoader.load(); //This sequence calls soundsAreReady when it's done, which calls init().
+audioLoader.load(); //This sequence calls soundsAreReady() when it's done.
 
 function init() {
     console.log("Tracker2D needs documentation! Here's a start.");
@@ -109,6 +109,8 @@ function init() {
     bindCanvas.addEventListener("mousedown",function (e) { interact('mousedown',e) }, false);
     bindCanvas.addEventListener("mouseup", function (e) { interact('mouseup',e) }, false);
     bindCanvas.addEventListener("mousemove", function (e) { interact('mousemove',e) }, false);
+    //Then set up file I/O for when the user loads a file off their computer.
+    document.getElementById('loadFileUI').addEventListener('change', loadFile, false);
 
     //Set up keyboard shortcuts.
     hookKeyboard();
@@ -205,8 +207,7 @@ function soundsAreReady(soundList) {
     for(var i = 0; i < soundList.length; ++i) {
         soundFont.push(soundList[i]); //We fill up SoundFont with sounds...
     }
-    $("#initButton").html("Loaded, click to play");
-    //init(); //Program's not going to be much use until the sounds have loaded.
+    $("#initButton").html("Loaded, click to play"); //Clicking this calls init().
 }
 
 function playSound(buffer, pitch, dspEffect, dspValue, volume) {
