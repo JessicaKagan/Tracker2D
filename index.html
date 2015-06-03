@@ -119,16 +119,15 @@
                     <div id="modifySongProperties" class="currentlyHidden editingWindow">
                         <button class="closeButton" onClick="hideUI()">Close Window</button>
                         <br>
-                        <p>Tempo: <input id = "tempoSpinner" class = "numbersOnly" type="number" name="tempo" min="1" max="999" value="120"></p>
-                        <!--
-                        <p>Playfield Size: <input type="number" name="fieldsize" min="64" max="512" value="64" step="64"></p>
-                        -->
+                        <p>Tempo: <input id = "tempoSpinner" class="numbersOnly" type="number" name="tempo" min="1" max="999" value="120"></p>
+                        <p>Playfield Size: <input type="number" class="numbersOnly" id="fieldSizeSpinner" min="64" max="512" value="64" step="64"></p>
                         <p>Song Author: <input type="text" id="authorName"></p>
                         <p>Song Name: <input type="text" id="songName"></p>
                         <p>Song Description: <input type="text" id="songDesc"></p>
                         <p>Paste Style (Move to UI properties):
                             <button type="button" id="selectPasteStyle" onClick="changePasteStyle()">Change from Overwrite to Mix</button>
                         </p>
+                        <p>Please note that shrinking the playfield will delete any data outside the new edges. Please rewrite this so it makes sense.</p>
                     </div>
                     <div id="queryInfo" class="currentlyHidden">
                     </div>

@@ -110,6 +110,15 @@ function hookKeyboard(){
         songDescription = this.value;
     });
 
+    jQuery('#fieldSizeSpinner').change(function (){
+        //First, make sure the value is a multiple of 64, and between 64*1 and 64*8 (512).
+        //if(this.value !== parseInt(this.value)) { this.value = 64; }
+        if(this.value > 512 || this.value < 64 ) { this.value = 64; }
+        if(this.value%64 != 0) { this.value = this.value - this.value%64; }
+        //Only then do we adjust the filesize, if at all.
+
+    });
+
     //Instrument adjuster in Tile Properties
     jQuery('#modifyTileInstrumentSpinner').change(function (){
         //currentlyEditedTile gets around scoping...
@@ -122,7 +131,6 @@ function hookKeyboard(){
     });    
     //Flow Control Value adjuster in Tile Properties
     jQuery('#modifyTileFlowSpinner').change(function (){
-        //currentlyEditedTile gets around scoping...
         if(this.value >= 0 && this.value <= 999) {
             fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].flowValue = parseInt(this.value);
         } else if(this.value < 0 || this.value > 999) {
