@@ -171,7 +171,7 @@ function interact(action, e) {
                         break;
                     case "moveBug":
                     //Move bug should eventually be upgraded to support click and drag like the pen and eraser features.
-                        pauseState = true; //I recommend against trying to move bugs during playback.
+                        pauseState = true; //I recommend against trying to manually move bugs during playback.
                         if(action === "click") {
                             if(moveBugStage === 1) {
                                 for(var i = 0; i < bugList.length; ++i){
@@ -183,12 +183,9 @@ function interact(action, e) {
                                     }
                                 }
                             } else if (moveBugStage === 2) {
-                                var newBugCoords = convertTiletoPixels(currentTile[0],currentTile[1]);
-                                //These conversions are redundant, but necessary to make things work.
-                                bugList[selectedBug].x = newBugCoords[0];
-                                bugList[selectedBug].y = newBugCoords[1];
+                                //console.log(currentTile[0],currentTile[1]);
                                 moveBugStage = 1;
-                                bugList[selectedBug].bugTile = getTile(bugList[selectedBug].x,bugList[selectedBug].y);
+                                bugList[selectedBug].bugTile = [currentTile[0],currentTile[1]];
                             } else {
                                 console.log("moveBug() in interact() failed.");
                                 moveBugStage = 1;
