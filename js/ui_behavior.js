@@ -643,6 +643,14 @@ function resizeFile(){
                 }
             }
         }
+        //Move bugs to failsafe positions just to be safe. Eventually make this conditional.
+        for(var i = 0; i < bugList.length; ++i){
+            if(bugList[i].x > FILE_SIZE[0] || bugList[i].y > FILE_SIZE[1]){
+                bugList[i].bugTile[0] = 1;
+                bugList[i].bugTile[1] = 1 + i*2;
+            }
+        }
+
 
         fieldContents.length = FILE_SIZE[0];
         //Everything is undefined by default;

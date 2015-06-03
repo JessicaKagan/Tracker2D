@@ -12,6 +12,7 @@ Current bugs:
 - Copies of counters made with the select and paste tools share their counter state until they hit 0
 - Revert tiles are glitchy and sometimes get ignored by the bugs.
 - Large fields and their save/loads may be broken; definite tile corruption in the upper right of large fields.
+- moveBug() doesn't handle offsets right.
 
 Tracker2D contains some code released under the MIT License. The following block of legalese applies to such:
 

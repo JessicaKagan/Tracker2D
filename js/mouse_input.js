@@ -70,6 +70,7 @@ function interact(action, e) {
             hideUI();
             //Fill the UI elements with data from the song properties.
             $("#tempoSpinner").val(TEMPO);
+            $("#fieldSizeSpinner").val(PLAYFIELD_SIZE*64);
             $("#authorName").val(author);
             $("#songName").val(songTitle);
             $("#songDesc").val(songDescription);
