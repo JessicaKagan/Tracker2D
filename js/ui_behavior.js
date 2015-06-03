@@ -22,6 +22,7 @@ var fieldOffset = [0,0] //Changed via interaction with the minimap, used to deci
 
 var storedBugPositions = new Array(32); //Stores 8 quadruples, representing bug coordinates and commands, and storage status.
 var numberOfPropertiesSaved = storedBugPositions.length + AMOUNT_OF_SONG_PROPERTIES; //Simplifies some saveload logic
+var renderMinimap = true; //The minimap should not be updated until a file is finished loading.
 
 //See main.js for the UI images, although maybe we should move this to the rendering bloc.
 var drawButtons = function() {
@@ -232,7 +233,7 @@ function saveFile() {
 
     //Dump song properties next.
     saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n' + songTitle;
-    console.log(saveContent);
+    //console.log(saveContent);
     var encodeToFile = new Blob([saveContent]); 
     saveAs(encodeToFile, songTitle + ".txt");
     //It will be some time before we can actually get this to a user.
@@ -240,6 +241,7 @@ function saveFile() {
 
 function loadFile(evt) {
     pauseState = true;
+    renderMinimap = false;
     hideUI();
     //We need to implement error trapping at some point.
     var file = evt.target.files[0];
@@ -253,6 +255,11 @@ function loadFile(evt) {
             var loadingWorkArray = saveContent.split("\n");
             var loadDimensions = loadingWorkArray[0].split(",");
             var tileLength = loadDimensions[0]*loadDimensions[1];
+            FILE_SIZE = [loadDimensions[0],loadDimensions[1]];
+            //Kludge.
+            PLAYFIELD_SIZE = loadDimensions[0]/64; 
+            resizeFile();
+
             //1 to (max index - 4) for now
             //Dump the tiles to fieldContents.
             for(var i = 0; i < loadDimensions[0]; ++i){
@@ -292,15 +299,18 @@ function loadFile(evt) {
             TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
             updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
             $("#tempoSpinner").value = TEMPO;
-            //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
+            PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4];
+            $("#fieldSizeSpinner").value = PLAYFIELD_SIZE*64;
             author = loadingWorkArray[loadingWorkArray.length - 3];
             songDescription = loadingWorkArray[loadingWorkArray.length - 2];
             songTitle = loadingWorkArray[loadingWorkArray.length - 1];
         }
 
         reader.readAsText(file);
+        renderMinimap = true;
     } else {
         alert("File load failed for some reason.");
+        renderMinimap = true;
         return;
     }
 }
@@ -626,13 +636,22 @@ function estimateSongLength(){
 
 function resizeFile(){
         //If we're shrinking the map, clean out the areas that will be removed.
+        if(fieldContents.length > FILE_SIZE[0]){
+            for(var i = FILE_SIZE[0]; i < fieldContents.length; ++i){
+                for(var j = FILE_SIZE[1]; j < fieldContents[i].length; ++j){
+                    fieldContents[i][j] = undefined;
+                }
+            }
+        }
+
         fieldContents.length = FILE_SIZE[0];
-        //Everything is undefined by default.
+        //Everything is undefined by default;
         for(var i = 0; i < fieldContents.length; ++i) {
-            if(fieldContents[i] === undefined){
+            if(fieldContents[i] == undefined){
                 fieldContents[i] = new Array(FILE_SIZE[1]);
             }
             fieldContents[i].length = FILE_SIZE[1];
         }
+        console.log(fieldContents);
 
 }
