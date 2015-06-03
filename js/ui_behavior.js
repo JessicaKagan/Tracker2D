@@ -233,17 +233,10 @@ function saveFile() {
     //Dump song properties next.
     saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n' + songTitle;
     console.log(saveContent);
-    var encodeToFile = new Blob([saveContent]); //Eventually we'll remove the pasteload.
-    //Base64 conversion is going to be removed once file loading and saving works.
-    /*
-    encodedContent = window.btoa(saveContent);
-    $("#saveText").html(encodedContent);
-    $("#saveExport").removeClass("currentlyHidden");
-    */
+    var encodeToFile = new Blob([saveContent]); 
     saveAs(encodeToFile, songTitle + ".txt");
     //It will be some time before we can actually get this to a user.
 }
-
 
 function loadFile(evt) {
     pauseState = true;
@@ -275,7 +268,9 @@ function loadFile(evt) {
                                                        currentTile[7],currentTile[8]);
 
                         //console.log(fieldContents[j][i]);
-                    } else fieldContents[j][i] = undefined;
+                    } else if(loadingWorkArray[currentIndex + 1] === "undefined"){
+                        fieldContents[j][i] = undefined;
+                    }
                 }
             }
             //Load bug properties. There's a serious offset here; might need tweaking.
@@ -295,21 +290,19 @@ function loadFile(evt) {
             restoreBugPositions(true); //The program will pause when the bugs have been restored to their positions.
             //Song properties are stored at the very end of the file.
             TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
-            console.log(TEMPO);
             updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
             $("#tempoSpinner").value = TEMPO;
-            //console.log($("#tempoSpinner").value);
             //PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4]; //Dummied out for now because it doesn't matter.
             author = loadingWorkArray[loadingWorkArray.length - 3];
             songDescription = loadingWorkArray[loadingWorkArray.length - 2];
             songTitle = loadingWorkArray[loadingWorkArray.length - 1];
         }
+
         reader.readAsText(file);
     } else {
         alert("File load failed for some reason.");
         return;
     }
-    
 }
 
 //General UI handling function called whenever the user opens up a UI element through Canvas.

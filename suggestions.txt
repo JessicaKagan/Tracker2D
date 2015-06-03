@@ -9,7 +9,8 @@ Things I know I want to do (which could get very long):
 - Add Web MIDI API support to allow instrument input
 - Functions to rotate and flip a selection (flips implemented, 90 degree rotation still necessary)
 - Implement an eyedropper tool (differentiated from copypaste by also cloning a tile's properties to your pen)
-- Implement the promised upgrades to field size (which will require a more robust file I/O solution than copypasting extremely long. See http://updates.html5rocks.com/2011/08/Saving-generated-files-on-the-client-side)
+- Implement the promised upgrades to field size (High priority now that I've improved the save/load functions, will require corresponding improvements to the minimap as well)
+- Zoom feature (Which might need better graphics to really shine and will be complicated to implement.)
 
 Things I might do but am not sure about:
 - Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior. (Up to 36 checks per second? Divergent series.)
