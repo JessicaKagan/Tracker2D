@@ -12,11 +12,14 @@ Things I know I want to do (which could get very long):
 
 - Zoom feature (Which might need better graphics to really shine and will be complicated to implement.)
 - "Find Bug" feature that centers the camera on a bug (Made particularly useful by upgrades to field size)
+- Performance optimization (Duh.)
 
 Things I might do but am not sure about:
 - Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior. (Up to 36 checks per second? Divergent series.)
+- Make selection flip and rotate tools change the direction of turnsignals.
 - A basic scripting language to allow for arbitrarily complicated conditional code and such on the field (potentially very difficult and time consuming, besides ballooning file sizes). 
 - Antialiasing for large file maps.
+
 
 Suggestions that have already been implemented:
 - Actually show the tile buffer (as filled up by the select tool) somehow, like a translucent overlay

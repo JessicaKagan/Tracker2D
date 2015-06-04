@@ -36,10 +36,16 @@ soundSet[21] = ["21 - Reed Organ", './sounds/21.ogg'];
 soundSet[22] = ["22 - Accordion", './sounds/22.ogg'];
 soundSet[23] = ["23 - Harmonica", './sounds/23.ogg']; 
 soundSet[24] = ["24 - Tangoccordion", './sounds/24.ogg'];
+//Guitar
+soundSet[25] = ["25 - Nylon String Guitar", './sounds/25.ogg']; 
+soundSet[26] = ["26 - Steel String Guitar", './sounds/26.ogg']; 
+soundSet[27] = ["27 - Jazz Guitar", './sounds/27.ogg']; 
+soundSet[28] = ["28 - Clean Electric Guitar", './sounds/28.ogg']; 
+soundSet[29] = ["29 - Palm Muted Guitar", './sounds/29.ogg']; 
+soundSet[30] = ["30 - Overdriven Guitar", './sounds/30.ogg'];
+soundSet[31] = ["31 - Distorted Guitar", './sounds/31.ogg'];
+soundSet[32] = ["32 - Guitar Harmonics", './sounds/32.ogg'];
 
-soundSet[25] = ["25 - Nylon String Guitar", './sounds/24.mp3']; 
-soundSet[30] = ["30 - Overdriven Guitar", './sounds/30.mp3'];
-soundSet[31] = ["31 - Distorted Guitar", './sounds/31.mp3'];
 soundSet[39] = ["39 - YM2612 Amp Bass", './sounds/39.mp3'];
 soundSet[46] = ["46 - Harp", './sounds/46.mp3'];
 soundSet[48] = ["48 - String Section", './sounds/48.mp3'];
@@ -50,7 +56,7 @@ soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 //These headercomments will be expanded as I get to them.
 
 
-//Guitar
+
 //Bass
 //Strings
 //Ensemble
