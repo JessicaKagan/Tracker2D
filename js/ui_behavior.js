@@ -264,20 +264,28 @@ function loadFile(evt) {
             //Dump the tiles to fieldContents.
             for(var i = 0; i < loadDimensions[0]; ++i){
                 for(var j = 0; j < loadDimensions[1]; ++j) {
-                    var currentIndex = (j*loadDimensions[1]) + i; //Flow control seems to be right.
+                    var currentIndex = (j*loadDimensions[1]) + i;
 
-                    if(loadingWorkArray[currentIndex + 1] !== "undefined") {
-                        var currentTile = loadingWorkArray[currentIndex + 1].split(",");
-                        fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
-                                                       currentTile[2],currentTile[3],
-                                                       currentTile[4],currentTile[5],
-                                                       currentTile[6],undefined,
-                                                       currentTile[7],currentTile[8]);
-
-                        //console.log(fieldContents[j][i]);
-                    } else if(loadingWorkArray[currentIndex + 1] === "undefined"){
+                    //console.log(loadingWorkArray[currentIndex + 1]); //Always a string.
+                    /*
+                    if(loadingWorkArray[currentIndex + 1] === "undefined"){
                         fieldContents[j][i] = undefined;
+                    } else if(loadingWorkArray[currentIndex + 1] !== "undefined") {
+                    */
+
+                    //Kludgetastic.
+                    var currentTile = loadingWorkArray[currentIndex + 1].split(",");
+                    if(isNaN(currentTile[0]) === true){
+                        fieldContents[j][i] = undefined;
+                    } else if(isNaN(currentTile[0]) === false){
+                        fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
+                                                   currentTile[2],currentTile[3],
+                                                   currentTile[4],currentTile[5],
+                                                   currentTile[6],undefined,
+                                                   currentTile[7],currentTile[8]);
                     }
+                    //console.log(fieldContents[j][i]);
+                    //}
                 }
             }
             //Load bug properties. There's a serious offset here; might need tweaking.
@@ -287,7 +295,7 @@ function loadFile(evt) {
                 bugList[(i/4)].bugTile[1] = $.parseJSON(loadingWorkArray[i + tileLength + 2]);
                 bugList[(i/4)].action = loadingWorkArray[i + tileLength + 3];
                 bugList[(i/4)].inStorage = $.parseJSON(loadingWorkArray[i + tileLength + 4]);
-                //console.log(bugList[i/4]);
+                console.log(bugList[i/4]);
             }
             //Run the obligatory bug checking loop and store the loaded bug positions in the buffer.
             for(var i = 0; i < bugList.length; ++i) {
@@ -298,9 +306,10 @@ function loadFile(evt) {
             //Song properties are stored at the very end of the file.
             TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
             updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
-            $("#tempoSpinner").value = TEMPO;
+            $("#tempoSpinner").attr('value', TEMPO);
+            console.log($("#tempoSpinner"));
             PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4];
-            $("#fieldSizeSpinner").value = PLAYFIELD_SIZE*64;
+            $("#fieldSizeSpinner").val = PLAYFIELD_SIZE*64;
             author = loadingWorkArray[loadingWorkArray.length - 3];
             songDescription = loadingWorkArray[loadingWorkArray.length - 2];
             songTitle = loadingWorkArray[loadingWorkArray.length - 1];
@@ -309,7 +318,7 @@ function loadFile(evt) {
         reader.readAsText(file);
         renderMinimap = true;
     } else {
-        alert("File load failed for some reason.");
+        alert("File load failed for some reason. This messsage also displays if you exit out of the loading dialog manually.");
         renderMinimap = true;
         return;
     }

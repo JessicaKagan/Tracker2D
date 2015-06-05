@@ -1,5 +1,5 @@
 # Tracker2D
-A step sequencer that uses a 2D space metaphor like Simtunes. "Bugs" move over a grid composed of tiles representing music instructions, and sounds play when the bugs travel over a tile containing an instruction. The sound features are intended to provide functionality roughly equivalent to MOD files, although that's a way off from actually being the case.
+A step sequencer that uses a 2D space metaphor like Simtunes; think Mario Paint colliding with FL Studio. "Bugs" move over a grid composed of tiles representing music instructions, and sounds play when the bugs travel over a tile containing an instruction. The sound features are intended to provide functionality roughly equivalent to MOD files, although that's a way off from actually being the case.
 
 This program is in alpha. While the program is far from complete, there is enough functionality implemented that you could actually create listenable music with it.
 
@@ -13,6 +13,7 @@ Current bugs:
 - Revert tiles are glitchy and sometimes get ignored by the bugs.
 - Large fields and their save/loads may be broken; definite tile corruption in the upper right of large fields. They're also really slow.
 - Unknown glitch with tile pointers, used for counters and teleports and such.
+- Every time I extend the instrument soundset, undefined tiles in old saves break horribly.
 
 Tracker2D contains some code released under the MIT License. The following block of legalese applies to such:
 
