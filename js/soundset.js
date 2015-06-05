@@ -45,8 +45,16 @@ soundSet[29] = ["29 - Palm Muted Guitar", './sounds/29.ogg'];
 soundSet[30] = ["30 - Overdriven Guitar", './sounds/30.ogg'];
 soundSet[31] = ["31 - Distorted Guitar", './sounds/31.ogg'];
 soundSet[32] = ["32 - Guitar Harmonics", './sounds/32.ogg'];
+//Bass
+soundSet[33] = ["33 - Acoustic Bass", './sounds/33.ogg'];
+soundSet[34] = ["34 - Fingered Bass", './sounds/34.ogg'];
+soundSet[35] = ["35 - Picked Bass", './sounds/35.ogg'];
+soundSet[36] = ["36 - Fretless", './sounds/36.ogg'];
+soundSet[37] = ["37 - Slap Bass 1", './sounds/37.ogg'];
+soundSet[38] = ["38 - Slap Bass 2", './sounds/38.ogg'];
+soundSet[39] = ["39 - Synth Bass", './sounds/39.ogg'];
+soundSet[40] = ["40 - YM2612 Amp Bass", './sounds/40.ogg'];
 
-soundSet[39] = ["39 - YM2612 Amp Bass", './sounds/39.mp3'];
 soundSet[46] = ["46 - Harp", './sounds/46.mp3'];
 soundSet[48] = ["48 - String Section", './sounds/48.mp3'];
 soundSet[56] = ["56 - Trumpet", './sounds/56.mp3'];
@@ -55,9 +63,6 @@ soundSet[81] = ["81 - Sawtooth Waveform", './sounds/81.mp3'];
 soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 //These headercomments will be expanded as I get to them.
 
-
-
-//Bass
 //Strings
 //Ensemble
 //Brass
