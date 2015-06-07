@@ -54,7 +54,10 @@ function interact(action, e) {
             moveBugStage = 1; //Like selecting a box, this is a two step process.
         } else if(cursorY >= 576 && cursorX >= 248 && cursorX < 272) {
             console.log("TURNBUG_BUTTON_AREA");
-            selectedTool = "turnBug";
+            selectedTool = "turnBug";        
+        } else if(cursorY >= 576 && cursorX >= 272 && cursorX < 296) {
+            console.log("EYEDROPPER_BUTTON_AREA");
+            selectedTool = "eyeDropper";
         } else if(cursorY >= 576 && cursorX >= 560 && cursorX < 588) {
             console.log("HELP_BUTTON_AREA");
             hideUI();
@@ -251,6 +254,21 @@ function interact(action, e) {
                             }
                             //Then show the window to the user.
                             $("#modifyTile").removeClass("currentlyHidden");
+                        }
+                        break;
+                    case "eyeDropper":
+                        if(action === "click") {
+                            console.log(fieldContents[currentTile[0]][currentTile[1]]);
+
+                            //Math.pow(base, exponent) (2,2) = 2^2 = 4
+                            //currentPitch = fieldContents[currentTile[0]][currentTile[1]].note; //Convert.
+                            currentInstrument = fieldContents[currentTile[0]][currentTile[1]].instrument;
+                            currentDSP = fieldContents[currentTile[0]][currentTile[1]].dspEffect;
+                            currentFlowControl = fieldContents[currentTile[0]][currentTile[1]].flowEffect;
+                            currentVolume = fieldContents[currentTile[0]][currentTile[1]].volume;
+                            currentDSPValue = fieldContents[currentTile[0]][currentTile[1]].dspValue;
+                            //Color value should be added later.
+                            //Flow control specifics are not eyedropped yet.
                         }
                         break;
                     default:

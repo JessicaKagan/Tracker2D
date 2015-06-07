@@ -49,6 +49,7 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[13],EDIT_TILE_BUTTON_AREA[0],EDIT_TILE_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[14],HELP_BUTTON_AREA[0],HELP_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[15],TURNBUG_BUTTON_AREA[0],TURNBUG_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[19],EYEDROPPER_BUTTON_AREA[0],EYEDROPPER_BUTTON_AREA[1]);
 
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
@@ -205,6 +206,7 @@ function respondToQuery(X, Y) {
 //Under constant extension. I think I fixed the pointer saving bug, but send me a message if I didn't.
 function saveFile() {
     pauseState = true;
+    storeBugPositions(); //This may or may not be a useful addition.
     defaultBuffer.fillBuffer(0, FILE_SIZE[0], 0, FILE_SIZE[1], 'save');
     selectBoxCoords = [0,0,0,0]; //Clear the selection to prevent a pastebug.
     if(defaultBuffer.array === fieldContents) { 

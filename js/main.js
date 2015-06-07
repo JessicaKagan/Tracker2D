@@ -20,6 +20,8 @@ var QUERY_BUTTON_AREA = [200,576,24,24];
 var MOVEBUG_BUTTON_AREA = [224,576,24,24];
 var TURNBUG_BUTTON_AREA = [248,576,24,24];
 
+var EYEDROPPER_BUTTON_AREA = [272,576,24,24];
+
 var HELP_BUTTON_AREA = [560,576,24,24];
 
 var EDIT_TILE_BUTTON_AREA = [608,576,24,24];
@@ -57,7 +59,7 @@ var currentFlowControl = "none";
 
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(19);
+var UIImages = new Array(20);
 var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.
@@ -118,7 +120,12 @@ function init() {
     //Populate the instrument menu. The undefined check is VERY important.
     for(var i = 0; i < soundSet.length; ++i){
         if(soundSet[i] !== undefined){
-            $('#instrumentInput').append('<option value="' + soundSet[i] + '">' + soundSet[i][0] + '</option>');
+            //Highlight the Grand Piano, which is selected at the beginning.
+            if(i === 1){
+                $('#instrumentInput').append('<option value="' + soundSet[i] + '" selected>' + soundSet[i][0] + '</option>');
+            } else {
+                $('#instrumentInput').append('<option value="' + soundSet[i] + '">' + soundSet[i][0] + '</option>');
+            }
         }
     }
     $('#instrumentInput').change(function() {
