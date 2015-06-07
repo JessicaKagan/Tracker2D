@@ -257,18 +257,33 @@ function interact(action, e) {
                         }
                         break;
                     case "eyeDropper":
-                        if(action === "click") {
+                        if(action === "click" && fieldContents[currentTile[0]][currentTile[1]] !== undefined) {
                             console.log(fieldContents[currentTile[0]][currentTile[1]]);
+                            solveForPitch = fieldContents[currentTile[0]][currentTile[1]].note;
+                            //We need to reverse the exponentiation from the pitchtable in music_instructions.js.
+                            //This is the equation. It presumably needs logarithms.
+                            //((Math.pow(2, (1/12)^ x)/8 = solveForPitch
 
-                            //Math.pow(base, exponent) (2,2) = 2^2 = 4
-                            //currentPitch = fieldContents[currentTile[0]][currentTile[1]].note; //Convert.
+                            //When we change the value being painted, we also need to inform the user by updating UI elements.
+
+                            //currentPitch = fieldContents[currentTile[0]][currentTile[1]].note; //Once we figure it out.
+                            //$('#pitchInput').val(currentPitch);
                             currentInstrument = fieldContents[currentTile[0]][currentTile[1]].instrument;
+                            $('#instrumentInput').val(currentInstrument);
+                            //Needs to scroll and change the highlighted element. Look this up!
+                            //JQuery has a scrollTop() method.
+
                             currentDSP = fieldContents[currentTile[0]][currentTile[1]].dspEffect;
+                            $('#DSPInput').val(currentDSP);
+
                             currentFlowControl = fieldContents[currentTile[0]][currentTile[1]].flowEffect;
+                            $('#controlInput').val(currentFlowControl);
                             currentVolume = fieldContents[currentTile[0]][currentTile[1]].volume;
+                            $('#adjustInputVolume').val(currentVolume*100);
                             currentDSPValue = fieldContents[currentTile[0]][currentTile[1]].dspValue;
+                            $('#dspValueInput').val(currentDSPValue);
                             //Color value should be added later.
-                            //Flow control specifics are not eyedropped yet.
+                            //Flow control specifics are not eyedropped yet.   
                         }
                         break;
                     default:
