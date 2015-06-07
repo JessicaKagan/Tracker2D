@@ -259,11 +259,9 @@ function interact(action, e) {
                     case "eyeDropper":
                         if(action === "click" && fieldContents[currentTile[0]][currentTile[1]] !== undefined) {
                             console.log(fieldContents[currentTile[0]][currentTile[1]]);
-                            solveForPitch = fieldContents[currentTile[0]][currentTile[1]].note;
-                            //We need to reverse the exponentiation from the pitchtable in music_instructions.js.
-                            //This is the equation. It presumably needs logarithms.
-                            //((Math.pow(2, (1/12)^ x)/8 = solveForPitch
-
+                            //I thought I had to do a logarithm to figure this out! I was so wrong.
+                            currentPitch = pitchTable.indexOf(fieldContents[currentTile[0]][currentTile[1]].note);
+                            $('#pitchInput').val(currentPitch);
                             //When we change the value being painted, we also need to inform the user by updating UI elements.
 
                             //currentPitch = fieldContents[currentTile[0]][currentTile[1]].note; //Once we figure it out.
