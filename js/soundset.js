@@ -64,10 +64,16 @@ soundSet[46] = ["46 - Pizzicato Section", './sounds/46.ogg'];
 soundSet[47] = ["47 - Harp", './sounds/47.ogg'];
 soundSet[48] = ["48 - Timpani", './sounds/48.ogg'];
 //Ensemble
+soundSet[49] = ["49 - String Ensemble", './sounds/49.ogg'];
+soundSet[50] = ["50 - Slow Strings", './sounds/50.ogg'];
+soundSet[51] = ["51 - Synth Strings", './sounds/51.ogg'];
+soundSet[52] = ["52 - Synth Strings 2", './sounds/52.ogg'];
+soundSet[53] = ["53 - Choir Aahs", './sounds/53.ogg'];
+soundSet[54] = ["54 - Bootleg Egoraptor Chorus", './sounds/54.ogg'];
+soundSet[55] = ["55 - Synth Vox", './sounds/55.ogg'];
+soundSet[56] = ["56 - Orchestra Hit", './sounds/56.ogg'];
 
-
-//soundSet[49] = ["49 - String Section", './sounds/48.mp3'];
-soundSet[56] = ["56 - Trumpet", './sounds/56.mp3'];
+//soundSet[57] = ["57 - Trumpet", './sounds/57.ogg'];
 soundSet[80] = ["80 - Square Waveform", './sounds/80.mp3'];
 soundSet[81] = ["81 - Sawtooth Waveform", './sounds/81.mp3'];
 soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
