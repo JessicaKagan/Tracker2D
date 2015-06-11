@@ -54,17 +54,27 @@ soundSet[37] = ["37 - Slap Bass 1", './sounds/37.ogg'];
 soundSet[38] = ["38 - Slap Bass 2", './sounds/38.ogg'];
 soundSet[39] = ["39 - Synth Bass", './sounds/39.ogg'];
 soundSet[40] = ["40 - YM2612 Amp Bass", './sounds/40.ogg'];
+//Strings
+soundSet[41] = ["41 - Violin", './sounds/41.ogg'];
+soundSet[42] = ["42 - Viola", './sounds/42.ogg'];
+soundSet[43] = ["43 - Cello", './sounds/43.ogg'];
+soundSet[44] = ["44 - Contrabass", './sounds/44.ogg'];
+soundSet[45] = ["45 - Tremolo", './sounds/45.ogg'];
+soundSet[46] = ["46 - Pizzicato Section", './sounds/46.ogg'];
+soundSet[47] = ["47 - Harp", './sounds/47.ogg'];
+soundSet[48] = ["48 - Timpani", './sounds/48.ogg'];
+//Ensemble
 
-soundSet[46] = ["46 - Harp", './sounds/46.mp3'];
-soundSet[48] = ["48 - String Section", './sounds/48.mp3'];
+
+//soundSet[49] = ["49 - String Section", './sounds/48.mp3'];
 soundSet[56] = ["56 - Trumpet", './sounds/56.mp3'];
 soundSet[80] = ["80 - Square Waveform", './sounds/80.mp3'];
 soundSet[81] = ["81 - Sawtooth Waveform", './sounds/81.mp3'];
 soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 //These headercomments will be expanded as I get to them.
 
-//Strings
-//Ensemble
+
+
 //Brass
 //Reed
 //Pipe
