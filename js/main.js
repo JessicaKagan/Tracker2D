@@ -221,7 +221,7 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
     //console.log(dspEffect + ": " + dspValue);
     var source = audioEngine.createBufferSource();  
     source.buffer = buffer;
-    source.playbackRate.value = pitch;
+    source.playbackRate.value = pitch; //Samples do not play back fully when slowed down. FIX THIS ALREADY.
     //console.log(source.playbackRate.value*44100);
 
     //Volume adjustment is handled before effects are added.

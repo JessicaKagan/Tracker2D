@@ -72,8 +72,16 @@ soundSet[53] = ["53 - Choir Aahs", './sounds/53.ogg'];
 soundSet[54] = ["54 - Bootleg Egoraptor Chorus", './sounds/54.ogg'];
 soundSet[55] = ["55 - Synth Vox", './sounds/55.ogg'];
 soundSet[56] = ["56 - Orchestra Hit", './sounds/56.ogg'];
-
-//soundSet[57] = ["57 - Trumpet", './sounds/57.ogg'];
+//Brass
+soundSet[57] = ["57 - Trumpet", './sounds/57.ogg'];
+soundSet[58] = ["58 - Trombone", './sounds/58.ogg'];
+soundSet[59] = ["59 - Tuba", './sounds/59.ogg'];
+soundSet[60] = ["60 - Muted Trumpet", './sounds/60.ogg'];
+soundSet[61] = ["61 - French Horn", './sounds/61.ogg'];
+soundSet[62] = ["62 - Generic Brass", './sounds/62.ogg'];
+soundSet[63] = ["63 - Synth Brass", './sounds/63.ogg'];
+soundSet[64] = ["64 - Synth Brass 2", './sounds/64.ogg'];
+//
 soundSet[80] = ["80 - Square Waveform", './sounds/80.mp3'];
 soundSet[81] = ["81 - Sawtooth Waveform", './sounds/81.mp3'];
 soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
@@ -81,7 +89,7 @@ soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 
 
 
-//Brass
+
 //Reed
 //Pipe
 //Synth Lead
