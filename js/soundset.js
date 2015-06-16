@@ -81,7 +81,18 @@ soundSet[61] = ["61 - French Horn", './sounds/61.ogg'];
 soundSet[62] = ["62 - Generic Brass", './sounds/62.ogg'];
 soundSet[63] = ["63 - Synth Brass", './sounds/63.ogg'];
 soundSet[64] = ["64 - Synth Brass 2", './sounds/64.ogg'];
-//
+//Reed
+soundSet[65] = ["65 - Soprano Sax", './sounds/65.ogg'];
+soundSet[66] = ["66 - Tenor Sax", './sounds/66.ogg'];
+soundSet[67] = ["67 - Alto Sax", './sounds/67.ogg'];
+soundSet[68] = ["68 - Baritone Sax", './sounds/68.ogg'];
+soundSet[69] = ["69 - Oboe", './sounds/69.ogg'];
+soundSet[70] = ["70 - English Horn", './sounds/70.ogg'];
+soundSet[71] = ["71 - Bassoon", './sounds/71.ogg'];
+soundSet[72] = ["72 - Clarinet", './sounds/72.ogg'];
+//Pipe
+
+
 soundSet[80] = ["80 - Square Waveform", './sounds/80.mp3'];
 soundSet[81] = ["81 - Sawtooth Waveform", './sounds/81.mp3'];
 soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
@@ -90,8 +101,8 @@ soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 
 
 
-//Reed
-//Pipe
+
+
 //Synth Lead
 //Synth Pad
 //Synth Effects
