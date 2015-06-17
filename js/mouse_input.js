@@ -182,7 +182,7 @@ function interact(action, e) {
                                         bugList[i].bugTile[1] === currentTile[1]) {
                                         selectedBug = i;
                                         moveBugStage = 2;
-                                        alert("Now click where in the field you want to move the bug. This won't work if you try to scroll the field first.");
+                                        alert("Now click where in the field you want to move the bug. You can move the field with the minimap during this process.");
                                     }
                                 }
                             } else if (moveBugStage === 2) {

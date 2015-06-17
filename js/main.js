@@ -218,11 +218,11 @@ function soundsAreReady(soundList) {
 }
 
 function playSound(buffer, pitch, dspEffect, dspValue, volume) {
-    //console.log(dspEffect + ": " + dspValue);
+
     var source = audioEngine.createBufferSource();  
     source.buffer = buffer;
-    source.playbackRate.value = pitch; //Samples do not play back fully when slowed down. FIX THIS ALREADY.
-    //console.log(source.playbackRate.value*44100);
+    var playbackMidPoint = source.buffer.duration; //Fallback.
+    source.playbackRate.value = pitch; //Samples do not play back fully in Chrome when slowed down.
 
     //Volume adjustment is handled before effects are added.
     var volumeAdjustment = audioEngine.createGain();
@@ -259,11 +259,26 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
             else { console.log('bendpitch only takes values between 0 and 16, for the sake of sanity. Effect not applied.'); }
             volumeAdjustment.connect(audioEngine.destination);
             break;
+        case 'stopplayback': //These share some logic and operate on start() accordingly.
+        case 'startfromlater':
+            //Takes values between 0-100 (floating point) and converts them into percentages of the file's length.
+            if(dspValue >= 0 && dspValue < 100) {
+                playbackMidPoint = source.buffer.duration * (dspValue/100);
+            }
+            volumeAdjustment.connect(audioEngine.destination);
+            break;
         default:
             volumeAdjustment.connect(audioEngine.destination);
             break;
     }
-    source.start(0); //Add the ability to start later in a sound or end it prematurely. Somehow.
+    //console.log(playbackMidPoint);
+    if(dspEffect == 'stopplayback'){
+        source.start(0,0,playbackMidPoint); //Stops playing after a percentage of the duration.
+    } else if(dspEffect == 'startfromlater') {
+        source.start(0,playbackMidPoint); //Starts playing in the middle of the sound.
+    } else {
+        source.start();
+    } //Add the ability to start later in a sound or end it prematurely. Somehow.
     //Write a conditional that allows us to cut off a sound if we have a certain DSP effect.
 }
 
