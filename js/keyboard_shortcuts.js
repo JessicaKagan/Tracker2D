@@ -70,7 +70,7 @@ function hookKeyboard(){
             $('#pitchInput').val(currentPitch);
             //UI function to demonstrate sounds to the user.
             //Make this optional.
-            if(pressedNoteKey === true){
+            if(pressedNoteKey === true && $("#modifySongProperties").hasClass("currentlyHidden") === true){
                 playSound(soundFont[currentInstrument],pitchTable[currentPitch],currentDSP,currentDSPValue,currentVolume);
             };
         }

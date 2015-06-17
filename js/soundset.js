@@ -91,10 +91,18 @@ soundSet[70] = ["70 - English Horn", './sounds/70.ogg'];
 soundSet[71] = ["71 - Bassoon", './sounds/71.ogg'];
 soundSet[72] = ["72 - Clarinet", './sounds/72.ogg'];
 //Pipe
+soundSet[73] = ["73 - Piccolo", './sounds/73.ogg'];
+soundSet[74] = ["74 - Flute", './sounds/74.ogg'];
+soundSet[75] = ["75 - Recorder", './sounds/75.ogg'];
+soundSet[76] = ["76 - Pan Flute", './sounds/76.ogg'];
+soundSet[77] = ["77 - Blown Bottle", './sounds/77.ogg'];
+soundSet[78] = ["78 - Shakuhachi", './sounds/78.ogg'];
+soundSet[79] = ["79 - Whistle", './sounds/79.ogg'];
+soundSet[80] = ["80 - Ocarina", './sounds/80.ogg'];
+//Synth Lead
 
-
-soundSet[80] = ["80 - Square Waveform", './sounds/80.mp3'];
-soundSet[81] = ["81 - Sawtooth Waveform", './sounds/81.mp3'];
+soundSet[81] = ["81 - Square Waveform", './sounds/80.mp3'];
+soundSet[82] = ["82 - Sawtooth Waveform", './sounds/81.mp3'];
 soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 //These headercomments will be expanded as I get to them.
 
@@ -103,7 +111,7 @@ soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 
 
 
-//Synth Lead
+
 //Synth Pad
 //Synth Effects
 //"Ethnic"
