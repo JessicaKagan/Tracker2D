@@ -100,9 +100,24 @@ soundSet[78] = ["78 - Shakuhachi", './sounds/78.ogg'];
 soundSet[79] = ["79 - Whistle", './sounds/79.ogg'];
 soundSet[80] = ["80 - Ocarina", './sounds/80.ogg'];
 //Synth Lead
+soundSet[81] = ["81 - Square Waveform", './sounds/81.ogg'];
+soundSet[82] = ["82 - Sawtooth Waveform", './sounds/82.ogg'];
+soundSet[83] = ["83 - Synth Calliope", './sounds/83.ogg'];
+soundSet[84] = ["84 - Chiffer Lead", './sounds/84.ogg'];
+soundSet[85] = ["85 - Charang", './sounds/85.ogg'];
+soundSet[86] = ["86 - Supposedly A Synth Voice", './sounds/86.ogg'];
+soundSet[87] = ["87 - 5ths Lead", './sounds/87.ogg'];
+soundSet[88] = ["88 - Bass Lead", './sounds/88.ogg'];
+//Synth Pad
+soundSet[89] = ["89 - Fantasia", './sounds/89.ogg'];
+soundSet[90] = ["90 - Warm Pad", './sounds/90.ogg'];
+soundSet[91] = ["91 - Polysynth", './sounds/91.ogg'];
+soundSet[92] = ["92 - Space Voice", './sounds/92.ogg'];
+soundSet[93] = ["93 - Bowed Glass", './sounds/93.ogg'];
+soundSet[94] = ["94 - Metallic Pad", './sounds/94.ogg'];
+soundSet[95] = ["95 - Halo Pad", './sounds/95.ogg'];
+soundSet[96] = ["96 - Sweep Pad", './sounds/96.ogg'];
 
-soundSet[81] = ["81 - Square Waveform", './sounds/80.mp3'];
-soundSet[82] = ["82 - Sawtooth Waveform", './sounds/81.mp3'];
 soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 //These headercomments will be expanded as I get to them.
 
@@ -112,7 +127,7 @@ soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 
 
 
-//Synth Pad
+
 //Synth Effects
 //"Ethnic"
 //Percussion
