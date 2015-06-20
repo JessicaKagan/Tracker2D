@@ -117,6 +117,15 @@ soundSet[93] = ["93 - Bowed Glass", './sounds/93.ogg'];
 soundSet[94] = ["94 - Metallic Pad", './sounds/94.ogg'];
 soundSet[95] = ["95 - Halo Pad", './sounds/95.ogg'];
 soundSet[96] = ["96 - Sweep Pad", './sounds/96.ogg'];
+//Synth Effects (Who, when the GM specification was being designed, named these things?)
+soundSet[97] = ["97 - Ice Rain", './sounds/97.ogg'];
+soundSet[98] = ["98 - Soundtrack", './sounds/98.ogg'];
+soundSet[99] = ["99 - Crystal", './sounds/99.ogg'];
+soundSet[100] = ["100 - Atmosphere", './sounds/100.ogg'];
+soundSet[101] = ["101 - Brightness", './sounds/101.ogg'];
+soundSet[102] = ["102 - Goblins", './sounds/102.ogg'];
+soundSet[103] = ["103 - Echo Drops", './sounds/103.ogg'];
+soundSet[104] = ["104 - Star Theme", './sounds/104.ogg'];
 
 soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 //These headercomments will be expanded as I get to them.
@@ -128,7 +137,7 @@ soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 
 
 
-//Synth Effects
+
 //"Ethnic"
 //Percussion
 //GM Sound Effects
