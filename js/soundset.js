@@ -126,6 +126,15 @@ soundSet[101] = ["101 - Brightness", './sounds/101.ogg'];
 soundSet[102] = ["102 - Goblins", './sounds/102.ogg'];
 soundSet[103] = ["103 - Echo Drops", './sounds/103.ogg'];
 soundSet[104] = ["104 - Star Theme", './sounds/104.ogg'];
+//Non-European instruments
+soundSet[105] = ["105 - Sitar", './sounds/105.ogg'];
+soundSet[106] = ["106 - Banjo", './sounds/106.ogg'];
+soundSet[107] = ["107 - Shamisen", './sounds/107.ogg'];
+soundSet[108] = ["108 - Koto", './sounds/108.ogg'];
+soundSet[109] = ["109 - Kalimba", './sounds/109.ogg'];
+soundSet[110] = ["110 - Bagpipe", './sounds/110.ogg'];
+soundSet[111] = ["111 - Fiddle", './sounds/111.ogg'];
+soundSet[112] = ["112 - Shanai", './sounds/112.ogg'];
 
 soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 //These headercomments will be expanded as I get to them.
@@ -138,7 +147,7 @@ soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 
 
 
-//"Ethnic"
+
 //Percussion
 //GM Sound Effects
 
