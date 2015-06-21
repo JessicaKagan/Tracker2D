@@ -135,6 +135,15 @@ soundSet[109] = ["109 - Kalimba", './sounds/109.ogg'];
 soundSet[110] = ["110 - Bagpipe", './sounds/110.ogg'];
 soundSet[111] = ["111 - Fiddle", './sounds/111.ogg'];
 soundSet[112] = ["112 - Shanai", './sounds/112.ogg'];
+//Percussion
+soundSet[113] = ["113 - Tinkle Bell", './sounds/113.ogg'];
+soundSet[114] = ["114 - Agogo", './sounds/114.ogg'];
+soundSet[115] = ["115 - Steel Drums", './sounds/115.ogg'];
+soundSet[116] = ["116 - Woodblock", './sounds/116.ogg'];
+soundSet[117] = ["117 - Taiko Drum", './sounds/117.ogg'];
+soundSet[118] = ["118 - Melodic Tom", './sounds/118.ogg'];
+soundSet[119] = ["119 - Synth Drum", './sounds/119.ogg'];
+soundSet[120] = ["120 - Reverse Symbal", './sounds/120.ogg'];
 
 soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 //These headercomments will be expanded as I get to them.
@@ -148,7 +157,7 @@ soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 
 
 
-//Percussion
+
 //GM Sound Effects
 
 //Beginning of the percussion map
