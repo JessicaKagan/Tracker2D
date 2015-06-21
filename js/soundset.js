@@ -3,9 +3,9 @@
 //Drumkits and the planned "funny SFX" module, in particular, will have a bunch.
 //I'll have to rewrite parts of the audio routine to support that.
 
-
-//Some of these sounds need tweaking. 1 and 5 come to mind.
 //Are there any other parameters that might come in handy?
+//We could expand instruments to contain multiple samples by adding another dimension to these arrays, or by replacing a file with a folder.
+//However, we'd have to make playback more robust first.
 var soundSet = new Array(175); //128 sounds for the general MIDI instruments, 46 more for the base percussion map; index 0 is silence.
 
 soundSet[0] = ["00 - Silence", './sounds/00.mp3']; //Name and reference sound for a simple one-sound instrument.
@@ -135,7 +135,7 @@ soundSet[109] = ["109 - Kalimba", './sounds/109.ogg'];
 soundSet[110] = ["110 - Bagpipe", './sounds/110.ogg'];
 soundSet[111] = ["111 - Fiddle", './sounds/111.ogg'];
 soundSet[112] = ["112 - Shanai", './sounds/112.ogg'];
-//Percussion
+//Percussive instruments (not to be confused with the Percussion banks)
 soundSet[113] = ["113 - Tinkle Bell", './sounds/113.ogg'];
 soundSet[114] = ["114 - Agogo", './sounds/114.ogg'];
 soundSet[115] = ["115 - Steel Drums", './sounds/115.ogg'];
@@ -154,21 +154,24 @@ soundSet[126] = ["126 - Helicopter", './sounds/126.ogg'];
 soundSet[127] = ["127 - Applause", './sounds/127.ogg'];
 soundSet[128] = ["128 - Gunshot", './sounds/128.ogg'];
 
-//These headercomments will be expanded as I get to them.
+//Beginning of the Level 1 percussion map
 
-
-
-
-
-
-
-
-
-
-
-
-
-//Beginning of the percussion map
+soundSet[129] = ["P01 - Acoustic Bass Drum", './sounds/129.ogg']; 
+soundSet[130] = ["P02 - Electric Bass Drum", './sounds/130.ogg']; 
+soundSet[131] = ["P03 - Side Stick", './sounds/131.ogg']; 
+soundSet[132] = ["P04 - Acoustic Snare", './sounds/132.ogg']; 
+soundSet[133] = ["P05 - Handclap", './sounds/133.ogg']; 
+soundSet[134] = ["P06 - Electric Snare", './sounds/134.ogg']; 
+soundSet[135] = ["P07 - Low Floor Tom", './sounds/135.ogg']; 
+soundSet[136] = ["P08 - Closed Hi Hat", './sounds/136.ogg']; 
+soundSet[137] = ["P09 - High Floor Tom", './sounds/137.ogg']; 
+soundSet[138] = ["P10 - Pedal Hi Hat", './sounds/138.ogg']; 
+soundSet[139] = ["P11 - Low Tom", './sounds/139.ogg']; 
+soundSet[140] = ["P12 - Open Hi Hat", './sounds/140.ogg']; 
+soundSet[141] = ["P13 - Low-Mid Tom", './sounds/141.ogg']; 
+soundSet[142] = ["P14 - Hi-Mid Tom", './sounds/142.ogg'];
+soundSet[143] = ["P15 - Crash Cymbal 1", './sounds/143.ogg']; 
+/*
 soundSet[129] = ["P01 - Acoustic Bass Drum", './sounds/128.mp3'];
 soundSet[131] = ["P04 - Acoustic Snare", './sounds/131.mp3'];
 soundSet[132] = ["P05 - Hand Clap", './sounds/132.mp3'];
@@ -177,5 +180,4 @@ soundSet[135] = ["P08 - Closed Hi Hat", './sounds/135.mp3'];
 soundSet[137] = ["P10 - Pedal Hi Hat", './sounds/137.mp3'];
 soundSet[139] = ["P12 - Open Hi Hat", './sounds/139.mp3'];
 soundSet[142] = ["P15 - Crash Cymbal 1", './sounds/142.mp3'];
-
-//soundSet[i][1] can either be a string, or an array. If it's an array, we'll need to override the pitchtable logic.
+*/
