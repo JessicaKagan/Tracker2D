@@ -155,7 +155,6 @@ soundSet[127] = ["127 - Applause", './sounds/127.ogg'];
 soundSet[128] = ["128 - Gunshot", './sounds/128.ogg'];
 
 //Beginning of the Level 1 percussion map
-
 soundSet[129] = ["P01 - Acoustic Bass Drum", './sounds/129.ogg']; 
 soundSet[130] = ["P02 - Electric Bass Drum", './sounds/130.ogg']; 
 soundSet[131] = ["P03 - Side Stick", './sounds/131.ogg']; 
@@ -171,13 +170,45 @@ soundSet[140] = ["P12 - Open Hi Hat", './sounds/140.ogg'];
 soundSet[141] = ["P13 - Low-Mid Tom", './sounds/141.ogg']; 
 soundSet[142] = ["P14 - Hi-Mid Tom", './sounds/142.ogg'];
 soundSet[143] = ["P15 - Crash Cymbal 1", './sounds/143.ogg']; 
-/*
-soundSet[129] = ["P01 - Acoustic Bass Drum", './sounds/128.mp3'];
-soundSet[131] = ["P04 - Acoustic Snare", './sounds/131.mp3'];
-soundSet[132] = ["P05 - Hand Clap", './sounds/132.mp3'];
-soundSet[133] = ["P06 - Electric Snare", './sounds/133.mp3'];
-soundSet[135] = ["P08 - Closed Hi Hat", './sounds/135.mp3'];
-soundSet[137] = ["P10 - Pedal Hi Hat", './sounds/137.mp3'];
-soundSet[139] = ["P12 - Open Hi Hat", './sounds/139.mp3'];
-soundSet[142] = ["P15 - Crash Cymbal 1", './sounds/142.mp3'];
-*/
+soundSet[144] = ["P16 - High Tom", './sounds/144.ogg']; 
+soundSet[145] = ["P17 - Ride Cymbal 1", './sounds/145.ogg']; 
+soundSet[146] = ["P18 - Chinese Cymbal", './sounds/146.ogg']; 
+soundSet[147] = ["P19 - Ride Bell", './sounds/147.ogg']; 
+soundSet[148] = ["P20 - Tambourine", './sounds/148.ogg']; 
+soundSet[149] = ["P21 - Splash Cymbal", './sounds/149.ogg']; 
+soundSet[150] = ["P22 - Cowbell", './sounds/150.ogg']; 
+soundSet[151] = ["P23 - Crash Cymbal 2", './sounds/151.ogg']; 
+soundSet[152] = ["P24 - Vibraslap (!?)", './sounds/152.ogg']; 
+
+soundSet[153] = ["P25 - Ride Cymbal 2", './sounds/153.ogg']; 
+soundSet[154] = ["P26 - High Bongo", './sounds/154.ogg']; 
+soundSet[155] = ["P27 - Low Bongo", './sounds/155.ogg']; 
+soundSet[156] = ["P28 - Mute High Conga", './sounds/156.ogg']; 
+soundSet[157] = ["P29 - Open High Conga", './sounds/157.ogg']; 
+soundSet[158] = ["P30 - Low Conga", './sounds/158.ogg']; 
+soundSet[159] = ["P31 - High Timbale", './sounds/159.ogg']; 
+soundSet[160] = ["P32 - Low Timbale", './sounds/160.ogg'];
+
+
+soundSet[161] = ["P33 - High Agogo", './sounds/161.ogg']; 
+soundSet[162] = ["P34 - Low Agogo", './sounds/162.ogg']; 
+soundSet[163] = ["P35 - Cabasa", './sounds/163.ogg']; 
+soundSet[164] = ["P36 - Maracas", './sounds/164.ogg']; 
+soundSet[165] = ["P37 - Short Whistle", './sounds/165.ogg']; 
+soundSet[166] = ["P38 - Long Whistle", './sounds/166.ogg']; 
+soundSet[167] = ["P39 - Short Guiro", './sounds/167.ogg']; 
+soundSet[168] = ["P40 - Long Guiro", './sounds/168.ogg']; 
+
+
+soundSet[169] = ["P41 - Claves", './sounds/169.ogg']; 
+soundSet[170] = ["P42 - High Wood Block", './sounds/170.ogg']; 
+soundSet[171] = ["P43 - Low Wood Block", './sounds/171.ogg']; 
+soundSet[172] = ["P44 - Mute Cuica", './sounds/172.ogg']; 
+soundSet[173] = ["P45 - Open Cuica", './sounds/173.ogg']; 
+soundSet[174] = ["P46 - Mute Triangle", './sounds/174.ogg']; 
+soundSet[175] = ["P47 - Jingle Bell", './sounds/175.ogg']; //More useful than an open triangle, I think.
+
+
+//Cool synthesizer type effects will go here
+
+//And finally, novelty sound effects, like farting.
