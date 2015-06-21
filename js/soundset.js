@@ -143,9 +143,17 @@ soundSet[116] = ["116 - Woodblock", './sounds/116.ogg'];
 soundSet[117] = ["117 - Taiko Drum", './sounds/117.ogg'];
 soundSet[118] = ["118 - Melodic Tom", './sounds/118.ogg'];
 soundSet[119] = ["119 - Synth Drum", './sounds/119.ogg'];
-soundSet[120] = ["120 - Reverse Symbal", './sounds/120.ogg'];
+soundSet[120] = ["120 - Reverse Cymbal", './sounds/120.ogg'];
+//GM Sound Effects
+soundSet[121] = ["121 - Guitar Frets", './sounds/121.ogg'];
+soundSet[122] = ["122 - Breath Noise (Buh)", './sounds/122.ogg'];
+soundSet[123] = ["123 - Seashore", './sounds/123.ogg'];
+soundSet[124] = ["124 - Birds", './sounds/124.ogg'];
+soundSet[125] = ["125 - Telephone", './sounds/125.ogg'];
+soundSet[126] = ["126 - Helicopter", './sounds/126.ogg'];
+soundSet[127] = ["127 - Applause", './sounds/127.ogg'];
+soundSet[128] = ["128 - Gunshot", './sounds/128.ogg'];
 
-soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 //These headercomments will be expanded as I get to them.
 
 
@@ -158,10 +166,10 @@ soundSet[127] = ["127 - Gunshot", './sounds/127.mp3'];
 
 
 
-//GM Sound Effects
+
 
 //Beginning of the percussion map
-soundSet[128] = ["P01 - Acoustic Bass Drum", './sounds/128.mp3'];
+soundSet[129] = ["P01 - Acoustic Bass Drum", './sounds/128.mp3'];
 soundSet[131] = ["P04 - Acoustic Snare", './sounds/131.mp3'];
 soundSet[132] = ["P05 - Hand Clap", './sounds/132.mp3'];
 soundSet[133] = ["P06 - Electric Snare", './sounds/133.mp3'];
