@@ -21,6 +21,7 @@ var MOVEBUG_BUTTON_AREA = [224,576,24,24];
 var TURNBUG_BUTTON_AREA = [248,576,24,24];
 
 var EYEDROPPER_BUTTON_AREA = [272,576,24,24];
+var ADJUSTPOINTER_BUTTON_AREA = [296,576,24,24];
 
 var HELP_BUTTON_AREA = [560,576,24,24];
 
@@ -41,7 +42,7 @@ for(var i = 0; i < FILE_SIZE[0]; ++i) {
 
 //Globals for now. Deglobalize as implementation permits. 
 var soundFont, audioEngine, audioLoader, defaultBuffer; 
-var selectBoxStage, moveBugStage, selectedBug, currentlyEditedTile;
+var selectBoxStage, moveBugStage, selectedBug, currentlyEditedTile, adjustPointerStage;
 //These values are used to run the timer.
 var lastTime, updateFrequency, timeToUpdate; 
 var elapsedTime = 0;
@@ -59,7 +60,7 @@ var currentFlowControl = "none";
 
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(20);
+var UIImages = new Array(21);
 var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.
@@ -376,6 +377,7 @@ function render(){
     }
     //4. UI Elements that don't use HTML (those that do are handled seperately)
     drawButtons();
+    drawSelectedToolOverlay();
     paintMiniMap();  
 }
 

@@ -1,4 +1,4 @@
-var drawingStatus, currentTile;
+var drawingStatus, currentTile, pointeeX, pointeeY;
 //This is our mouse listeners go!
 //Needs rewriting in order to take advantage of the new event listeners.
 function interact(action, e) {
@@ -58,6 +58,10 @@ function interact(action, e) {
         } else if(cursorY >= 576 && cursorX >= 272 && cursorX < 296) {
             console.log("EYEDROPPER_BUTTON_AREA");
             selectedTool = "eyeDropper";
+        } else if(cursorY >= 576 && cursorX >= 296 && cursorX < 320) {
+            console.log("ADJUSTPOINTER_BUTTON_AREA");
+            selectedTool = "adjustPointer";
+            adjustPointerStage = 1;
         } else if(cursorY >= 576 && cursorX >= 560 && cursorX < 588) {
             console.log("HELP_BUTTON_AREA");
             hideUI();
@@ -282,6 +286,25 @@ function interact(action, e) {
                             $('#dspValueInput').val(currentDSPValue);
                             //Color value should be added later.
                             //Flow control specifics are not eyedropped yet.   
+                        }
+                        break;
+                    case "adjustPointer":
+                        if(action === "click") {
+                            if(adjustPointerStage === 1) {
+                                //Get one tile. 
+                                pointeeX = currentTile[0];
+                                pointeeY = currentTile[1];
+                                adjustPointerStage = 2;
+                                alert("Select the tile you want your previous selection to point to.");
+                            } else if(adjustPointerStage === 2) {
+                                //Get the coords yet again.
+                                var pointToX = currentTile[0];
+                                var pointToY = currentTile[1];
+                                //Use this pair to adjust data in the first pair.
+                                fieldContents[pointeeX][pointeeY].xPointer = pointToX;
+                                fieldContents[pointeeX][pointeeY].yPointer = pointToY;
+                                adjustPointerStage = 1;
+                            } else console.log("adjustPointer() in interact() failed.");
                         }
                         break;
                     default:

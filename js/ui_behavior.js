@@ -50,12 +50,50 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[14],HELP_BUTTON_AREA[0],HELP_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[15],TURNBUG_BUTTON_AREA[0],TURNBUG_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[19],EYEDROPPER_BUTTON_AREA[0],EYEDROPPER_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[20],ADJUSTPOINTER_BUTTON_AREA[0],ADJUSTPOINTER_BUTTON_AREA[1]);
 
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[5],LOAD_BUTTON_AREA[0],LOAD_BUTTON_AREA[1]); 
     
 
+}
+
+//This contains a lot of duplicated code.
+var drawSelectedToolOverlay = function() {
+    //console.log("Test");
+    ctx.fillStyle = 'rgba(64,64,255,0.4)'; //Slightly blue and mostly transparent.
+    switch(selectedTool) {
+                    case "pencil":
+                    ctx.fillRect(PENCIL_BUTTON_AREA[0], PENCIL_BUTTON_AREA[1],PENCIL_BUTTON_AREA[2],PENCIL_BUTTON_AREA[3]);
+                        break;
+                    case "eraser":
+                    ctx.fillRect(ERASER_BUTTON_AREA[0], ERASER_BUTTON_AREA[1],ERASER_BUTTON_AREA[2],ERASER_BUTTON_AREA[3]);
+                        break;
+                    case "selectBox":
+                    ctx.fillRect(SELECTBOX_BUTTON_AREA[0], SELECTBOX_BUTTON_AREA[1],SELECTBOX_BUTTON_AREA[2],SELECTBOX_BUTTON_AREA[3]);
+                        break;
+                    case "paste":
+                    ctx.fillRect(PASTE_BUTTON_AREA[0], PASTE_BUTTON_AREA[1],PASTE_BUTTON_AREA[2],PASTE_BUTTON_AREA[3]);
+                        break;
+                    case "query":
+                    ctx.fillRect(QUERY_BUTTON_AREA[0], QUERY_BUTTON_AREA[1],QUERY_BUTTON_AREA[2],QUERY_BUTTON_AREA[3]);
+                        break;
+                    case "moveBug":
+                    ctx.fillRect(MOVEBUG_BUTTON_AREA[0], MOVEBUG_BUTTON_AREA[1],MOVEBUG_BUTTON_AREA[2],MOVEBUG_BUTTON_AREA[3]);
+                        break;
+                    case "turnBug":
+                    ctx.fillRect(TURNBUG_BUTTON_AREA[0], TURNBUG_BUTTON_AREA[1],TURNBUG_BUTTON_AREA[2],TURNBUG_BUTTON_AREA[3]);
+                        break;
+                    case "eyeDropper":
+                    ctx.fillRect(EYEDROPPER_BUTTON_AREA[0], EYEDROPPER_BUTTON_AREA[1],EYEDROPPER_BUTTON_AREA[2],EYEDROPPER_BUTTON_AREA[3]);
+                        break;
+                    case "adjustPointer":
+                    ctx.fillRect(ADJUSTPOINTER_BUTTON_AREA[0], ADJUSTPOINTER_BUTTON_AREA[1],ADJUSTPOINTER_BUTTON_AREA[2],ADJUSTPOINTER_BUTTON_AREA[3]);
+                        break;
+        default:
+            break;
+    }
 }
 
 var TileBuffer = function(fromX, toX, fromY, toY) {

@@ -115,11 +115,10 @@ Bug.prototype.updateBug = function() {
                 break;
             case "incrementer":
             //Incrementers increase the value of the counter they point to by 1 every time a bug walks over them.
-            //We start by getting the coordinates.
+            //Get the coords we're pointing to, then increment that tile's flowvalue.
                 var XCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer;
                 var YCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer;
-                console.log(fieldContents[XCoord][YCoord]);
-                
+                //console.log(fieldContents[XCoord][YCoord]);
                 if(fieldContents[XCoord][YCoord].flowValue < 999 && 
                    fieldContents[XCoord][YCoord].flowEffect === "counter"){
                     fieldContents[XCoord][YCoord].flowValue += 1;
