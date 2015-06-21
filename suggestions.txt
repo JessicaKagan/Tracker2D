@@ -1,10 +1,9 @@
 Suggestions people have made:
 - Full fledged reset button (reverting both bugs and tiles to saved data) - definitely will be implemented
-- Progress display (A naive one that just displays the amount of updates since a reset will be possible, but calculating the length of the song in advance could be difficult and hard to make performant)
+- Progress display (A naive one that just displays the amount of updates since a reset is implemented, but calculating the length of the song in advance could be difficult and hard to make performant)
 - Overall UI simplification and clarification (Potentially hard, but always being done.)
 
 Things I know I want to do (which could get very long):
-- Fill up the soundset and keep sample quality as high as possible within a 20 MB limit
 - Indicate the position of bugs on the minimap, somehow (Hard to do in 64x64 confines)
 - Add Web MIDI API support to allow instrument input
 - Functions to rotate and flip a selection (flips implemented, 90 degree rotation still necessary)
@@ -13,6 +12,7 @@ Things I know I want to do (which could get very long):
 - Performance optimization (Duh.)
 
 - Tool to adjust tile pointers via point and click (which would be a a lot easier than adjusting by menus.)
+- Rotate turn tiles with the rotate selection tool, or perhaps add a tool to increment through flow control options.
 
 Things I might do but am not sure about:
 - Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior. (Up to 36 checks per second? Divergent series.)
@@ -27,3 +27,4 @@ Suggestions that have already been implemented:
 - Scroll bars on the instrument list
 - Implement the promised upgrades to field size (Improved minimap as well, still somewhat buggy, but can be saved, too!)
 - Implement an eyedropper tool (Might need some bugfixes and does need some UI tweaking)
+- Fill up the soundset and keep sample quality as high as possible within a 20 MB limit (GM bank implemented, plenty of room for more sounds, though)
