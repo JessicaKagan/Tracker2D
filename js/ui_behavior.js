@@ -22,6 +22,7 @@ var fieldOffset = [0,0] //Changed via interaction with the minimap, used to deci
 var storedBugPositions = new Array(32); //Stores 8 quadruples, representing bug coordinates and commands, and storage status.
 var numberOfPropertiesSaved = storedBugPositions.length + AMOUNT_OF_SONG_PROPERTIES; //Simplifies some saveload logic
 var renderMinimap = true; //The minimap should not be updated until a file is finished loading.
+var bugHoverState = false; //If the user isn't hovering a bug, no indicator rendering happens
 
 //See main.js for the UI images, although maybe we should move this to the rendering bloc.
 var drawButtons = function() {
@@ -197,14 +198,27 @@ TileBuffer.prototype.transformBuffer = function(transformCommand){
                     }
                 }
                 break;
+            //This freaks out for rectangles taller than they are wide!
             case "rotateRight":
+                alert("Not implemented yet");
+            //Diagonally mirror, then reverse rows like horizontalFlip.
+            /*
                 for(var i = 0; i < defaultBuffer.array.length; ++i){
                     for(var j = 0; j < defaultBuffer.array[i].length; ++j){
                         transformContents[j][i] = defaultBuffer.array[i][j]; //Diagonal mirroring; step one?
                     }
                 }
+                
+                for(var i = 0; i < defaultBuffer.array.length; ++i){
+                    for(var j = 0; j < defaultBuffer.array[i].length; ++j){
+                        transformContents[i][j] = defaultBuffer.array[(defaultBuffer.array.length - i) - 1][j]
+                    }
+                }
+                
+            */
                 break;
             case "rotateLeft":
+                alert("Not implemented yet");
                 //You know, this COULD be kludged by calling rotateRight three times...
                 break;            
 
@@ -561,79 +575,10 @@ function getBug(bugVal, edit){
     }
 }
 
-//Paints the minimap in the upper left corner.
-function paintMiniMap(){
-    var currentMiniMapPixel;
-    var miniMapImage = ctx.createImageData(64, 64); //Constant size, with zoom based on file_size.
-    var miniMapContents = new Array(64);
-    //Make a separate array with our color data and pixels.
 
-    for(var i = 0; i < 64; ++i){
-        miniMapContents[i] = new Array(64);
-        for(var j = 0; j < 64; ++j) {
-            if(fieldContents[i*PLAYFIELD_SIZE][j*PLAYFIELD_SIZE] !== undefined){
-                miniMapContents[i][j] = tinycolor(fieldContents[i*PLAYFIELD_SIZE][j*PLAYFIELD_SIZE].color).toRgb();
-            }
-        }
-    }
-
-    //tinycolor(variable).toRgb();
-
-    //miniMapImage is a one-dimensional array that needs to be mapped to a 2D one, and each pixel takes up 4 values (RGBA)
-    //When large fields are implemented, we need to multiply some of these fields by the multipliers.
-    for(var i = 0; i < 64; ++i){
-        for(var j = 0; j < 64; ++j){
-            var miniMapIndex = ((j*64 + i)) * 4; //Multiply or divide by undetermined value
-            //Build our image. For now, we use grey pixels, but we'll add color here when it's in the actual field.
-            //Maybe we can use transparencies effectively at higher zoom levels.
-            if(miniMapContents[i][j] !== undefined) {
-                miniMapImage.data[miniMapIndex + 0] = miniMapContents[i][j].r;
-                miniMapImage.data[miniMapIndex + 1] = miniMapContents[i][j].g;
-                miniMapImage.data[miniMapIndex + 2] = miniMapContents[i][j].b;
-                miniMapImage.data[miniMapIndex + 3] = 255; //(255/PLAYFIELD_SIZE) eventually
-            } else {
-                miniMapImage.data[miniMapIndex + 0] = 255;
-                miniMapImage.data[miniMapIndex + 1] = 255;
-                miniMapImage.data[miniMapIndex + 2] = 255;
-                miniMapImage.data[miniMapIndex + 3] = 255;
-            }
-        }
-    }
-    //Paint the image once it's complete.
-    ctx.putImageData(miniMapImage, 8, 8);
-    //Draw an unfilled rectangle over the player's view.
-    //This will make it more apparent that there is a minimap and that the player can use it to look around.
-    ctx.beginPath();
-    ctx.lineWidth = "1";
-    ctx.rect(8 + (fieldOffset[0]/PLAYFIELD_SIZE), 8 + (fieldOffset[1]/PLAYFIELD_SIZE),
-            (FIELD_SIZE[0]/PLAYFIELD_SIZE),(FIELD_SIZE[1]/PLAYFIELD_SIZE));
-    ctx.stroke(); 
-}
-
-//Used for the minimap.
-//This should be extended so that the user can scroll by clicking and dragging.
-function moveViewingField(X,Y) {
-    //Adjust what the user put in to centralize it.
-    var adjustedX = (X * PLAYFIELD_SIZE) - Math.floor(FIELD_SIZE[0]/2);
-    var adjustedY = (Y * PLAYFIELD_SIZE) - Math.floor(FIELD_SIZE[1]/2);
-
-    //Where the user clicked becomes the leftmost corner of the view.
-    //Change this so it goes for the center, instead.
-    //If this means part of the view would go offscreen, center as close to the edge as possible.
-    if(adjustedX + FIELD_SIZE[0] > FILE_SIZE[0]) {
-        adjustedX = FILE_SIZE[0] - FIELD_SIZE[0]; 
-    } else if(adjustedX < 0) {
-        adjustedX = 0;
-    }
-
-    if(adjustedY + FIELD_SIZE[1] > FILE_SIZE[1]) {
-        adjustedY = FILE_SIZE[1] - FIELD_SIZE[1];
-    } else if(adjustedY < 0) {
-        adjustedY = 0;
-    }
-
-    fieldOffset = [adjustedX,adjustedY];
-    console.log(fieldOffset);
+//Draws a square on the minimap when the user hovers over a bug.
+function highlightSelectedBug(bugValue) {
+    console.log(bugValue);
 }
 
 function storeBugPositions() {
@@ -709,6 +654,7 @@ function estimateSongLength(){
     //This might get into the halting problem, you know?
 }
 
+//Still kind of janky, especially when there's stuff in a file.
 function resizeFile(){
         //If we're shrinking the map, clean out the areas that will be removed.
         if(fieldContents.length > FILE_SIZE[0]){
@@ -725,7 +671,6 @@ function resizeFile(){
                 bugList[i].bugTile[1] = 1 + i*2;
             }
         }
-
 
         fieldContents.length = FILE_SIZE[0];
         //Everything is undefined by default;

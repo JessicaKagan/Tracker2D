@@ -183,6 +183,18 @@ function init() {
     //Populating this will prevent unsolicited load errors.
     storeBugPositions();
 
+    //Add an event listener for hovering in the bug storage divs.
+    //This is going to be kind of inefficient, but we'll live.
+    //Finish this.
+    $("#bugStorageUnit1").hover(
+        function(){
+            bugHoverState = true;
+        }, 
+        function() {
+            bugHoverState = false;
+        }
+        );
+
     //Create the buffer.
     defaultBuffer = new TileBuffer(0,0,0,0);
     //console.log(defaultBuffer);
@@ -317,129 +329,4 @@ function main(){
     window.requestAnimationFrame(main);
     
 
-}
-
-function render(){
-    ctx.clearRect(FIELD_PIXELS[0],FIELD_PIXELS[1],FIELD_PIXELS[2],FIELD_PIXELS[3]); //Use this to refresh everything.
-    //Render things in this order:
-    //1. Background (Which didn't have to be redrawn a lot but now does?)
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
-    ctx.fillStyle = "#888888";
-    ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
-    ctx.fillStyle = "#BBBBBB";
-    //2. Painted tiles
-
-    //Draw boundaries between tiles.
-    //This may need adjustment if we implement a zoom feature.
-    //Replacing some constants with variables in order to make it easier to rebuild (although readability might be a pain).
-    for(var i = FIELD_PIXELS[0]; i < FIELD_PIXELS[2]; i += TILE_SIZE) {
-        ctx.beginPath();
-        ctx.moveTo(i,0); //Horizontal lines
-        ctx.lineTo(i,FIELD_PIXELS[3]);
-        ctx.stroke();
-    }
-    for(var i = FIELD_PIXELS[1]; i < FIELD_PIXELS[3]; i += TILE_SIZE) {
-        ctx.beginPath();
-        ctx.moveTo(0,i); //Vertical lines
-        ctx.lineTo(FIELD_PIXELS[2],i);
-        ctx.stroke();
-    }
-    //Painting squares! From an MVC stance this is the "view", I guess.
-    for(var i = 0; i < (FIELD_SIZE[0]); ++i){
-        for(var j = 0; j < (FIELD_SIZE[1]); ++j){
-            if(typeof fieldContents[i + fieldOffset[0]][j + fieldOffset[1]] === 'object'){
-                //Color's been added. See music_instructions.js for more info.
-                paintTile(i,j, fieldContents[i + fieldOffset[0]][j + fieldOffset[1]].color);
-            }
-            //Experimental tile buffer overlay that draws a translucent box over the tile buffer.
-            //Reserved for when the user is actively selecting or pasting things.
-            if(defaultBuffer.array !== undefined && defaultBuffer.array.length < fieldContents.length && 
-               defaultBuffer.array[0].length < fieldContents[0].length && selectBoxStage === 1) {
-                if(selectedTool === 'selectBox' || selectedTool === 'paste') {
-                //Check to see if the tile is in the tile buffer.
-                    if(i + fieldOffset[0] >= selectBoxCoords[0] && j + fieldOffset[1] >= selectBoxCoords[2] &&
-                       i + fieldOffset[0] <= selectBoxCoords[1] && j + fieldOffset[1] <= selectBoxCoords[3]){
-                        //console.log(selectBoxCoords);
-                        ctx.fillStyle = 'rgba(0,0,0,0.2)'; //Preps the overlay. 
-                        ctx.fillRect(FIELD_PIXELS[0] + (TILE_SIZE*i), 
-                                     FIELD_PIXELS[1] + (TILE_SIZE*j),
-                                    (TILE_SIZE*1), 
-                                    (TILE_SIZE*1));
-                    }
-                }
-            }
-        }
-    }
-    //3. Bugs and actual bug overlays.
-    for(var i = 0; i < bugList.length; ++i){
-        if(bugList[i].inStorage === false) { 
-            bugList[i].drawBug(); 
-        }   
-    }
-    //4. UI Elements that don't use HTML (those that do are handled seperately)
-    drawButtons();
-    drawSelectedToolOverlay();
-    paintMiniMap();  
-}
-
-//This is a rendering function, anyways.
-function paintTile(tileX, tileY, color){
-    //Fill in the basics.
-    ctx.fillStyle = color; 
-    ctx.fillRect(FIELD_PIXELS[0] + (TILE_SIZE*tileX), 
-                 FIELD_PIXELS[1] + (TILE_SIZE*tileY),
-                (TILE_SIZE*1), 
-                (TILE_SIZE*1));
-    //Add overlays to tiles as needed.
-    var currentOverlay = fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]];
-    //The first layer is for turnsignals.
-    if(currentOverlay.flowEffect !== "none") {
-        switch(currentOverlay.flowEffect) {
-            case "turn_west":
-                ctx.drawImage(tileOverlayImages[0],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
-                break;
-            case "turn_north":
-                ctx.drawImage(tileOverlayImages[1],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
-                break;
-            case "turn_east":
-                ctx.drawImage(tileOverlayImages[2],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
-                break;
-            case "turn_south":
-                ctx.drawImage(tileOverlayImages[3],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
-                break;
-            case "freeze":
-                ctx.drawImage(tileOverlayImages[4],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
-                break;
-            case "teleport":
-                ctx.drawImage(tileOverlayImages[10],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
-                break;
-            case "counter":
-                ctx.font = "10px Tahoma";
-                ctx.fillStyle = "#FFFFFF"; 
-                //For contrast.
-                if(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].note > 1) { 
-                    ctx.fillStyle = "#000000";
-                }
-                ctx.fillText(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue, FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 2, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 16, 22);
-                ctx.fillText(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue, FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 1, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 16, 22);
-                break;
-            case "revert":
-                //Use a modified version of this icon or something instead!
-                ctx.drawImage(UIImages[11],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
-                break;
-            case "incrementer":
-                ctx.drawImage(tileOverlayImages[11],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
-                break;
-            default:
-                break;
-        }
-    }
-    //The second layer tells us which part of the soundbank we're looking at.
-    //0-128 is the General MIDI melodic bank and has no extra overlay.
-    //128-174 is the percussion bank and has a little "P" in the top left.
-    //A sound effect bank and a 'synthesizer' bank are planned, but they do not have sounds or overlays yet.
-    if(currentOverlay.instrument > 128 && currentOverlay.instrument < 174) {
-        ctx.drawImage(tileOverlayImages[9],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
-    }
 }
