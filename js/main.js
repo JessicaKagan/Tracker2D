@@ -45,6 +45,8 @@ for(var i = 0; i < FILE_SIZE[0]; ++i) {
 //Globals for now. Deglobalize as implementation permits. 
 var soundFont, audioEngine, audioLoader, defaultBuffer; 
 var selectBoxStage, moveBugStage, selectedBug, currentlyEditedTile, adjustPointerStage;
+var hoverBug = -1; //This one is similar to selectedBug but can't be merged. Maybe localize it at some point?
+
 //These values are used to run the timer.
 var lastTime, updateFrequency, timeToUpdate; 
 var elapsedTime = 0;
@@ -62,7 +64,7 @@ var currentFlowControl = "none";
 
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(23);
+var UIImages = new Array(24);
 var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.
@@ -189,11 +191,83 @@ function init() {
     $("#bugStorageUnit1").hover(
         function(){
             bugHoverState = true;
+            hoverBug = 0;
         }, 
         function() {
             bugHoverState = false;
+            hoverBug = -1;
         }
-        );
+    );    
+    $("#bugStorageUnit2").hover(
+        function(){
+            bugHoverState = true;
+            hoverBug = 1;
+        }, 
+        function() {
+            bugHoverState = false;
+            hoverBug = -1;
+        }
+    );    
+    $("#bugStorageUnit3").hover(
+        function(){
+            bugHoverState = true;
+            hoverBug = 2;
+        }, 
+        function() {
+            bugHoverState = false;
+            hoverBug = -1;
+        }
+    );    
+    $("#bugStorageUnit4").hover(
+        function(){
+            bugHoverState = true;
+            hoverBug = 3;
+        }, 
+        function() {
+            bugHoverState = false;
+            hoverBug = -1;
+        }
+    );    
+    $("#bugStorageUnit5").hover(
+        function(){
+            bugHoverState = true;
+            hoverBug = 4;
+        }, 
+        function() {
+            bugHoverState = false;
+            hoverBug = -1;
+        }
+    );    
+    $("#bugStorageUnit6").hover(
+        function(){
+            bugHoverState = true;
+            hoverBug = 5;
+        }, 
+        function() {
+            bugHoverState = false;
+            hoverBug = -1;
+        }
+    );    
+    $("#bugStorageUnit7").hover(
+        function(){
+            bugHoverState = true;
+            hoverBug = 6;
+        }, 
+        function() {
+            bugHoverState = false;
+            hoverBug = -1;
+        }
+    );    
+    $("#bugStorageUnit8").hover(
+        function(){
+            bugHoverState = true;
+            hoverBug = 7;
+        }, 
+        function() {
+            bugHoverState = false;
+            hoverBug = -1;
+        }
+    );
 
     //Create the buffer.
     defaultBuffer = new TileBuffer(0,0,0,0);

@@ -22,7 +22,7 @@ var fieldOffset = [0,0] //Changed via interaction with the minimap, used to deci
 var storedBugPositions = new Array(32); //Stores 8 quadruples, representing bug coordinates and commands, and storage status.
 var numberOfPropertiesSaved = storedBugPositions.length + AMOUNT_OF_SONG_PROPERTIES; //Simplifies some saveload logic
 var renderMinimap = true; //The minimap should not be updated until a file is finished loading.
-var bugHoverState = false; //If the user isn't hovering a bug, no indicator rendering happens
+
 
 //See main.js for the UI images, although maybe we should move this to the rendering bloc.
 var drawButtons = function() {
@@ -573,12 +573,6 @@ function getBug(bugVal, edit){
                 break;
         }
     }
-}
-
-
-//Draws a square on the minimap when the user hovers over a bug.
-function highlightSelectedBug(bugValue) {
-    console.log(bugValue);
 }
 
 function storeBugPositions() {

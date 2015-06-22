@@ -1,5 +1,7 @@
 //Welcome to our new graphics rendering file!
 
+var bugHoverState = false; //If the user isn't hovering over a bug, no indicator rendering happens
+
 function render(){
     ctx.clearRect(FIELD_PIXELS[0],FIELD_PIXELS[1],FIELD_PIXELS[2],FIELD_PIXELS[3]); //Use this to refresh everything.
     //Render things in this order:
@@ -61,6 +63,7 @@ function render(){
     drawButtons();
     drawSelectedToolOverlay();
     paintMiniMap();  
+    highlightSelectedBug();
 }
 
 //This is a rendering function, anyways.
@@ -191,4 +194,19 @@ function moveViewingField(X,Y) {
 
     fieldOffset = [adjustedX,adjustedY];
     console.log(fieldOffset);
+}
+
+//Draws an image on the minimap when the user hovers over a bug.
+function highlightSelectedBug() {
+    if(bugHoverState === true && hoverBug >= 0){
+        //Get the coords of our needed bug, convert to minimap coords with offsets.
+        //(bugList[hoverBug].bugTile[0]/PLAYFIELD_SIZE) + 8
+        var bugMiniMapCoords = [(bugList[hoverBug].bugTile[0]/PLAYFIELD_SIZE) + 8,(bugList[hoverBug].bugTile[1]/PLAYFIELD_SIZE) + 8];
+        //Use these to prevent the icon from going off the minimap.
+        if(bugMiniMapCoords[0] > 66) { bugMiniMapCoords[0] = 66; }
+        if(bugMiniMapCoords[1] > 66) { bugMiniMapCoords[1] = 66; }
+        //Then draw the icon.
+        ctx.drawImage(UIImages[23], bugMiniMapCoords[0], bugMiniMapCoords[1]);
+
+    }
 }
