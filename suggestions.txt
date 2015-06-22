@@ -6,14 +6,14 @@ Suggestions people have made:
 Things I know I want to do (which could get very long):
 - Indicate the position of bugs on the minimap, somehow (Hard to do in 64x64 confines)
 - Add Web MIDI API support to allow instrument input
-- Functions to rotate and flip a selection (flips implemented, 90 degree rotation still necessary)
+
 - Zoom feature (Which might need better graphics to really shine and will be complicated to implement.)
 - "Find Bug" feature that centers the camera on a bug (Made particularly useful by upgrades to field size)
 - Performance optimization (Duh.)
 
+- Functions to rotate and flip a selection (flips implemented, 90 degree rotation still necessary)
+- Rotate turn tiles with the rotate selection tool (make this function optional), or perhaps add a tool to increment through flow control options.
 
-- Rotate turn tiles with the rotate selection tool, or perhaps add a tool to increment through flow control options.
-- Indicate currently selected tool with an overlay (probably easy)
 
 Things I might do but am not sure about:
 - Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior. (Up to 36 checks per second? Divergent series.)
@@ -30,3 +30,4 @@ Suggestions that have already been implemented:
 - Implement an eyedropper tool (Might need some bugfixes and does need some UI tweaking)
 - Fill up the soundset and keep sample quality as high as possible within a 20 MB limit (GM bank implemented, plenty of room for more sounds, though)
 - Tool to adjust tile pointers via point and click (which would be a a lot easier than adjusting by menus.)
+- Indicate currently selected tool with an overlay

@@ -44,7 +44,13 @@ function interact(action, e) {
             defaultBuffer.transformBuffer("horizontalFlip");
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 176 && cursorX < 200) { 
             console.log("VERTFLIP_BUTTON_AREA"); 
-            defaultBuffer.transformBuffer("verticalFlip");
+            defaultBuffer.transformBuffer("verticalFlip");        
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 200 && cursorX < 224) { 
+            console.log("ROTATELEFT_BUTTON_AREA"); 
+            defaultBuffer.transformBuffer("rotateLeft");        
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 224 && cursorX < 248) { 
+            console.log("ROTATERIGHT_BUTTON_AREA"); 
+            defaultBuffer.transformBuffer("rotateRight");
         } else if(cursorY >= 576 && cursorX >= 200 && cursorX < 224) {
             console.log("QUERY_BUTTON_AREA");
             selectedTool = "query";

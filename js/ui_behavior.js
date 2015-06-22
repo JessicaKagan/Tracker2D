@@ -16,7 +16,6 @@ var pasteStyle = 1 //1 is an overwrite paste, 2 is mixpaste.
 var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','turnBug','singleStep','modifyTile']; 
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var saveContent; //A string representing the contents of the map.
-var encodedContent; //Stores the base64 equivalent of saveContent. Remove ASAP!
 var selectBoxCoords = new Array(4); //Stores two coordinate pairs.
 var fieldOffset = [0,0] //Changed via interaction with the minimap, used to decide which part of the field's showing.
 
@@ -51,6 +50,8 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[15],TURNBUG_BUTTON_AREA[0],TURNBUG_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[19],EYEDROPPER_BUTTON_AREA[0],EYEDROPPER_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[20],ADJUSTPOINTER_BUTTON_AREA[0],ADJUSTPOINTER_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[21],ROTATELEFT_BUTTON_AREA[0],ROTATELEFT_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[22],ROTATERIGHT_BUTTON_AREA[0],ROTATERIGHT_BUTTON_AREA[1]);
 
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
@@ -84,6 +85,9 @@ var drawSelectedToolOverlay = function() {
                         break;
                     case "turnBug":
                     ctx.fillRect(TURNBUG_BUTTON_AREA[0], TURNBUG_BUTTON_AREA[1],TURNBUG_BUTTON_AREA[2],TURNBUG_BUTTON_AREA[3]);
+                        break;                    
+                    case "editTile":
+                    ctx.fillRect(EDITTILE_BUTTON_AREA[0], EDITTILE_BUTTON_AREA[1],EDITTILE_BUTTON_AREA[2],EDITTILE_BUTTON_AREA[3]);
                         break;
                     case "eyeDropper":
                     ctx.fillRect(EYEDROPPER_BUTTON_AREA[0], EYEDROPPER_BUTTON_AREA[1],EYEDROPPER_BUTTON_AREA[2],EYEDROPPER_BUTTON_AREA[3]);
@@ -133,7 +137,7 @@ TileBuffer.prototype.fillBuffer = function(fromX, toX, fromY, toY, fillCommand) 
                     this.array[i][j] = fieldContents[fromX + i][fromY + j];
                 }
             }
-            console.log(this.array);
+            //console.log(this.array);
             break;
         default:
             break;
@@ -167,6 +171,7 @@ TileBuffer.prototype.pasteBuffer = function(fromX, toX, fromY, toY, tileX, tileY
 
 TileBuffer.prototype.transformBuffer = function(transformCommand){
     //Initialize by updating the buffer with our current contents; break if this does nothing.
+    //Needs special code to handle non-square arrays. 
     defaultBuffer.fillBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3],'selectBox');
     if(defaultBuffer.array === undefined) { 
         console.log("It's empty");
@@ -185,14 +190,24 @@ TileBuffer.prototype.transformBuffer = function(transformCommand){
                     }
                 }
                 break;
-            //This is bugged.
             case "verticalFlip":
                 for(var i = 0; i < defaultBuffer.array.length; ++i){
                     for(var j = 0; j < defaultBuffer.array[i].length; ++j){
-                        transformContents[i][j] = defaultBuffer.array[i][(defaultBuffer.array.length - j) - 1]
+                        transformContents[i][j] = defaultBuffer.array[i][(defaultBuffer.array[i].length - j) - 1]
                     }
                 }
                 break;
+            case "rotateRight":
+                for(var i = 0; i < defaultBuffer.array.length; ++i){
+                    for(var j = 0; j < defaultBuffer.array[i].length; ++j){
+                        transformContents[j][i] = defaultBuffer.array[i][j]; //Diagonal mirroring; step one?
+                    }
+                }
+                break;
+            case "rotateLeft":
+                //You know, this COULD be kludged by calling rotateRight three times...
+                break;            
+
             default:
                 break;
         }
@@ -202,6 +217,17 @@ TileBuffer.prototype.transformBuffer = function(transformCommand){
         //This should be implicitly an overwrite at the same place we started.
         pasteStyle = 1;
         defaultBuffer.pasteBuffer(this.fromX, this.fromY, this.toX, this.toY, this.fromX, this.fromY);
+        //When we rotate, though, we need to change the dimensions of the transform buffer.
+        //The first rotation works, but without this, the user would have to manually resize their selection
+        //after each rotation to prevent data loss or mangling.
+        switch(transformCommand){
+            case "rotateRight":
+                break;
+            case "rotateLeft":
+                break;
+            default: 
+                break;
+        }
     }
 }
 

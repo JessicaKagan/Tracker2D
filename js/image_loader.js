@@ -35,6 +35,8 @@ function getImages() {
     UIImages[18].src = 'images/vertical_flip_button.png';    
     UIImages[19].src = 'images/eyedropper_button.png';
     UIImages[20].src = 'images/adjust_pointer_button.png';
+    UIImages[21].src = 'images/rotate_left_button.png';
+    UIImages[22].src = 'images/rotate_right_button.png';
 
     //Maybe someone will make more detailed and complex bug images.
     bugImages[0].src = 'images/placeholder_bug.png';
