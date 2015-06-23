@@ -12,7 +12,7 @@ Current bugs:
 - Copies of counters made with the select and paste tools share their counter state until they hit 0
 - Revert tiles are glitchy and sometimes get ignored by the bugs.
 - Large fields and their save/loads may be broken; definite tile corruption in the upper right of large fields. They're also really slow.
-- Unknown glitch with tile pointers, used for counters and teleports and such?
+- Unknown glitch with tile pointers, used for counters and teleports and such? Might be fixed.
 - On Google Chrome, slowed down samples don't play for their entire length; should be fixed in either v44 or v45.
 
 Tracker2D contains some code released under the MIT License. The following block of legalese applies to such:

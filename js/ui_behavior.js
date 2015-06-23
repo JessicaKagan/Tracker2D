@@ -88,7 +88,7 @@ var drawSelectedToolOverlay = function() {
                     ctx.fillRect(TURNBUG_BUTTON_AREA[0], TURNBUG_BUTTON_AREA[1],TURNBUG_BUTTON_AREA[2],TURNBUG_BUTTON_AREA[3]);
                         break;                    
                     case "editTile":
-                    ctx.fillRect(EDITTILE_BUTTON_AREA[0], EDITTILE_BUTTON_AREA[1],EDITTILE_BUTTON_AREA[2],EDITTILE_BUTTON_AREA[3]);
+                    ctx.fillRect(EDIT_TILE_BUTTON_AREA[0], EDIT_TILE_BUTTON_AREA[1],EDIT_TILE_BUTTON_AREA[2],EDIT_TILE_BUTTON_AREA[3]);
                         break;
                     case "eyeDropper":
                     ctx.fillRect(EYEDROPPER_BUTTON_AREA[0], EYEDROPPER_BUTTON_AREA[1],EYEDROPPER_BUTTON_AREA[2],EYEDROPPER_BUTTON_AREA[3]);

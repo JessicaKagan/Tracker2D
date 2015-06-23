@@ -4,15 +4,15 @@ Suggestions people have made:
 - Overall UI simplification and clarification (Potentially hard, but always being done.)
 
 Things I know I want to do (which could get very long):
-- Indicate the position of bugs on the minimap, somehow (Hard to do in 64x64 confines)
 - Add Web MIDI API support to allow instrument input
 
 - Zoom feature (Which might need better graphics to really shine and will be complicated to implement.)
-- "Find Bug" feature that centers the camera on a bug (Made particularly useful by upgrades to field size)
+- "Find Bug" feature that centers the camera on a bug (Made less useful by minimap finder.)
 - Performance optimization (Duh.)
 
 - Functions to rotate and flip a selection (flips implemented, 90 degree rotation still necessary; latter is partially done but not quite there yet.)
 - Rotate turn tiles with the rotate selection tool (make this function optional), or perhaps add a tool to increment through flow control options.
+
 
 
 Things I might do but am not sure about:
@@ -21,6 +21,7 @@ Things I might do but am not sure about:
 - A basic scripting language to allow for arbitrarily complicated conditional code and such on the field (potentially very difficult and time consuming, besides ballooning file sizes). 
 - Antialiasing for large file maps.
 - Make bugs in storage translucent instead of completely invisible. Depends on what users ask for.
+- Flow control feature to move the viewing field to the pointer.
 
 Suggestions that have already been implemented:
 - Actually show the tile buffer (as filled up by the select tool) somehow, like a translucent overlay
@@ -31,3 +32,4 @@ Suggestions that have already been implemented:
 - Fill up the soundset and keep sample quality as high as possible within a 20 MB limit (GM bank implemented, plenty of room for more sounds, though)
 - Tool to adjust tile pointers via point and click (which would be a a lot easier than adjusting by menus.)
 - Indicate currently selected tool with an overlay
+- Indicate the position of bugs on the minimap, somehow (A small dot shows up when you mouse over the storage slots)
