@@ -166,15 +166,26 @@ select {
 #loadScreen, #initButton {
     z-index: 9999;
     position: absolute;
+    font-family: Tahoma, sans-serif;
+}
+
+#loadingScreenText {
+    z-index: 10000;
+    position: absolute;
+    background-color: #FFFFFF;
+    top: 220px;
+    left: 210px;
+    padding: 10px;
+    text-align: center;
+    width: 360px;
+    border-style: outset;
+    border-width: 10px;
+    border-color: #444444;
 }
 
 #initButton {
-    left: 400px;
+    left: 360px;
     top: 540px;
-}
-
-#modifySongProperties {
-
 }
 
 #progressCounter {
