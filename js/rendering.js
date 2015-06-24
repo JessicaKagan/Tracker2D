@@ -6,16 +6,17 @@ function render(){
     ctx.clearRect(FIELD_PIXELS[0],FIELD_PIXELS[1],FIELD_PIXELS[2],FIELD_PIXELS[3]); //Use this to refresh everything.
     //Render things in this order:
     //1. Background (Which didn't have to be redrawn a lot but now does?)
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = 'rgba(0,0,0,1)';
     ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
-    ctx.fillStyle = "#888888";
+    ctx.fillStyle = 'rgba(128,128,128,1)';
     ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
-    ctx.fillStyle = "#BBBBBB";
+    
     //2. Painted tiles
 
     //Draw boundaries between tiles.
     //This may need adjustment if we implement a zoom feature.
     //Replacing some constants with variables in order to make it easier to rebuild (although readability might be a pain).
+    ctx.fillStyle = 'rgba(192,192,192,1)';
     for(var i = FIELD_PIXELS[0]; i < FIELD_PIXELS[2]; i += TILE_SIZE) {
         ctx.beginPath();
         ctx.moveTo(i,0); //Horizontal lines
@@ -99,10 +100,10 @@ function paintTile(tileX, tileY, color){
                 break;
             case "counter":
                 ctx.font = "10px Tahoma";
-                ctx.fillStyle = "#FFFFFF"; 
+                ctx.fillStyle = 'rgba(255,255,255,1)'; 
                 //For contrast.
                 if(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].note > 1) { 
-                    ctx.fillStyle = "#000000";
+                    ctx.fillStyle = 'rgba(0,0,0,1)';
                 }
                 ctx.fillText(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue, FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 2, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 16, 22);
                 ctx.fillText(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue, FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 1, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 16, 22);
