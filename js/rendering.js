@@ -6,6 +6,8 @@ function render(){
     ctx.clearRect(FIELD_PIXELS[0],FIELD_PIXELS[1],FIELD_PIXELS[2],FIELD_PIXELS[3]); //Use this to refresh everything.
     //Render things in this order:
     //1. Background (Which didn't have to be redrawn a lot but now does?)
+    ctx.fillStyle = 'rgba(255,255,255,1)';
+    ctx.fillRect(0,0,800,600); //Not drawing this causes problems on backgrounds that aren't white.
     ctx.fillStyle = 'rgba(0,0,0,1)';
     ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
     ctx.fillStyle = 'rgba(128,128,128,1)';
