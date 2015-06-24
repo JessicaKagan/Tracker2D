@@ -173,19 +173,19 @@ select {
     z-index: 10000;
     position: absolute;
     background-color: #FFFFFF;
-    top: 220px;
+    top: 205px;
     left: 210px;
-    padding: 10px;
+    padding: 8px;
     text-align: center;
     width: 360px;
     border-style: outset;
-    border-width: 10px;
+    border-width: 8px;
     border-color: #444444;
 }
 
 #initButton {
     left: 360px;
-    top: 540px;
+    top: 550px;
 }
 
 #progressCounter {

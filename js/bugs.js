@@ -160,9 +160,9 @@ Bug.prototype.updateBug = function() {
                fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer !== undefined){
                 this.bugTile = [parseInt(fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer) , 
                                 parseInt(fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer)]; 
-                console.log(this.bugTile);
+                //console.log(this.bugTile);
                 this.action = this.previousAction; //Restore the previous action once we have teleported the bug.
-                console.log(this.action + " , " + this.previousAction);
+                //console.log(this.action + " , " + this.previousAction);
             }
             break;
         default:

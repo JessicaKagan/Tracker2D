@@ -196,7 +196,7 @@ function moveViewingField(X,Y) {
     }
 
     fieldOffset = [adjustedX,adjustedY];
-    console.log(fieldOffset);
+    //console.log(fieldOffset);
 }
 
 //Draws an image on the minimap when the user hovers over a bug.

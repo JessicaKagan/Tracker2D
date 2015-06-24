@@ -1,4 +1,4 @@
-var drawingStatus, currentTile, pointeeX, pointeeY;
+var drawingStatus, miniMapScrollingStatus, currentTile, pointeeX, pointeeY;
 //This is our mouse listeners go!
 //Needs rewriting in order to take advantage of the new event listeners.
 function interact(action, e) {
@@ -10,14 +10,20 @@ function interact(action, e) {
     var cursorY = e.pageY - $('#canvas').offset().top;
     //Displays debug messages for now based on where you click.
     //When we make more, we'll need some sort of 2D switch statement, because this is just getting ugly.
+    if(cursorX >= 8 && cursorX <= 72 && cursorY >=8 && cursorY <= 72) {
+            //console.log("MINIMAP");
+            setMiniMapScrollingStatus();
+            if(miniMapScrollingStatus === true){
+                moveViewingField((cursorX - 8),(cursorY - 8)); //Compensating for the offsets in the UI.
+            }
+    }
+
+    //Dummied out for now, but I'm keeping it in the off chance we need something in the left bar later.
+    /*
     if(cursorX <= 80 && cursorX > 0 && action === "click") { 
         console.log("LEFT_VERTICAL_BAR"); 
-        //Minimap usage.
-        if(cursorX >= 8 && cursorX <= 72 && cursorY >=8 && cursorY <= 72) {
-            console.log("MINIMAP");
-            moveViewingField((cursorX - 8),(cursorY - 8)); //Compensating for the offsets in the UI.
-        }
     }
+    */
     if(cursorY >= 540 && cursorY <= 600 && cursorX >= 80 && action === "click") { 
         console.log("BOTTOM_HORIZONTAL_BAR");
         //UI buttons on the bottom horizontal bar.
@@ -325,6 +331,14 @@ function interact(action, e) {
             drawingStatus = true;
         } else if (action === 'mouseup') {
             drawingStatus = false;
+        }
+    }
+    //Similar to setDrawingStatus(), but for scrolling the minimap.
+    function setMiniMapScrollingStatus(){
+        if(action === 'mousedown') {
+            miniMapScrollingStatus = true;
+        } else if (action === 'mouseup') {
+            miniMapScrollingStatus = false;
         }
     }
 }
