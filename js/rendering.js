@@ -213,3 +213,80 @@ function highlightSelectedBug() {
 
     }
 }
+
+//See main.js for the UI images, although maybe we should move this to the rendering bloc.
+var drawButtons = function() {
+    //Pause button with 2 states
+    if(pauseState == false) { ctx.drawImage(UIImages[0],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
+    else if(pauseState == true) { ctx.drawImage(UIImages[1],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
+    //Most buttons, though, do not change function when clicked.
+    ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]);
+    //Actually putting the second menu row to use.
+    ctx.drawImage(UIImages[17],HORIFLIP_BUTTON_AREA[0],HORIFLIP_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[18],VERTFLIP_BUTTON_AREA[0],VERTFLIP_BUTTON_AREA[1]);
+    //Draw a different paste button based on which type of paste is selected in the options pages.
+    if(pasteStyle === 1){
+        ctx.drawImage(UIImages[7],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]);
+    } else if(pasteStyle === 2){ ctx.drawImage(UIImages[16],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]); } //Mixpaste.
+
+    ctx.drawImage(UIImages[8],QUERY_BUTTON_AREA[0],QUERY_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[9],MOVEBUG_BUTTON_AREA[0],MOVEBUG_BUTTON_AREA[1]);     
+    ctx.drawImage(UIImages[10],STOREBUG_BUTTON_AREA[0],STOREBUG_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[11],RESTOREBUG_BUTTON_AREA[0],RESTOREBUG_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[12],SONGPROPS_BUTTON_AREA[0],SONGPROPS_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[13],EDIT_TILE_BUTTON_AREA[0],EDIT_TILE_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[14],HELP_BUTTON_AREA[0],HELP_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[15],TURNBUG_BUTTON_AREA[0],TURNBUG_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[19],EYEDROPPER_BUTTON_AREA[0],EYEDROPPER_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[20],ADJUSTPOINTER_BUTTON_AREA[0],ADJUSTPOINTER_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[21],ROTATELEFT_BUTTON_AREA[0],ROTATELEFT_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[22],ROTATERIGHT_BUTTON_AREA[0],ROTATERIGHT_BUTTON_AREA[1]);
+
+    //Save and load functions
+    ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[5],LOAD_BUTTON_AREA[0],LOAD_BUTTON_AREA[1]); 
+    
+
+}
+
+//This contains a lot of duplicated code.
+var drawSelectedToolOverlay = function() {
+    //console.log("Test");
+    ctx.fillStyle = 'rgba(64,64,255,0.4)'; //Slightly blue and mostly transparent.
+    switch(selectedTool) {
+                    case "pencil":
+                    ctx.fillRect(PENCIL_BUTTON_AREA[0], PENCIL_BUTTON_AREA[1],PENCIL_BUTTON_AREA[2],PENCIL_BUTTON_AREA[3]);
+                        break;
+                    case "eraser":
+                    ctx.fillRect(ERASER_BUTTON_AREA[0], ERASER_BUTTON_AREA[1],ERASER_BUTTON_AREA[2],ERASER_BUTTON_AREA[3]);
+                        break;
+                    case "selectBox":
+                    ctx.fillRect(SELECTBOX_BUTTON_AREA[0], SELECTBOX_BUTTON_AREA[1],SELECTBOX_BUTTON_AREA[2],SELECTBOX_BUTTON_AREA[3]);
+                        break;
+                    case "paste":
+                    ctx.fillRect(PASTE_BUTTON_AREA[0], PASTE_BUTTON_AREA[1],PASTE_BUTTON_AREA[2],PASTE_BUTTON_AREA[3]);
+                        break;
+                    case "query":
+                    ctx.fillRect(QUERY_BUTTON_AREA[0], QUERY_BUTTON_AREA[1],QUERY_BUTTON_AREA[2],QUERY_BUTTON_AREA[3]);
+                        break;
+                    case "moveBug":
+                    ctx.fillRect(MOVEBUG_BUTTON_AREA[0], MOVEBUG_BUTTON_AREA[1],MOVEBUG_BUTTON_AREA[2],MOVEBUG_BUTTON_AREA[3]);
+                        break;
+                    case "turnBug":
+                    ctx.fillRect(TURNBUG_BUTTON_AREA[0], TURNBUG_BUTTON_AREA[1],TURNBUG_BUTTON_AREA[2],TURNBUG_BUTTON_AREA[3]);
+                        break;                    
+                    case "editTile":
+                    ctx.fillRect(EDIT_TILE_BUTTON_AREA[0], EDIT_TILE_BUTTON_AREA[1],EDIT_TILE_BUTTON_AREA[2],EDIT_TILE_BUTTON_AREA[3]);
+                        break;
+                    case "eyeDropper":
+                    ctx.fillRect(EYEDROPPER_BUTTON_AREA[0], EYEDROPPER_BUTTON_AREA[1],EYEDROPPER_BUTTON_AREA[2],EYEDROPPER_BUTTON_AREA[3]);
+                        break;
+                    case "adjustPointer":
+                    ctx.fillRect(ADJUSTPOINTER_BUTTON_AREA[0], ADJUSTPOINTER_BUTTON_AREA[1],ADJUSTPOINTER_BUTTON_AREA[2],ADJUSTPOINTER_BUTTON_AREA[3]);
+                        break;
+        default:
+            break;
+    }
+}
