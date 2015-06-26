@@ -572,6 +572,8 @@ function estimateSongLength(){
 
 //Still kind of janky, especially when there's stuff in a file.
 function resizeFile(){
+        var oldSize = fieldContents.length; //It's good to know large the file was before the resize.
+
         //If we're shrinking the map, clean out the areas that will be removed.
         if(fieldContents.length > FILE_SIZE[0]){
             for(var i = FILE_SIZE[0]; i < fieldContents.length; ++i){
@@ -589,13 +591,23 @@ function resizeFile(){
         }
 
         fieldContents.length = FILE_SIZE[0];
-        //Everything is undefined by default;
+        //Define the rest of the field.
         for(var i = 0; i < fieldContents.length; ++i) {
             if(fieldContents[i] == undefined){
                 fieldContents[i] = new Array(FILE_SIZE[1]);
             }
             fieldContents[i].length = FILE_SIZE[1];
         }
-        console.log(fieldContents);
+        
+        //If we're growing the field, sanitize the new territories with this kludge.
+        if(oldSize < FILE_SIZE[0]){
+            for(var i = 0; i < fieldContents.length; ++i){
+                for(var j = 0; j < fieldContents[i].length; ++j){
+                    //Avoid cleaning out userdata.
+                    if(i >= oldSize || j >= oldSize) { fieldContents[i][j] = undefined; }
+                    
+                }
+            }
+        }
 
 }
