@@ -22,6 +22,7 @@ var fieldOffset = [0,0] //Changed via interaction with the minimap, used to deci
 var storedBugPositions = new Array(32); //Stores 8 quadruples, representing bug coordinates and commands, and storage status.
 var numberOfPropertiesSaved = storedBugPositions.length + AMOUNT_OF_SONG_PROPERTIES; //Simplifies some saveload logic
 var renderMinimap = true; //The minimap should not be updated until a file is finished loading.
+var loadedTiles; //Used for reversion.
 
 var TileBuffer = function(fromX, toX, fromY, toY) {
     if(fromX === undefined){ this.fromX = 0; } else { this.fromX = fromX; }
@@ -46,7 +47,6 @@ TileBuffer.prototype.fillBuffer = function(fromX, toX, fromY, toY, fillCommand) 
     switch(fillCommand) {
         case 'save':
             this.array = fieldContents;
-            //console.log(tileBuffer);
             break;
         case 'selectBox':
             //In this case, tileBuffer has to actually be defined.
@@ -212,6 +212,8 @@ function saveFile() {
     if(defaultBuffer.array === fieldContents) { 
         //console.log("We're ready to save now."); 
     } else { console.log("Something went wrong in saveFile() or fillBuffer(). Real error trapping later."); }
+    //Put our latest revision in the revert buffer, too.
+    loadedTiles = jQuery.extend(true, {}, fieldContents);
     //Bake everything into a string.
     saveContent = "";
     //console.log(tileBuffer.length);
@@ -274,7 +276,6 @@ function loadFile(evt) {
                         fieldContents[j][i] = undefined;
                     } else if(loadingWorkArray[currentIndex + 1] !== "undefined") {
                     */
-
                     //Kludgetastic.
                     var currentTile = loadingWorkArray[currentIndex + 1].split(",");
                     if(isNaN(currentTile[0]) === true){
@@ -315,6 +316,7 @@ function loadFile(evt) {
             author = loadingWorkArray[loadingWorkArray.length - 3];
             songDescription = loadingWorkArray[loadingWorkArray.length - 2];
             songTitle = loadingWorkArray[loadingWorkArray.length - 1];
+            loadedTiles = jQuery.extend(true, {}, fieldContents);
         }
 
         reader.readAsText(file);

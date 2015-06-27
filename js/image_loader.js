@@ -38,7 +38,8 @@ function getImages() {
     UIImages[21].src = 'images/rotate_left_button.png';
     UIImages[22].src = 'images/rotate_right_button.png';
     UIImages[23].src = 'images/bug_minimap_indicator.png';    
-    UIImages[24].src = 'images/bug_properties_button.png';
+    UIImages[24].src = 'images/bug_properties_button.png';    
+    UIImages[25].src = 'images/revert_button.png';
 
     //Maybe someone will make more detailed and complex bug images.
     bugImages[0].src = 'images/placeholder_bug.png';

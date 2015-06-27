@@ -37,6 +37,7 @@ var RESTOREBUG_BUTTON_AREA = [704,576,24,24];
 
 var SAVE_BUTTON_AREA = [752,576,24,24];
 var LOAD_BUTTON_AREA = [776,576,24,24];
+var REVERT_BUTTON_AREA = [776,552,24,24];
 
 var fieldContents = new Array(FILE_SIZE[0]);
 //Everything is undefined by default.
@@ -66,7 +67,7 @@ var currentFlowControl = "none";
 
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(25);
+var UIImages = new Array(26);
 var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.

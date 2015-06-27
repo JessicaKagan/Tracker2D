@@ -115,6 +115,15 @@ function interact(action, e) {
             console.log('LOAD_BUTTON_AREA');
             hideUI();
             $("#loadExport").removeClass("currentlyHidden");
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 776 && cursorX < 800) {
+            console.log("REVERT_BUTTON_AREA");
+            if(loadedTiles !== undefined){
+                var continueReverting = confirm("Revert restores the most recent copy of the field from your latest save or load operation. Your bugs' positions and headings will not be affected.");
+                if(continueReverting === true) {
+                    if(fieldContents === loadedTiles) { console.log("wut");} //This shouldn't be the case right now!
+                    fieldContents = jQuery.extend(true, {}, loadedTiles);
+                }
+            } else { alert("Can't revert because you haven't attempted to save or load a file yet.");}
         }
     }
     //If we're inside the playfield, convert the coordinates to a tile.
