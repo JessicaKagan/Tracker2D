@@ -18,6 +18,8 @@ var VERTFLIP_BUTTON_AREA = [176,552,24,24];
 var ROTATELEFT_BUTTON_AREA = [200,552,24,24];
 var ROTATERIGHT_BUTTON_AREA = [224,552,24,24];
 
+var BUGPROPS_BUTTON_AREA = [608,552,24,24];
+
 var QUERY_BUTTON_AREA = [200,576,24,24];
 var MOVEBUG_BUTTON_AREA = [224,576,24,24];
 var TURNBUG_BUTTON_AREA = [248,576,24,24];
@@ -64,7 +66,7 @@ var currentFlowControl = "none";
 
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(24);
+var UIImages = new Array(25);
 var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.

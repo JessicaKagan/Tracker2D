@@ -80,6 +80,13 @@ function interact(action, e) {
             if($("#helpPage").hasClass("currentlyHidden") === true){
                 $("#helpPage").removeClass("currentlyHidden");
             }
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 608 && cursorX < 632) {
+            console.log("BUGPROPS_BUTTON_AREA");
+            hideUI();
+            if($("#modifyBugProperties").hasClass("currentlyHidden") === true){
+                $("#modifyBugProperties").removeClass("currentlyHidden");
+            //Bug property stuff will be necessary at some point.
+            }
         } else if(cursorY >= 576 && cursorX >= 608 && cursorX < 632) {
             selectedTool = "editTile";
             console.log("EDIT_TILE_BUTTON_AREA");

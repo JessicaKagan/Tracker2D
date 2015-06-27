@@ -214,6 +214,10 @@ select {
     z-index: 1;
 }
 
+#modifyBugProperties {
+    font-size: 12px;
+}
+
 .bugHoldingPen {
     position: absolute;
     width: 24px;

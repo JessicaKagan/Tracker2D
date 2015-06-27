@@ -10,7 +10,7 @@
 //inStorage is for bugs that currently aren't being used on the field, and it prevents the bug from updating at all.
 var bugActions = ['moveLeft', 'moveRight', 'moveUp', 'moveDown', 'teleportToTile', 'holdPosition', 'inStorage'];
 
-var Bug = function(image, x,y, action,name, inStorage){
+var Bug = function(image, x,y, action,name, inStorage, volume){
     this.image = image;
     this.action = action;
     this.x = x;
@@ -20,6 +20,8 @@ var Bug = function(image, x,y, action,name, inStorage){
     //this.bugTile = getTile(this.x, this.y);
     this.inStorage = inStorage;
     this.previousAction = this.action; //In case we need to buffer an action.
+    if(volume === undefined) { this.volume = 1;
+    } else { this.volume = volume; }
 }
 
 Bug.prototype.drawBug = function(){
