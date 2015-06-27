@@ -346,6 +346,9 @@ function hideUI(){
     }
     if($("#queryInfo").hasClass("currentlyHidden") === false) { 
         setTimeout(function() {$("#queryInfo").addClass("currentlyHidden");}, 50);
+    }     
+    if($("#modifyBugProperties").hasClass("currentlyHidden") === false) { 
+        setTimeout(function() {$("#modifyBugProperties").addClass("currentlyHidden");}, 50);
     } 
 }
 

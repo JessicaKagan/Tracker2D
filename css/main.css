@@ -12,7 +12,7 @@ input[type="file"] {
 }
 
 input[type="range"] {
-    width: 50%;
+    /*width: 50%;*/
 }
 
 input[type="submit"] {
@@ -110,13 +110,15 @@ select {
 }
 
 #UIShifter6 {
-    top: 290px;
-    left: -30px;
+    top: 292px;
+    width: 80px;
     font-size: 10px;
 }
 
 #adjustInputVolume {
     padding: 0px;
+    margin: 0px;
+    width: 75px;
 }
 
 #bugStorage {
