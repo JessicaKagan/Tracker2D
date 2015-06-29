@@ -19,7 +19,7 @@ var saveContent; //A string representing the contents of the map.
 var selectBoxCoords = new Array(4); //Stores two coordinate pairs.
 var fieldOffset = [0,0] //Changed via interaction with the minimap, used to decide which part of the field's showing.
 
-var storedBugPositions = new Array(32); //Stores 8 quadruples, representing bug coordinates and commands, and storage status.
+var storedBugPositions = new Array(40); //Stores 8 quintuples, representing bug coordinates, commands, and storage status.
 var numberOfPropertiesSaved = storedBugPositions.length + AMOUNT_OF_SONG_PROPERTIES; //Simplifies some saveload logic
 var renderMinimap = true; //The minimap should not be updated until a file is finished loading.
 var loadedTiles; //Used for reversion.
@@ -264,7 +264,7 @@ function loadFile(evt) {
             PLAYFIELD_SIZE = loadDimensions[0]/64; 
             resizeFile();
 
-            //1 to (max index - 4) for now
+            //From the first indice to the index of tileLength.
             //Dump the tiles to fieldContents.
             for(var i = 0; i < loadDimensions[0]; ++i){
                 for(var j = 0; j < loadDimensions[1]; ++j) {
@@ -292,20 +292,22 @@ function loadFile(evt) {
                 }
             }
             //Load bug properties. There's a serious offset here; might need tweaking.
-            for(var i = 0; i < (loadingWorkArray.length - tileLength - AMOUNT_OF_SONG_PROPERTIES - 4); i+=4){
+            //Eventually, it might be a good idea to put all bug properties on one line.
+            for(var i = 0; i < (loadingWorkArray.length - tileLength - AMOUNT_OF_SONG_PROPERTIES - 4); i+=5){
                 //console.log(loadingWorkArray[i + tileLength + 1]);
-                bugList[(i/4)].bugTile[0] = $.parseJSON(loadingWorkArray[i + tileLength + 1]);
-                bugList[(i/4)].bugTile[1] = $.parseJSON(loadingWorkArray[i + tileLength + 2]);
-                bugList[(i/4)].action = loadingWorkArray[i + tileLength + 3];
-                bugList[(i/4)].inStorage = $.parseJSON(loadingWorkArray[i + tileLength + 4]);
-                console.log(bugList[i/4]);
+                bugList[(i/5)].bugTile[0] = $.parseJSON(loadingWorkArray[i + tileLength + 1]);
+                bugList[(i/5)].bugTile[1] = $.parseJSON(loadingWorkArray[i + tileLength + 2]);
+                bugList[(i/5)].action = loadingWorkArray[i + tileLength + 3];
+                bugList[(i/5)].inStorage = $.parseJSON(loadingWorkArray[i + tileLength + 4]);
+                bugList[(i/5)].volume = $.parseJSON(loadingWorkArray[i + tileLength + 5]);
+                console.log(bugList[i/5]);
             }
             //Run the obligatory bug checking loop and store the loaded bug positions in the buffer.
             for(var i = 0; i < bugList.length; ++i) {
                 checkBug(i);
             }
             storeBugPositions();
-            restoreBugPositions(true); //The program will pause when the bugs have been restored to their positions.
+            restoreBugPositions(true); //The program will pause automatically when the bugs have been restored to their positions.
             //Song properties are stored at the very end of the file.
             TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
             updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
@@ -504,14 +506,13 @@ function getBug(bugVal, edit){
 
 function storeBugPositions() {
     pauseState = true;
-    for(var i = 0; i < storedBugPositions.length; i+=4){
-        storedBugPositions[i] = bugList[(i/4)].bugTile[0];
-        storedBugPositions[i+1] = bugList[(i/4)].bugTile[1];
-        storedBugPositions[i+2] = bugList[(i/4)].action;
-        storedBugPositions[i+3] = bugList[(i/4)].inStorage;
+    for(var i = 0; i < storedBugPositions.length; i+=5){
+        storedBugPositions[i] = bugList[(i/5)].bugTile[0];
+        storedBugPositions[i+1] = bugList[(i/5)].bugTile[1];
+        storedBugPositions[i+2] = bugList[(i/5)].action;
+        storedBugPositions[i+3] = bugList[(i/5)].inStorage;
+        storedBugPositions[i+4] = bugList[(i/5)].volume;
     }
-    //console.log(storedBugPositions);
-    //console.log("Bug positions stored");
 }
 
 function restoreBugPositions(pauseOnRestore) {
@@ -520,17 +521,18 @@ function restoreBugPositions(pauseOnRestore) {
     if(pauseOnRestore !== true) {  
         pauseState = false;
     } else if(pauseOnRestore === true){ pauseState = true; }
-
-    if(storedBugPositions === [] || storedBugPositions.length !== 32) {
+    //Generalize the second part of this condition... somehow.
+    if(storedBugPositions === [] || storedBugPositions.length !== 40) {
         console.log("Stored bug positions are glitchy.");
         return;
     } else {
-        for(var i = 0; i < storedBugPositions.length; i+=4){
+        for(var i = 0; i < storedBugPositions.length; i+=5){
             //This is literally the opposite of what we do in storeBugPositions().
-            bugList[(i/4)].bugTile[0] = storedBugPositions[i];
-            bugList[(i/4)].bugTile[1] = storedBugPositions[i+1];
-            bugList[(i/4)].action = storedBugPositions[i+2];
-            bugList[(i/4)].inStorage = storedBugPositions[i+3];
+            bugList[(i/5)].bugTile[0] = storedBugPositions[i];
+            bugList[(i/5)].bugTile[1] = storedBugPositions[i+1];
+            bugList[(i/5)].action = storedBugPositions[i+2];
+            bugList[(i/5)].inStorage = storedBugPositions[i+3];
+            bugList[(i/5)].volume = storedBugPositions[i+4];
         }
         for(var i = 0; i < bugList.length; ++i) {
             getBug(i,false);

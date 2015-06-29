@@ -85,6 +85,8 @@ function interact(action, e) {
             hideUI();
             if($("#modifyBugProperties").hasClass("currentlyHidden") === true){
                 $("#modifyBugProperties").removeClass("currentlyHidden");
+                $("#bugPropsVolume").val(bugList[$("#bugSelectionMenu").val()].volume);
+                $("#currentBugVolume").html($("#bugPropsVolume").val());
             //Bug property stuff will be necessary at some point.
             }
         } else if(cursorY >= 576 && cursorX >= 608 && cursorX < 632) {
