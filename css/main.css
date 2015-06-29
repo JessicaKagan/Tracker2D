@@ -115,10 +115,17 @@ select {
     font-size: 10px;
 }
 
-#adjustInputVolume {
+#adjustInputVolume, #bugPropsVolume {
     padding: 0px;
     margin: 0px;
+}
+
+#adjustInputVolume {
     width: 75px;
+}
+
+#bugPropsVolume {
+    width: 150px;
 }
 
 #bugStorage {
@@ -286,4 +293,8 @@ select {
 .smallHTMLUIText {
     font-family: Tahoma, sans-serif;
     font-size: 10px;
+}
+
+.darkBackground {
+    background-color: #AAAAAA;
 }

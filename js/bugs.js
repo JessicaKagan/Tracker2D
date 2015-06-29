@@ -20,7 +20,7 @@ var Bug = function(image, x,y, action,name, inStorage, volume){
     //this.bugTile = getTile(this.x, this.y);
     this.inStorage = inStorage;
     this.previousAction = this.action; //In case we need to buffer an action.
-    if(volume === undefined) { this.volume = 1;
+    if(volume === undefined) { this.volume = 100;
     } else { this.volume = volume; }
 }
 
@@ -68,7 +68,7 @@ Bug.prototype.updateBug = function() {
                                 fieldContents[this.bugTile[0]][this.bugTile[1]].note,
                                 fieldContents[this.bugTile[0]][this.bugTile[1]].dspEffect,
                                 fieldContents[this.bugTile[0]][this.bugTile[1]].dspValue,
-                                fieldContents[this.bugTile[0]][this.bugTile[1]].volume
+                                (fieldContents[this.bugTile[0]][this.bugTile[1]].volume * (this.volume/100))
                                 );
         }
     }
@@ -171,4 +171,8 @@ Bug.prototype.updateBug = function() {
             break;
     }
     //this.bugTile = getTile(this.x, this.y); //Updates our derivative.
+}
+
+function updateBugVolume(volume,bug){
+    bugList[bug].volume = volume;
 }

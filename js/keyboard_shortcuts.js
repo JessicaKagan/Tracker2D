@@ -154,7 +154,29 @@ function hookKeyboard(){
             this.value.replace(yPointer);
         }
     });
+    //Adjusts the target of the bug volume adjust function.
+    jQuery('#bugSelectionMenu').change(function (){
+        //First, set the volume slider's value to that of the selected bug.
+        //$("#bugPropsVolume").val(bugList[this.value].volume); //Redundant?
+        $("#currentBugVolume").html(bugList[this.value].volume);
+        //Then tweak the HTML of our onChange function.
+        //This is kind of janky in a vanillaJS way, but it should do the trick.
+        $("#bugVolumeFunction").html('<input id="bugPropsVolume" type="range" min="0" max="100" value="' 
+            + bugList[this.value].volume + 
+            '"onchange="updateBugVolume(value,' 
+            + this.value + 
+            ') "></input>');
+        //This seems like a really unhealthy kludge, but it works. 
+        //If you know how to do it more elegantly, please make a pull request.
+        jQuery('#bugPropsVolume').change(function (){
+            $("#currentBugVolume").html(this.value);
+        });
 
+    });
+    //This only handles the HTML adjustment side. See updateBugVolume() in bugs.js for the meat of the code.
+    jQuery('#bugPropsVolume').change(function (){
+        $("#currentBugVolume").html(this.value);
+    });
 
 
 

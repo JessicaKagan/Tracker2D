@@ -144,17 +144,24 @@
                     <div id="modifyBugProperties" class="currentlyHidden editingWindow">
                         <button class="closeButton" onClick="hideUI()">Close Window</button>
                         <br><br>
-                        <p>Select a bug to edit. Not implemented yet.</p>
+                        <p>Select a bug to edit with this menu.</p>
                         <select id="bugSelectionMenu">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
+                            <option value="0">1</option>
+                            <option value="1">2</option>
+                            <option value="2">3</option>
+                            <option value="3">4</option>
+                            <option value="4">5</option>
+                            <option value="5">6</option>
+                            <option value="6">7</option>
+                            <option value="7">8</option>
                         </select>
+                        <br><br>
+                        <div class="darkBackground">
+                            <p>Volume (multiplicative with global volume) (<span id="currentBugVolume">100</span>%)</p>
+                            <div id="bugVolumeFunction">
+                                <input id="bugPropsVolume" type="range" min="0" max="100" value="100" onchange="updateBugVolume(value, 0)"></input>
+                            </div>
+                        </div>
                     </div>
                 </div>
         </div>
