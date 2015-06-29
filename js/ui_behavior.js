@@ -195,6 +195,7 @@ function respondToQuery(X, Y) {
             if(bugList[i].inStorage === true) {
                 queryResponse += "<p>This bug is in storage.</p>";
             }
+            queryResponse += "<p>Plays notes at " + bugList[i].volume + "% of their volume. </p>";
             break;
         }
     }
