@@ -122,22 +122,23 @@ TileBuffer.prototype.transformBuffer = function(transformCommand){
                 break;
             //This freaks out for rectangles taller than they are wide!
             case "rotateRight":
-                alert("Not implemented yet");
-            //Diagonally mirror, then reverse rows like horizontalFlip.
-            /*
+                //alert("Not implemented yet");
+                //Diagonally mirror, then reverse rows like horizontalFlip.
                 for(var i = 0; i < defaultBuffer.array.length; ++i){
                     for(var j = 0; j < defaultBuffer.array[i].length; ++j){
                         transformContents[j][i] = defaultBuffer.array[i][j]; //Diagonal mirroring; step one?
                     }
                 }
-                
+                //Then change the select buffer accordingly.
+                /*
                 for(var i = 0; i < defaultBuffer.array.length; ++i){
                     for(var j = 0; j < defaultBuffer.array[i].length; ++j){
                         transformContents[i][j] = defaultBuffer.array[(defaultBuffer.array.length - i) - 1][j]
                     }
                 }
+                */
                 
-            */
+            
                 break;
             case "rotateLeft":
                 alert("Not implemented yet");
