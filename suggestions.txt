@@ -13,6 +13,7 @@ Things I know I want to do (which could get very long):
 - Functions to rotate and flip a selection (flips implemented, 90 degree rotation still necessary; latter is partially done but not quite there yet.)
 - Rotate turn tiles with the rotate selection tool (make this function optional), or perhaps add a tool to increment through flow control options.
 - Randomized trivia for the loadscreens.
+- When the pointer setting tool is selected, apply an overlay to pointee tiles when hovering over a tile.
 
 
 

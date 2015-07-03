@@ -9,7 +9,7 @@ So far, this code runs best on Chrome. Firefox seems to handle it decently as we
 
 Current bugs:
 - Not enough watchful eyes bleeding at the sight of code errors
-- Copies of counters made with the select and paste tools share their counter state until they hit 0
+- Some tools may use reference pastes instead of deep clone pastes via jQuery.extend();
 - Revert tiles are glitchy and sometimes get ignored by the bugs.
 - Large fields and their save/loads may have various odd bugs. They're also really slow.
 - On Google Chrome, slowed down samples don't play for their entire length; should be fixed in either v44 or v45.

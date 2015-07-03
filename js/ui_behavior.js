@@ -68,9 +68,9 @@ TileBuffer.prototype.fillBuffer = function(fromX, toX, fromY, toY, fillCommand) 
 }
 
 //toX and toY are derived from the size of tileBuffer. TileX and tileY are where the user clicked.
+//I expect I may add more paste styles in the future, so this uses a switch statement.
 TileBuffer.prototype.pasteBuffer = function(fromX, toX, fromY, toY, tileX, tileY) {
-    //This is an overlap paste that replaces all contents.
-    //The switch statement isn't as terse as it could be, but it's more readable and extensible in case we actually need more special pastes.
+    //This handles multiple paste styles.
     for(var i = 0; i < defaultBuffer.array.length; ++i){
         for(var j = 0; j < defaultBuffer.array[i].length; ++j){
             //Conditional to prevent accidental writes outside the file, which could get crashy.
@@ -78,13 +78,21 @@ TileBuffer.prototype.pasteBuffer = function(fromX, toX, fromY, toY, tileX, tileY
             //tileX and tileY store offsets.
             if((i + tileX) < FILE_SIZE[0] || (j + tileY) < FILE_SIZE[1]) {
                 switch(pasteStyle){
+                    //The undefined check 
                     case 1: // Simplistic overwrite paste.
-                        fieldContents[(i + tileX)][(j + tileY)] = defaultBuffer.array[i][j];
+                        if(defaultBuffer.array[i][j] !== undefined){
+                            fieldContents[(i + tileX)][(j + tileY)] = jQuery.extend(true, {}, defaultBuffer.array[i][j]);
+                        }
                         break; 
                     case 2: // More complicated mixpaste that doesn't overwrite occupied tiles with undefined ones.
-                        if(fieldContents[(i + tileX)][(j + tileY)] instanceof Tile === false){
-                            fieldContents[(i + tileX)][(j + tileY)] = defaultBuffer.array[i][j];
-                        } else break;
+                        if(defaultBuffer.array[i][j] !== undefined){
+                            if(fieldContents[(i + tileX)][(j + tileY)] instanceof Tile === false){
+                                fieldContents[(i + tileX)][(j + tileY)] = jQuery.extend(true, {}, defaultBuffer.array[i][j]);
+                            } else break;
+                        }
+                        break;
+                    case 3: // If I can find a way to convey what it does well, I might bring back this reference paste.
+                        //fieldContents[(i + tileX)][(j + tileY)] = defaultBuffer.array[i][j];
                         break;
                 } 
             }
