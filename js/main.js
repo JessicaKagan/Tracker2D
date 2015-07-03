@@ -49,6 +49,7 @@ for(var i = 0; i < FILE_SIZE[0]; ++i) {
 var soundFont, audioEngine, audioLoader, defaultBuffer; 
 var selectBoxStage, moveBugStage, selectedBug, currentlyEditedTile, adjustPointerStage;
 var hoverBug = -1; //This one is similar to selectedBug but can't be merged. Maybe localize it at some point?
+var revertCalled = false;
 
 //These values are used to run the timer.
 var lastTime, updateFrequency, timeToUpdate; 
@@ -392,7 +393,12 @@ function main(){
         if(pauseState == false) { 
             for(var i = 0; i < bugList.length; ++i) {
                 if(bugList[i].inStorage === false) { bugList[i].updateBug(); }
+                //If any of the bugs tripped a revert tile, run the revert.
             }
+            if(revertCalled === true){
+                restoreBugPositions(false);
+                revertCalled = false;
+            }  
             //Once we've updated positions, update the timer as well.
             elapsedTime += 1;
             $("#elapsedTime").html(elapsedTime);

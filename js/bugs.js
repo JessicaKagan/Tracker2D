@@ -124,8 +124,8 @@ Bug.prototype.updateBug = function() {
                 }
                 break;
             case "revert":
-            //All bugs after the one that triggers this update. That's not good.
-                restoreBugPositions(false); 
+            //Queue up a revert operation for the main() loop.
+                revertCalled = true;
                 return;
             default:
                 break;
