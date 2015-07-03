@@ -533,7 +533,8 @@ function restoreBugPositions(pauseOnRestore) {
     } else if(pauseOnRestore === true){ pauseState = true; }
     //Generalize the second part of this condition... somehow.
     if(storedBugPositions === [] || storedBugPositions.length !== 40) {
-        console.log("Stored bug positions are glitchy.");
+        console.log("Sorry, an error occured in the data storing bug positions; see the browser console for details.");
+        console.log(storedBugPositions);
         return;
     } else {
         for(var i = 0; i < storedBugPositions.length; i+=5){

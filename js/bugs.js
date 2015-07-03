@@ -100,7 +100,6 @@ Bug.prototype.updateBug = function() {
             case "counter":
             //Counters are cool. Bugs decrement them until they hit 0 and turn into whatever tile they point to.
             //The pointer tile can change during execution, too. 
-            //There is a very strange bug where if you copy a tile with a counter, all the pasted counters share decrements.
                 if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue > 0) {
                     fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue -= 1;
                     break;
@@ -110,9 +109,7 @@ Bug.prototype.updateBug = function() {
                     //We're using the coordinates stored here to copy the ENTIRE tile (not just its coordinates) into memory.
                     var XCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer;
                     var YCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer;
-                    var copyFromThisTile = fieldContents[XCoord][YCoord];
-                    //console.log(copyFromThisTile);
-                    fieldContents[this.bugTile[0]][this.bugTile[1]] = copyFromThisTile;
+                    fieldContents[this.bugTile[0]][this.bugTile[1]] = jQuery.extend(true, {}, fieldContents[XCoord][YCoord]);
                 }
                 break;
             case "incrementer":

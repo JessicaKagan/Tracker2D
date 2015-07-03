@@ -162,7 +162,7 @@ function interact(action, e) {
                                 selectBoxCoords[0] = currentTile[0];
                                 selectBoxCoords[2] = currentTile[1];
                                 selectBoxStage = 2;
-                                alert("Click a second tile to define a selection rectangle.");
+                                alert("Click a second tile (or the same tile) to define a selection rectangle.");
                             } else if(selectBoxStage === 2) {
                                 //A second click gets the second pair. 
                                 selectBoxCoords[1] = currentTile[0];
