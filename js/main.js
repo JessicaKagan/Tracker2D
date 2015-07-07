@@ -89,8 +89,8 @@ for(var i = 0; i < bugImages.length; i++) {
 
 getImages(); //See image_loader.js
 
-//Make the buffer array for Web Audio! If we don't have a sound yet, fill with silence.
-//Apparently this can't handle FLACs, so convert to wavs, mp3s, or Vorbis?
+//This makes the buffer array for Web Audio! If we don't have a sound yet, fill with silence.
+//All sounds are in Vorbis format... except for the silence.
 var soundArray = new Array(soundSet.length);
 for(var i = 0; i < soundSet.length; ++i){
     if(soundSet[i] !== undefined){
