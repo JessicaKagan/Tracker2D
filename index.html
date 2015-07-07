@@ -19,151 +19,152 @@
         </div>
         <div id="box">
             <canvas id="canvas"  width="800px" height="600px">If you can see this, Canvas failed. Try reloading or upgrading your browser.</canvas>
-                <div id="UIShifter" class="UIInputBox">
-                    <p>Pitch</p>
-                    <input type="text" placeholder="Submit with enter" class="UIShifterInput" readonly id="pitchInput" value="36"></input>
-                </div>
-                <div id="UIShifter2" class="UIInputBox">
-                    <p>Instrument</p>
-                    <select id="instrumentInput" class="UIShifterInput" size ="4">
-                    </select>
-                    <!--
-                    <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="instrumentInput" value="1"></input>
-                    -->
-                </div>
-                <div id="UIShifter3" class="UIInputBox">
-                    <p>Audio FX</p>
-                    <select class="UIShifterInput" id="DSPInput"></select>
 
+            <div id="UIShifter" class="UIInputBox">
+                <p>Pitch</p>
+                <input type="text" placeholder="Submit with enter" class="UIShifterInput" readonly id="pitchInput" value="36"></input>
+            </div>
+            <div id="UIShifter2" class="UIInputBox">
+                <p>Instrument</p>
+                <select id="instrumentInput" class="UIShifterInput" size ="4">
+                </select>
+                <!--
+                <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="instrumentInput" value="1"></input>
+                -->
+            </div>
+            <div id="UIShifter3" class="UIInputBox">
+                <p>Audio FX</p>
+                <select class="UIShifterInput" id="DSPInput"></select>
+
+            </div>
+            <div id="UIShifter4" class="UIInputBox">
+                <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="dspValueInput" class="numbersOnly"></input>
+            </div>
+            <div id="UIShifter5" class="UIInputBox">
+                <p>Flow Control</p>
+                <select class="UIShifterInput" id="controlInput"></select>
+            </div>
+            <div id="UIShifter6" class="UIInputBox">
+                <p>Input <br>Volume (<span id="currentInputVolume">60</span>%)</p>
+                <input id="adjustInputVolume" type="range" min="0" max="100" value="60" onchange="updateInputVolume(value)"></input>
+            </div>
+            <!--The user can click these to move bugs in and out of storage.-->
+            <div id="bugStorage">
+                <p>Bug Storage
+                <p class="smallHTMLUIText">Click to store bugs, and again to return them.</p>
+                </p>
+                <div id="bugStorageUnit1" class="bugHoldingPen">
+                    <button type="button" onclick="getBug(0,true)">1</button>
                 </div>
-                <div id="UIShifter4" class="UIInputBox">
-                    <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="dspValueInput"></input>
+                <div id="bugStorageUnit2" class="bugHoldingPen">
+                    <button type="button" onclick="getBug(1,true)">2</button>
                 </div>
-                <div id="UIShifter5" class="UIInputBox">
-                    <p>Flow Control</p>
-                    <select class="UIShifterInput" id="controlInput"></select>
+                <!--These six bugs are in storage by default.-->
+                <div id="bugStorageUnit3" class="bugHoldingPen">
+                    <button type="button" onclick="getBug(2,true)">3</button>
+                </div>                    
+                <div id="bugStorageUnit4" class="bugHoldingPen">
+                    <button type="button" onclick="getBug(3,true)">4</button>
                 </div>
-                <div id="UIShifter6" class="UIInputBox">
-                    <p>Input <br>Volume (<span id="currentInputVolume">60</span>%)</p>
-                    <input id="adjustInputVolume" type="range" min="0" max="100" value="60" onchange="updateInputVolume(value)"></input>
+                <div id="bugStorageUnit5" class="bugHoldingPen">
+                    <button type="button" onclick="getBug(4,true)">5</button>
+                </div>                    
+                <div id="bugStorageUnit6" class="bugHoldingPen">
+                    <button type="button" onclick="getBug(5,true)">6</button>
+                </div>                    
+                <div id="bugStorageUnit7" class="bugHoldingPen">
+                    <button type="button" onclick="getBug(6,true)">7</button>
+                </div>                    
+                <div id="bugStorageUnit8" class="bugHoldingPen">
+                    <button type="button" onclick="getBug(7,true)">8</button>
                 </div>
-                <!--The user can click these to move bugs in and out of storage.-->
-                <div id="bugStorage">
-                    <p>Bug Storage
-                    <p class="smallHTMLUIText">Click to store bugs, and again to return them.</p>
+                <!---->
+            </div>
+            <div id="progressCounter">
+            <p><span id="elapsedTime">0</span> ticks</p>
+            </div>
+            <!--Marketing things, like links to social media.-->
+            <div id="callsToAction">
+                <form action="https://www.facebook.com/Tracker2D" target="_blank" class="promoButton">
+                    <button type="submit" id="facebookButton" value="">
+                        <img src="./images/facebook_icon.png">
+                    </button>
+                </form>
+                </div>
+            </div>
+
+            <!--Now for elements that will pop up and take drawing precedence when the user presses a button.-->
+            <div id="canvasUIElements">
+                <div id="saveExport" class="currentlyHidden">
+                    <p>Copy this save data somewhere safe. <button type="button" class="closeWindow" onClick="hideUI()">Close Window</button></p>
+                    <textarea id="saveText" class="fileIOArea" readonly></textarea>
+                </div>
+
+                <div id="loadExport" class="currentlyHidden">
+                    <button type="button" class="closeWindow" onClick="hideUI()">Close Window</button>
+                    <br><br>
+                    <input type="file" id="loadFileUI" name="tracker2DSave">
+                    <p>Someday, song properties will display here when you load a file. Other status messages would be good, too!</p>
+                </div>
+
+                <!--This will allow you to change tile properties in a more detailed fashion than the leftmenu. Absolute highest priority at the moment.-->
+                <div id="modifyTile" class="editingWindow currentlyHidden">
+                    <p>Maybe this should be merged with queryInfo and the query Tool. Indicate to the user that you have to click on a tile in order to activate this tool!</p> <br>
+                    <p>Currently editing tile: <span id="modifyTileTarget"></span></p> <br>
+                    <p>Pitch (Readonly for now): <input id = "modifyTilePitchSpinner" class = "numbersOnly" readonly type="number" name="pitch" min="0" max="71" value="36"></input></p>
+                    <!--Instrument max needs to be changed programmatically.-->
+                    <p>Instrument: <input id = "modifyTileInstrumentSpinner" class = "numbersOnly" type="number" name="Instrument" min="0" max="175" value="1"></input></p>
+                    <p>Audio FX Value (Not implemented yet): </p>
+                    <p>Flow Control Value: <input id = "modifyTileFlowSpinner" class = "numbersOnly" type="number" name="FlowControl" min="0" max="999" value="0"></input></p>
+                    <p>Points to the tile at these coordinates:<br>
+                        <input id = "modifyPointerTileX" class = "numbersOnly" type="number" name="Instrument" min="0" max="512" value="0">X</input><br>
+                        <input id = "modifyPointerTileY" class = "numbersOnly" type="number" name="Instrument" min="0" max="512" value="0">Y</input>
                     </p>
-                    <div id="bugStorageUnit1" class="bugHoldingPen">
-                        <button type="button" onclick="getBug(0,true)">1</button>
-                    </div>
-                    <div id="bugStorageUnit2" class="bugHoldingPen">
-                        <button type="button" onclick="getBug(1,true)">2</button>
-                    </div>
-                    <!--These six bugs are in storage by default.-->
-                    <div id="bugStorageUnit3" class="bugHoldingPen">
-                        <button type="button" onclick="getBug(2,true)">3</button>
-                    </div>                    
-                    <div id="bugStorageUnit4" class="bugHoldingPen">
-                        <button type="button" onclick="getBug(3,true)">4</button>
-                    </div>
-                    <div id="bugStorageUnit5" class="bugHoldingPen">
-                        <button type="button" onclick="getBug(4,true)">5</button>
-                    </div>                    
-                    <div id="bugStorageUnit6" class="bugHoldingPen">
-                        <button type="button" onclick="getBug(5,true)">6</button>
-                    </div>                    
-                    <div id="bugStorageUnit7" class="bugHoldingPen">
-                        <button type="button" onclick="getBug(6,true)">7</button>
-                    </div>                    
-                    <div id="bugStorageUnit8" class="bugHoldingPen">
-                        <button type="button" onclick="getBug(7,true)">8</button>
-                    </div>
-                    <!---->
+                    <button class="closeButton" onClick="hideUI()">Close Window</button>
                 </div>
-                <div id="progressCounter">
-                <p><span id="elapsedTime">0</span> ticks</p>
+                <!--This will allow you to change song properties.-->
+                <div id="modifySongProperties" class="currentlyHidden editingWindow">
+                    <button class="closeButton" onClick="hideUI()">Close Window</button>
+                    <br>
+                    <p>Tempo: <input id = "tempoSpinner" class="numbersOnly" type="number" name="tempo" min="1" max="999" value="120"></p>
+                    <p>Playfield Size: <input type="number" class="numbersOnly" id="fieldSizeSpinner" min="64" max="512" value="64" step="64"></p>
+                    <p>Song Author: <input type="text" id="authorName"></p>
+                    <p>Song Name: <input type="text" id="songName"></p>
+                    <p>Song Description: <input type="text" id="songDesc"></p>
+                    <p>Paste Style (Move to UI properties):
+                        <button type="button" id="selectPasteStyle" onClick="changePasteStyle()">Change from Overwrite to Mix</button>
+                    </p>
+                    <p>Please note that shrinking the playfield will delete any data outside the new edges, and it might cause crashes. Also, large fields will be EXPONENTIALLY slower than small ones until further optimization is done.</p>
                 </div>
-                <!--Marketing things, like links to social media.-->
-                <div id="callsToAction">
-                    <form action="https://www.facebook.com/Tracker2D" target="_blank" class="promoButton">
-                        <button type="submit" id="facebookButton" value="">
-                            <img src="./images/facebook_icon.png">
-                        </button>
-                    </form>
-                    </div>
+                <div id="queryInfo" class="currentlyHidden">
                 </div>
-
-                <!--Now for elements that will pop up and take drawing precedence when the user presses a button.-->
-                <div id="canvasUIElements">
-                    <div id="saveExport" class="currentlyHidden">
-                        <p>Copy this save data somewhere safe. <button type="button" class="closeWindow" onClick="hideUI()">Close Window</button></p>
-                        <textarea id="saveText" class="fileIOArea" readonly></textarea>
-                    </div>
-
-                    <div id="loadExport" class="currentlyHidden">
-                        <button type="button" class="closeWindow" onClick="hideUI()">Close Window</button>
-                        <br><br>
-                        <input type="file" id="loadFileUI" name="tracker2DSave">
-                        <p>Someday, song properties will display here when you load a file. Other status messages would be good, too!</p>
-                    </div>
-
-                    <!--This will allow you to change tile properties in a more detailed fashion than the leftmenu. Absolute highest priority at the moment.-->
-                    <div id="modifyTile" class="editingWindow currentlyHidden">
-                        <p>Maybe this should be merged with queryInfo and the query Tool. Indicate to the user that you have to click on a tile in order to activate this tool!</p> <br>
-                        <p>Currently editing tile: <span id="modifyTileTarget"></span></p> <br>
-                        <p>Pitch (Readonly for now): <input id = "modifyTilePitchSpinner" class = "numbersOnly" readonly type="number" name="pitch" min="0" max="71" value="36"></input></p>
-                        <!--Instrument max needs to be changed programmatically.-->
-                        <p>Instrument: <input id = "modifyTileInstrumentSpinner" class = "numbersOnly" type="number" name="Instrument" min="0" max="175" value="1"></input></p>
-                        <p>Audio FX Value (Not implemented yet): </p>
-                        <p>Flow Control Value: <input id = "modifyTileFlowSpinner" class = "numbersOnly" type="number" name="FlowControl" min="0" max="999" value="0"></input></p>
-                        <p>Points to the tile at these coordinates:<br>
-                            <input id = "modifyPointerTileX" class = "numbersOnly" type="number" name="Instrument" min="0" max="512" value="0">X</input><br>
-                            <input id = "modifyPointerTileY" class = "numbersOnly" type="number" name="Instrument" min="0" max="512" value="0">Y</input>
-                        </p>
-                        <button class="closeButton" onClick="hideUI()">Close Window</button>
-                    </div>
-                    <!--This will allow you to change song properties.-->
-                    <div id="modifySongProperties" class="currentlyHidden editingWindow">
-                        <button class="closeButton" onClick="hideUI()">Close Window</button>
-                        <br>
-                        <p>Tempo: <input id = "tempoSpinner" class="numbersOnly" type="number" name="tempo" min="1" max="999" value="120"></p>
-                        <p>Playfield Size: <input type="number" class="numbersOnly" id="fieldSizeSpinner" min="64" max="512" value="64" step="64"></p>
-                        <p>Song Author: <input type="text" id="authorName"></p>
-                        <p>Song Name: <input type="text" id="songName"></p>
-                        <p>Song Description: <input type="text" id="songDesc"></p>
-                        <p>Paste Style (Move to UI properties):
-                            <button type="button" id="selectPasteStyle" onClick="changePasteStyle()">Change from Overwrite to Mix</button>
-                        </p>
-                        <p>Please note that shrinking the playfield will delete any data outside the new edges, and it might cause crashes. Also, large fields will be EXPONENTIALLY slower than small ones until further optimization is done.</p>
-                    </div>
-                    <div id="queryInfo" class="currentlyHidden">
-                    </div>
-                    <div id="helpPage" class="currentlyHidden">
-                        <iframe src="manual.html" width="480" height="480"></iframe>
-                    </div>
-                    <!--This will allow you to adjust bug properties! So far, bug volume multipliers and sample cutoff are planned.-->
-                    <div id="modifyBugProperties" class="currentlyHidden editingWindow">
-                        <button class="closeButton" onClick="hideUI()">Close Window</button>
-                        <br><br>
-                        <p>Select a bug to edit with this menu.</p>
-                        <select id="bugSelectionMenu">
-                            <option value="0">1</option>
-                            <option value="1">2</option>
-                            <option value="2">3</option>
-                            <option value="3">4</option>
-                            <option value="4">5</option>
-                            <option value="5">6</option>
-                            <option value="6">7</option>
-                            <option value="7">8</option>
-                        </select>
-                        <br><br>
-                        <div class="darkBackground">
-                            <p>Volume (multiplicative with global volume) (<span id="currentBugVolume">100</span>%)</p>
-                            <div id="bugVolumeFunction">
-                                <input id="bugPropsVolume" type="range" min="0" max="100" value="100" onchange="updateBugVolume(value, 0)"></input>
-                            </div>
+                <div id="helpPage" class="currentlyHidden">
+                    <iframe src="manual.html" width="480" height="480"></iframe>
+                </div>
+                <!--This will allow you to adjust bug properties! So far, bug volume multipliers and sample cutoff are planned.-->
+                <div id="modifyBugProperties" class="currentlyHidden editingWindow">
+                    <button class="closeButton" onClick="hideUI()">Close Window</button>
+                    <br><br>
+                    <p>Select a bug to edit with this menu.</p>
+                    <select id="bugSelectionMenu">
+                        <option value="0">1</option>
+                        <option value="1">2</option>
+                        <option value="2">3</option>
+                        <option value="3">4</option>
+                        <option value="4">5</option>
+                        <option value="5">6</option>
+                        <option value="6">7</option>
+                        <option value="7">8</option>
+                    </select>
+                    <br><br>
+                    <div class="darkBackground">
+                        <p>Volume (multiplicative with global volume) (<span id="currentBugVolume">100</span>%)</p>
+                        <div id="bugVolumeFunction">
+                            <input id="bugPropsVolume" type="range" min="0" max="100" value="100" onchange="updateBugVolume(value, 0)"></input>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </body>
 

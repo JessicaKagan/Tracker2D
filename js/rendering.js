@@ -130,12 +130,13 @@ function paintTile(tileX, tileY, color){
     }
 }
 
-//Paints the minimap in the upper left corner. Should be moved to rendering bloc.
+//Paints the minimap in the upper left corner. 
 function paintMiniMap(){
     var currentMiniMapPixel;
     var miniMapImage = ctx.createImageData(64, 64); //Constant size, with zoom based on file_size.
     var miniMapContents = new Array(64);
     //Make a separate array with our color data and pixels.
+    //This part specifically needs an overhaul to get better results from larger maps.
     for(var i = 0; i < 64; ++i){
         miniMapContents[i] = new Array(64);
         for(var j = 0; j < 64; ++j) {
@@ -146,11 +147,9 @@ function paintMiniMap(){
     }
 
     //miniMapImage is a one-dimensional array that needs to be mapped to a 2D one, and each pixel takes up 4 values (RGBA)
-    //When large fields are implemented, we need to multiply some of these fields by the multipliers.
     for(var i = 0; i < 64; ++i){
         for(var j = 0; j < 64; ++j){
             var miniMapIndex = ((j*64 + i)) * 4; //Multiply or divide by undetermined value
-            //Build our image. For now, we use grey pixels, but we'll add color here when it's in the actual field.
             //Maybe we can use transparencies effectively at higher zoom levels.
             if(miniMapContents[i][j] !== undefined) {
                 miniMapImage.data[miniMapIndex + 0] = miniMapContents[i][j].r;
@@ -168,7 +167,7 @@ function paintMiniMap(){
     //Paint the image once it's complete.
     ctx.putImageData(miniMapImage, 8, 8);
     //Draw an unfilled rectangle over the player's view.
-    //This will make it more apparent that there is a minimap and that the player can use it to look around.
+    //This makes it more apparent that there is a minimap and that the player can use it to look around.
     ctx.beginPath();
     ctx.lineWidth = "1";
     ctx.rect(8 + (fieldOffset[0]/PLAYFIELD_SIZE), 8 + (fieldOffset[1]/PLAYFIELD_SIZE),

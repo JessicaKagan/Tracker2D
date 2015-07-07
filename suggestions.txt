@@ -3,17 +3,18 @@ Suggestions people have made:
 - Progress display (A naive one that just displays the amount of updates since a reset is implemented, but calculating the length of the song in advance could be difficult and hard to make performant)
 - Overall UI simplification and clarification (Potentially hard, but always being done.)
 
+
+
 Things I know I want to do (which could get very long):
 - Add Web MIDI API support to allow instrument input
-
 - Zoom feature (Which might need better graphics to really shine and will be complicated to implement.)
 - "Find Bug" feature that centers the camera on a bug (Made less useful by minimap finder.)
 - Performance optimization (Duh.)
-
 - Functions to rotate and flip a selection (flips implemented, 90 degree rotation still necessary; latter is partially done but not quite there yet.)
 - Rotate turn tiles with the rotate selection tool (make this function optional), or perhaps add a tool to increment through flow control options.
 - Randomized trivia for the loadscreens.
 - When the pointer setting tool is selected, apply an overlay to pointee tiles when hovering over a tile.
+- "Megamap" that displays a 64*64 to 512*512 pixel image showing the entire field in miniature.
 
 
 
@@ -21,7 +22,7 @@ Things I might do but am not sure about:
 - Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior. (Up to 36 checks per second? Divergent series.)
 - Make selection flip and rotate tools change the direction of turnsignals.
 - A basic scripting language to allow for arbitrarily complicated conditional code and such on the field (potentially very difficult and time consuming, besides ballooning file sizes). 
-- Antialiasing for large file maps.
+- Antialiasing for large file minimaps.
 - Make bugs in storage translucent instead of completely invisible. Depends on what users ask for.
 - Flow control feature to move the viewing field to the pointers.
 - Show the selected tilebuffer on the minimap as an overlay (which might be difficult or awkward to do as image data).
