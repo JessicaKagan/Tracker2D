@@ -1,6 +1,6 @@
 var drawingStatus, miniMapScrollingStatus, currentTile, pointeeX, pointeeY;
+
 //This is our mouse listeners go!
-//Needs rewriting in order to take advantage of the new event listeners.
 function interact(action, e) {
     //console.log(e);
     //queryInfo's hide routine probably needs to be merged with the rest of hideUI().
@@ -9,7 +9,6 @@ function interact(action, e) {
     var cursorX = e.pageX - $('#canvas').offset().left;
     var cursorY = e.pageY - $('#canvas').offset().top;
     //Displays debug messages for now based on where you click.
-    //When we make more, we'll need some sort of 2D switch statement, because this is just getting ugly.
     if(cursorX >= 8 && cursorX <= 72 && cursorY >=8 && cursorY <= 72) {
             //console.log("MINIMAP");
             setMiniMapScrollingStatus();
@@ -343,9 +342,9 @@ function interact(action, e) {
                         break;
                 }
             }
-        //console.log(fieldContents[currentTile[0]][currentTile[1]]);
     }
     //Used for the pen and eraser tools and anything with a standard draw mechanism.
+    //These need refining to make the buttons less 'sticky'.
     function setDrawingStatus(){
         if(action === 'mousedown') {
             drawingStatus = true;

@@ -453,64 +453,13 @@ function getBug(bugVal, edit){
     }
     //Local functions that should only be called within getBug.
     function moveToStorage(bugVal){
-        switch(bugVal) {
-            case 0:
-                $('#bugStorageUnit1').html(getBugHTML);
-                break;
-            case 1:
-                $('#bugStorageUnit2').html(getBugHTML);
-                break;            
-            case 2:
-                $('#bugStorageUnit3').html(getBugHTML);
-                break;
-            case 3:
-                $('#bugStorageUnit4').html(getBugHTML);
-                break;            
-            case 4:
-                $('#bugStorageUnit5').html(getBugHTML);
-                break;
-            case 5:
-                $('#bugStorageUnit6').html(getBugHTML);
-                break;            
-            case 6:
-                $('#bugStorageUnit7').html(getBugHTML);
-                break;
-            case 7:
-                $('#bugStorageUnit8').html(getBugHTML);
-                break;
-            default:
-                break;
-        }
+        var storageClass = "#bugStorageUnit" + (bugVal + 1);
+        $(storageClass).html(getBugHTML);
     }
+    
     function moveFromStorage(bugVal){
-        switch(bugVal) {
-            case 0:
-                $('#bugStorageUnit1').html('<button type="button" onclick="getBug(0,true)">1</button>');
-                break;
-            case 1:
-                $('#bugStorageUnit2').html('<button type="button" onclick="getBug(1,true)">2</button>');
-                break;
-            case 2:
-                $('#bugStorageUnit3').html('<button type="button" onclick="getBug(2,true)">3</button>');
-                break;
-            case 3:
-                $('#bugStorageUnit4').html('<button type="button" onclick="getBug(3,true)">4</button>');
-                break;            
-            case 4:
-                $('#bugStorageUnit5').html('<button type="button" onclick="getBug(4,true)">5</button>');
-                break;
-            case 5:
-                $('#bugStorageUnit6').html('<button type="button" onclick="getBug(5,true)">6</button>');
-                break;            
-            case 6:
-                $('#bugStorageUnit7').html('<button type="button" onclick="getBug(6,true)">7</button>');
-                break;            
-            case 7:
-                $('#bugStorageUnit8').html('<button type="button" onclick="getBug(7,true)">8</button>');
-                break;
-            default:
-                break;
-        }
+        var storageClass = "#bugStorageUnit" + (bugVal + 1);
+        $(storageClass).html('<button type="button" onclick="getBug('+ bugVal + ',true)">' + (bugVal + 1) +'</button>');
     }
 }
 
