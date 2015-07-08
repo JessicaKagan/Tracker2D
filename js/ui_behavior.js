@@ -229,7 +229,6 @@ function saveFile() {
     //console.log(tileBuffer.length);
     //The very first line contains the amount of tiles.
     saveContent += FILE_SIZE[0] + "," + FILE_SIZE[1] + '\n';
-
     //Dump all tiles to a string. Parses top to bottom before moving left to right.
     for(var i = 0; i < defaultBuffer.array.length; ++i){
         for(var j = 0; j < defaultBuffer.array[i].length; ++j){
@@ -240,17 +239,15 @@ function saveFile() {
         }
 
     }
-    //Dump the bug properties! Extends the file by 32 lines.
+    //Dump the bug properties! Extends the file by 40 (8 * the amount of bug properties) lines.
     for(var i = 0; i < storedBugPositions.length; ++i) {
         saveContent += storedBugPositions[i] + '\n';
     }
 
     //Dump song properties next.
     saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n' + songTitle;
-    //console.log(saveContent);
     var encodeToFile = new Blob([saveContent]); 
     saveAs(encodeToFile, songTitle + ".txt");
-    //It will be some time before we can actually get this to a user.
 }
 
 function loadFile(evt) {
@@ -366,77 +363,23 @@ function hideUI(){
     } 
 }
 
-//checkBug and getBug need to be merged properly.
+//checkBug and getBug need to be merged properly?
 //This one just checks the status of the bug without altering it.
 function checkBug(bugVal){
     var getBugHTML = "";
-    if(bugList[bugVal].inStorage === false && bugList[bugVal] !== undefined) { 
-        switch(bugVal) {
-            case 0:
-                $('#bugStorageUnit1').html('<button type="button" onclick="getBug(0)">1</button>');
-                break;
-            case 1:
-                $('#bugStorageUnit2').html('<button type="button" onclick="getBug(1)">2</button>');
-                break;
-            case 2:
-                $('#bugStorageUnit3').html('<button type="button" onclick="getBug(2)">3</button>');
-                break;
-            case 3:
-                $('#bugStorageUnit4').html('<button type="button" onclick="getBug(3)">4</button>');
-                break;            
-            case 4:
-                $('#bugStorageUnit5').html('<button type="button" onclick="getBug(4)">5</button>');
-                break;
-            case 5:
-                $('#bugStorageUnit6').html('<button type="button" onclick="getBug(5)">6</button>');
-                break;            
-            case 6:
-                $('#bugStorageUnit7').html('<button type="button" onclick="getBug(6)">7</button>');
-                break;            
-            case 7:
-                $('#bugStorageUnit8').html('<button type="button" onclick="getBug(7)">8</button>');
-                break;
-            default:
-                break;
-        }
-
+    var storageClass = "#bugStorageUnit" + (bugVal + 1);
+    if(bugList[bugVal].inStorage === false && bugList[bugVal] !== undefined) {
+        $(storageClass).html('<button type="button" onclick="getBug('+ bugVal + ',true)">' + (bugVal + 1) +'</button>');
     } else if(bugList[bugVal].inStorage === true) {
         getBugHTML = '<button type="button" onclick="getBug(' + bugVal + ')">' + bugList[bugVal].image.outerHTML + '</button>';
-        //console.log(getBugHTML);
-        switch(bugVal) {
-            case 0:
-                $('#bugStorageUnit1').html(getBugHTML);
-                break;
-            case 1:
-                $('#bugStorageUnit2').html(getBugHTML);
-                break;            
-            case 2:
-                $('#bugStorageUnit3').html(getBugHTML);
-                break;
-            case 3:
-                $('#bugStorageUnit4').html(getBugHTML);
-                break;            
-            case 4:
-                $('#bugStorageUnit5').html(getBugHTML);
-                break;
-            case 5:
-                $('#bugStorageUnit6').html(getBugHTML);
-                break;            
-            case 6:
-                $('#bugStorageUnit7').html(getBugHTML);
-                break;
-            case 7:
-                $('#bugStorageUnit8').html(getBugHTML);
-                break;
-            default:
-                break;
-        }
+        $(storageClass).html(getBugHTML);
     }
 }
 
 function getBug(bugVal, edit){
     if(edit !== true && edit !== false){ edit = false; } //Error trapping.
     var getBugHTML = '<button type="button" onclick="getBug(' + bugVal + ',true)">' + bugList[bugVal].image.outerHTML + '</button>';
+    var storageClass = "#bugStorageUnit" + (bugVal + 1);
     if(bugList[bugVal].inStorage === false && bugList[bugVal] !== undefined) {
         if(edit === true){
             bugList[bugVal].inStorage = true;
@@ -449,16 +392,15 @@ function getBug(bugVal, edit){
         if(edit === true){
             bugList[bugVal].inStorage = false;
             moveFromStorage(bugVal);
-        } else if (edit === false) { moveToStorage(bugVal); } //Something's buggy here.
+        } else if (edit === false) { moveToStorage(bugVal); }
     }
     //Local functions that should only be called within getBug.
+    //These don't need to be functions, but it seems to improve readability.
     function moveToStorage(bugVal){
-        var storageClass = "#bugStorageUnit" + (bugVal + 1);
         $(storageClass).html(getBugHTML);
     }
-    
+
     function moveFromStorage(bugVal){
-        var storageClass = "#bugStorageUnit" + (bugVal + 1);
         $(storageClass).html('<button type="button" onclick="getBug('+ bugVal + ',true)">' + (bugVal + 1) +'</button>');
     }
 }
