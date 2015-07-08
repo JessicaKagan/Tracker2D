@@ -187,9 +187,9 @@ function respondToQuery(X, Y) {
         else { queryResponse += "Does not reference a pitch."; }
         queryResponse += "<p> Instrument: " +  soundSet[fieldContents[X][Y].instrument][0] + "</p>";
         queryResponse += "<p> Audio Effect: " +  fieldContents[X][Y].dspEffect + "</p>";
-        queryResponse += "<p> Audio Effect Parameter: " +  fieldContents[X][Y].dspValue + "</p>";        
+        queryResponse += "<p> Audio Effect Value: " +  fieldContents[X][Y].dspValue + "</p>";        
         queryResponse += "<p> Flow Effect: " +  fieldContents[X][Y].flowEffect + "</p>";
-        queryResponse += "<p> Flow Effect Parameter: " +  fieldContents[X][Y].flowValue + "</p>"; //Uncomment when relevant.
+        queryResponse += "<p> Flow Effect Value: " +  fieldContents[X][Y].flowValue + "</p>"; //Uncomment when relevant.
         queryResponse += "<p> Volume: " + (fieldContents[X][Y].volume * 100) + "%</p>";
         queryResponse += "<p> Points to this tile: " + fieldContents[X][Y].xPointer + " , " + fieldContents[X][Y].yPointer + "</p>";
     } else queryResponse += "No data in this tile.";
@@ -204,7 +204,7 @@ function respondToQuery(X, Y) {
             if(bugList[i].inStorage === true) {
                 queryResponse += "<p>This bug is in storage.</p>";
             }
-            queryResponse += "<p>Plays notes at " + bugList[i].volume + "% of their volume. </p>";
+            queryResponse += "<p>This bug plays notes at " + bugList[i].volume + "% of their volume. </p>";
             break;
         }
     }
@@ -470,13 +470,15 @@ function loadIfReady(){
 
 function estimateSongLength(){
     console.log("Not implemented yet");
-    //This should only attempt to estimate the song's length if there are definite end conditions.
-    //For now, this means either a freeze or revert tile is on the field.
-    //Two ways to go about this that might be combined:
-    //1. Simulate X moves into the future without actually playing their sounds.
-    //2. Set the 'maximum' length when a bug moves over such a tile.
-    //Self-modifying tracks with complicated counters and teleporters and such aren't going to be easy to measure.
-    //This might get into the halting problem, you know?
+    /*
+    This should only attempt to estimate the song's length if there are definite end conditions.
+    For now, this means either a freeze or revert tile is on the field.
+    Two ways to go about this that might be combined:
+    1. Simulate X moves into the future without actually playing their sounds.
+    2. Set the 'maximum' length when a bug moves over such a tile.
+    Self-modifying tracks with complicated counters and teleporters and such aren't going to be easy to measure.
+    This might get into the halting problem, you know?
+    */
 }
 
 //Still kind of janky, especially when there's stuff in a file.
