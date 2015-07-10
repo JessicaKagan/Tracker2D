@@ -7,6 +7,7 @@ var LEFT_VERTICAL_BAR = [0,0,80,800];
 var BOTTOM_HORIZONTAL_BAR = [80,552,720,48];
 var FIELD_PIXELS = [80,0,800,552]; //This is the area not covered by the UI; x-coords 80-> 800, y-coords 0->552
 
+//A series of button coordinates. The size might be redundant.
 var PAUSE_PLAY_BUTTON_AREA = [80,576,24,24];
 var PENCIL_BUTTON_AREA = [104,576,24,24];
 var ERASER_BUTTON_AREA = [128,576,24,24];
@@ -26,6 +27,8 @@ var TURNBUG_BUTTON_AREA = [248,576,24,24];
 
 var EYEDROPPER_BUTTON_AREA = [272,576,24,24];
 var ADJUSTPOINTER_BUTTON_AREA = [296,576,24,24];
+var ARROWPEN_BUTTON_AREA = [320,576,24,24];
+
 
 var HELP_BUTTON_AREA = [560,576,24,24];
 
@@ -68,7 +71,7 @@ var currentFlowControl = "none";
 
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(26);
+var UIImages = new Array(27);
 var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.

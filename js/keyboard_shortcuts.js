@@ -6,6 +6,7 @@ function hookKeyboard(){
         var keyboardInput = (e.charCode) ? e.charCode : ((e.which) ? e.which : e.keyCode);
         console.log(keyboardInput);
         var pressedNoteKey = true;
+        var pressedArrowKey = false;
         switch(keyboardInput){
             //Pitch adjustment. This should perhaps be disabled when a window requiring text input is open.
             //It might be good to play the current instrument at the selected pitch when the user triggers hotkeys.
@@ -24,7 +25,7 @@ function hookKeyboard(){
                 }
                 $('#pitchInput').val(currentPitch);
                 break;
-
+            //QWERTY row - 12 tone scale
             case 113:
                 scaleNote = 0;
                 break;
@@ -61,10 +62,33 @@ function hookKeyboard(){
             case 93:
                 scaleNote = 11;
                 break;
+            //2, 4, 6, 8 (arrow keys on the numpad)
+            //For sanity, you can't move off the field, although you can move out of the viewing window.
+            case 50: //Down
+                pressedArrowKey = true;
+                pressedNoteKey = false; 
+                if((currentArrowPenTile[1] + 1) < FILE_SIZE[1] && selectedTool === "arrowPen") {currentArrowPenTile[1] += 1;}
+                break;            
+            case 52: //Left
+                pressedArrowKey = true;
+                pressedNoteKey = false;
+                if(currentArrowPenTile[0] > 0 && selectedTool === "arrowPen") {currentArrowPenTile[0] -= 1;}
+                break;            
+            case 54: //Right
+                pressedArrowKey = true;
+                pressedNoteKey = false;
+                if((currentArrowPenTile[0] + 1) < FILE_SIZE[0] && selectedTool === "arrowPen") {currentArrowPenTile[0] += 1;} 
+                break;           
+            case 56: //Up
+                pressedArrowKey = true;
+                pressedNoteKey = false; 
+                if(currentArrowPenTile[1] > 0 && selectedTool === "arrowPen") {currentArrowPenTile[1] -= 1;}
+                break;
             default:
                 pressedNoteKey = false; 
                 break;   
         }
+        //If the user pressed a note key, change the current pitch.
         if(keyboardInput !== 61 && keyboardInput !== 45) { 
             currentPitch = currentOctave*12 + scaleNote; 
             $('#pitchInput').val(currentPitch);
@@ -73,6 +97,10 @@ function hookKeyboard(){
             if(pressedNoteKey === true && $("#modifySongProperties").hasClass("currentlyHidden") === true){
                 playSound(soundFont[currentInstrument],pitchTable[currentPitch],currentDSP,currentDSPValue,currentVolume);
             };
+        }
+        //If the user pressed an arrow key while using the arrow pen, paint in the direction they pressed.
+        if(pressedArrowKey === true && selectedTool === "arrowPen"){
+            fieldContents[currentArrowPenTile[0]][currentArrowPenTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, currentVolume, currentDSPValue, 0);
         }
     });
 

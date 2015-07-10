@@ -13,7 +13,7 @@ var pasteStyle = 1 //1 is an overwrite paste, 2 is mixpaste.
 //singleStep executes a single update and then pauses.
 //Labels for all tools that require clicking on the field. Not in use yet.
 
-var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','turnBug','singleStep','modifyTile']; 
+var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','turnBug','singleStep','modifyTile','arrowPen']; 
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var saveContent; //A string representing the contents of the map.
 var selectBoxCoords = new Array(4); //Stores two coordinate pairs.

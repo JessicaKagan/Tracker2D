@@ -1,4 +1,5 @@
 var drawingStatus, miniMapScrollingStatus, currentTile, pointeeX, pointeeY;
+var currentArrowPenTile = [0,0];
 
 //This is our mouse listeners go!
 function interact(action, e) {
@@ -75,6 +76,10 @@ function interact(action, e) {
             console.log("ADJUSTPOINTER_BUTTON_AREA");
             selectedTool = "adjustPointer";
             adjustPointerStage = 1;
+        } else if(cursorY >= 576 && cursorX >= 320 && cursorX < 344) {
+            console.log("ARROWPEN_BUTTON_AREA");
+            selectedTool = "arrowPen";
+            alert("To use this tool, press the numpad arrow keys (2/4/6/8), and click where you want to start. Each keypress will paint one tile in the relevant direction. Rephrase this.")
         } else if(cursorY >= 576 && cursorX >= 560 && cursorX < 588) {
             console.log("HELP_BUTTON_AREA");
             hideUI();
@@ -336,6 +341,13 @@ function interact(action, e) {
                                 fieldContents[pointeeX][pointeeY].yPointer = pointToY;
                                 adjustPointerStage = 1;
                             } else console.log("adjustPointer() in interact() failed.");
+                        }
+                        break;
+                    //This simply moves the arrowPen location around.
+                    case "arrowPen":
+                        if(action === "click") {
+                            currentArrowPenTile = currentTile;
+                            console.log(currentArrowPenTile);
                         }
                         break;
                     default:

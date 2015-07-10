@@ -54,6 +54,18 @@ function render(){
                     }
                 }
             }
+            //A similar overlay (slightly different color) for the arrowpen tool.
+            if(selectedTool === 'arrowPen' && currentArrowPenTile !== undefined){
+                //This conditional isn't working yet.
+                if(i + fieldOffset[0] === currentArrowPenTile[0] && j + fieldOffset[1] === currentArrowPenTile[1]){
+                    ctx.fillStyle = 'rgba(255,255,0,0.3)';
+                    ctx.fillRect(FIELD_PIXELS[0] + (TILE_SIZE*i), 
+                                 FIELD_PIXELS[1] + (TILE_SIZE*j),
+                                (TILE_SIZE*1), 
+                                (TILE_SIZE*1));
+                    
+                }
+            }
         }
     }
     //3. Bugs and actual bug overlays.
@@ -244,6 +256,7 @@ var drawButtons = function() {
     //ctx.drawImage(UIImages[22],ROTATERIGHT_BUTTON_AREA[0],ROTATERIGHT_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[24],BUGPROPS_BUTTON_AREA[0],BUGPROPS_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[25],REVERT_BUTTON_AREA[0],REVERT_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[26],ARROWPEN_BUTTON_AREA[0],ARROWPEN_BUTTON_AREA[1]);
 
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 
@@ -286,6 +299,9 @@ var drawSelectedToolOverlay = function() {
                         break;
                     case "adjustPointer":
                     ctx.fillRect(ADJUSTPOINTER_BUTTON_AREA[0], ADJUSTPOINTER_BUTTON_AREA[1],ADJUSTPOINTER_BUTTON_AREA[2],ADJUSTPOINTER_BUTTON_AREA[3]);
+                        break;                    
+                    case "arrowPen":
+                    ctx.fillRect(ARROWPEN_BUTTON_AREA[0], ARROWPEN_BUTTON_AREA[1],ARROWPEN_BUTTON_AREA[2],ARROWPEN_BUTTON_AREA[3]);
                         break;
         default:
             break;
