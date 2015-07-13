@@ -200,7 +200,7 @@ function init() {
             bugHoverState = true;
             hoverBug = 0;
         }, 
-        function() {
+        function(){
             bugHoverState = false;
             hoverBug = -1;
         }
@@ -210,7 +210,7 @@ function init() {
             bugHoverState = true;
             hoverBug = 1;
         }, 
-        function() {
+        function(){
             bugHoverState = false;
             hoverBug = -1;
         }
@@ -220,7 +220,7 @@ function init() {
             bugHoverState = true;
             hoverBug = 2;
         }, 
-        function() {
+        function(){
             bugHoverState = false;
             hoverBug = -1;
         }
@@ -230,7 +230,7 @@ function init() {
             bugHoverState = true;
             hoverBug = 3;
         }, 
-        function() {
+        function(){
             bugHoverState = false;
             hoverBug = -1;
         }
@@ -240,7 +240,7 @@ function init() {
             bugHoverState = true;
             hoverBug = 4;
         }, 
-        function() {
+        function(){
             bugHoverState = false;
             hoverBug = -1;
         }
@@ -250,7 +250,7 @@ function init() {
             bugHoverState = true;
             hoverBug = 5;
         }, 
-        function() {
+        function(){
             bugHoverState = false;
             hoverBug = -1;
         }
@@ -260,7 +260,7 @@ function init() {
             bugHoverState = true;
             hoverBug = 6;
         }, 
-        function() {
+        function(){
             bugHoverState = false;
             hoverBug = -1;
         }
@@ -270,9 +270,28 @@ function init() {
             bugHoverState = true;
             hoverBug = 7;
         }, 
-        function() {
+        function(){
             bugHoverState = false;
             hoverBug = -1;
+        }
+    );
+
+    //Add an event listener for the instrument bank to widen it when the user rolls over it.
+    //This should make instrument names more legible.
+    $("#instrumentInput").hover(
+        function(){
+            $("#instrumentInput").animate({
+                width: "+=96px",
+            }, 150, function(){
+                //Animation complete
+            });
+        }, 
+        function(){
+            $("#instrumentInput").animate({
+                width: "-=96px",
+            }, 150, function(){
+                //Animation complete
+            });
         }
     );
 

@@ -15,8 +15,9 @@ Things I know I want to do (which could get very long):
 - Randomized trivia for the loadscreens.
 - When the pointer setting tool is selected, apply an overlay to pointee tiles when hovering over a tile.
 - "Megamap" that displays a 64*64 to 512*512 pixel image showing the entire field in miniature.
-- "Direction paint" - use the arrow keys to move a cursor around and draw instructions.
 - Make the instrument menu grow temporarily larger on mouseover?
+- Improve the arrow pen - have a function to temporarily stop painting, etc.
+- Add an "amount of revisions" property to savefiles; increment on saves and add to the file name by default.
 
 
 
