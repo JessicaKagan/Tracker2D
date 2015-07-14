@@ -84,6 +84,16 @@ function hookKeyboard(){
                 pressedNoteKey = false; 
                 if(currentArrowPenTile[1] > 0 && selectedTool === "arrowPen") {currentArrowPenTile[1] -= 1;}
                 break;
+            case 53: //Toggle actual drawing
+                pressedArrowKey = true;
+                pressedNoteKey = false;
+                if(arrowPenDrawingActivated === false && selectedTool === "arrowPen"){
+                    arrowPenDrawingActivated = true;
+                } else if(arrowPenDrawingActivated === true && selectedTool === "arrowPen") {
+                    arrowPenDrawingActivated = false;
+                }
+                console.log(arrowPenDrawingActivated);
+                break;
             default:
                 pressedNoteKey = false; 
                 break;   
@@ -99,7 +109,7 @@ function hookKeyboard(){
             };
         }
         //If the user pressed an arrow key while using the arrow pen, paint in the direction they pressed.
-        if(pressedArrowKey === true && selectedTool === "arrowPen"){
+        if(pressedArrowKey === true && selectedTool === "arrowPen" && arrowPenDrawingActivated === true){
             fieldContents[currentArrowPenTile[0]][currentArrowPenTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, currentVolume, currentDSPValue, 0);
         }
     });

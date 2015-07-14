@@ -15,7 +15,7 @@ Things I know I want to do (which could get very long):
 - Randomized trivia for the loadscreens.
 - When the pointer setting tool is selected, apply an overlay to pointee tiles when hovering over a tile.
 - "Megamap" that displays a 64*64 to 512*512 pixel image showing the entire field in miniature.
-- Make the instrument menu grow temporarily larger on mouseover?
+
 - Improve the arrow pen - have a function to temporarily stop painting, etc.
 - Add an "amount of revisions" property to savefiles; increment on saves and add to the file name by default.
 
@@ -35,10 +35,11 @@ Suggestions that have already been implemented:
 - Actually show the tile buffer (as filled up by the select tool) somehow, like a translucent overlay
 - Indicate current part of the window on the minimap
 - Scroll bars on the instrument list
-- Implement the promised upgrades to field size (Improved minimap as well, still somewhat buggy, but can be saved, too!)
+- Implement the promised upgrades to field size (Always in need of tweaking)
 - Implement an eyedropper tool (Might need some bugfixes and does need some UI tweaking)
 - Fill up the soundset and keep sample quality as high as possible within a 20 MB limit (GM bank implemented, plenty of room for more sounds, though)
 - Tool to adjust tile pointers via point and click (which would be a a lot easier than adjusting by menus.)
 - Indicate currently selected tool with an overlay
 - Indicate the position of bugs on the minimap, somehow (A small dot shows up when you mouse over the storage slots)
 - Apply click and drag to the minimap.
+- Make the instrument menu grow temporarily larger on mouseover

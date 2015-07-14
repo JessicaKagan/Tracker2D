@@ -1,5 +1,6 @@
 var drawingStatus, miniMapScrollingStatus, currentTile, pointeeX, pointeeY;
 var currentArrowPenTile = [0,0];
+var arrowPenDrawingActivated = true;
 
 //This is our mouse listeners go!
 function interact(action, e) {
