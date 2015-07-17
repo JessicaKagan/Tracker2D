@@ -43,9 +43,9 @@
         </ul>
         </p>
         <hr>
-        <h2>Effect Reference</h2>
-        <p>Tracker2D gives you a couple ways to adjust the sound and playback order of tiles. Expand and rephrase this.</p>
-        <hr>
+            <h2>Effect Reference</h2>
+            <p>Tracker2D gives you a couple ways to adjust the sound and playback order of tiles. Expand and rephrase this.</p>
+            <hr>
         <h2>Audio Effects</h2>
             <p>Keep in mind that it is currently only possible to apply one audio effect to a tile at a time. This may be changed in the future, although it would require significant revision to the audio playback engine.</p>
             <ul>
@@ -56,8 +56,56 @@
             <li><strong>Start From Later</strong>: Causes a sample to play from its middle. Like "Stop Playback", takes values between 0 and 100.</li>
             </ul>
         <hr>
-        <h2>Flow Control Effects</h2>
-
+        <div class = "alternateBackground">
+            <h2>Flow Control Effects</h2>
+            <p>These effects do not change the sound of a tile, but they change how bugs interact with the field. Many of them rely on a tile's "pointer" value, which indicates another tile on the map that they point to.</p>
+            <ul>
+                <li>
+                    <div class="flowControlImages">
+                        <img src="images/north_arrow_overlay.png" alt="Turn North">
+                        <img src="images/east_arrow_overlay.png" alt="Turn East">
+                        <img src="images/south_arrow_overlay.png" alt="Turn South">
+                        <img src="images/west_arrow_overlay.png" alt="Turn West">
+                    </div>
+                    <strong>Turn Signals</strong>: When a bug passes over this tile, it will turn in the direction indicated. 
+                </li>
+                <br>
+                <li>
+                    <div class="flowControlImages">
+                    </div>
+                    <strong>Counter</strong>: When a bug passes over this tile, the counter's value will decrease by 1. When the counter reaches 0, the tile will turn into the tile it is currently pointing to.
+                </li>
+                <br>
+                <li>
+                    <div class="flowControlImages">
+                        <img src="images/incrementer_overlay.png" alt="Incrementer">
+                    </div>
+                    <strong>Incrementer</strong>: When a bug passes over this tile, the value of the counter in the tile that this tile is pointing to will increase by 1.
+                </li>
+                <br>
+                <li>
+                    <div class="flowControlImages">
+                        <img src="images/teleporter_overlay.png" alt="Teleporter">
+                    </div>
+                    <strong>Teleport</strong>: When a bug passes over this tile, they will be moved (after playing a sound) to the tile that the teleporter tile points to.
+                </li>
+                <br>
+                <li>
+                    <div class="flowControlImages">
+                        <img src="images/freeze_overlay.png" alt="Freeze">
+                    </div>
+                    <strong>Freeze</strong>: When a bug passes over this tile, all playback pauses. This tile is best used to end a song, and to allow a user to manually restart by restoring bug positions if they so desire.
+                </li>
+                <br>
+                <li>
+                    <div class="flowControlImages">
+                        <img src="images/restore_bugs_button.png" alt="Revert Tile">
+                    </div>
+                    <strong>Revert</strong>: When a bug passes over this tile, all bugs are moved back to their initial positions stored in memory (which is updated whenever the user presses the "Store Bug Positions" button, whenever they save a file, or whenever they load a file). Playback does not pause. This is best used for looping music.
+                </li>
+            </ul>
+        </div>
         <hr>
+        <p>More text and better formatting coming eventually.</p>
     </body>
 </html>

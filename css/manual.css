@@ -1,4 +1,26 @@
 body {
-    background-color: #DEDEDE;
+    background-color: #DDDDEE;
     font-family: Tahoma, sans-serif;
+    color: #111111;
+}
+
+.flowControlImages {
+    /*background-color: #444444;*/
+    text-align: center;
+    max-width: 160px;
+    display: flex;
+}
+
+.alternateBackground {
+    background-color: #333333;
+    color: #DDDDEE;
+}
+
+h2, hr, ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+ul {
+    list-style-type: square;
 }
