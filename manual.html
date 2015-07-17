@@ -17,24 +17,42 @@
         </ol>
         <h2>UI FUNCTIONS</h2>
         <p>We need text here!</p>
+
         <hr>
+
         <h2>The Field</h2>
         <p>This is literally where the music happens. The way the UI is currently set up, you can see a 30*23 'slice' of the entire field (although this may change if we implement a zoom feature).</p><br>
+
         <hr>
+
         <h2>The Left Bar</h2>
         <p>This uses HTML5-based controls. From top to bottom, the following functions are available: <br>
         <strong>Minimap</strong>: This shows a small view of the entire field. Clicking anywhere on it will move your view to a different part of the field. <br>
+        <strong>Pitch Indicator</strong>: This indicates your current pitch (we use mathematics to convert it into an actual pitch in hertz). When you press number keys and/or +/-, it changes. You'll also hear your instrument play.<br>
+        <strong>Instrument Menu</strong>: This allows you to select which instrument is applied to the tile you're painting.<br>
+        <strong>Audio FX Menu</strong>: Use this dropdown menu to select an audio effect to apply to your current tile. You will also need to input a value into the text field below it.<br>
+        <strong>Flow Control Menu</strong>: Use this dropdown menu to select a flow control effect to apply to your current tile.<br>
+        <strong>Volume Slider</strong>: Click and drag this slider to set the volume attribute for a tile.<br>
+        <strong>Bug Storage</strong>: This shows the status of Tracker2D's 8 bugs (analogous to audio channels). By hovering over one of the boxes, you can see on the minimap the location of the corresponding bug. The other major functionality of this (click a box to toggle whether a bug is on the field or in storage) is mentioned in the UI.<br>
+        <strong>Tick Counter</strong>: This shows how many units of time/tempo have passed since the last reset.<br>
+        <strong>Facebook</strong>: This takes you to Tracker2D's Facebook page, which opens in a new window. Pretty basic.<br>
+
+
         (more)
         </p>
+
         <hr>
+
         <h2>The Bottom Bar</h2>  
         <p> This uses jQuery controls and HTML5 Canvas for icons. From left to right: <br>
         <strong>Play/Pause Button</strong>: Changes state when clicked. Clicking it when it shows the play icon will the bugs to move. Clicking it when it shows the pause icon will cause the bugs to stop moving. Please note that attempting to use many other tools will pause playback.<br>
         <strong>Pen</strong>: Click on a tile in the field, and it will put the musical instructions you've selected in the left bar onto that tile.<br>
         <strong>Eraser</strong>: The eraser removes musical instructions from tiles that you click on.<br>
         (more)
-        </p>    
+        </p>  
+
         <hr>
+
         <h2>Tips and Tricks</h2>    
         <p>
         <ul>
