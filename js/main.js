@@ -281,14 +281,14 @@ function init() {
     $("#instrumentInput").hover(
         function(){
             $("#instrumentInput").animate({
-                width: "+=96px",
+                width: "176px",
             }, 150, function(){
                 //Animation complete
             });
         }, 
         function(){
             $("#instrumentInput").animate({
-                width: "-=96px",
+                width: "80px",
             }, 150, function(){
                 //Animation complete
             });
