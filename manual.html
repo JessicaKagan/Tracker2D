@@ -42,5 +42,22 @@
             <li>Even after fields larger than 64*64 are implemented, Tracker2D will probably still be pretty small. Experiment with the flow control to see how efficiently you can utilize space!</li> 
         </ul>
         </p>
+        <hr>
+        <h2>Effect Reference</h2>
+        <p>Tracker2D gives you a couple ways to adjust the sound and playback order of tiles. Expand and rephrase this.</p>
+        <hr>
+        <h2>Audio Effects</h2>
+            <p>Keep in mind that it is currently only possible to apply one audio effect to a tile at a time. This may be changed in the future, although it would require significant revision to the audio playback engine.</p>
+            <ul>
+            <li><strong>Bend Pitch</strong>: Multiplies the pitch of a note by a value between 0 and 16. Useful for pushing an instrument beyond its 6 octave range, transposing without changing notes, or creating microtonal music.</li>
+            <li><strong>Lowpass</strong>: Removes frequencies above the input value from a sound. Takes values between 0 and 20,000. This filter is applied after any pitch shifting.</li>
+            <li><strong>Highpass</strong>: Removes frequencies below the input value from a sound. Takes values between 0 and 20,000. This filter is applied after any pitch shifting, and is generally very similar to lowpass.</li>
+            <li><strong>Stop Playback</strong>: Cuts off a sample once a certain percentage of it has played. Takes values between 0 and 100.</li>
+            <li><strong>Start From Later</strong>: Causes a sample to play from its middle. Like "Stop Playback", takes values between 0 and 100.</li>
+            </ul>
+        <hr>
+        <h2>Flow Control Effects</h2>
+
+        <hr>
     </body>
 </html>
