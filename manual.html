@@ -7,7 +7,6 @@
     <body>
         <h1>MANUAL FOR TRACKER2D</h1>
         <strong>Press the help button again at any time to close this window.</strong>
-        <p id ="invisibleText">Please finish this help file.</p>
         <p>The most basic tutorial follows:</p>
         <ol>
         <li> Select an instrument from the instrument menu. </li>
@@ -15,14 +14,16 @@
         <li> When the "PEN" tool is selected (which it is when you first load up the application), clicking on a square will put instructions on the tile based on the parameters on the left. </li>
         <li> Once you have some instructions painted on the screen, press the play button in the lower left to get the bugs moving. Whenever they move over a grey tile, they'll play sounds based on the instructions in the tile. </li>
         </ol>
+        The rest of this manual is intended to provide a highly detailed look into how Tracker2D functions. It may not always be up to date, and furthermore requires significant expansion and revision.
         <h2>UI FUNCTIONS</h2>
         <p>We need text here!</p>
 
         <hr>
 
         <h2>The Field</h2>
-        <p>This is literally where the music happens. The way the UI is currently set up, you can see a 30*23 'slice' of the entire field (although this may change if we implement a zoom feature).</p><br>
+        <p>This is literally where the music happens. The way the UI is currently set up, you can see a 30*23 'slice' of the entire field (although this may change if we implement a zoom feature).<br><br>Depending on your current field setup, you may see up to 8 bugs and a variety of colorful tiles with various icons on them. (Expand and explain things)
 
+        </p>
         <hr>
 
         <h2>The Left Bar</h2>
@@ -36,18 +37,27 @@
         <strong>Bug Storage</strong>: This shows the status of Tracker2D's 8 bugs (analogous to audio channels). By hovering over one of the boxes, you can see on the minimap the location of the corresponding bug. The other major functionality of this (click a box to toggle whether a bug is on the field or in storage) is mentioned in the UI.<br>
         <strong>Tick Counter</strong>: This shows how many units of time/tempo have passed since the last reset.<br>
         <strong>Facebook</strong>: This takes you to Tracker2D's Facebook page, which opens in a new window. Pretty basic.<br>
-
-
-        (more)
         </p>
 
         <hr>
 
         <h2>The Bottom Bar</h2>  
-        <p> This uses jQuery controls and HTML5 Canvas for icons. From left to right: <br>
-        <strong>Play/Pause Button</strong>: Changes state when clicked. Clicking it when it shows the play icon will the bugs to move. Clicking it when it shows the pause icon will cause the bugs to stop moving. Please note that attempting to use many other tools will pause playback.<br>
-        <strong>Pen</strong>: Click on a tile in the field, and it will put the musical instructions you've selected in the left bar onto that tile.<br>
-        <strong>Eraser</strong>: The eraser removes musical instructions from tiles that you click on.<br>
+        <p> This uses jQuery controls and HTML5 Canvas for icons. There are two rows, but tools with similar effects are placed together. Some tools have a selection indicator (a blue overlay).<br><br>
+
+        First, the field painting bloc: <br>
+        <strong><img src="images/play_button.png" alt=""><img src="images/pause_button.png" alt="">Play/Pause Button</strong>: Changes state when clicked. Clicking it when it shows the play icon will the bugs to move. Clicking it when it shows the pause icon will cause the bugs to stop moving. Please note that attempting to use many other tools will pause playback.<br>
+        <strong><img src="images/pen_button.png" alt="">Pen</strong>: Click on a tile in the field, and it will put the musical instructions you've selected in the left bar onto that tile. This tool supports click and drag.<br>
+        <strong><img src="images/eraser_button.png" alt="">Eraser</strong>: The eraser removes musical instructions from tiles that you click on. This tool supports click and drag.<br>
+        <strong><img src="images/select_button.png" alt="">Select</strong>: This tool allows you to select a rectangle of tiles on the field. It requires two clicks, but the rectangle can be as large as the field, or as small as a single tile. When this tool is selected, it draws a translucent grey overlay over the tiles you have used it to select. Furthermore, your selection is remembered until you draw a new one or perform file I/O (which uses the same 'buffer' functionality as this tool. If you replace the contents of your selection box by, for example, drawing inside it, this will not change the contents of the select buffer.<br>
+        <strong><img src="images/paste_button.png" alt=""><img src="images/mixpaste_button.png" alt="">Paste</strong>:This tool pastes the <em>current</em> contents of the select buffer where you click (which specifically determines the upper left corner of where pasting begins). In the Song Properties window, you can switch between the dfeault overwrite paste mode and one that doesn't overwrite tiles that currently have instructions in them.<br>
+        <strong><img src="images/query_button.png" alt="">Query</strong>: When you hover over a tile in the field with this selected, a window will pop up that displays detailed information about the contents of not only the tile, but any bugs that are in the tile.<br>
+        <strong><img src="images/move_bug_button.png" alt="">Move Bug</strong>: This tool allows you to move a bug to a different tile. First, select the bug, then select the tile you want to move it to.<br>
+        <strong><img src="images/turn_bug_button.png" alt="">Turn Bug</strong>: This tool rotates a bug in place. Currently, it only turns bugs clockwise. You can tell which direction a bug is heading in by looking at the direction their "nose" points.<br>
+        <strong><img src="images/eyedropper_button.png" alt="">Eyedropper</strong>: When you click a tile with this tool activated, your current options in the left bar will change to those in the tile you've clicked.<br>
+        <strong><img src="images/adjust_pointer_button.png" alt="">Pointer Adjuster</strong>: This tool makes the first tile you click with it point to the second tile you click with it.<br>
+        <strong><img src="images/arrow_pen_button.png" alt="">Arrow Pen</strong>: This is an alternate painting method to the normal pen that uses the keyboard. You can reposition the 'cursor' of the arrow pen (a yellow translucent overlay) by clicking on the map. Then, you can move it one tile at a time by pressing arrow keys on the numpad (2/4/6/8). Press "5" to change whether it paints tiles with your current properties or not when you move it around. <br>
+        <strong><img src="images/horizontal_flip_button.png" alt=""><img src="images/vertical_flip_button.png" alt="">Selection Flippers</strong>: These tools flip your current selection horizontally or vertically. You don't need to have the selection tool active to use these.<br>
+
         (more)
         </p>  
 
