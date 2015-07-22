@@ -14,15 +14,24 @@
         <li> When the "PEN" tool is selected (which it is when you first load up the application), clicking on a square will put instructions on the tile based on the parameters on the left. </li>
         <li> Once you have some instructions painted on the screen, press the play button in the lower left to get the bugs moving. Whenever they move over a grey tile, they'll play sounds based on the instructions in the tile. </li>
         </ol>
-        The rest of this manual is intended to provide a highly detailed look into how Tracker2D functions. It may not always be up to date, and furthermore requires significant expansion and revision.
+        The rest of this manual is intended to provide a highly detailed look into how Tracker2D functions. It may not always be up to date, and furthermore requires significant expansion and revision. It also needs styling, but I don't think that's <em>quite</em> as important beyond a very basic level.
         <h2>UI FUNCTIONS</h2>
         <p>We need text here!</p>
 
         <hr>
 
         <h2>The Field</h2>
-        <p>This is literally where the music happens. The way the UI is currently set up, you can see a 30*23 'slice' of the entire field (although this may change if we implement a zoom feature).<br><br>Depending on your current field setup, you may see up to 8 bugs and a variety of colorful tiles with various icons on them. (Expand and explain things)
-
+        <p>This is literally where the music happens. The way the UI is currently set up, you can see a 30*23 'slice' of the entire field (although this may change if we implement a zoom feature).<br><br>Depending on your current field setup, you may see up to 8 bugs and a variety of colorful tiles with various icons on them. What follows are some examples of tiles and how their parameters affect their appearance.
+        <br></br>
+        <img src="images/tile_examples.png" alt="An image depicting several Tracker2D tiles."> 
+        <br>
+        A few rules of thumb:
+        <ul>
+            <li>The tile coloring algorithm assigns hue based on the instrument used, saturation based on volume, and intensity (brightness) based on the tile's pitch.</li>
+            <li>Percussion instruments have a small "P" indicator on their tiles.</li>
+            <li>The most prominent overlays will be indicators for what sort of flow control a tile contains. Due to graphical constraints, audio effects are currently not represented visually in any fashion whatsoever.</li>
+        </ul>
+        Someday, I intend to implement alternate coloration and graphics schemes that the user can switch between at will.
         </p>
         <hr>
 
@@ -45,31 +54,28 @@
         <p> This uses jQuery controls and HTML5 Canvas for icons. There are two rows, but tools with similar effects are placed together. Some tools have a selection indicator (a blue overlay).<br><br>
 
         First, the field painting bloc: <br>
-        <strong><img src="images/play_button.png" alt=""><img src="images/pause_button.png" alt="">Play/Pause Button</strong>: Changes state when clicked. Clicking it when it shows the play icon will the bugs to move. Clicking it when it shows the pause icon will cause the bugs to stop moving. Please note that attempting to use many other tools will pause playback.<br>
-        <strong><img src="images/pen_button.png" alt="">Pen</strong>: Click on a tile in the field, and it will put the musical instructions you've selected in the left bar onto that tile. This tool supports click and drag.<br>
-        <strong><img src="images/eraser_button.png" alt="">Eraser</strong>: The eraser removes musical instructions from tiles that you click on. This tool supports click and drag.<br>
-        <strong><img src="images/select_button.png" alt="">Select</strong>: This tool allows you to select a rectangle of tiles on the field. It requires two clicks, but the rectangle can be as large as the field, or as small as a single tile. When this tool is selected, it draws a translucent grey overlay over the tiles you have used it to select. Furthermore, your selection is remembered until you draw a new one or perform file I/O (which uses the same 'buffer' functionality as this tool. If you replace the contents of your selection box by, for example, drawing inside it, this will not change the contents of the select buffer.<br>
-        <strong><img src="images/paste_button.png" alt=""><img src="images/mixpaste_button.png" alt="">Paste</strong>:This tool pastes the <em>current</em> contents of the select buffer where you click (which specifically determines the upper left corner of where pasting begins). In the Song Properties window, you can switch between the dfeault overwrite paste mode and one that doesn't overwrite tiles that currently have instructions in them.<br>
-        <strong><img src="images/query_button.png" alt="">Query</strong>: When you hover over a tile in the field with this selected, a window will pop up that displays detailed information about the contents of not only the tile, but any bugs that are in the tile.<br>
-        <strong><img src="images/move_bug_button.png" alt="">Move Bug</strong>: This tool allows you to move a bug to a different tile. First, select the bug, then select the tile you want to move it to.<br>
-        <strong><img src="images/turn_bug_button.png" alt="">Turn Bug</strong>: This tool rotates a bug in place. Currently, it only turns bugs clockwise. You can tell which direction a bug is heading in by looking at the direction their "nose" points.<br>
-        <strong><img src="images/eyedropper_button.png" alt="">Eyedropper</strong>: When you click a tile with this tool activated, your current options in the left bar will change to those in the tile you've clicked.<br>
-        <strong><img src="images/adjust_pointer_button.png" alt="">Pointer Adjuster</strong>: This tool makes the first tile you click with it point to the second tile you click with it.<br>
-        <strong><img src="images/arrow_pen_button.png" alt="">Arrow Pen</strong>: This is an alternate painting method to the normal pen that uses the keyboard. You can reposition the 'cursor' of the arrow pen (a yellow translucent overlay) by clicking on the map. Then, you can move it one tile at a time by pressing arrow keys on the numpad (2/4/6/8). Press "5" to change whether it paints tiles with your current properties or not when you move it around. <br>
-        <strong><img src="images/horizontal_flip_button.png" alt=""><img src="images/vertical_flip_button.png" alt="">Selection Flippers</strong>: These tools flip your current selection horizontally or vertically. You don't need to have the selection tool active to use these. Please note that using them sets your paste mode back to overwrite mode.<br>
-
+        <strong><img src="images/play_button.png" alt="Play button"><img src="images/pause_button.png" alt="Pause button">Play/Pause Button</strong>: Changes state when clicked. Clicking it when it shows the play icon will the bugs to move. Clicking it when it shows the pause icon will cause the bugs to stop moving. Please note that attempting to use many other tools will pause playback.<br>
+        <strong><img src="images/pen_button.png" alt="Pen">Pen</strong>: Click on a tile in the field, and it will put the musical instructions you've selected in the left bar onto that tile. This tool supports click and drag.<br>
+        <strong><img src="images/eraser_button.png" alt="Eraser">Eraser</strong>: The eraser removes musical instructions from tiles that you click on. This tool supports click and drag.<br>
+        <strong><img src="images/select_button.png" alt="Select">Select</strong>: This tool allows you to select a rectangle of tiles on the field. It requires two clicks, but the rectangle can be as large as the field, or as small as a single tile. When this tool is selected, it draws a translucent grey overlay over the tiles you have used it to select. Furthermore, your selection is remembered until you draw a new one or perform file I/O (which uses the same 'buffer' functionality as this tool. If you replace the contents of your selection box by, for example, drawing inside it, this will not change the contents of the select buffer.<br>
+        <strong><img src="images/paste_button.png" alt="Paste"><img src="images/mixpaste_button.png" alt="Mix Paste">Paste</strong>:This tool pastes the <em>current</em> contents of the select buffer where you click (which specifically determines the upper left corner of where pasting begins). In the Song Properties window, you can switch between the dfeault overwrite paste mode and one that doesn't overwrite tiles that currently have instructions in them.<br>
+        <strong><img src="images/query_button.png" alt="Query">Query</strong>: When you hover over a tile in the field with this selected, a window will pop up that displays detailed information about the contents of not only the tile, but any bugs that are in the tile.<br>
+        <strong><img src="images/move_bug_button.png" alt="Move Bug Tool">Move Bug</strong>: This tool allows you to move a bug to a different tile. First, select the bug, then select the tile you want to move it to.<br>
+        <strong><img src="images/turn_bug_button.png" alt="Turn Bug Tool">Turn Bug</strong>: This tool rotates a bug in place. Currently, it only turns bugs clockwise. You can tell which direction a bug is heading in by looking at the direction their "nose" points.<br>
+        <strong><img src="images/eyedropper_button.png" alt="Eyedropper">Eyedropper</strong>: When you click a tile with this tool activated, your current options in the left bar will change to those in the tile you've clicked.<br>
+        <strong><img src="images/adjust_pointer_button.png" alt="Pointer Adjuster">Pointer Adjuster</strong>: This tool makes the first tile you click with it point to the second tile you click with it.<br>
+        <strong><img src="images/arrow_pen_button.png" alt="Arrow Pen">Arrow Pen</strong>: This is an alternate painting method to the normal pen that uses the keyboard. You can reposition the 'cursor' of the arrow pen (a yellow translucent overlay) by clicking on the map. Then, you can move it one tile at a time by pressing arrow keys on the numpad (2/4/6/8). Press "5" to change whether it paints tiles with your current properties or not when you move it around. <br>
+        <strong><img src="images/horizontal_flip_button.png" alt="Horizontal Flipper"><img src="images/vertical_flip_button.png" alt="Vertical Flipper">Selection Flippers</strong>: These tools flip your current selection horizontally or vertically. You don't need to have the selection tool active to use these. Please note that using them sets your paste mode back to overwrite mode.<br>
+        <br>
+        The menu bloc: <br>
+        <strong><img src="images/help_button.png" alt="">Help</strong>: This pulls up the manual you're reading (or alternatively dismisses it if's already open). You presumably figured that out when you clicked on it in the first place. However, if you've been following the repository, there's always the chance you opened up this manual separately instead of looking at the iframe it spawns in.<br>
+        <strong><img src="images/bug_properties_button.png" alt="">Bug Properties</strong>: This is very underdeveloped. Currently, it allows you to adjust the volume for bugs, which is multiplied by tile volume.<br>
+        <strong><img src="images/edit_tile_button.png" alt="">Edit Tile Properties</strong>: Click a tile on the field when this is selected to open a menu allowing you to manually adjust many of its parameters. This is currently the only way to set a tile's "flow control value" (which is currently only used for the counter).<br>
+        <strong><img src="images/song_properties_button.png" alt="">Song Properties</strong>: This menu allows you to adjust global properties for a song, including attribution data. It's currently also the location of the one UI option, at least until a new UI menu is created.<br>
+        <br>
+        The file I/O bloc:
         (more)
         </p>  
-
-        <hr>
-
-        <h2>Tips and Tricks</h2>    
-        <p>
-        <ul>
-            <li>If you have a lot of bugs playing the same notes and instruments, small pitchbends (0.99, 1.01, etc) can help reduce clipping.</li>
-            <li>Even after fields larger than 64*64 are implemented, Tracker2D will probably still be pretty small. Experiment with the flow control to see how efficiently you can utilize space!</li> 
-        </ul>
-        </p>
         <hr>
             <h2>Effect Reference</h2>
             <p>Tracker2D gives you a couple ways to adjust the sound and playback order of tiles. Expand and rephrase this.</p>
@@ -86,7 +92,7 @@
         <hr>
         <div class = "alternateBackground">
             <h2>Flow Control Effects</h2>
-            <p>These effects do not change the sound of a tile, but they change how bugs interact with the field. Many of them rely on a tile's "pointer" value, which indicates another tile on the map that they point to.</p>
+            <p>These effects do not change the sound of a tile, but they change how bugs interact with the field. Many of them rely on a tile's "pointer" value, which indicates another tile on the map that they point to. On the field, a flow control is indicated with an overlay.</p>
             <ul>
                 <li>
                     <div class="flowControlImages">
@@ -99,8 +105,6 @@
                 </li>
                 <br>
                 <li>
-                    <div class="flowControlImages">
-                    </div>
                     <strong>Counter</strong>: When a bug passes over this tile, the counter's value will decrease by 1. When the counter reaches 0, the tile will turn into the tile it is currently pointing to.
                 </li>
                 <br>
@@ -133,6 +137,14 @@
                 </li>
             </ul>
         </div>
+        <hr>
+        <h2>Tips and Tricks</h2>    
+        <p>
+        <ul>
+            <li>If you have a lot of bugs playing the same notes and instruments, small pitchbends (0.99, 1.01, etc) can help reduce clipping.</li>
+            <li>Even after fields larger than 64*64 are implemented, Tracker2D will probably still be pretty small. Experiment with the flow control to see how efficiently you can utilize space!</li> 
+        </ul>
+        </p>
         <hr>
         <p>More text and better formatting coming eventually.</p>
     </body>
