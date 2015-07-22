@@ -78,15 +78,14 @@ TileBuffer.prototype.pasteBuffer = function(fromX, toX, fromY, toY, tileX, tileY
             //tileX and tileY store offsets.
             if((i + tileX) < FILE_SIZE[0] || (j + tileY) < FILE_SIZE[1]) {
                 switch(pasteStyle){
-                    //The undefined check 
                     case 1: // Simplistic overwrite paste.
                         if(defaultBuffer.array[i][j] !== undefined){
                             fieldContents[(i + tileX)][(j + tileY)] = jQuery.extend(true, {}, defaultBuffer.array[i][j]);
-                        }
+                        } else { fieldContents[(i + tileX)][(j + tileY)] = undefined; } //Required for proper whitespace behavior
                         break; 
-                    case 2: // More complicated mixpaste that doesn't overwrite occupied tiles with undefined ones.
+                    case 2: // More complicated mixpaste that doesn't overwrite occupied tiles at all.
                         if(defaultBuffer.array[i][j] !== undefined){
-                            if(fieldContents[(i + tileX)][(j + tileY)] instanceof Tile === false){
+                            if(fieldContents[(i + tileX)][(j + tileY)] === undefined){
                                 fieldContents[(i + tileX)][(j + tileY)] = jQuery.extend(true, {}, defaultBuffer.array[i][j]);
                             } else break;
                         }

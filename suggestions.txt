@@ -15,8 +15,8 @@ Things I know I want to do (which could get very long):
 - Randomized trivia for the loadscreens.
 - When the pointer setting tool is selected, apply an overlay to pointee tiles when hovering over a tile.
 - "Megamap" that displays a 64*64 to 512*512 pixel image showing the entire field in miniature.
-- Improve the arrow pen - have a function to temporarily stop painting, etc.
 - Add an "amount of revisions" property to savefiles; increment on saves and add to the file name by default.
+- Some sort of feature to compute changes in volume and effects between two tiles and 'extrapolate' changes between them.
 
 
 
@@ -42,3 +42,4 @@ Suggestions that have already been implemented:
 - Indicate the position of bugs on the minimap, somehow (A small dot shows up when you mouse over the storage slots)
 - Apply click and drag to the minimap.
 - Make the instrument menu grow temporarily larger on mouseover
+- Improve the arrow pen - have a function to temporarily stop painting, etc.
