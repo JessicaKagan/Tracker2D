@@ -96,6 +96,10 @@ function interact(action, e) {
                 $("#currentBugVolume").html($("#bugPropsVolume").val());
             //Bug property stuff will be necessary at some point.
             }
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 632 && cursorX < 656) {
+            console.log("UIPROPS_BUTTON_AREA");
+            hideUI();
+            $("#modifyUIProperties").removeClass("currentlyHidden");
         } else if(cursorY >= 576 && cursorX >= 608 && cursorX < 632) {
             selectedTool = "editTile";
             console.log("EDIT_TILE_BUTTON_AREA");

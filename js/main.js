@@ -34,6 +34,7 @@ var HELP_BUTTON_AREA = [560,576,24,24];
 
 var EDIT_TILE_BUTTON_AREA = [608,576,24,24];
 var SONGPROPS_BUTTON_AREA = [632,576,24,24];
+var UIPROPS_BUTTON_AREA = [632,552,24,24];
 
 var STOREBUG_BUTTON_AREA = [680,576,24,24];
 var RESTOREBUG_BUTTON_AREA = [704,576,24,24];
@@ -71,7 +72,7 @@ var currentFlowControl = "none";
 
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(27);
+var UIImages = new Array(28);
 var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the bug arrays.

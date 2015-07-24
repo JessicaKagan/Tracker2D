@@ -257,6 +257,7 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[24],BUGPROPS_BUTTON_AREA[0],BUGPROPS_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[25],REVERT_BUTTON_AREA[0],REVERT_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[26],ARROWPEN_BUTTON_AREA[0],ARROWPEN_BUTTON_AREA[1]);
+    ctx.drawImage(UIImages[27],UIPROPS_BUTTON_AREA[0],UIPROPS_BUTTON_AREA[1]);
 
     //Save and load functions
     ctx.drawImage(UIImages[4],SAVE_BUTTON_AREA[0],SAVE_BUTTON_AREA[1]); 

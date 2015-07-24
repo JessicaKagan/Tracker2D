@@ -359,6 +359,9 @@ function hideUI(){
     }     
     if($("#modifyBugProperties").hasClass("currentlyHidden") === false) { 
         setTimeout(function() {$("#modifyBugProperties").addClass("currentlyHidden");}, 50);
+    }     
+    if($("#modifyUIProperties").hasClass("currentlyHidden") === false) { 
+        setTimeout(function() {$("#modifyUIProperties").addClass("currentlyHidden");}, 50);
     } 
 }
 
