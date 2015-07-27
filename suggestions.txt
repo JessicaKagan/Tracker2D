@@ -20,7 +20,6 @@ Things I know I want to do (which could get very long):
 - UI options display (Easy, but time consuming).
 
 
-
 Things I might do but am not sure about:
 - Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior. (Up to 36 checks per second? Divergent series.)
 - Make selection flip and rotate tools change the direction of turnsignals.

@@ -42,6 +42,7 @@ function getImages() {
     UIImages[25].src = 'images/revert_button.png';
     UIImages[26].src = 'images/arrow_pen_button.png';
     UIImages[27].src = 'images/ui_properties_button.png';
+    UIImages[28].src = 'images/extrapolate_button.png';
 
     //Maybe someone will make more detailed and complex bug images.
     bugImages[0].src = 'images/placeholder_bug.png';

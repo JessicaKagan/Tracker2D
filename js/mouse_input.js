@@ -1,6 +1,7 @@
 var drawingStatus, miniMapScrollingStatus, currentTile, pointeeX, pointeeY;
 var currentArrowPenTile = [0,0];
 var arrowPenDrawingActivated = true;
+var extrapolateTiles = [0,0,0,0];
 
 //This is our mouse listeners go!
 function interact(action, e) {
@@ -81,6 +82,10 @@ function interact(action, e) {
             console.log("ARROWPEN_BUTTON_AREA");
             selectedTool = "arrowPen";
             alert("To use this tool, press the numpad arrow keys (2/4/6/8), and click where you want to start. Each keypress will paint one tile in the relevant direction. Rephrase this.")
+        }else if(cursorY >= 576 && cursorX >= 344 && cursorX < 368) {
+            console.log("EXTRAPOLATE_BUTTON_AREA");
+            selectedTool = "extrapolate";
+            extrapolateStage = 1;
         } else if(cursorY >= 576 && cursorX >= 560 && cursorX < 588) {
             console.log("HELP_BUTTON_AREA");
             hideUI();
@@ -353,6 +358,22 @@ function interact(action, e) {
                         if(action === "click") {
                             currentArrowPenTile = currentTile;
                             console.log(currentArrowPenTile);
+                        }
+                        break;
+                    case "extrapolate":
+                        if(action === "click") {
+                            if(extrapolateStage === 1){
+                                extrapolateTiles[0] = currentTile[0];
+                                extrapolateTiles[1] = currentTile[1];
+                                extrapolateStage = 2;
+                                console.log(extrapolateTiles);
+                            } else if(extrapolateStage === 2){
+                                extrapolateTiles[2] = currentTile[0];
+                                extrapolateTiles[3] = currentTile[1];
+                                extrapolateStage = 1;
+                                console.log(extrapolateTiles);
+
+                            }
                         }
                         break;
                     default:
