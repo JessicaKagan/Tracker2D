@@ -182,7 +182,7 @@ function respondToQuery(X, Y) {
     queryResponse += "<p>Tile Coordinates: " + X + " , " + Y + "</p>";
     if(fieldContents[X][Y] !== undefined) {
         //We iterate through the tile properties.
-        if(fieldContents[X][Y].note !== undefined ) { queryResponse += "<p>Pitch: " + Math.floor(fieldContents[X][Y].note * 44100);}
+        if(fieldContents[X][Y].note !== undefined ) { queryResponse += "<p>Pitch: " + Math.floor(fieldContents[X][Y].note * 44100) + " (Note #" + pitchTable.indexOf(fieldContents[X][Y].note) + ")";}
         else { queryResponse += "Does not reference a pitch."; }
         queryResponse += "<p> Instrument: " +  soundSet[fieldContents[X][Y].instrument][0] + "</p>";
         queryResponse += "<p> Audio Effect: " +  fieldContents[X][Y].dspEffect + "</p>";
