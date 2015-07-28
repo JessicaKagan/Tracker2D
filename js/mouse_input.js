@@ -380,11 +380,11 @@ function interact(action, e) {
                                 }
                                 //Once we have two tiles, behavior diverges based on what the user has selected in the relevant UI props.
                                 if($('#extrapolatePitch').is(':checked')){
-                                    extrapolateTileData("pitch");
+                                    extrapolateTileData("note");
                                 } else if($('#extrapolateVolume').is(':checked')){
                                     extrapolateTileData("volume");
                                 } else if($('#extrapolateFXValue').is(':checked')){
-                                    extrapolateTileData("FX");
+                                    extrapolateTileData("dspValue"); //The capitalization on this is actually important!
                                 }
                                 extrapolateStage = 1;
                             }
@@ -425,7 +425,7 @@ function interact(action, e) {
         var dataRange; 
         var amountOfTilesPainted = 0;
         switch(type){
-            case "pitch":
+            case "note":
                 dataRange = [pitchTable.indexOf(fieldContents[extrapolateTiles[0]][extrapolateTiles[1]].note),
                              pitchTable.indexOf(fieldContents[extrapolateTiles[2]][extrapolateTiles[3]].note)];
                 break;
@@ -433,9 +433,10 @@ function interact(action, e) {
                 dataRange = [fieldContents[extrapolateTiles[0]][extrapolateTiles[1]].volume,
                              fieldContents[extrapolateTiles[2]][extrapolateTiles[3]].volume];
                 break;
-            case "FX":
-                dataRange = [fieldContents[extrapolateTiles[0]][extrapolateTiles[1]].dspvalue,
-                             fieldContents[extrapolateTiles[2]][extrapolateTiles[3]].value];
+            case "dspValue":
+                //Parsefloat fixes an as-of-yet unidentified bug in DSPValue's type.
+                dataRange = [parseFloat(fieldContents[extrapolateTiles[0]][extrapolateTiles[1]].dspValue),
+                             parseFloat(fieldContents[extrapolateTiles[2]][extrapolateTiles[3]].dspValue)];
                 break;
             default:
                 alert("Somehow, the extrapolator didn't get a valid data type.");
@@ -443,8 +444,8 @@ function interact(action, e) {
         }
         //console.log(dataRange);
         
-        //Bresenham's line drawing algorithm.
-        //Needs a lot of debugging.
+        //Bresenham's line drawing algorithm; might need some debugging.
+        //I use two loops - one to determine the "length" of the line, and one to actually paint it.
         var deltaX = extrapolateTiles[2] - extrapolateTiles[0];
         var deltaY = extrapolateTiles[3] - extrapolateTiles[1];
         var error = 0;
@@ -452,20 +453,63 @@ function interact(action, e) {
         var baseY = extrapolateTiles[1];
         //We need a fix for vertical lines. Apparently this requires a different algorithm.
         for(var i = extrapolateTiles[0]; i < extrapolateTiles[2]; ++i){
-            //Base tile.
-            fieldContents[i][baseY] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
             error += deltaError;
-            ++amountOfTilesPainted; //This needs to be measured in order to properly compute interpolation values.
+            ++amountOfTilesPainted; //This needs to be measured in order to properly compute interpolation values. Surprisingly, adding it to the differential corrector isn't necessary.
             while(error >= 0.5){
-                fieldContents[i][baseY] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
                 baseY += Math.sign(extrapolateTiles[3] - extrapolateTiles[1]);
                 error -= 1;
-                ++amountOfTilesPainted; //I don't know how to compute this without running this loop.
             }
         }
-        var differenceBetweenTiles = (dataRange[0] - dataRange[1])/amountOfTilesPainted;
+        var differenceBetweenTiles = Math.abs(dataRange[0] - dataRange[1])/amountOfTilesPainted;
         console.log(differenceBetweenTiles);
 
+        //Reset extra counters for the second loop.
+        error = 0;
+        baseY = extrapolateTiles[1];
+
+        
+        //Loop through the line again; this time extrapolating the data as needed.
+        console.log(dataRange);
+        var currentExtrapolationValue = dataRange[0];
+        var paintValue;
+        for(var i = extrapolateTiles[0]; i < extrapolateTiles[2]; ++i){
+            
+            currentExtrapolationValue += differenceBetweenTiles; 
+            console.log(currentExtrapolationValue);
+
+            switch(type){
+                case "note":
+                    //Convert to the pitch we need using the pitchTable.
+                    paintValue = pitchTable[Math.floor(currentExtrapolationValue)];
+                    break;
+                case "dspValue":
+                case "volume":
+                    //Otherwise, we shouldn't have to do any mathematical conversions. 
+                    paintValue = currentExtrapolationValue;
+                    console.log(paintValue);
+                    break;
+                default:
+                    break;
+            }
+            
+            fieldContents[i][baseY] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
+            //Object and array equivalence is very interesting in Javascript.
+            //This SHOULD pass the data to the parameter requested by the user.
+            fieldContents[i][baseY][type] = paintValue; 
+            fieldContents[i][baseY].updateColor(); //Color doesn't update properly without this (which just computes the new color)
+            console.log(type + " = " + fieldContents[i][baseY][type]);
+            error += deltaError;
+
+            while(error >= 0.5){
+                fieldContents[i][baseY] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
+                fieldContents[i][baseY][type] = paintValue; 
+                fieldContents[i][baseY].updateColor();
+                console.log(type + " = " + fieldContents[i][baseY][type]);
+                baseY += Math.sign(extrapolateTiles[3] - extrapolateTiles[1]);
+                error -= 1;
+            }
+        }
+    //We might need some error trapping or something at the end of this function.
     }
 }
 
