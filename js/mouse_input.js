@@ -450,6 +450,24 @@ function interact(action, e) {
         var deltaY = extrapolateTiles[3] - extrapolateTiles[1];
         var error = 0;
         var deltaError = Math.abs(deltaY/deltaX);
+        var differenceBetweenTiles = 0;
+        var paintValue;
+        var currentExtrapolationValue;
+
+
+        //If the line is vertical, we need special code. Readability improvements, too.
+        //Implement this only once some of the code is functionalized.
+        if(deltaError === Infinity) {
+            alert("Due to implementation problems, completely vertical lines are not yet possible. Pretty lame, right?");
+            /*
+            differenceBetweenTiles = Math.abs(dataRange[0] - dataRange[1])/(extrapolateTiles[3] - extrapolateTiles[1]);
+            for(var i = extrapolateTiles[1]; i < extrapolateTiles[3]; ++i){
+
+            }
+            */
+            return;
+        }
+
         var baseY = extrapolateTiles[1];
         //We need a fix for vertical lines. Apparently this requires a different algorithm.
         for(var i = extrapolateTiles[0]; i < extrapolateTiles[2]; ++i){
@@ -460,8 +478,8 @@ function interact(action, e) {
                 error -= 1;
             }
         }
-        var differenceBetweenTiles = Math.abs(dataRange[0] - dataRange[1])/amountOfTilesPainted;
-        console.log(differenceBetweenTiles);
+        differenceBetweenTiles = Math.abs(dataRange[0] - dataRange[1])/amountOfTilesPainted;
+        //console.log(differenceBetweenTiles);
 
         //Reset extra counters for the second loop.
         error = 0;
@@ -470,8 +488,8 @@ function interact(action, e) {
         
         //Loop through the line again; this time extrapolating the data as needed.
         console.log(dataRange);
-        var currentExtrapolationValue = dataRange[0];
-        var paintValue;
+        currentExtrapolationValue = dataRange[0];
+        
         for(var i = extrapolateTiles[0]; i < extrapolateTiles[2]; ++i){
             
             if(dataRange[0] <= dataRange[1]) { currentExtrapolationValue += differenceBetweenTiles; }
