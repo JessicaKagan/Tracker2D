@@ -474,8 +474,8 @@ function interact(action, e) {
         var paintValue;
         for(var i = extrapolateTiles[0]; i < extrapolateTiles[2]; ++i){
             
-            currentExtrapolationValue += differenceBetweenTiles; 
-            console.log(currentExtrapolationValue);
+            if(dataRange[0] <= dataRange[1]) { currentExtrapolationValue += differenceBetweenTiles; }
+            else { currentExtrapolationValue -= differenceBetweenTiles; }
 
             switch(type){
                 case "note":
@@ -486,24 +486,35 @@ function interact(action, e) {
                 case "volume":
                     //Otherwise, we shouldn't have to do any mathematical conversions. 
                     paintValue = currentExtrapolationValue;
-                    console.log(paintValue);
                     break;
                 default:
                     break;
             }
-            
-            fieldContents[i][baseY] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
+            //We should not replace pitches unless we're extrapolating pitch.
+            if(type === "note"){
+                fieldContents[i][baseY] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
+            }
+
             //Object and array equivalence is very interesting in Javascript.
             //This SHOULD pass the data to the parameter requested by the user.
-            fieldContents[i][baseY][type] = paintValue; 
-            fieldContents[i][baseY].updateColor(); //Color doesn't update properly without this (which just computes the new color)
-            console.log(type + " = " + fieldContents[i][baseY][type]);
+            if(fieldContents[i][baseY] !== undefined || type === "note"){ 
+                fieldContents[i][baseY][type] = paintValue; 
+                fieldContents[i][baseY].updateColor();
+            }
+             //Color doesn't update properly without this (which just computes the new color)
+            //console.log(type + " = " + fieldContents[i][baseY][type]);
             error += deltaError;
 
             while(error >= 0.5){
-                fieldContents[i][baseY] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
-                fieldContents[i][baseY][type] = paintValue; 
-                fieldContents[i][baseY].updateColor();
+
+                if(type === "note"){
+                    fieldContents[i][baseY] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
+                }
+
+                if(fieldContents[i][baseY] !== undefined || type === "note"){ 
+                    fieldContents[i][baseY][type] = paintValue; 
+                    fieldContents[i][baseY].updateColor();
+                }
                 console.log(type + " = " + fieldContents[i][baseY][type]);
                 baseY += Math.sign(extrapolateTiles[3] - extrapolateTiles[1]);
                 error -= 1;
