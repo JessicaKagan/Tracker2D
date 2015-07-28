@@ -305,6 +305,9 @@ var drawSelectedToolOverlay = function() {
                     case "arrowPen":
                     ctx.fillRect(ARROWPEN_BUTTON_AREA[0], ARROWPEN_BUTTON_AREA[1],ARROWPEN_BUTTON_AREA[2],ARROWPEN_BUTTON_AREA[3]);
                         break;
+                    case "extrapolate":
+                    ctx.fillRect(EXTRAPOLATE_BUTTON_AREA[0], EXTRAPOLATE_BUTTON_AREA[1],EXTRAPOLATE_BUTTON_AREA[2],EXTRAPOLATE_BUTTON_AREA[3]);
+                        break;
         default:
             break;
     }

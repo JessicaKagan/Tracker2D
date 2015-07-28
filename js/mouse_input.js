@@ -366,13 +366,27 @@ function interact(action, e) {
                                 extrapolateTiles[0] = currentTile[0];
                                 extrapolateTiles[1] = currentTile[1];
                                 extrapolateStage = 2;
-                                console.log(extrapolateTiles);
+                                //console.log(extrapolateTiles);
                             } else if(extrapolateStage === 2){
+                                //Extrapolate takes values from two tiles and paints the area between said tiles with their averages.
                                 extrapolateTiles[2] = currentTile[0];
                                 extrapolateTiles[3] = currentTile[1];
+                                //If the tiles are equivalent, stop executing.
+                                if(extrapolateTiles[0] === extrapolateTiles[2] &&
+                                   extrapolateTiles[1] === extrapolateTiles[3]){
+                                    extrapolateStage = 1;
+                                    alert("You have to click different tiles for the Extrapolator to work properly.");
+                                    break;
+                                }
+                                //Once we have two tiles, behavior diverges based on what the user has selected in the relevant UI props.
+                                if($('#extrapolatePitch').is(':checked')){
+                                    extrapolateTileData("pitch");
+                                } else if($('#extrapolateVolume').is(':checked')){
+                                    extrapolateTileData("volume");
+                                } else if($('#extrapolateFXValue').is(':checked')){
+                                    extrapolateTileData("FX");
+                                }
                                 extrapolateStage = 1;
-                                console.log(extrapolateTiles);
-
                             }
                         }
                         break;
@@ -398,5 +412,61 @@ function interact(action, e) {
             miniMapScrollingStatus = false;
         }
     }
+    //Called when you have an extrapolation. Probably contains more duplicated code than is healthy.
+    //Each case makes sure the data it needs to extrapolate is valid at both ends.
+    //Then it draws a (low precision) line between the tiles.
+    function extrapolateTileData(type){
+        //ALWAYS think left to right and adjust the order of coords as necessary.
+        if(extrapolateTiles[2] < extrapolateTiles[0]) {
+            extrapolateTiles[2] = [extrapolateTiles[0], extrapolateTiles[0] = extrapolateTiles[2]][0]; //Kludge swap.
+            extrapolateTiles[3] = [extrapolateTiles[1], extrapolateTiles[1] = extrapolateTiles[3]][0]; //Also necessary to swap the Y coords.
+        }
+        //Then compute the range of values we need.
+        var dataRange; 
+        var amountOfTilesPainted = 0;
+        switch(type){
+            case "pitch":
+                dataRange = [pitchTable.indexOf(fieldContents[extrapolateTiles[0]][extrapolateTiles[1]].note),
+                             pitchTable.indexOf(fieldContents[extrapolateTiles[2]][extrapolateTiles[3]].note)];
+                break;
+            case "volume":
+                dataRange = [fieldContents[extrapolateTiles[0]][extrapolateTiles[1]].volume,
+                             fieldContents[extrapolateTiles[2]][extrapolateTiles[3]].volume];
+                break;
+            case "FX":
+                dataRange = [fieldContents[extrapolateTiles[0]][extrapolateTiles[1]].dspvalue,
+                             fieldContents[extrapolateTiles[2]][extrapolateTiles[3]].value];
+                break;
+            default:
+                alert("Somehow, the extrapolator didn't get a valid data type.");
+                return;
+        }
+        //console.log(dataRange);
+        
+        //Bresenham's line drawing algorithm.
+        //Needs a lot of debugging.
+        var deltaX = extrapolateTiles[2] - extrapolateTiles[0];
+        var deltaY = extrapolateTiles[3] - extrapolateTiles[1];
+        var error = 0;
+        var deltaError = Math.abs(deltaY/deltaX);
+        var baseY = extrapolateTiles[1];
+        //We need a fix for vertical lines. Apparently this requires a different algorithm.
+        for(var i = extrapolateTiles[0]; i < extrapolateTiles[2]; ++i){
+            //Base tile.
+            fieldContents[i][baseY] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
+            error += deltaError;
+            ++amountOfTilesPainted; //This needs to be measured in order to properly compute interpolation values.
+            while(error >= 0.5){
+                fieldContents[i][baseY] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
+                baseY += Math.sign(extrapolateTiles[3] - extrapolateTiles[1]);
+                error -= 1;
+                ++amountOfTilesPainted; //I don't know how to compute this without running this loop.
+            }
+        }
+        var differenceBetweenTiles = (dataRange[0] - dataRange[1])/amountOfTilesPainted;
+        console.log(differenceBetweenTiles);
+
+    }
 }
+
 

@@ -139,9 +139,18 @@
                     <br>
                     <p><strong>Like many things, this window is under construction.</strong></p>
                     <br>
-                    <p>Paste Style (Move to UI properties):
+                    <p>Paste Style:
                         <button type="button" id="selectPasteStyle" onClick="changePasteStyle()">Change from Overwrite to Mix</button>
                     </p>
+                    <br>
+                    <p>Extrapolation Style:
+                        <form id="extrapolationOptions">
+                            <input id="extrapolatePitch" type="radio" name="extrapolationStyle" value="0" checked>Pitch</input>
+                            <input id="extrapolateVolume" type="radio" name="extrapolationStyle" value="1">Volume</input>
+                            <input id="extrapolateFXValue" type="radio" name="extrapolationStyle" value="2">Audio FX Value</input>
+                        </form>
+                    </p>
+                    <br>
                     
                 </div>
                 <div id="queryInfo" class="currentlyHidden">
