@@ -14,7 +14,7 @@
         <li> When the "PEN" tool is selected (which it is when you first load up the application), clicking on a square will put instructions on the tile based on the parameters on the left. </li>
         <li> Once you have some instructions painted on the screen, press the play button in the lower left to get the bugs moving. Whenever they move over a grey tile, they'll play sounds based on the instructions in the tile. </li>
         </ol>
-        The rest of this manual is intended to provide a highly detailed look into how Tracker2D functions. It may not always be up to date, and furthermore requires significant expansion and revision. It also needs styling, but I don't think that's <em>quite</em> as important beyond a very basic level.
+        The rest of this manual is intended to provide a highly detailed look into how Tracker2D functions. It may not always be up to date, and furthermore requires significant expansion and revision. It also may benefit from more elaborate visual styling, but I don't think that's <em>quite</em> as important beyond a very basic level.
         <h2>UI FUNCTIONS</h2>
         <p>We need text here!</p>
 
@@ -144,6 +144,29 @@
             <li>If you have a lot of bugs playing the same notes and instruments, small pitchbends (0.99, 1.01, etc) can help reduce clipping.</li>
             <li>Even after fields larger than 64*64 are implemented, Tracker2D will probably still be pretty small. Experiment with the flow control to see how efficiently you can utilize space!</li> 
         </ul>
+        </p>
+        <hr>
+        <h2>How Tracker2D Works</h2>
+        <p>Here, I'm hoping to provide a basic idea of how the code that supports this program functions.</p>
+        <p>
+        This program relies very heavily on the HTML5 Canvas and Web Audio APIs in order to simplify various tasks important to its functioning. With graphics and audio being fairly abstracted, much of the code I write pertains to things like user input, file operations, and the occasional bit of number crunching.</p>
+        <p>
+        Tracker2D preloads its entire soundbank before allowing the user to operate it. This can take some time depending primarily on the speed of the user's internet connection, but generally should not be too long on modern connections, as the 4 megabytes of samples actually represents the majority of the program's size. Other parts of the program are not prebuffered due to this lopsided sound to code, text, and images ratio. In the future, the sound bank may be extended further (so far, a sound effects bank and a synthesizer sound bank are planned), which would skew the ratio even more.
+        </p>
+        <p>
+        Understanding the main loop is a good place to get started on your journey to really grokking Tracker2D. It essentially functions as the core of a game engine, and there are two especially important points I need to immediately bring up:
+        <ol>
+            <li>The main loop is designed to run as often as possible, but also to keep everything synchronized, hence the use of a delta timer.</li>
+            <li>Tracker2D's computation functions are ideally separated from its conveyance (rendering) functions, so that if the program visibly slows down or "lags" (appears especially choppy due to its framerate lowering), things like sound playback and field state updates should be at least somewhat resistant to performance problems.</li>
+        </ol>
+        To be fair, Tracker2D does not have particularly demanding graphics, so your performance should theoretically be primarily a function of how good your CPU is (and possibly your sound card and graphics card, depending on what tasks the CPU can offload onto them). I have had little opportunity to analyze the performance of Tracker2D, so you can add benchmarking to the list of development tasks I would be greatly thankful for you assisting me with.
+        </p>
+        <p>
+        These sections are very incomplete (or perhaps not even written yet), even compared to some of the others.
+        <h3>The Rendering Loop</h3>
+        <h3>Tiles</h3>
+        <h3>(Intentional) Bug Behavior</h3>
+        <h3>The Tracker2D Field File Format</h3>
         </p>
         <hr>
         <p>More text and better formatting coming eventually.</p>

@@ -309,13 +309,14 @@ function init() {
 }
 
 //Graphics functions. It might be wise to make these subfunctions of something tile related.
-//fieldOffset changes the logic!
+//They are, however, enormously useful.
 function getTile(x,y) {
     var tileX = Math.floor((x - 80)/TILE_SIZE) + fieldOffset[0];
     var tileY = Math.floor(y/TILE_SIZE) + fieldOffset[1];
     return [tileX, tileY];
 }
 
+//Well, not this one. I should probably remove it, since nothing seems to call it.
 function convertTiletoPixels(x,y){
     var pixelX = (x*24) + 80;
     var pixelY = y*24;
