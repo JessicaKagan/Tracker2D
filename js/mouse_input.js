@@ -455,16 +455,45 @@ function interact(action, e) {
         var currentExtrapolationValue;
 
 
-        //If the line is vertical, we need special code. Readability improvements, too.
-        //Implement this only once some of the code is functionalized.
+        //If the line is vertical, we need special code. Too much of this is duplicated and unfunctionalized to really be kosher.
         if(deltaError === Infinity) {
-            alert("Due to implementation problems, completely vertical lines are not yet possible. Pretty lame, right?");
-            /*
+            //alert("Due to implementation problems, completely vertical lines are not yet possible. Pretty lame, right?");
+            //We need to store our single X-coord for easy access.
+            var baseX = extrapolateTiles[0];
+
             differenceBetweenTiles = Math.abs(dataRange[0] - dataRange[1])/(extrapolateTiles[3] - extrapolateTiles[1]);
+            currentExtrapolationValue = dataRange[0];
             for(var i = extrapolateTiles[1]; i < extrapolateTiles[3]; ++i){
 
+                console.log(i);
+
+                if(dataRange[0] <= dataRange[1]) { currentExtrapolationValue += differenceBetweenTiles; }
+                else { currentExtrapolationValue -= differenceBetweenTiles; }
+
+                switch(type){
+                    case "note":
+                        //Convert to the pitch we need using the pitchTable.
+                        paintValue = pitchTable[Math.floor(currentExtrapolationValue)];
+                        break;
+                    case "dspValue":
+                    case "volume":
+                        //Otherwise, we shouldn't have to do any mathematical conversions. 
+                        paintValue = currentExtrapolationValue;
+                        break;
+                    default:
+                        break;
+                }
+                //Computing the coordinates of the next tile is easier here since we don't have to really deal with slopes.
+                if(type === "note"){
+                    fieldContents[baseX][i] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
+                }
+
+                if(fieldContents[baseX][i] !== undefined || type === "note"){ 
+                    fieldContents[baseX][i][type] = paintValue; 
+                    fieldContents[baseX][i].updateColor();
+                }
             }
-            */
+            
             return;
         }
 

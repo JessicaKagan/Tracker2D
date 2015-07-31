@@ -16,8 +16,8 @@ Things I know I want to do (which could get very long):
 - When the pointer setting tool is selected, apply an overlay to pointee tiles when hovering over a tile.
 - "Megamap" that displays a 64*64 to 512*512 pixel image showing the entire field in miniature.
 - Add an "amount of revisions" property to savefiles; increment on saves and add to the file name by default.
-- Some sort of feature to compute changes in volume and effects between two tiles and 'extrapolate' changes between them.
-- UI options display (Easy, but time consuming).
+- Some sort of feature to compute changes in volume and effects between two tiles and 'extrapolate' changes between them (Partially implemented, needs expansion).
+
 
 
 Things I might do but am not sure about:
@@ -29,6 +29,7 @@ Things I might do but am not sure about:
 - Flow control feature to move the viewing field to the pointers.
 - Show the selected tilebuffer on the minimap as an overlay (which might be difficult or awkward to do as image data).
 - Flow control features to dynamically adjust bug properties (possibly really cool, but programming would be annoying, especially on the save/load/revert frontier)
+- UI options display (Needs more options, period).
 
 Suggestions that have already been implemented:
 - Actually show the tile buffer (as filled up by the select tool) somehow, like a translucent overlay
