@@ -497,6 +497,8 @@ function interact(action, e) {
             return;
         }
 
+        /* NORMAL BRESENHAM FOR LINES WITH NON-VERTICAL SLOPE BEGINS HERE. */
+
         var baseY = extrapolateTiles[1];
         //We need a fix for vertical lines. Apparently this requires a different algorithm.
         for(var i = extrapolateTiles[0]; i < extrapolateTiles[2]; ++i){
@@ -518,8 +520,7 @@ function interact(action, e) {
         //Loop through the line again; this time extrapolating the data as needed.
         console.log(dataRange);
         currentExtrapolationValue = dataRange[0];
-        
-        for(var i = extrapolateTiles[0]; i < extrapolateTiles[2]; ++i){
+        for(var i = (extrapolateTiles[0]); i < extrapolateTiles[2]; ++i){
             
             if(dataRange[0] <= dataRange[1]) { currentExtrapolationValue += differenceBetweenTiles; }
             else { currentExtrapolationValue -= differenceBetweenTiles; }
@@ -544,7 +545,8 @@ function interact(action, e) {
 
             //Object and array equivalence is very interesting in Javascript.
             //This SHOULD pass the data to the parameter requested by the user.
-            if(fieldContents[i][baseY] !== undefined || type === "note"){ 
+            if((fieldContents[i][baseY] !== undefined || type === "note") && 
+                (i != extrapolateTiles[0] && baseY != extrapolateTiles[1]) ){ 
                 fieldContents[i][baseY][type] = paintValue; 
                 fieldContents[i][baseY].updateColor();
             }
@@ -552,13 +554,15 @@ function interact(action, e) {
             //console.log(type + " = " + fieldContents[i][baseY][type]);
             error += deltaError;
 
+            //Extrapolation values don't propogate too well on near-vertical lines.
             while(error >= 0.5){
 
                 if(type === "note"){
                     fieldContents[i][baseY] = jQuery.extend(true, {}, fieldContents[extrapolateTiles[0]][extrapolateTiles[1]]);
                 }
 
-                if(fieldContents[i][baseY] !== undefined || type === "note"){ 
+                if((fieldContents[i][baseY] !== undefined || type === "note") && 
+                    (i != extrapolateTiles[0] && baseY != extrapolateTiles[1]) ){ 
                     fieldContents[i][baseY][type] = paintValue; 
                     fieldContents[i][baseY].updateColor();
                 }

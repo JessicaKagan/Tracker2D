@@ -17,6 +17,7 @@ Things I know I want to do (which could get very long):
 - "Megamap" that displays a 64*64 to 512*512 pixel image showing the entire field in miniature.
 - Add an "amount of revisions" property to savefiles; increment on saves and add to the file name by default.
 - Some sort of feature to compute changes in volume and effects between two tiles and 'extrapolate' changes between them (Partially implemented, needs expansion).
+- Note names instead of mere numbers (requires some code to figure them out based on modulo logic)
 
 
 
@@ -29,7 +30,7 @@ Things I might do but am not sure about:
 - Flow control feature to move the viewing field to the pointers.
 - Show the selected tilebuffer on the minimap as an overlay (which might be difficult or awkward to do as image data).
 - Flow control features to dynamically adjust bug properties (possibly really cool, but programming would be annoying, especially on the save/load/revert frontier)
-- UI options display (Needs more options, period).
+
 
 Suggestions that have already been implemented:
 - Actually show the tile buffer (as filled up by the select tool) somehow, like a translucent overlay
@@ -44,3 +45,4 @@ Suggestions that have already been implemented:
 - Apply click and drag to the minimap.
 - Make the instrument menu grow temporarily larger on mouseover
 - Improve the arrow pen - have a function to temporarily stop painting, etc.
+- UI options display (Needs more options, period).
