@@ -114,10 +114,7 @@ audioLoader = new BufferLoader(audioEngine, soundArray, soundsAreReady);
 audioLoader.load(); //This sequence calls soundsAreReady() when it's done.
 
 function init() {
-    console.log("Tracker2D needs documentation! Here's a start.");
-    console.log("Only audio FX that work are bendpitch, lowpass, and highpass. Bendpitch takes values between 0-16; the passes take values from 0-20000.");
-    console.log("Adjust input pitch with the QWERTY row and +/-, although you'll need a QWERTY layout keyboard for that to really make sense.");
-    //Since this running means everything's loaded, dispel the load notice.
+    //Since this function running means everything's loaded, dispel the load notice.
     $("#loadScreen").addClass("alwaysHidden");
     //Set up HTML5 Canvas and mouse input. interact() is now in mouse_input.js
     var bindCanvas = document.getElementById("canvas");
@@ -131,7 +128,7 @@ function init() {
     //Set up keyboard shortcuts.
     hookKeyboard();
 
-    //Populate the instrument menu. The undefined check is VERY important.
+    //Populate the instrument menu. The undefined check is VERY important during periods of expansion
     for(var i = 0; i < soundSet.length; ++i){
         if(soundSet[i] !== undefined){
             //Highlight the Grand Piano, which is selected at the beginning.

@@ -1,10 +1,7 @@
 /*
+ * This is likely to be the most complicated file in Tracker2D, since it contains a wide variety of functions.
  * Long term thoughts: At some point in the near future, we might want to add a synchronization feature to help people create more complicated interlocking
  * See this for advice on how to get click and drag: http://simonsarris.com/blog/140-canvas-moving-selectable-shapes
-*/
-
-/*
-    Medium term useful thing: Extrapolation feature.
 */
 
 var isOverlayShowing = false; //Used to handle some pointer events CSS.
@@ -156,7 +153,7 @@ TileBuffer.prototype.transformBuffer = function(transformCommand){
                 break;
         }
         //console.log(transformContents);
-        //Then paste it onto the field.
+        //Then paste it onto the field. Perhaps this should be an .extend paste?
         defaultBuffer.array = transformContents;
         //This should be implicitly an overwrite at the same place we started.
         pasteStyle = 1;
@@ -522,5 +519,53 @@ function resizeFile(){
                 }
             }
         }
+
+}
+
+//This function renames the value of the pitch to more accurately reflect where it is in a traditional Western 12 tone scale.
+function updatePitchDescription(){
+    var noteName;
+    switch(scaleNote){
+        case 0:
+            noteName = "C";
+            break;        
+        case 1:
+            noteName = "C#";
+            break;        
+        case 2:
+            noteName = "D";
+            break;        
+        case 3:
+            noteName = "D#";
+            break;        
+        case 4:
+            noteName = "E";
+            break;        
+        case 5:
+            noteName = "F";
+            break;        
+        case 6:
+            noteName = "F#";
+            break;        
+        case 7:
+            noteName = "G";
+            break;        
+        case 8:
+            noteName = "G#";
+            break;        
+        case 9:
+            noteName = "A";
+            break;        
+        case 10:
+            noteName = "A#";
+            break;        
+        case 11:
+            noteName = "B";
+            break;
+        default:
+            alert("Something has gone horribly wrong in updatePitchDescription()!");
+            return;
+    }
+    $('#pitchInput').val(noteName + "-" + (currentOctave + 1) );
 
 }

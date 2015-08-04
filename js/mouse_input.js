@@ -311,11 +311,8 @@ function interact(action, e) {
                             console.log(fieldContents[currentTile[0]][currentTile[1]]);
                             //I thought I had to do a logarithm to figure this out! I was so wrong.
                             currentPitch = pitchTable.indexOf(fieldContents[currentTile[0]][currentTile[1]].note);
-                            $('#pitchInput').val(currentPitch);
+                            updatePitchDescription();
                             //When we change the value being painted, we also need to inform the user by updating UI elements.
-
-                            //currentPitch = fieldContents[currentTile[0]][currentTile[1]].note; //Once we figure it out.
-                            //$('#pitchInput').val(currentPitch);
                             currentInstrument = fieldContents[currentTile[0]][currentTile[1]].instrument;
                             $('#instrumentInput').val(currentInstrument);
                             //Needs to scroll and change the highlighted element. Look this up!

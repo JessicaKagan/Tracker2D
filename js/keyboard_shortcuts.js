@@ -14,16 +14,16 @@ function hookKeyboard(){
                 if(currentOctave < 5) {
                     currentOctave += 1;
                     currentPitch += 12;
-                    $('#pitchInput').val(currentPitch);
+                    //$('#pitchInput').val(currentPitch);
                 }
                 break;
             case 45:
                 if(currentOctave > 0) {
                     currentOctave -= 1;
                     currentPitch -= 12;
-                    $('#pitchInput').val(currentPitch);
+                    //$('#pitchInput').val(currentPitch);
                 }
-                $('#pitchInput').val(currentPitch);
+                //$('#pitchInput').val(currentPitch);
                 break;
             //QWERTY row - 12 tone scale
             case 113:
@@ -101,13 +101,12 @@ function hookKeyboard(){
         //If the user pressed a note key, change the current pitch.
         if(keyboardInput !== 61 && keyboardInput !== 45) { 
             currentPitch = currentOctave*12 + scaleNote; 
-            $('#pitchInput').val(currentPitch);
-            //UI function to demonstrate sounds to the user.
-            //Make this optional.
+            //UI function to demonstrate sounds to the user. Make this optional.
             if(pressedNoteKey === true && $("#modifySongProperties").hasClass("currentlyHidden") === true){
                 playSound(soundFont[currentInstrument],pitchTable[currentPitch],currentDSP,currentDSPValue,currentVolume);
             };
         }
+        updatePitchDescription(); //Prettyprint the current pitch value.
         //If the user pressed an arrow key while using the arrow pen, paint in the direction they pressed.
         if(pressedArrowKey === true && selectedTool === "arrowPen" && arrowPenDrawingActivated === true){
             fieldContents[currentArrowPenTile[0]][currentArrowPenTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, currentVolume, currentDSPValue, 0);
