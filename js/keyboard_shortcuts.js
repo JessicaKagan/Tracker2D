@@ -102,7 +102,8 @@ function hookKeyboard(){
         if(keyboardInput !== 61 && keyboardInput !== 45) { 
             currentPitch = currentOctave*12 + scaleNote; 
             //UI function to demonstrate sounds to the user. Make this optional.
-            if(pressedNoteKey === true && $("#modifySongProperties").hasClass("currentlyHidden") === true){
+            if(pressedNoteKey === true && $("#modifySongProperties").hasClass("currentlyHidden") === true &&
+                $('#samplePlayback').prop('checked') === true ) {
                 playSound(soundFont[currentInstrument],pitchTable[currentPitch],currentDSP,currentDSPValue,currentVolume);
             };
         }
