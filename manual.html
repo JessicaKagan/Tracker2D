@@ -164,6 +164,13 @@
         <p>
         These sections are very incomplete (or perhaps not even written yet), even compared to some of the others.
         <h3>The Rendering Loop</h3>
+        <p>Like most programs with any sort of graphics, Tracker2D performs a great deal of graphics functions at any given time. While the actual graphical elements are again very simple (and essentially placeholders barring the creation of more detailed artwork), the graphics rendering loop isn't. This section only refers to graphics tasks handled with HTML5 Canvas - there are several important ones that are handled using standard HTML DOM elements.</p>
+        <ol>
+            <li>After blanking the canvas at the beginning of the loop, Tracker2D first draws a simple background.</li>
+            <li>Tracker2D then draws the tiles, starting with a grid to distinguish them and indicate the overall size of field elements. After this, it computes the viewable area of your current file and paints tiles in said area. Once the colors are painted, the program continues by drawing any relevant overlays. This includes not only indicators of tile data type, like flow control, but overlays that extend beyond a single tile, like that of the selection buffer.</li>
+            <li>We then call the bug drawing routine, which unlike the rest of the graphics code is a method of the Bug object. Bugs have a small arrow overlay (that you could interpret as a nose with the current graphics) that's added after the bug itself is painted on the screen.</li>
+            <li>The final step of each instance of the rendering loop is to draw Canvas based UI elements. The most obvious examples of these are the bottom toolbar and the minimap.</li>
+        </ol>
         <h3>Tiles</h3>
         <h3>(Intentional) Bug Behavior</h3>
         <h3>The Tracker2D Field File Format</h3>

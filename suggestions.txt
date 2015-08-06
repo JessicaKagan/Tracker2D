@@ -18,6 +18,7 @@ Things I know I want to do (which could get very long):
 - Add an "amount of revisions" property to savefiles; increment on saves and add to the file name by default.
 - Note names instead of mere numbers (Update the query tool to use note names)
 - Save the user's UI properties in localStorage or something.
+- Responsive window size (to make the program look better on larger monitors. Time consuming!)
 
 
 
@@ -26,7 +27,7 @@ Things I might do but am not sure about:
 - Make selection flip and rotate tools change the direction of turnsignals.
 - A basic scripting language to allow for arbitrarily complicated conditional code and such on the field (potentially very difficult and time consuming, besides ballooning file sizes). 
 - Antialiasing for large file minimaps.
-- Make bugs in storage translucent instead of completely invisible. Depends on what users ask for.
+- Make bugs in storage translucent instead of completely invisible, at least optionally.
 - Flow control feature to move the viewing field to the pointers.
 - Show the selected tilebuffer on the minimap as an overlay (which might be difficult or awkward to do as image data).
 - Flow control features to dynamically adjust bug properties (possibly really cool, but programming would be annoying, especially on the save/load/revert frontier)
