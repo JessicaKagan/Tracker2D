@@ -6,11 +6,11 @@
 
 var isOverlayShowing = false; //Used to handle some pointer events CSS.
 var pauseState = true;
-var pasteStyle = 1 //1 is an overwrite paste, 2 is mixpaste.
-//singleStep executes a single update and then pauses.
-//Labels for all tools that require clicking on the field. Not in use yet.
+var pasteStyle = 1; //1 is an overwrite paste, 2 is mixpaste. Stored in localStorage.
 
-var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','turnBug','singleStep','modifyTile','arrowPen']; 
+//Labels for all tools that require clicking on the field. Not in use yet except as a reference.
+//singleStep will eventually be implemented and will advance time by a single tick every time it's clicked.
+var toolList = ['pencil', 'line', 'eraser', 'pause', 'selectBox','paste', 'query', 'moveBug','storeBug','turnBug','singleStep','modifyTile','arrowPen', 'extrapolate']; 
 var selectedTool = 'pencil'; //Change as needed, default to pencil.
 var saveContent; //A string representing the contents of the map.
 var selectBoxCoords = new Array(4); //Stores two coordinate pairs.
@@ -359,7 +359,21 @@ function hideUI(){
     }     
     if($("#modifyUIProperties").hasClass("currentlyHidden") === false) { 
         setTimeout(function() {$("#modifyUIProperties").addClass("currentlyHidden");}, 50);
-    } 
+        //Some UI properties need to be saved to localStorage when we close this.
+        if($('#extrapolatePitch').is(':checked')){
+            localStorage.extrapolateStyle = "note";
+        } else if($('#extrapolateVolume').is(':checked')){
+            localStorage.extrapolateStyle = "volume";
+        } else if($('#extrapolateFXValue').is(':checked')){
+            localStorage.extrapolateStyle = "dspValue";
+        }
+        if($('#samplePlayback').prop('checked') === true ) {
+            localStorage.samplePlayback = "true";
+        } else if($('#samplePlayback').prop('checked') === false ){ 
+            localStorage.samplePlayback = "false"; 
+        }
+    }
+
 }
 
 //checkBug and getBug need to be merged properly?
@@ -455,10 +469,11 @@ function changePasteStyle() {
     if(pasteStyle === 1) {
         pasteStyle = 2;
         $("#selectPasteStyle").html("Change from Mix to Overwrite");
-    } else if(pasteStyle === 2){
+    } else if(pasteStyle === 2 || null){
         pasteStyle = 1;
         $("#selectPasteStyle").html("Change from Overwrite to Mix");
     }
+    localStorage.pasteStyle = pasteStyle;
 }
 
 //Initializes everything, but only responds if the soundSet is loaded. Move to main.js?

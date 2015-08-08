@@ -79,6 +79,7 @@ var bugImages = new Array(8);
 //Define the bug arrays.
 var bugList = new Array(8);
 
+//Various pre-init things, like actually beginning the preloads.
 //Initialize the image arrays properly.
 for(var i = 0; i < tileOverlayImages.length; i++) {
     tileOverlayImages[i] = new Image();
@@ -103,6 +104,18 @@ for(var i = 0; i < soundSet.length; ++i){
     } else soundArray[i] = './sounds/00.mp3'; //Otherwise, silence.
 }
 
+//Check to see if we have local storage support, although it SHOULD be a given on anything new enough to support the rest of Tracker2D.
+//Copypasta'ed from http://diveintohtml5.info/storage.html.
+var localStorageSupport = function supports_html5_storage() {
+  try {
+    return 'localStorage' in window && window['localStorage'] !== null;
+  } catch (e) {
+    alert("It appears your browser doesn't support HTML5 local storage. This alone merely prevents you from saving UI settings between sessions, but it probably also means your browser is very out of date and will not be able to handle other parts of Tracker2D.");
+    return false;
+  }
+}
+
+
 //Set up a canvas to draw on. All the drawing functions should be in render()7 now.
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
@@ -124,6 +137,11 @@ function init() {
     bindCanvas.addEventListener("mousemove", function (e) { interact('mousemove',e) }, false);
     //Then set up file I/O for when the user loads a file off their computer.
     document.getElementById('loadFileUI').addEventListener('change', loadFile, false);
+    //And set up localStorage for the UI in case we need it.
+    window.addEventListener("storage", handle_storage, false);
+    function handle_storage(e) {
+        if (!e) { e = window.event; }
+    }
 
     //Set up keyboard shortcuts.
     hookKeyboard();
@@ -282,7 +300,7 @@ function init() {
             $("#instrumentInput").animate({
                 width: "176px",
             }, 150, function(){
-                //Animation complete
+                //Animation complete; we don't do anything here yet.
             });
         }, 
         function(){
@@ -294,9 +312,48 @@ function init() {
         }
     );
 
-    //Create the buffer.
+    //Set UI properties based on localStorage.
+    if(pasteStyle === (1 || 2)) {
+        pasteStyle = parseInt(localStorage.getItem("pasteStyle"));
+    } else { pasteStyle = 1; }
+    //I think these need to be nulled for safety.
+    $('#extrapolatePitch').prop('checked' , false);
+    $('#extrapolateVolume').prop('checked' , false);
+    $('#extrapolateFXValue').prop('checked' , false);
+    switch(localStorage.extrapolateStyle){
+        case "note":
+            $('#extrapolatePitch').prop('checked' , true);
+            break;
+        case "volume":
+            $('#extrapolateVolume').prop('checked' , true);
+            break;
+        case "dspValue":
+            $('#extrapolateFXValue').prop('checked' , true);
+            break;
+        //If the data is malformed or nonexistent (due to, for instance, 1st runtime), set these fallback values.
+        default:
+            $('#extrapolatePitch').prop('checked' , true);
+            localStorage.extrapolateStyle = "note";
+            break;
+    }
+    //Same here. Localstorage doesn't like booleans, so we use strings instead.
+    $('#samplePlayback').prop('checked', false);
+    switch(localStorage.samplePlayback){
+        case "true":
+            $('#samplePlayback').prop('checked', true);
+            break;        
+        case "false":
+            $('#samplePlayback').prop('checked', false);
+            break;
+        default:
+            localStorage.samplePlayback = "true";
+            $('#samplePlayback').prop('checked', true);
+            break;
+    }
+
+
+    //Create the tile buffer, which stores tiles inside a coordinate range.
     defaultBuffer = new TileBuffer(0,0,0,0);
-    //console.log(defaultBuffer);
 
     //Create timing information, and then begin the mainloop.
     lastTime = Date.now();
