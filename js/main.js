@@ -315,6 +315,7 @@ function init() {
     //Set UI properties based on localStorage. This should be turned into a function and called during init().
     if(pasteStyle === ("1" || "2")) {
         pasteStyle = parseInt(localStorage.getItem("pasteStyle"));
+        localStorage.pasteStyle = pasteStyle;
     } else { 
         pasteStyle = 1;
         localStorage.pasteStyle = "1";
