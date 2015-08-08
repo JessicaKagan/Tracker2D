@@ -312,10 +312,13 @@ function init() {
         }
     );
 
-    //Set UI properties based on localStorage.
-    if(pasteStyle === (1 || 2)) {
+    //Set UI properties based on localStorage. This should be turned into a function and called during init().
+    if(pasteStyle === ("1" || "2")) {
         pasteStyle = parseInt(localStorage.getItem("pasteStyle"));
-    } else { pasteStyle = 1; }
+    } else { 
+        pasteStyle = 1;
+        localStorage.pasteStyle = "1";
+    }
     //I think these need to be nulled for safety.
     $('#extrapolatePitch').prop('checked' , false);
     $('#extrapolateVolume').prop('checked' , false);
