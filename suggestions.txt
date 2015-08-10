@@ -9,16 +9,17 @@ Things I know I want to do (which could get very long):
 - Add Web MIDI API support to allow instrument input
 - Zoom feature (Which might need better graphics to really shine and will be complicated to implement.)
 - "Find Bug" feature that centers the camera on a bug (Made less useful by minimap finder.)
-- Performance optimization (Duh.)
+- Performance optimization (Not enough effort has been made in this realm yet.)
 - Functions to rotate and flip a selection (flips implemented, 90 degree rotation still necessary; latter is partially done but not quite there yet.)
 - Rotate turn tiles with the rotate selection tool (make this function optional), or perhaps add a tool to increment through flow control options.
 - Randomized trivia for the loadscreens.
 - When the pointer setting tool is selected, apply an overlay to pointee tiles when hovering over a tile.
 - "Megamap" that displays a 64*64 to 512*512 pixel image showing the entire field in miniature.
 - Add an "amount of revisions" property to savefiles; increment on saves and add to the file name by default.
-- Note names instead of mere numbers (Update the query tool to use note names)
-- Save the user's UI properties in localStorage or something.
+- Note names instead of mere numbers (Update the query tool to use note names, requires functionalization of note-naming code)
 - Responsive window size (to make the program look better on larger monitors. Time consuming!)
+- Properly implement versioning and use this to make the save format more robust and less likely to break compatibility with old files.
+- Simply add more audio effects (like reverb, etc).
 
 
 
@@ -31,9 +32,10 @@ Things I might do but am not sure about:
 - Flow control feature to move the viewing field to the pointers.
 - Show the selected tilebuffer on the minimap as an overlay (which might be difficult or awkward to do as image data).
 - Flow control features to dynamically adjust bug properties (possibly really cool, but programming would be annoying, especially on the save/load/revert frontier)
+- Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data)
 
 
-Suggestions that have already been implemented:
+Suggestions and planned features that have already been implemented:
 - Actually show the tile buffer (as filled up by the select tool) somehow, like a translucent overlay
 - Indicate current part of the window on the minimap
 - Scroll bars on the instrument list
@@ -48,3 +50,4 @@ Suggestions that have already been implemented:
 - Improve the arrow pen - have a function to temporarily stop painting, etc.
 - UI options display (Needs more options, period).
 - Some sort of feature to compute changes in volume and effects between two tiles and 'extrapolate' changes between them (could use more expansion, perhaps).
+- Save the user's UI properties in localStorage.

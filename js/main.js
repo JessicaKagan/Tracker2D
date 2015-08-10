@@ -312,50 +312,9 @@ function init() {
         }
     );
 
-    //Set UI properties based on localStorage. This should be turned into a function and called during init().
-    if(pasteStyle === ("1" || "2")) {
-        pasteStyle = parseInt(localStorage.getItem("pasteStyle"));
-        localStorage.pasteStyle = pasteStyle;
-    } else { 
-        pasteStyle = 1;
-        localStorage.pasteStyle = "1";
-    }
-    //I think these need to be nulled for safety.
-    $('#extrapolatePitch').prop('checked' , false);
-    $('#extrapolateVolume').prop('checked' , false);
-    $('#extrapolateFXValue').prop('checked' , false);
-    switch(localStorage.extrapolateStyle){
-        case "note":
-            $('#extrapolatePitch').prop('checked' , true);
-            break;
-        case "volume":
-            $('#extrapolateVolume').prop('checked' , true);
-            break;
-        case "dspValue":
-            $('#extrapolateFXValue').prop('checked' , true);
-            break;
-        //If the data is malformed or nonexistent (due to, for instance, 1st runtime), set these fallback values.
-        default:
-            $('#extrapolatePitch').prop('checked' , true);
-            localStorage.extrapolateStyle = "note";
-            break;
-    }
-    //Same here. Localstorage doesn't like booleans, so we use strings instead.
-    $('#samplePlayback').prop('checked', false);
-    switch(localStorage.samplePlayback){
-        case "true":
-            $('#samplePlayback').prop('checked', true);
-            break;        
-        case "false":
-            $('#samplePlayback').prop('checked', false);
-            break;
-        default:
-            localStorage.samplePlayback = "true";
-            $('#samplePlayback').prop('checked', true);
-            break;
-    }
-
-
+    //Set UI properties based on localStorage. See file_io.js for the gritty details.
+    loadUserSettings();
+    
     //Create the tile buffer, which stores tiles inside a coordinate range.
     defaultBuffer = new TileBuffer(0,0,0,0);
 
