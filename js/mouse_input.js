@@ -138,7 +138,7 @@ function interact(action, e) {
             if(loadedTiles !== undefined){
                 var continueReverting = confirm("Revert restores the most recent copy of the field from your latest save or load operation. Your bugs' positions and headings will not be affected.");
                 if(continueReverting === true) {
-                    if(fieldContents === loadedTiles) { console.log("wut");} //This shouldn't be the case right now!
+                    if(fieldContents === loadedTiles) { alert("Your field is the same as it was during the last file I/O operation.");} //This shouldn't be the case right now!
                     fieldContents = jQuery.extend(true, {}, loadedTiles);
                 }
             } else { alert("Can't revert because you haven't attempted to save or load a file yet.");}

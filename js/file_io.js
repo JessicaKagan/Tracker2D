@@ -123,7 +123,7 @@ function loadFile(evt) {
         reader.readAsText(file);
         renderMinimap = true;
     } else {
-        alert("File load failed for some reason. This messsage also displays if you exit out of the loading dialog manually.");
+        alert("File load failed for some reason. If you exited out of your browser's file uploader manually, please disregard this.");
         renderMinimap = true;
         return;
     }
