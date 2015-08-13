@@ -32,7 +32,8 @@ Things I might do but am not sure about:
 - Flow control feature to move the viewing field to the pointers.
 - Show the selected tilebuffer on the minimap as an overlay (which might be difficult or awkward to do as image data).
 - Flow control features to dynamically adjust bug properties (possibly really cool, but programming would be annoying, especially on the save/load/revert frontier)
-- Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data)
+- Flow control features to dynamically adjust SONG properties! (Currently only tempo; would require similar expansion of file I/O to dynamic bug properties)
+- Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data; one way to do this would possibly be adding audio effects to bugs).
 
 
 Suggestions and planned features that have already been implemented:
