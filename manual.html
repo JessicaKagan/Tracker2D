@@ -6,7 +6,7 @@
     </head>
     <body>
         <h1>MANUAL FOR TRACKER2D</h1>
-        <strong>Press the help button again at any time to close this window.</strong>
+        <strong>Press the help button again at any time to close this window. Complain to the dev until he creates a proper navigable table of contents for this manual!</strong>
         <p>The most basic tutorial follows:</p>
         <ol>
         <li> Select an instrument from the instrument menu. </li>
@@ -81,12 +81,27 @@
         <strong><img src="images/revert_button.png" alt="">Revert</strong>: As the program explains when you click this button, Revert attempts to change the tiles on the field to what they were when you last saved or loaded a file. This doesn't affect the positions of your bugs.<br>   
         <strong><img src="images/save_button.png" alt="">Save File</strong>: This pulls up your browser's download dialog, allowing you to save a Tracker2D file to your computer. Currently the files are stored as plain text, which means you can technically edit them manually if you understand the format well enough, although it's not recommended in most cases. Note that the file saving routine calls the same "store bugs" routine as the "Store Bug Positions" button.<br>   
         <strong><img src="images/load_button.png" alt="">Load File</strong>: This pulls up a dialog allowing you to load a text file from your computer that hopefully matches the Tracker2D format. I should probably change the extension on these things at some point. The loader then interprets the file as a Tracker2D field; in the process, it calls the "Restore Bug Positions" algorithm.<br>   
-
         </p>  
         <hr>
-            <h2>Effect Reference</h2>
+        <h2>The Dialog Windows</h2>
+        As of this writing, there are four of these that have any thing interesting within them.
+        <h3>Bug Properties</h3>
+        <p>Currently, the only purpose of this window is that it lets you adjust the volume multiplier on a bug, which is multiplied by the volume data of a tile to get the total playback volume of a sample. Use this sparingly; at its absolute lowest it can combine with tile volume to reduce a sample's volume to an essentially inaudible 0.01%.</p>
+        <h3>UI Properties</h3>
+        <p></p>
+        <h3>Tile Properties</h3>
+        <p>Click this button, and then click a tile on the field, and you will open up a more detailed editing window that allows you to edit a single tile in ways that are otherwise inaccessible; read on for more information about those.
+        <ul>
+            <li>Flow Control Value</li>: Currently only used for the counter effect. Each flow control effect can <em>potentially</em> have an integer associated with it; in the case of the counter this is decreased when a bug moves over the tile, or used to trigger a tile change when its value is zero. 
+            <li>Points To The Tiles At These Coordinates</li>: Each tile on the field can "point" to another tile on the field - in other words, it stores the location of another tile, as opposed to the contents of the tile at said location. Certain flow control effects use this pointer to govern some aspect of their behavior. The "Flow Control" section of this manual describes these specifics in more detail. 
+        </ul>
+        </p>
+        <h3>Song Properties</h3>
+        <p></p>
+        <hr>
+        <h2>Effect Reference</h2>
             <p>Tracker2D gives you a couple ways to adjust the sound and playback order of tiles. Expand and rephrase this.</p>
-            <hr>
+        <hr>
         <h2>Audio Effects</h2>
             <p>Keep in mind that it is currently only possible to apply one audio effect to a tile at a time. This may be changed in the future, although it would require significant revision to the audio playback engine.</p>
             <ul>
@@ -112,7 +127,7 @@
                 </li>
                 <br>
                 <li>
-                    <strong>Counter</strong>: When a bug passes over this tile, the counter's value will decrease by 1. When the counter reaches 0, the tile will turn into the tile it is currently pointing to.
+                    <strong>Counter</strong>: When a bug passes over this tile, the counter's value will decrease by 1. When the counter reaches 0, the tile will turn into an exact and deep copy of the tile it is currently pointing to. 
                 </li>
                 <br>
                 <li>
@@ -126,7 +141,7 @@
                     <div class="flowControlImages">
                         <img src="images/teleporter_overlay.png" alt="Teleporter">
                     </div>
-                    <strong>Teleport</strong>: When a bug passes over this tile, they will be moved (after playing a sound) to the tile that the teleporter tile points to.
+                    <strong>Teleport</strong>: When a bug passes over this tile, they will be moved (after playing the tile's computed sound) to the tile that the teleporter tile points to. Their current direction will not change.
                 </li>
                 <br>
                 <li>
