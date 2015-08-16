@@ -3,7 +3,7 @@ A step sequencer that uses a 2D space metaphor like Simtunes; think Mario Paint 
 
 This program is in late alpha. While the program is far from complete, there is enough functionality implemented that you can easily create interesting music with it. Most development effort is going towards UI improvements and increasing the range of sound/instrumentation possible. Besides the GitHub Pages version, you can also play with a live version of this program at http://www.kongregate.com/games/PepsiPoP/tracker2d.
 
-Currently, this software uses jQuery 2.1.3, the Web Audio API, and eventually the HTML File API (currently FileReader is used). More acknowledgements as I add things. It also uses XMLHTTPRequest to prep sound files, so you won't be able to run it locally unless you have server software like XAMPP set up. Making it work without that will probably require a major refactoring and the replacement of various crucial libraries. I also intend to use Vorbis to supply audio, so make sure your browser supports that.
+Currently, this software uses jQuery 2.1.3, the Web Audio API, and eventually the HTML File API (currently FileReader is used). More acknowledgements as I add things. It also uses XMLHTTPRequest to prep sound files, so you won't be able to run it locally unless you have server software like XAMPP set up. Making it work without that will probably require a major refactoring and the replacement of various crucial libraries. I also use Vorbis audio for the sound set, so make sure your browser supports that.
 
 So far, this code runs best on Chrome. Firefox seems to handle it decently as well, but there are some issues with visual alignment that eventually need to be handled.
 
@@ -13,7 +13,7 @@ Current bugs:
 - Mouse input can be 'sticky' and occasionally problematic if you click too fast or drag properly (I can't tell you more because I don't know how quite to describe it).
 - Occasionally, if you click the bottom row, the canvas doesn't register the click properly and instead selects some unknown text (eventually the first UIShifter div).
 - Large fields and their save/loads may have various odd bugs. They're also really slow.
-- On Google Chrome, slowed down samples don't play for their entire length; should be fixed in either v44 or v45.
+- Microsoft Edge does not support the code used to load sound samples.
 
 Tracker2D contains some code released under the MIT License. The following block of legalese applies to such:
 
