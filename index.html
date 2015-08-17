@@ -154,11 +154,13 @@
                     <p><input id="samplePlayback" type="checkbox" checked>Play Sample When Pitch Key Is Pressed</input>
                     </p>
                     <br>
-                    <p>UI Colors (use RGBA strings, not implemented yet, do something for text too, save to localStorage, this is getting way too long):<br><br>
-                    <input type="text" placeholder="Background color" id="bgColorInput" value="Get this working">Background</input><br>
-                    <input type="text" placeholder="Background color" id="leftBarColorInput" value="Get this working">Left Bar</input><br>
-                    <input type="text" placeholder="Background color" id="bottomBarColorInput" value="Get this working">Bottom Bar</input><br>
-                    <input type="text" placeholder="Background color" id="boundaryColorInput" value="Get this working">Tile Boundaries</input><br>
+                    <p>UI Colors (use four numbers, not implemented yet, do something for text too, save to localStorage, this is getting way too long):<br><br>
+                    Example (RGBA): 255,255,255,0<br>
+                    First 3 values need to be from 0-255, value 4 is from 0-1<br>
+                    <input type="text" placeholder="Submit with enter" id="bgColorInput" value="">Background</input><br>
+                    <input type="text" placeholder="Submit with enter" id="leftBarColorInput" value="">Left Bar</input><br>
+                    <input type="text" placeholder="Submit with enter" id="bottomBarColorInput" value="">Bottom Bar</input><br>
+                    <input type="text" placeholder="Submit with enter" id="boundaryColorInput" value="">Tile Boundaries</input><br>
                     <button type="button" id="resetUIColors" onClick="resetUIColors()">Reset To Default</button>
                     </p>
                     <br>

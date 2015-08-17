@@ -145,54 +145,58 @@ function init() {
 
     //Set up keyboard shortcuts.
     hookKeyboard();
-
-    //Populate the instrument menu. The undefined check is VERY important during periods of expansion
-    for(var i = 0; i < soundSet.length; ++i){
-        if(soundSet[i] !== undefined){
-            //Highlight the Grand Piano, which is selected at the beginning.
-            if(i === 1){
-                $('#instrumentInput').append('<option value="' + soundSet[i] + '" selected>' + soundSet[i][0] + '</option>');
-            } else {
-                $('#instrumentInput').append('<option value="' + soundSet[i] + '">' + soundSet[i][0] + '</option>');
-            }
-        }
-    }
-    $('#instrumentInput').change(function() {
+    //I encapsulated this for readability. It gets called IMMEDIATELY after being defined.
+    function handleLeftBarMenu(){
+        //Populate the instrument menu. The undefined check is VERY important during periods of expansion
         for(var i = 0; i < soundSet.length; ++i){
             if(soundSet[i] !== undefined){
-                //We should parse the input from the instrument menu so that we can use strict equivalence.
-                if(soundSet[i] == $(this).find('option:selected').attr('value')) {
-                    currentInstrument = i;
+                //Highlight the Grand Piano, which is selected at the beginning.
+                if(i === 1){
+                    $('#instrumentInput').append('<option value="' + soundSet[i] + '" selected>' + soundSet[i][0] + '</option>');
+                } else {
+                    $('#instrumentInput').append('<option value="' + soundSet[i] + '">' + soundSet[i][0] + '</option>');
                 }
             }
         }
-    });
+        $('#instrumentInput').change(function() {
+            for(var i = 0; i < soundSet.length; ++i){
+                if(soundSet[i] !== undefined){
+                    //We should parse the input from the instrument menu so that we can use strict equivalence.
+                    if(soundSet[i] == $(this).find('option:selected').attr('value')) {
+                        currentInstrument = i;
+                    }
+                }
+            }
+        });
 
-    //This handles the audio FX menu.
-    for(var i = 0; i < possibleDSPEffects.length; ++i){
-        $('#DSPInput').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
-    }
-    $( "#DSPInput" ).change(function() {
-        currentDSP = $(this).find('option:selected').attr('value');
-        console.log(currentDSP);
-    });
-    //Definitely functionalize. This handles input for Audio FX.    
-    $('#dspValueInput').keydown(function(event){
-        if (event.keyCode == 13) {
-            currentDSPValue = $('#dspValueInput').val(); //Unlike the others, this needs to be interpreted based on the current DSP.
-            console.log(currentDSPValue);
-            //$('#dspValueInput').val('');
+        //This handles the audio FX menu.
+        for(var i = 0; i < possibleDSPEffects.length; ++i){
+            $('#DSPInput').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
         }
-    })
-    //This handles the flow control menu.
-    for(var i = 0; i < possibleFlowEffects.length; ++i){
-        $('#controlInput').append('<option value="' + possibleFlowEffects[i] + '">' + possibleFlowEffects[i] + '</option>');
+        $( "#DSPInput" ).change(function() {
+            currentDSP = $(this).find('option:selected').attr('value');
+            console.log(currentDSP);
+        });
+        //Definitely functionalize. This handles input for Audio FX.    
+        $('#dspValueInput').keydown(function(event){
+            if (event.keyCode == 13) {
+                currentDSPValue = $('#dspValueInput').val(); //Unlike the others, this needs to be interpreted based on the current DSP.
+                console.log(currentDSPValue);
+                //$('#dspValueInput').val('');
+            }
+        })
+        //This handles the flow control menu.
+        for(var i = 0; i < possibleFlowEffects.length; ++i){
+            $('#controlInput').append('<option value="' + possibleFlowEffects[i] + '">' + possibleFlowEffects[i] + '</option>');
+        }
+        $( "#controlInput" ).change(function() {
+            currentFlowControl = $(this).find('option:selected').attr('value');
+            console.log(currentFlowControl);
+        });
+        //Left bar menu stuff ends here.
     }
-    $( "#controlInput" ).change(function() {
-        currentFlowControl = $(this).find('option:selected').attr('value');
-        console.log(currentFlowControl);
-    });
-    //Left bar menu stuff ends here.
+    handleLeftBarMenu();
+    
     //Define the bugs. The names are for flavor.
     bugList[0] = new Bug(bugImages[0], 1,1,'moveRight','George', false);
     bugList[1] = new Bug(bugImages[1], 1,3,'moveRight','Steve', false);
@@ -211,7 +215,28 @@ function init() {
 
     //Add an event listener for hovering in the bug storage divs.
     //This is going to be kind of inefficient, but we'll live.
-    //Finish this.
+
+    //I have a more generic version of this, but it runs into scope problems with i.
+    //See this to fix it. http://stackoverflow.com/questions/7774636/jquery-event-handler-created-in-loop
+
+    /*
+    for(var i = 1; i <= 8; ++i ){
+        var hookBugStorage = $("#bugStorageUnit" + i);
+
+        var hoverValue = i - 1;
+        hookBugStorage.hover(
+        function(){
+            bugHoverState = true;
+            hoverBug = hoverValue;
+        }, 
+        function(){
+            bugHoverState = false;
+            hoverBug = -1;
+        }
+    );  
+    }
+    */
+
     $("#bugStorageUnit1").hover(
         function(){
             bugHoverState = true;
@@ -292,6 +317,7 @@ function init() {
             hoverBug = -1;
         }
     );
+    
 
     //Add an event listener for the instrument bank to widen it when the user rolls over it.
     //This should make instrument names more legible.

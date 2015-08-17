@@ -5,25 +5,19 @@ var bugHoverState = false; //If the user isn't hovering over a bug, no indicator
 var backgroundColor = 'rgba(255,255,255,1)';
 var leftBarColor = 'rgba(0,0,0,1)';
 var bottomBarColor = 'rgba(128,128,128,1)';
-var tileBoundaryColor = 'rgba(192,192,192,1)';
+var tileBoundaryColor = 'rgba(64,64,64,1)';
 
 function render(){
     ctx.clearRect(FIELD_PIXELS[0],FIELD_PIXELS[1],FIELD_PIXELS[2],FIELD_PIXELS[3]); //Use this to refresh everything.
     //Render things in this order:
-    //1. Background (Which didn't have to be redrawn a lot but now does?)
+    //1. Background
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0,0,800,600); //Not drawing this causes problems on backgrounds that aren't white.
-    ctx.fillStyle = leftBarColor;
-    ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
-    ctx.fillStyle = bottomBarColor;
-    ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
-    
-    //2. Painted tiles
 
     //Draw boundaries between tiles.
     //This may need adjustment if we implement a zoom feature.
     //Replacing some constants with variables in order to make it easier to rebuild (although readability might be a pain).
-    ctx.fillStyle = tileBoundaryColor;
+    ctx.strokeStyle = tileBoundaryColor;
     for(var i = FIELD_PIXELS[0]; i < FIELD_PIXELS[2]; i += TILE_SIZE) {
         ctx.beginPath();
         ctx.moveTo(i,0); //Horizontal lines
@@ -36,6 +30,13 @@ function render(){
         ctx.lineTo(FIELD_PIXELS[2],i);
         ctx.stroke();
     }
+
+    ctx.fillStyle = leftBarColor;
+    ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
+    ctx.fillStyle = bottomBarColor;
+    ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
+    
+    //2. Painted tiles
     //Painting squares! From an MVC stance this is the "view", I guess.
     for(var i = 0; i < (FIELD_SIZE[0]); ++i){
         for(var j = 0; j < (FIELD_SIZE[1]); ++j){
@@ -189,6 +190,7 @@ function paintMiniMap(){
     ctx.lineWidth = "1";
     ctx.rect(8 + (fieldOffset[0]/PLAYFIELD_SIZE), 8 + (fieldOffset[1]/PLAYFIELD_SIZE),
             (FIELD_SIZE[0]/PLAYFIELD_SIZE),(FIELD_SIZE[1]/PLAYFIELD_SIZE));
+    ctx.strokeStyle = 'rgba(64,64,64,1)';
     ctx.stroke(); 
 }
 
@@ -316,4 +318,58 @@ var drawSelectedToolOverlay = function() {
         default:
             break;
     }
+}
+
+//These could technically go in ui_behavior.
+function resetUIColors(){
+    backgroundColor = 'rgba(255,255,255,1)';
+    leftBarColor = 'rgba(0,0,0,1)';
+    bottomBarColor = 'rgba(128,128,128,1)';
+    tileBoundaryColor = 'rgba(192,192,192,1)';
+}
+
+function updateUIColors(property , value){
+    //console.log(property, value);
+
+    //Start by verifying the user's value string. Takes a lot of conditionals.
+    var colorInput = value.split(",");
+    console.log(colorInput);
+    if(colorInput.length != 4){
+        alert("Terminating color update due to incorrect amount of color values.");
+        return;
+    }
+    for(var i = 0; i < colorInput.length; ++i){
+        if(isNaN(colorInput[i])) {
+            alert("Terminating color update because value #" + (i + 1) + " doesn't seem to be a number at all.");
+            return;
+        }
+        switch(i){
+            case 0:
+            case 1:
+            case 2:
+                if( (parseFloat(colorInput[i]) > 255 || parseFloat(colorInput[i]) < 0) ){
+                    alert("Terminating color update because value #" + (i + 1) + 
+                        " doesn't seem to be between 0 and 255. (It's " + colorInput[i] + ")");
+                    return;
+                }
+                break;
+            case 3:
+                if( (parseFloat(colorInput[i]) > 1 || parseFloat(colorInput[i]) < 0) ){
+                    alert("Terminating color update because value #" + (i + 1) + 
+                        " doesn't seem to be between 0 and 1. (It's " + colorInput[i] + ")");
+                    return;
+                }
+                break;
+            default:
+                return; //Something went VERY wrong.
+        }
+    }
+    //If all of those conditionals passed, we should have valid input.
+    //Format it into a string.
+    var formattedColorString = "rgba(" + colorInput[0] + "," 
+                                       + colorInput[1] + ","                                        
+                                       + colorInput[2] + ","                                        
+                                       + colorInput[3] + ")";
+    //console.log(formattedColorString);
+    window[property] = formattedColorString;
 }

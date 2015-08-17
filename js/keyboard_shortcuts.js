@@ -216,6 +216,20 @@ function hookKeyboard(){
         $("#currentBugVolume").html(this.value);
     });
 
+    //Colors for the UI properties! These call a function in rendering.js
+    jQuery('#bgColorInput').change(function (){
+        updateUIColors("backgroundColor",this.value);
+    });
+    jQuery('#leftBarColorInput').change(function (){
+        updateUIColors("leftBarColor",this.value);
+    });    
+    jQuery('#bottomBarColorInput').change(function (){
+        updateUIColors("bottomBarColor",this.value);
+    });    
+    jQuery('#boundaryColorInput').change(function (){
+        updateUIColors("tileBoundaryColor",this.value);
+    });
+
 
 
 }

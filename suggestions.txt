@@ -21,6 +21,7 @@ Things I know I want to do (which could get very long):
 - Properly implement versioning and use this to make the save format more robust and less likely to break compatibility with old files.
 - Simply add more audio effects (like reverb, etc).
 - Adjust bufferloader code so that Tracker2D is compatible with Microsoft Edge
+- Multiple color schemes for the UI (or better yet, let the user define them with RGBA strings?)
 
 
 Things I might do but am not sure about:
