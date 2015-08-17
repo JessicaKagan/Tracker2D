@@ -20,7 +20,7 @@ Things I know I want to do (which could get very long):
 - Responsive window size (to make the program look better on larger monitors. Time consuming!)
 - Properly implement versioning and use this to make the save format more robust and less likely to break compatibility with old files.
 - Simply add more audio effects (like reverb, etc).
-
+- Adjust bufferloader code so that Tracker2D is compatible with Microsoft Edge
 
 
 Things I might do but am not sure about:

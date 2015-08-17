@@ -1,16 +1,21 @@
 //Welcome to our new graphics rendering file!
 
 var bugHoverState = false; //If the user isn't hovering over a bug, no indicator rendering happens
+//Groundwork for later UI color customization
+var backgroundColor = 'rgba(255,255,255,1)';
+var leftBarColor = 'rgba(0,0,0,1)';
+var bottomBarColor = 'rgba(128,128,128,1)';
+var tileBoundaryColor = 'rgba(192,192,192,1)';
 
 function render(){
     ctx.clearRect(FIELD_PIXELS[0],FIELD_PIXELS[1],FIELD_PIXELS[2],FIELD_PIXELS[3]); //Use this to refresh everything.
     //Render things in this order:
     //1. Background (Which didn't have to be redrawn a lot but now does?)
-    ctx.fillStyle = 'rgba(255,255,255,1)';
+    ctx.fillStyle = backgroundColor;
     ctx.fillRect(0,0,800,600); //Not drawing this causes problems on backgrounds that aren't white.
-    ctx.fillStyle = 'rgba(0,0,0,1)';
+    ctx.fillStyle = leftBarColor;
     ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
-    ctx.fillStyle = 'rgba(128,128,128,1)';
+    ctx.fillStyle = bottomBarColor;
     ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
     
     //2. Painted tiles
@@ -18,7 +23,7 @@ function render(){
     //Draw boundaries between tiles.
     //This may need adjustment if we implement a zoom feature.
     //Replacing some constants with variables in order to make it easier to rebuild (although readability might be a pain).
-    ctx.fillStyle = 'rgba(192,192,192,1)';
+    ctx.fillStyle = tileBoundaryColor;
     for(var i = FIELD_PIXELS[0]; i < FIELD_PIXELS[2]; i += TILE_SIZE) {
         ctx.beginPath();
         ctx.moveTo(i,0); //Horizontal lines
