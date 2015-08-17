@@ -334,9 +334,14 @@ function resetUIColors(){
 }
 
 function updateUIColors(property , value){
-    //console.log(property, value);
+    console.log(property, value);
 
     //Start by verifying the user's value string. Takes a lot of conditionals.
+    if(value === (null || undefined)) {
+        alert("Terminating color update because we didn't recieve a value at all.");
+        return;
+    }
+
     var colorInput = value.split(",");
     //console.log(colorInput);
     if(colorInput.length != 4){
