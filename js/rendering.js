@@ -2,22 +2,22 @@
 
 var bugHoverState = false; //If the user isn't hovering over a bug, no indicator rendering happens
 //Groundwork for later UI color customization
-var backgroundColor = 'rgba(255,255,255,1)';
-var leftBarColor = 'rgba(0,0,0,1)';
-var bottomBarColor = 'rgba(128,128,128,1)';
-var tileBoundaryColor = 'rgba(64,64,64,1)';
+var backgroundColor = '255,255,255,1';
+var leftBarColor = '0,0,0,1';
+var bottomBarColor = '128,128,128,1';
+var tileBoundaryColor = '64,64,64,1';
 
 function render(){
     ctx.clearRect(FIELD_PIXELS[0],FIELD_PIXELS[1],FIELD_PIXELS[2],FIELD_PIXELS[3]); //Use this to refresh everything.
     //Render things in this order:
     //1. Background
-    ctx.fillStyle = backgroundColor;
+    ctx.fillStyle = 'rgba(' + backgroundColor + ')';
     ctx.fillRect(0,0,800,600); //Not drawing this causes problems on backgrounds that aren't white.
 
     //Draw boundaries between tiles.
     //This may need adjustment if we implement a zoom feature.
     //Replacing some constants with variables in order to make it easier to rebuild (although readability might be a pain).
-    ctx.strokeStyle = tileBoundaryColor;
+    ctx.strokeStyle = 'rgba(' + tileBoundaryColor + ')';
     for(var i = FIELD_PIXELS[0]; i < FIELD_PIXELS[2]; i += TILE_SIZE) {
         ctx.beginPath();
         ctx.moveTo(i,0); //Horizontal lines
@@ -31,9 +31,9 @@ function render(){
         ctx.stroke();
     }
 
-    ctx.fillStyle = leftBarColor;
+    ctx.fillStyle = 'rgba(' + leftBarColor + ')';
     ctx.fillRect(LEFT_VERTICAL_BAR[0],LEFT_VERTICAL_BAR[1],LEFT_VERTICAL_BAR[2],LEFT_VERTICAL_BAR[3]); 
-    ctx.fillStyle = bottomBarColor;
+    ctx.fillStyle = 'rgba(' + bottomBarColor + ')';
     ctx.fillRect(BOTTOM_HORIZONTAL_BAR[0],BOTTOM_HORIZONTAL_BAR[1],BOTTOM_HORIZONTAL_BAR[2],BOTTOM_HORIZONTAL_BAR[3]);
     
     //2. Painted tiles
@@ -322,10 +322,15 @@ var drawSelectedToolOverlay = function() {
 
 //These could technically go in ui_behavior.
 function resetUIColors(){
-    backgroundColor = 'rgba(255,255,255,1)';
-    leftBarColor = 'rgba(0,0,0,1)';
-    bottomBarColor = 'rgba(128,128,128,1)';
-    tileBoundaryColor = 'rgba(192,192,192,1)';
+    backgroundColor = '255,255,255,1';
+    leftBarColor = '0,0,0,1';
+    bottomBarColor = '128,128,128,1';
+    tileBoundaryColor = '64,64,64,1';
+    //Clear out the input fields for sanity's sake.
+    $('#bgColorInput').val(backgroundColor);
+    $('#leftBarColorInput').val(leftBarColor);
+    $('#bottomBarColorInput').val(bottomBarColor);
+    $('#boundaryColorInput').val(tileBoundaryColor);
 }
 
 function updateUIColors(property , value){
@@ -366,10 +371,10 @@ function updateUIColors(property , value){
     }
     //If all of those conditionals passed, we should have valid input.
     //Format it into a string.
-    var formattedColorString = "rgba(" + colorInput[0] + "," 
-                                       + colorInput[1] + ","                                        
-                                       + colorInput[2] + ","                                        
-                                       + colorInput[3] + ")";
+    var formattedColorString = colorInput[0] + "," 
+                             + colorInput[1] + ","                                        
+                             + colorInput[2] + ","                                        
+                             + colorInput[3];
     //console.log(formattedColorString);
     window[property] = formattedColorString;
 }

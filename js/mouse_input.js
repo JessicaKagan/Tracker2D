@@ -105,6 +105,12 @@ function interact(action, e) {
             console.log("UIPROPS_BUTTON_AREA");
             hideUI();
             $("#modifyUIProperties").removeClass("currentlyHidden");
+            //Fill the UI color changers with the current color values.
+            //$('#bgColorInput').val(backgroundColor.substring(5,backgroundColor.length - 1));
+            $('#bgColorInput').val(backgroundColor);
+            $('#leftBarColorInput').val(leftBarColor);
+            $('#bottomBarColorInput').val(bottomBarColor);
+            $('#boundaryColorInput').val(tileBoundaryColor);
         } else if(cursorY >= 576 && cursorX >= 608 && cursorX < 632) {
             selectedTool = "editTile";
             console.log("EDIT_TILE_BUTTON_AREA");
