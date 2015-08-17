@@ -154,14 +154,13 @@
                     <p><input id="samplePlayback" type="checkbox" checked>Play Sample When Pitch Key Is Pressed</input>
                     </p>
                     <br>
-                    <p>UI Colors (use four numbers, not implemented yet, do something for text too, save to localStorage, this is getting way too long):<br><br>
-                    Example (RGBA): 255,255,255,0<br>
-                    First 3 values need to be from 0-255, value 4 is from 0-1<br>
+                    <p>UI Colors (<em>Example - 64,128,255,0.5</em>):<br><br>
+                    First 3 values (RGB) need to be between 0->255, value 4 (alpha) takes values between 0->1<br>
                     <input type="text" placeholder="Submit with enter" id="bgColorInput" value="">Background</input><br>
                     <input type="text" placeholder="Submit with enter" id="leftBarColorInput" value="">Left Bar</input><br>
                     <input type="text" placeholder="Submit with enter" id="bottomBarColorInput" value="">Bottom Bar</input><br>
                     <input type="text" placeholder="Submit with enter" id="boundaryColorInput" value="">Tile Boundaries</input><br>
-                    <button type="button" id="resetUIColors" onClick="resetUIColors()">Reset To Default</button>
+                    <button type="button" id="resetUIColors" onClick="resetUIColors()">Reset UI Colors To Default</button>
                     </p>
                     <br>
                     

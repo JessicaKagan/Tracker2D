@@ -171,4 +171,22 @@ function loadUserSettings() {
             $('#samplePlayback').prop('checked', true);
             break;
     }
+    //Using the UI updater function should give me free error checking. I hope.
+    if(localStorage.backgroundColor !== null || undefined ){
+        updateUIColors("backgroundColor",localStorage.backgroundColor);
+    } else { localStorage.backgroundColor = backgroundColor; }    
+    if(localStorage.leftBarColor !== null || undefined ){
+        updateUIColors("leftBarColor",localStorage.leftBarColor);
+    } else { localStorage.leftBarColor = leftBarColor; }    
+    if(localStorage.bottomBarColor !== null || undefined ){
+        updateUIColors("bottomBarColor",localStorage.bottomBarColor);
+    } else { localStorage.bottomBarColor = bottomBarColor; }    
+    if(localStorage.tileBoundaryColor !== null || undefined ){
+        updateUIColors("tileBoundaryColor",localStorage.tileBoundaryColor);
+    } else { localStorage.tileBoundaryColor = tileBoundaryColor; }
+    /*
+    updateUIColors("leftBarColor",localStorage.leftBarColor);
+    updateUIColors("bottomBarColor",localStorage.bottomBarColor);
+    updateUIColors("tileBoundaryColor",localStorage.tileBoundaryColor);
+    */
 }

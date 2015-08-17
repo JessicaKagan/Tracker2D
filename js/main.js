@@ -215,7 +215,6 @@ function init() {
 
     //Add an event listener for hovering in the bug storage divs.
     //This is going to be kind of inefficient, but we'll live.
-
     //I have a more generic version of this, but it runs into scope problems with i.
     //See this to fix it. http://stackoverflow.com/questions/7774636/jquery-event-handler-created-in-loop
 

@@ -338,7 +338,7 @@ function updateUIColors(property , value){
 
     //Start by verifying the user's value string. Takes a lot of conditionals.
     var colorInput = value.split(",");
-    console.log(colorInput);
+    //console.log(colorInput);
     if(colorInput.length != 4){
         alert("Terminating color update due to incorrect amount of color values.");
         return;

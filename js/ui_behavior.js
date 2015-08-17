@@ -247,6 +247,10 @@ function hideUI(){
         } else if($('#samplePlayback').prop('checked') === false ){ 
             localStorage.samplePlayback = "false"; 
         }
+        localStorage.backgroundColor = backgroundColor;
+        localStorage.leftBarColor = leftBarColor;
+        localStorage.bottomBarColor = bottomBarColor;
+        localStorage.tileBoundaryColor = tileBoundaryColor;
     }
 
 }
