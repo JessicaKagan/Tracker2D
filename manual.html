@@ -58,7 +58,7 @@
         <strong><img src="images/pen_button.png" alt="Pen">Pen</strong>: Click on a tile in the field, and it will put the musical instructions you've selected in the left bar onto that tile. This tool supports click and drag.<br>
         <strong><img src="images/eraser_button.png" alt="Eraser">Eraser</strong>: The eraser removes musical instructions from tiles that you click on. This tool supports click and drag.<br>
         <strong><img src="images/select_button.png" alt="Select">Select</strong>: This tool allows you to select a rectangle of tiles on the field. It requires two clicks, but the rectangle can be as large as the field, or as small as a single tile. When this tool is selected, it draws a translucent grey overlay over the tiles you have used it to select. Furthermore, your selection is remembered until you draw a new one or perform file I/O (which uses the same 'buffer' functionality as this tool. If you replace the contents of your selection box by, for example, drawing inside it, this will not change the contents of the select buffer.<br>
-        <strong><img src="images/paste_button.png" alt="Paste"><img src="images/mixpaste_button.png" alt="Mix Paste">Paste</strong>:This tool pastes the <em>current</em> contents of the select buffer where you click (which specifically determines the upper left corner of where pasting begins). In the Song Properties window, you can switch between the dfeault overwrite paste mode and one that doesn't overwrite tiles that currently have instructions in them.<br>
+        <strong><img src="images/paste_button.png" alt="Paste"><img src="images/mixpaste_button.png" alt="Mix Paste">Paste</strong>:This tool pastes the <em>current</em> contents of the select buffer where you click (which specifically determines the upper left corner of where pasting begins). In the UI Properties window, you can switch between the dfeault overwrite paste mode and one that doesn't overwrite tiles that currently have instructions in them.<br>
         <strong><img src="images/query_button.png" alt="Query">Query</strong>: When you hover over a tile in the field with this selected, a window will pop up that displays detailed information about the contents of not only the tile, but any bugs that are in the tile.<br>
         <strong><img src="images/move_bug_button.png" alt="Move Bug Tool">Move Bug</strong>: This tool allows you to move a bug to a different tile. First, select the bug, then select the tile you want to move it to.<br>
         <strong><img src="images/turn_bug_button.png" alt="Turn Bug Tool">Turn Bug</strong>: This tool rotates a bug in place. Currently, it only turns bugs clockwise. You can tell which direction a bug is heading in by looking at the direction their "nose" points.<br>
@@ -88,16 +88,33 @@
         <h3>Bug Properties</h3>
         <p>Currently, the only purpose of this window is that it lets you adjust the volume multiplier on a bug, which is multiplied by the volume data of a tile to get the total playback volume of a sample. Use this sparingly; at its absolute lowest it can combine with tile volume to reduce a sample's volume to an essentially inaudible 0.01%.</p>
         <h3>UI Properties</h3>
-        <p></p>
+        <p>As previously mentioned, the settings here alter how you interact with Tracker2D, and are saved between sessions. A list of options available through here follows.</p>
+        <ul>
+            <strong><li>Paste Style:</li></strong>
+            Tracker2D has two ways of pasting data from the select buffer. By default, it overwrites every tile in the rectangle where you paste, but in mix-paste mode, it only overwrites empty tiles and leaves tiles with data in them alone. 
+            <strong><li>Extrapolate Style:</li></strong>
+            You can choose three different types of data to use for the extrapolator - note pitches, volumes, or the 'audio effect' value (as distinguished from the type of audio effect in a tile). Pitch is extrapolated by default.
+            <strong><li>Play Sample When Pitch Key Is Pressed:</li></strong> 
+            When this is selected, pressing keys on the home row (assuming a QWERTY keyboard) to choose a pitch will cause your current instrument to play at the chosen pitch and with any audio FX you have applied.
+            <strong><li>UI Colors:</li></strong>
+            This allows you to change how Tracker2D looks, in case the somber, minimal greyscale color scheme isn't to your liking. Each UI element takes an RGBA string - four integers separated by commas. Acceptable values are described in the menu itself. If your input is invalid, it won't go through, and Javascript will generate an alert telling you what you did wrong. If your current color scheme isn't to your liking, you can always use the reset button to change it back to the default.
+        </ul>
         <h3>Tile Properties</h3>
         <p>Click this button, and then click a tile on the field, and you will open up a more detailed editing window that allows you to edit a single tile in ways that are otherwise inaccessible; read on for more information about those.
         <ul>
-            <li>Flow Control Value</li>: Currently only used for the counter effect. Each flow control effect can <em>potentially</em> have an integer associated with it; in the case of the counter this is decreased when a bug moves over the tile, or used to trigger a tile change when its value is zero. 
-            <li>Points To The Tiles At These Coordinates</li>: Each tile on the field can "point" to another tile on the field - in other words, it stores the location of another tile, as opposed to the contents of the tile at said location. Certain flow control effects use this pointer to govern some aspect of their behavior. The "Flow Control" section of this manual describes these specifics in more detail. 
+            <strong><li>Flow Control Value:</li></strong> Currently only used for the counter effect. Each flow control effect can <em>potentially</em> have an integer associated with it; in the case of the counter this is decreased when a bug moves over the tile, or used to trigger a tile change when its value is zero. 
+            <strong><li>Points To The Tiles At These Coordinates:</li></strong> Each tile on the field can "point" to another tile on the field - in other words, it stores the location of another tile, as opposed to the contents of the tile at said location. Certain flow control effects use this pointer to govern some aspect of their behavior. The "Flow Control" section of this manual describes these specifics in more detail. 
         </ul>
         </p>
         <h3>Song Properties</h3>
-        <p></p>
+        <p>Important field information is stored here; these values are stored at the end of a savefile.</p>
+        <strong><li>Tempo:</li></strong>
+        Represents how fast the song is in beats per minute; this defaults to 120. Tempos can range anywhere from 1 to 999 BPM, although I personally don't recommend pushing your tempos to values that are too extreme.
+        <strong><li>Playfield Size:</li></strong>
+        Use this to adjust your filesize in increments of 64 tiles, up to a maximum of 512*512 tiles. Due to the current state of implementation, I recommend only enlarging your files when you're certain you will need more space. Each expansion gives you more room than the last, but also makes the program more resource intensive.
+        <strong><li>Song Metadata:</li></strong>
+        These fields allow you to declare the author and title of a track, as well as write a description. The default values are rather derogatory.
+        <br><br>
         <hr>
         <h2>Effect Reference</h2>
             <p>Tracker2D gives you a couple ways to adjust the sound and playback order of tiles. Expand and rephrase this.</p>
