@@ -73,10 +73,10 @@ var currentFlowControl = "none";
 
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(29);
+var UIImages = new Array(29); //These are almost entirely buttons.
 var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
-//Define the bug arrays.
+//Define the arrays used for bug data.
 var bugList = new Array(8);
 
 //Various pre-init things, like actually beginning the preloads.
@@ -93,7 +93,7 @@ for(var i = 0; i < bugImages.length; i++) {
     bugImages[i] = new Image();
 }
 
-getImages(); //See image_loader.js
+getImages(); //See image_loader.js.
 
 //This makes the buffer array for Web Audio! If we don't have a sound yet, fill with silence.
 //All sounds are in Vorbis format... except for the silence.
@@ -218,24 +218,28 @@ function init() {
     //I have a more generic version of this, but it runs into scope problems with i.
     //See this to fix it. http://stackoverflow.com/questions/7774636/jquery-event-handler-created-in-loop
 
-    /*
-    for(var i = 1; i <= 8; ++i ){
-        var hookBugStorage = $("#bugStorageUnit" + i);
 
-        var hoverValue = i - 1;
-        hookBugStorage.hover(
+    //More compact hovercode that uses HTML classes and event delegation to determine where the user hovers.
+    $(".bugHoldingPen").hover(
         function(){
             bugHoverState = true;
-            hoverBug = hoverValue;
+            //Get which bug holding pen we hovered over by finding a relevant number from the HTML class.
+            var test = $( event.target );
+            if(test.is("button")){
+                hoverBug = (test.context.innerHTML - 1);
+
+            } else if (test.is("img")) {
+                var getHoverVal = test.context.outerHTML;
+                hoverBug = (getHoverVal.match(/\d+/)[0]) - 1;
+            }
         }, 
         function(){
             bugHoverState = false;
             hoverBug = -1;
         }
-    );  
-    }
-    */
+    );
 
+    /*
     $("#bugStorageUnit1").hover(
         function(){
             bugHoverState = true;
@@ -316,7 +320,7 @@ function init() {
             hoverBug = -1;
         }
     );
-    
+    */
 
     //Add an event listener for the instrument bank to widen it when the user rolls over it.
     //This should make instrument names more legible.

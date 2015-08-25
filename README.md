@@ -13,7 +13,7 @@ Current bugs:
 - Mouse input can be 'sticky' and occasionally problematic if you click too fast or drag properly (I can't tell you more because I don't know how quite to describe it).
 - Occasionally, if you click the bottom row, the canvas doesn't register the click properly and instead selects some unknown text (eventually the first UIShifter div).
 - Large fields and their save/loads may have various odd bugs. They're also really slow.
-- Microsoft Edge does not support the code used to load sound samples.
+- Microsoft Edge does not support Vorbis audio.
 
 Tracker2D contains some code released under the MIT License. The following block of legalese applies to such:
 

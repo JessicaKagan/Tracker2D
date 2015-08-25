@@ -195,7 +195,6 @@ function paintMiniMap(){
 }
 
 //Used for the minimap.
-//This should be extended so that the user can scroll by clicking and dragging.
 function moveViewingField(X,Y) {
     //Adjust what the user put in to centralize it.
     var adjustedX = (X * PLAYFIELD_SIZE) - Math.floor(FIELD_SIZE[0]/2);
@@ -232,7 +231,7 @@ function highlightSelectedBug() {
     }
 }
 
-//See main.js for the UI images, although maybe we should move this to the rendering bloc.
+//See image_loader.js for the UI images, although maybe we should move this to the rendering bloc.
 var drawButtons = function() {
     //Pause button with 2 states
     if(pauseState == false) { ctx.drawImage(UIImages[0],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
@@ -253,18 +252,22 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[9],MOVEBUG_BUTTON_AREA[0],MOVEBUG_BUTTON_AREA[1]);     
     ctx.drawImage(UIImages[10],STOREBUG_BUTTON_AREA[0],STOREBUG_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[11],RESTOREBUG_BUTTON_AREA[0],RESTOREBUG_BUTTON_AREA[1]); 
+    //Calling the windowbuttons together.
+    ctx.drawImage(UIImages[24],BUGPROPS_BUTTON_AREA[0],BUGPROPS_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[12],SONGPROPS_BUTTON_AREA[0],SONGPROPS_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[13],EDIT_TILE_BUTTON_AREA[0],EDIT_TILE_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[27],UIPROPS_BUTTON_AREA[0],UIPROPS_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[14],HELP_BUTTON_AREA[0],HELP_BUTTON_AREA[1]);
+
     ctx.drawImage(UIImages[15],TURNBUG_BUTTON_AREA[0],TURNBUG_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[19],EYEDROPPER_BUTTON_AREA[0],EYEDROPPER_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[20],ADJUSTPOINTER_BUTTON_AREA[0],ADJUSTPOINTER_BUTTON_AREA[1]);
     //ctx.drawImage(UIImages[21],ROTATELEFT_BUTTON_AREA[0],ROTATELEFT_BUTTON_AREA[1]);
     //ctx.drawImage(UIImages[22],ROTATERIGHT_BUTTON_AREA[0],ROTATERIGHT_BUTTON_AREA[1]);
-    ctx.drawImage(UIImages[24],BUGPROPS_BUTTON_AREA[0],BUGPROPS_BUTTON_AREA[1]);
+    
     ctx.drawImage(UIImages[25],REVERT_BUTTON_AREA[0],REVERT_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[26],ARROWPEN_BUTTON_AREA[0],ARROWPEN_BUTTON_AREA[1]);
-    ctx.drawImage(UIImages[27],UIPROPS_BUTTON_AREA[0],UIPROPS_BUTTON_AREA[1]);
+    
     ctx.drawImage(UIImages[28],EXTRAPOLATE_BUTTON_AREA[0],EXTRAPOLATE_BUTTON_AREA[1]);
 
     //Save and load functions
@@ -334,7 +337,7 @@ function resetUIColors(){
 }
 
 function updateUIColors(property , value){
-    console.log(property, value);
+    //console.log(property, value);
 
     //Start by verifying the user's value string. Takes a lot of conditionals.
     if(value === (null || undefined)) {
