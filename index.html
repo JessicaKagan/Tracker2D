@@ -12,7 +12,7 @@
             <div id="loadingScreenText">
                 <p>Tracker2D is in <em>active</em> development. If you want to contribute, please do so!<br><br>
                 For example, check out the <a href="http://www.github.com/GabeKagan/Tracker2D">GitHub</a> repository. We also need improved artwork, more sounds, feature suggestions, and even bug reports, so definitely give us, the community, a hand if you can. Don't literally cut your hand off, though; that could cause serious lifestyle issues. <br><br>
-                Want an example file to play around with? Download <a href="https://www.mediafire.com/?j4ug5bwgfo28hoe">this</a> file to somewhere on your PC and open it with the black floppy disc icon in the far lower right corner. 
+                Want an example file to play around with? Download <a href="https://www.mediafire.com/?j4ug5bwgfo28hoe">this</a> file to somewhere on your PC and open it with the floppy disc icon in the far lower right corner. 
                 </p>
             </div>
         <button id="initButton" type="button" onclick = "loadIfReady()">Loading...</button>
@@ -107,12 +107,11 @@
                     <p>Someday, song properties will display here when you load a file. Other status messages would be good, too!</p>
                 </div>
 
-                <!--This will allow you to change tile properties in a more detailed fashion than the leftmenu. Absolute highest priority at the moment.-->
+                <!--This allows you to change tile properties in a more detailed fashion than the leftmenu.-->
                 <div id="modifyTile" class="editingWindow currentlyHidden">
                     <p>Maybe this should be merged with queryInfo and the query Tool. Indicate to the user that you have to click on a tile in order to activate this tool!</p> <br>
                     <p>Currently editing tile: <span id="modifyTileTarget"></span></p> <br>
                     <p>Pitch (Readonly for now): <input id = "modifyTilePitchSpinner" class = "numbersOnly" readonly type="number" name="pitch" min="0" max="71" value="36"></input></p>
-                    <!--Instrument max needs to be changed programmatically.-->
                     <p>Instrument: <input id = "modifyTileInstrumentSpinner" class = "numbersOnly" type="number" name="Instrument" min="0" max="175" value="1"></input></p>
                     <p>Audio FX Value (Not implemented yet): </p>
                     <p>Flow Control Value: <input id = "modifyTileFlowSpinner" class = "numbersOnly" type="number" name="FlowControl" min="0" max="999" value="0"></input></p>
@@ -133,7 +132,7 @@
                     <p>Song Description: <textarea rows="4" cols="50" id="songDesc"></textarea></p>
                     <p>Please note that shrinking the playfield will delete any data outside the new edges, and it might cause crashes. Also, large fields will be EXPONENTIALLY slower than small ones until further optimization is done.</p>
                 </div>
-                <!--This allows you to change how the user interface works. This might be something that should be saved with cookies or local storage or something-->
+                <!--This allows you to change how the user interface works.-->
                 <div id="modifyUIProperties" class="currentlyHidden editingWindow">
                     <button class="closeButton" onClick="hideUI()">Close Window</button>
                     <br>
@@ -163,8 +162,8 @@
                     <button type="button" id="resetUIColors" onClick="resetUIColors()">Reset UI Colors To Default</button>
                     </p>
                     <br>
-                    
                 </div>
+                <!--Unhidden when the user pulls up the query tool.-->
                 <div id="queryInfo" class="currentlyHidden">
                 </div>
                 <div id="helpPage" class="currentlyHidden">

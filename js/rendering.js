@@ -1,7 +1,7 @@
 //Welcome to our new graphics rendering file!
 
 var bugHoverState = false; //If the user isn't hovering over a bug, no indicator rendering happens
-//Groundwork for later UI color customization
+//These variables store UI colors for user customization.
 var backgroundColor = '255,255,255,1';
 var leftBarColor = '0,0,0,1';
 var bottomBarColor = '128,128,128,1';
@@ -14,9 +14,8 @@ function render(){
     ctx.fillStyle = 'rgba(' + backgroundColor + ')';
     ctx.fillRect(0,0,800,600); //Not drawing this causes problems on backgrounds that aren't white.
 
-    //Draw boundaries between tiles.
-    //This may need adjustment if we implement a zoom feature.
-    //Replacing some constants with variables in order to make it easier to rebuild (although readability might be a pain).
+    //Draw boundaries between tiles. This may need adjustment if we implement a zoom feature.
+
     ctx.strokeStyle = 'rgba(' + tileBoundaryColor + ')';
     for(var i = FIELD_PIXELS[0]; i < FIELD_PIXELS[2]; i += TILE_SIZE) {
         ctx.beginPath();
@@ -245,7 +244,7 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[18],VERTFLIP_BUTTON_AREA[0],VERTFLIP_BUTTON_AREA[1]);
     //Draw a different paste button based on which type of paste is selected in the options pages.
     if(pasteStyle === 1){
-        ctx.drawImage(UIImages[7],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]);
+        ctx.drawImage(UIImages[7],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]); //Default overwrite paste.
     } else if(pasteStyle === 2){ ctx.drawImage(UIImages[16],PASTE_BUTTON_AREA[0],PASTE_BUTTON_AREA[1]); } //Mixpaste.
 
     ctx.drawImage(UIImages[8],QUERY_BUTTON_AREA[0],QUERY_BUTTON_AREA[1]); 
@@ -323,7 +322,7 @@ var drawSelectedToolOverlay = function() {
     }
 }
 
-//These could technically go in ui_behavior.
+//These could technically go in ui_behavior.js
 function resetUIColors(){
     backgroundColor = '255,255,255,1';
     leftBarColor = '0,0,0,1';
@@ -339,7 +338,7 @@ function resetUIColors(){
 function updateUIColors(property , value){
     //console.log(property, value);
 
-    //Start by verifying the user's value string. Takes a lot of conditionals.
+    //Start by verifying the user's value string. This takes a lot of conditionals.
     if(value === (null || undefined)) {
         alert("Terminating color update because we didn't recieve a value at all.");
         return;
@@ -377,12 +376,10 @@ function updateUIColors(property , value){
                 return; //Something went VERY wrong.
         }
     }
-    //If all of those conditionals passed, we should have valid input.
-    //Format it into a string.
+    //If all of those conditionals passed, we should have valid input, which we format into a string.
     var formattedColorString = colorInput[0] + "," 
                              + colorInput[1] + ","                                        
                              + colorInput[2] + ","                                        
                              + colorInput[3];
-    //console.log(formattedColorString);
-    window[property] = formattedColorString;
+    window[property] = formattedColorString; //Changes the value of the variable whose name was passed in as "property".
 }

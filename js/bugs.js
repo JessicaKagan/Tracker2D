@@ -53,10 +53,7 @@ Bug.prototype.drawBug = function(){
 }
 
 Bug.prototype.updateBug = function() {
-    //console.log(this.action);
-    //Eventually we need to rewrite this so that if a bug slams into the edge of the playfield (not just tiles), it changes direction.
-    //console.log(this.bugTile);
-    //this.bugTile = getTile(this.x, this.y); //Updates our derivative.
+    //this.bugTile = getTile(this.x, this.y); //Updates our derivative. Might be obsolete.
 
     //Play sounds BEFORE attempting to move the bug.
     if(fieldContents[this.bugTile[0]][this.bugTile[1]] !== undefined){
@@ -89,7 +86,6 @@ Bug.prototype.updateBug = function() {
                 this.action = 'moveDown';
                 break;
             case "freeze":
-            //Needs more writing in order to prevent the program from pausing one tick later than a freezetile.
             //There are some questionable interactions, but freeze should only be used at the very end of a song.
                 pauseState = true; 
                 return;
@@ -133,13 +129,12 @@ Bug.prototype.updateBug = function() {
     }
 
     //If the bug is about to leave the map, make it turn around.
-    //Based on tiles, in the hopes of scaling gracefully to larger maps.
     if((this.bugTile[0] + 1) >= FILE_SIZE[0] && this.action === 'moveRight') { this.action = 'moveLeft'; }
     if(this.bugTile[0] === 0 && this.action === 'moveLeft') { this.action = 'moveRight'; }
     if((this.bugTile[1] + 1) >= FILE_SIZE[1] && this.action === 'moveDown') { this.action = 'moveUp'; }
     if(this.bugTile[1] === 0 && this.action === 'moveUp') { this.action = 'moveDown'; }
 
-    //Then move the bug based on its behavior.
+    //Then move the bug based on its behavior value.
     switch(this.action){
         case 'moveLeft':
             this.bugTile[0] -= 1;

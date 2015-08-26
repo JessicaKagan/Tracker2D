@@ -8,7 +8,7 @@ function soundsAreReady(soundList) {
     for(var i = 0; i < soundList.length; ++i) {
         soundFont.push(soundList[i]); //We fill up SoundFont with sounds...
     }
-    $("#initButton").html("Loaded, click to write music"); //Clicking this calls init().
+    $("#initButton").html("Loaded, click to write music"); //Clicking this button calls init().
 }
 
 function playSound(buffer, pitch, dspEffect, dspValue, volume) {
@@ -16,7 +16,7 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
     var source = audioEngine.createBufferSource();  
     source.buffer = buffer;
     var playbackMidPoint = source.buffer.duration; //Fallback.
-    source.playbackRate.value = pitch; //Samples do not play back fully in Chrome when slowed down.
+    source.playbackRate.value = pitch; 
 
     //Volume adjustment is handled before effects are added.
     var volumeAdjustment = audioEngine.createGain();
@@ -71,7 +71,7 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
     } else if(dspEffect == 'startfromlater') {
         source.start(0,playbackMidPoint); //Starts playing in the middle of the sound.
     } else {
-        source.start();
-    } //Add the ability to start later in a sound or end it prematurely. Somehow.
-    //Write a conditional that allows us to cut off a sound if we have a certain DSP effect.
+        source.start(); //By default, we play the entire sound.
+    } 
+    
 }
