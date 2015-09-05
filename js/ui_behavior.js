@@ -252,6 +252,9 @@ function hideUI(){
         localStorage.bottomBarColor = bottomBarColor;
         localStorage.tileBoundaryColor = tileBoundaryColor;
     }
+    if($("#flowControlSelector").hasClass("currentlyHidden") === false) { 
+        setTimeout(function() {$("#flowControlSelector").addClass("currentlyHidden");}, 50);
+    }
 
 }
 
@@ -463,3 +466,62 @@ function updatePitchDescription(){
     $('#pitchInput').html(noteName + "-" + (currentOctave + 1) );
 
 }
+
+function showFlowControlButtons(){
+    if($("#flowControlSelector").hasClass("currentlyHidden") === true) { 
+        $("#flowControlSelector").removeClass("currentlyHidden");
+    }
+}
+
+//Set the current flow control item, and then display the currently selected one's image.
+function setFlowControl(value){
+    currentFlowControl = value;
+    $("#flowControlSelector").addClass("currentlyHidden"); //Hide the menu.
+    //This part's verbose until improved.
+    switch(currentFlowControl){
+        case "none":
+            $("#currentFlowControl > img").replaceWith('<img src="images/no_flow_control.png">');
+            break;        
+        case "turn_west":
+            $("#currentFlowControl > img").replaceWith('<img src="images/west_arrow_overlay.png">');
+            break;        
+        case "turn_east":
+            $("#currentFlowControl > img").replaceWith('<img src="images/east_arrow_overlay.png">');
+            break;        
+        case "turn_north":
+            $("#currentFlowControl > img").replaceWith('<img src="images/north_arrow_overlay.png">');
+            break;        
+        case "turn_south":
+            $("#currentFlowControl > img").replaceWith('<img src="images/south_arrow_overlay.png">');
+            break;        
+        case "counter":
+            $("#currentFlowControl > img").replaceWith('<img src="images/counter_overlay.png">');
+            break;        
+        case "incrementer":
+            $("#currentFlowControl > img").replaceWith('<img src="images/incrementer_overlay.png">');
+            break;        
+        case "teleport":
+            $("#currentFlowControl > img").replaceWith('<img src="images/teleporter_overlay.png">');
+            break;        
+        case "freeze":
+            $("#currentFlowControl > img").replaceWith('<img src="images/freeze_overlay.png">');
+            break;        
+        case "revert":
+            $("#currentFlowControl > img").replaceWith('<img src="images/revert_button.png">');
+            break;
+        default:
+            break;
+    }
+}
+
+/*        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;none&quot;)"><img src="images/no_flow_control.png"></button>None<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_west&quot;)"><img src="images/west_arrow_overlay.png"></button>Turn West<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_north&quot;)"><img src="images/north_arrow_overlay.png"></button>Turn North<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_east&quot;)"><img src="images/east_arrow_overlay.png"></button>Turn East<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_south&quot;)"><img src="images/south_arrow_overlay.png"></button>Turn South<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;counter&quot;)"><img src="images/counter_overlay.png"></button>Counter<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;incrementer&quot;)"><img src="images/incrementer_overlay.png"></button>Incrementer<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;teleport&quot;)"><img src="images/teleporter_overlay.png"></button>Teleporter<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;freeze&quot;)"><img src="images/freeze_overlay.png"></button>Freeze<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;revert&quot;)"><img src="images/revert_button.png"></button>Revert Tile<br>');
+*/

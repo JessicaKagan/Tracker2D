@@ -73,7 +73,7 @@ var currentFlowControl = "none";
 
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(29); //These are almost entirely buttons.
+var UIImages = new Array(30); //These are almost entirely buttons.
 var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the arrays used for bug data.
@@ -185,7 +185,25 @@ function init() {
                 //$('#dspValueInput').val('');
             }
         })
-        //This handles the flow control menu.
+        //This handles the flow control menu. Under revision.
+
+        //Generate all the buttons we need and use a function to set the current flow control properly.
+        //See ui_behavior.js for setFlowControl.
+        //Kind of ugly and verbose.
+        $('#flowControlSelector').html("");
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;none&quot;)"><img src="images/no_flow_control.png"></button>None<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_west&quot;)"><img src="images/west_arrow_overlay.png"></button>Turn West<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_north&quot;)"><img src="images/north_arrow_overlay.png"></button>Turn North<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_east&quot;)"><img src="images/east_arrow_overlay.png"></button>Turn East<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_south&quot;)"><img src="images/south_arrow_overlay.png"></button>Turn South<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;counter&quot;)"><img src="images/counter_overlay.png"></button>Counter<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;incrementer&quot;)"><img src="images/incrementer_overlay.png"></button>Incrementer<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;teleport&quot;)"><img src="images/teleporter_overlay.png"></button>Teleporter<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;freeze&quot;)"><img src="images/freeze_overlay.png"></button>Freeze<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;revert&quot;)"><img src="images/revert_button.png"></button>Revert Tile<br>');
+
+
+        /*
         for(var i = 0; i < possibleFlowEffects.length; ++i){
             $('#controlInput').append('<option value="' + possibleFlowEffects[i] + '">' + possibleFlowEffects[i] + '</option>');
         }
@@ -193,6 +211,8 @@ function init() {
             currentFlowControl = $(this).find('option:selected').attr('value');
             console.log(currentFlowControl);
         });
+        */
+
         //Left bar menu stuff ends here.
     }
     handleLeftBarMenu();

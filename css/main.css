@@ -87,12 +87,12 @@ select {
 }
 
 #UIShifter {
-    top: 75px;
+    top: 80px;
     left: 8px;
 }
 
 #UIShifter2 {
-    top: 112px;
+    top: 105px;
     background-color: rgba(0,0,0,1);
     z-index: 1;
 }
@@ -104,19 +104,19 @@ select {
 }
 
 #UIShifter3 {
-    top: 195px;
+    top: 180px;
 }
 
 #UIShifter4 {
-    top: 235px;
+    top: 220px;
 }
 
 #UIShifter5 {
-    top: 255px;
+    top: 240px;
 }
 
 #UIShifter6 {
-    top: 292px;
+    top: 300px;
     width: 80px;
     font-size: 10px;
 }
@@ -229,6 +229,38 @@ select {
 
 #modifyBugProperties {
     font-size: 12px;
+}
+
+#currentFlowControl {
+    text-align: left;    
+}
+
+#currentFlowControl > button {
+    position: relative;
+    top: -6px;
+    left: 2px;
+    font-size: 10px;
+}
+
+#flowControlSelector {
+    position: fixed;
+    width: 200px;
+    height: 160px;
+    background-color: rgba(224,224,224, 0.85);
+    color: black;
+    top: 280px;
+    left: 80px;
+    z-index: 1;
+    text-align: left;
+    overflow-y: scroll;
+}
+
+#flowControlSelector > button {
+    width: 24px;
+    height: 24px;
+    padding: 0px;
+    background-color: black;
+    border: none;
 }
 
 .bugHoldingPen {
