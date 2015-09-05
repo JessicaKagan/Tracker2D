@@ -460,6 +460,6 @@ function updatePitchDescription(){
             alert("Something has gone horribly wrong in updatePitchDescription()!");
             return;
     }
-    $('#pitchInput').val(noteName + "-" + (currentOctave + 1) );
+    $('#pitchInput').html(noteName + "-" + (currentOctave + 1) );
 
 }

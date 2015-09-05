@@ -22,6 +22,8 @@ Things I know I want to do (which could get very long):
 - Simply add more audio effects (like reverb, etc).
 - Multiple color schemes for the UI (or better yet, let the user define them with RGBA strings?)
 - Simple "undo" function? It will not be so simple.
+- Fill bucket tool for the selection buffer.
+- Graphical menu for flow control FX (Good chance to practice event delegation).
 
 
 Things I might do but am not sure about:
@@ -35,6 +37,7 @@ Things I might do but am not sure about:
 - Flow control features to dynamically adjust bug properties (possibly really cool, but programming would be annoying, especially on the save/load/revert frontier)
 - Flow control features to dynamically adjust SONG properties! (Currently only tempo; would require similar expansion of file I/O to dynamic bug properties)
 - Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data; one way to do this would possibly be adding audio effects to bugs).
+
 
 
 Suggestions and planned features that have already been implemented:
