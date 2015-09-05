@@ -1,4 +1,4 @@
-//This file contains image defines in an attempt to increase code readability.
+//This file contains image definitions in an attempt to increase code readability.
 
 function getImages() {
     tileOverlayImages[0].src = 'images/west_arrow_overlay.png';
@@ -43,8 +43,8 @@ function getImages() {
     UIImages[26].src = 'images/arrow_pen_button.png';
     UIImages[27].src = 'images/ui_properties_button.png';
     UIImages[28].src = 'images/extrapolate_button.png';
+    UIImages[29].src = 'images/no_flow_control.png';
 
-    //Maybe someone will make more detailed and complex bug images.
     bugImages[0].src = 'images/placeholder_bug.png';
     bugImages[1].src = 'images/placeholder_bug_2.png';
     bugImages[2].src = 'images/placeholder_bug_3.png';

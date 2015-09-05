@@ -73,10 +73,10 @@ var currentFlowControl = "none";
 
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(29);
+var UIImages = new Array(30); //These are almost entirely buttons.
 var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
-//Define the bug arrays.
+//Define the arrays used for bug data.
 var bugList = new Array(8);
 
 //Various pre-init things, like actually beginning the preloads.
@@ -93,7 +93,7 @@ for(var i = 0; i < bugImages.length; i++) {
     bugImages[i] = new Image();
 }
 
-getImages(); //See image_loader.js
+getImages(); //See image_loader.js.
 
 //This makes the buffer array for Web Audio! If we don't have a sound yet, fill with silence.
 //All sounds are in Vorbis format... except for the silence.
@@ -185,7 +185,25 @@ function init() {
                 //$('#dspValueInput').val('');
             }
         })
-        //This handles the flow control menu.
+        //This handles the flow control menu. Under revision.
+
+        //Generate all the buttons we need and use a function to set the current flow control properly.
+        //See ui_behavior.js for setFlowControl.
+        //Kind of ugly and verbose.
+        $('#flowControlSelector').html("");
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;none&quot;)"><img src="images/no_flow_control.png"></button>None<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_west&quot;)"><img src="images/west_arrow_overlay.png"></button>Turn West<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_north&quot;)"><img src="images/north_arrow_overlay.png"></button>Turn North<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_east&quot;)"><img src="images/east_arrow_overlay.png"></button>Turn East<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_south&quot;)"><img src="images/south_arrow_overlay.png"></button>Turn South<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;counter&quot;)"><img src="images/counter_overlay.png"></button>Counter<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;incrementer&quot;)"><img src="images/incrementer_overlay.png"></button>Incrementer<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;teleport&quot;)"><img src="images/teleporter_overlay.png"></button>Teleporter<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;freeze&quot;)"><img src="images/freeze_overlay.png"></button>Freeze<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;revert&quot;)"><img src="images/revert_button.png"></button>Revert Tile<br>');
+
+
+        /*
         for(var i = 0; i < possibleFlowEffects.length; ++i){
             $('#controlInput').append('<option value="' + possibleFlowEffects[i] + '">' + possibleFlowEffects[i] + '</option>');
         }
@@ -193,6 +211,8 @@ function init() {
             currentFlowControl = $(this).find('option:selected').attr('value');
             console.log(currentFlowControl);
         });
+        */
+
         //Left bar menu stuff ends here.
     }
     handleLeftBarMenu();
@@ -218,105 +238,26 @@ function init() {
     //I have a more generic version of this, but it runs into scope problems with i.
     //See this to fix it. http://stackoverflow.com/questions/7774636/jquery-event-handler-created-in-loop
 
-    /*
-    for(var i = 1; i <= 8; ++i ){
-        var hookBugStorage = $("#bugStorageUnit" + i);
 
-        var hoverValue = i - 1;
-        hookBugStorage.hover(
+    //More compact hovercode that uses HTML classes and event delegation to determine where the user hovers.
+    $(".bugHoldingPen").hover(
         function(){
             bugHoverState = true;
-            hoverBug = hoverValue;
-        }, 
-        function(){
-            bugHoverState = false;
-            hoverBug = -1;
-        }
-    );  
-    }
-    */
+            //Get which bug holding pen we hovered over by finding a relevant number from the HTML class.
+            var test = $( event.target );
+            if(test.is("button")){
+                hoverBug = (test.context.innerHTML - 1);
 
-    $("#bugStorageUnit1").hover(
-        function(){
-            bugHoverState = true;
-            hoverBug = 0;
-        }, 
-        function(){
-            bugHoverState = false;
-            hoverBug = -1;
-        }
-    );    
-    $("#bugStorageUnit2").hover(
-        function(){
-            bugHoverState = true;
-            hoverBug = 1;
-        }, 
-        function(){
-            bugHoverState = false;
-            hoverBug = -1;
-        }
-    );    
-    $("#bugStorageUnit3").hover(
-        function(){
-            bugHoverState = true;
-            hoverBug = 2;
-        }, 
-        function(){
-            bugHoverState = false;
-            hoverBug = -1;
-        }
-    );    
-    $("#bugStorageUnit4").hover(
-        function(){
-            bugHoverState = true;
-            hoverBug = 3;
-        }, 
-        function(){
-            bugHoverState = false;
-            hoverBug = -1;
-        }
-    );    
-    $("#bugStorageUnit5").hover(
-        function(){
-            bugHoverState = true;
-            hoverBug = 4;
-        }, 
-        function(){
-            bugHoverState = false;
-            hoverBug = -1;
-        }
-    );    
-    $("#bugStorageUnit6").hover(
-        function(){
-            bugHoverState = true;
-            hoverBug = 5;
-        }, 
-        function(){
-            bugHoverState = false;
-            hoverBug = -1;
-        }
-    );    
-    $("#bugStorageUnit7").hover(
-        function(){
-            bugHoverState = true;
-            hoverBug = 6;
-        }, 
-        function(){
-            bugHoverState = false;
-            hoverBug = -1;
-        }
-    );    
-    $("#bugStorageUnit8").hover(
-        function(){
-            bugHoverState = true;
-            hoverBug = 7;
+            } else if (test.is("img")) {
+                var getHoverVal = test.context.outerHTML;
+                hoverBug = (getHoverVal.match(/\d+/)[0]) - 1;
+            }
         }, 
         function(){
             bugHoverState = false;
             hoverBug = -1;
         }
     );
-    
 
     //Add an event listener for the instrument bank to widen it when the user rolls over it.
     //This should make instrument names more legible.
