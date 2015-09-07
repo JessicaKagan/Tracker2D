@@ -44,6 +44,7 @@ function getImages() {
     UIImages[27].src = 'images/ui_properties_button.png';
     UIImages[28].src = 'images/extrapolate_button.png';
     UIImages[29].src = 'images/no_flow_control.png';
+    UIImages[30].src = 'images/fill_button.png';
 
     bugImages[0].src = 'images/placeholder_bug.png';
     bugImages[1].src = 'images/placeholder_bug_2.png';

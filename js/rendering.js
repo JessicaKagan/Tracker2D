@@ -1,4 +1,4 @@
-//Welcome to our new graphics rendering file!
+//Welcome to our (no longer new) graphics rendering file!
 
 var bugHoverState = false; //If the user isn't hovering over a bug, no indicator rendering happens
 //These variables store UI colors for user customization.
@@ -240,6 +240,7 @@ var drawButtons = function() {
     ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]);
     //Actually putting the second menu row to use.
+    ctx.drawImage(UIImages[30],FILL_BUTTON_AREA[0],FILL_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[17],HORIFLIP_BUTTON_AREA[0],HORIFLIP_BUTTON_AREA[1]);
     ctx.drawImage(UIImages[18],VERTFLIP_BUTTON_AREA[0],VERTFLIP_BUTTON_AREA[1]);
     //Draw a different paste button based on which type of paste is selected in the options pages.

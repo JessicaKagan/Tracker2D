@@ -23,7 +23,7 @@ Things I know I want to do (which could get very long):
 - Multiple color schemes for the UI (or better yet, let the user define them with RGBA strings?)
 - Simple "undo" function? It will not be so simple.
 - Fill bucket tool for the selection buffer.
-- Graphical menu for flow control FX (Good chance to practice event delegation).
+
 
 
 Things I might do but am not sure about:
@@ -56,3 +56,4 @@ Suggestions and planned features that have already been implemented:
 - UI options display (Needs more options, period).
 - Some sort of feature to compute changes in volume and effects between two tiles and 'extrapolate' changes between them (could use more expansion, perhaps).
 - Save the user's UI properties in localStorage.
+- Graphical menu for flow control FX (Implemented through buttons; make more efficient.)
