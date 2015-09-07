@@ -47,6 +47,18 @@ function interact(action, e) {
         } else if(cursorY >= 576 && cursorX >= 176 && cursorX < 200) {
             console.log("PASTE_BUTTON_AREA");
             selectedTool = "paste";  
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 128 && cursorX < 152) {
+            console.log("FILL_BUTTON_AREA"); 
+            if( (selectBoxCoords[0] == selectBoxCoords[1]) && (selectBoxCoords[2] == selectBoxCoords[3]) ) { 
+                alert("You must select some tiles (not just one) before you can use the fill tool."); 
+            } else {
+                for(var i = selectBoxCoords[0]; i <= selectBoxCoords[1]; ++i){
+                    for(var j = selectBoxCoords[2]; j <= selectBoxCoords[3]; ++j){
+                        //Remember to update this if the tile data structure is changed.
+                        fieldContents[i][j] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, currentVolume, currentDSPValue, 0);
+                    }
+                }
+            }
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 152 && cursorX < 176) {
             console.log("HORIFLIP_BUTTON_AREA"); 
             defaultBuffer.transformBuffer("horizontalFlip");
