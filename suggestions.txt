@@ -20,9 +20,7 @@ Things I know I want to do (which could get very long):
 - Responsive window size (to make the program look better on larger monitors. Time consuming!)
 - Properly implement versioning and use this to make the save format more robust and less likely to break compatibility with old files.
 - Simply add more audio effects (like reverb, etc).
-- Multiple color schemes for the UI (or better yet, let the user define them with RGBA strings?)
 - Simple "undo" function? It will not be so simple.
-- Fill bucket tool for the selection buffer.
 
 
 
@@ -57,3 +55,5 @@ Suggestions and planned features that have already been implemented:
 - Some sort of feature to compute changes in volume and effects between two tiles and 'extrapolate' changes between them (could use more expansion, perhaps).
 - Save the user's UI properties in localStorage.
 - Graphical menu for flow control FX (Implemented through buttons; make more efficient.)
+- Fill bucket tool for the selection buffer
+- Multiple color schemes for the UI (or better yet, let the user define them with RGBA strings?)

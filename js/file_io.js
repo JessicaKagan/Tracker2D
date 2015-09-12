@@ -37,7 +37,7 @@ function saveFile() {
     }
 
     //Dump song properties next.
-    saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n' + songTitle;
+    saveContent += TEMPO + '\n' + PLAYFIELD_SIZE + '\n' + author + '\n' + songDescription + '\n' + songTitle + '\n' + version;
     var encodeToFile = new Blob([saveContent]); 
     saveAs(encodeToFile, songTitle + ".txt");
 }
@@ -108,15 +108,31 @@ function loadFile(evt) {
             storeBugPositions();
             restoreBugPositions(true); //The program will pause automatically when the bugs have been restored to their positions.
             //Song properties are stored at the very end of the file.
-            TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
-            updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
-            $("#tempoSpinner").attr('value', TEMPO);
-            console.log($("#tempoSpinner"));
-            PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4];
-            $("#fieldSizeSpinner").val = PLAYFIELD_SIZE*64;
-            author = loadingWorkArray[loadingWorkArray.length - 3];
-            songDescription = loadingWorkArray[loadingWorkArray.length - 2];
-            songTitle = loadingWorkArray[loadingWorkArray.length - 1];
+
+            //Quick kludge for versioning. Don't name any songs "1" (minus quotes)
+            if(loadingWorkArray[loadingWorkArray.length - 1] === "1"){
+                console.log("Version 01 load algorithm used");
+                TEMPO = loadingWorkArray[loadingWorkArray.length - 6];
+                updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
+                $("#tempoSpinner").attr('value', TEMPO);
+                console.log($("#tempoSpinner"));
+                PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 5];
+                $("#fieldSizeSpinner").val = PLAYFIELD_SIZE*64;
+                author = loadingWorkArray[loadingWorkArray.length - 4];
+                songDescription = loadingWorkArray[loadingWorkArray.length - 3];
+                songTitle = loadingWorkArray[loadingWorkArray.length - 2];
+            } else {
+                console.log("Pre-versioning load algorithm used");
+                TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
+                updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
+                $("#tempoSpinner").attr('value', TEMPO);
+                console.log($("#tempoSpinner"));
+                PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4];
+                $("#fieldSizeSpinner").val = PLAYFIELD_SIZE*64;
+                author = loadingWorkArray[loadingWorkArray.length - 3];
+                songDescription = loadingWorkArray[loadingWorkArray.length - 2];
+                songTitle = loadingWorkArray[loadingWorkArray.length - 1];
+            }
             loadedTiles = jQuery.extend(true, {}, fieldContents);
         }
 
