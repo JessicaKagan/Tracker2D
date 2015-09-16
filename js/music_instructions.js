@@ -19,10 +19,9 @@ for(var i = 1; i < pitchTable.length; ++i){
     pitchTable[i] = pitchTable[i - 1] * Math.pow(2, (1/12));
 }
 
-//It might be good to format these names better at some point.  
+//It might be good to improve the DSP menu simular to how Flow control was improved.
 //We need more of these. 
-//Removing unused DSP effects from the list: 'arpeggio', 'resonance', 'pauseresume', etc.
-var possibleDSPEffects = ['none','bendpitch', 'lowpass', 'hipass', 'stopplayback', 'startfromlater'];
+var possibleDSPEffects = ['none','bendpitch', 'lowpass', 'bandpass', 'hipass', 'stopplayback', 'startfromlater'];
 var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south', 'counter','incrementer','teleport', 'freeze', 'revert'];
 //To be implemented: "random_tile", which will send the bug to a random tile within a user defined range.
 

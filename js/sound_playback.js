@@ -48,6 +48,13 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
             createHighPass.type = 'highpass';
             createHighPass.frequency.value = dspValue;
             break;
+        case 'bandpass':
+            var createBandPass = audioEngine.createBiquadFilter();
+            volumeAdjustment.connect(createBandPass);
+            createBandPass.connect(audioEngine.destination);
+            createBandPass.type = 'bandpass';
+            createBandPass.frequency.value = dspValue;
+            break;
         case 'bendpitch':
             if(dspValue <= 16 && dspValue > 0) { source.playbackRate.value *= dspValue; } 
             else { console.log('bendpitch only takes values between 0 and 16, for the sake of sanity. Effect not applied.'); }
