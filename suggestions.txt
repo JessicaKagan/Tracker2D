@@ -22,7 +22,8 @@ Things I know I want to do (which could get very long):
 - Simply add more audio effects (like reverb, etc).
 - Simple "undo" function? It will not be so simple.
 - Improve the overall UI/UX of exceptionally large fields.
-- Open up more audio FX options to the user (requires save file versioning update)
+- Open up more audio FX parameters to the user (requires save file versioning update, extrapolator improvements)
+- Improve the overall UI/UX of the audio FX menu
 
 
 

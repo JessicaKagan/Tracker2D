@@ -21,7 +21,7 @@ for(var i = 1; i < pitchTable.length; ++i){
 
 //It might be good to improve the DSP menu simular to how Flow control was improved.
 //We need more of these. 
-var possibleDSPEffects = ['none','bendpitch', 'lowpass', 'bandpass', 'hipass', 'stopplayback', 'startfromlater'];
+var possibleDSPEffects = ['none','bendpitch', 'lowpass', 'bandpass', 'hipass', 'lowshelf', 'highshelf', 'stopplayback', 'startfromlater'];
 var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south', 'counter','incrementer','teleport', 'freeze', 'revert'];
 //To be implemented: "random_tile", which will send the bug to a random tile within a user defined range.
 
