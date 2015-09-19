@@ -24,6 +24,7 @@ Things I know I want to do (which could get very long):
 - Improve the overall UI/UX of exceptionally large fields.
 - Open up more audio FX parameters to the user (requires save file versioning update, extrapolator improvements)
 - Improve the overall UI/UX of the audio FX menu
+- Add the rest of the BiquadFilterNode FX (trivial)
 
 
 

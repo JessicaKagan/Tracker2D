@@ -71,11 +71,39 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
             biQuadFilter.gain.value = 6;
             biQuadFilter.connect(audioEngine.destination);
             break;
+        //Boosts frequencies between values
+        case 'peaking':
+            volumeAdjustment.connect(biQuadFilter);
+            biQuadFilter.type = 'peaking';
+            biQuadFilter.frequency.value = dspValue;
+            biQuadFilter.Q.value = 1;
+            biQuadFilter.gain.value = 6;
+            console.log(biQuadFilter);
+            biQuadFilter.connect(audioEngine.destination);
+            break;
+        //Removes all pitches that ARE near a value
+        case 'notch':
+            volumeAdjustment.connect(biQuadFilter);
+            biQuadFilter.type = 'notch';
+            biQuadFilter.frequency.value = dspValue;
+            biQuadFilter.Q.value = 1;
+            biQuadFilter.connect(audioEngine.destination);
+            break;
+        //Changes the "phase relationship" between frequencies.
+        case 'allpass':
+            volumeAdjustment.connect(biQuadFilter);
+            biQuadFilter.type = 'allpass';
+            biQuadFilter.frequency.value = dspValue;
+            biQuadFilter.Q.value = 200;
+            biQuadFilter.connect(audioEngine.destination);
+            break;
+        //Separate from all the frequency filters
         case 'bendpitch':
             if(dspValue <= 16 && dspValue > 0) { source.playbackRate.value *= dspValue; } 
             else { console.log('bendpitch only takes values between 0 and 16, for the sake of sanity. Effect not applied.'); }
             volumeAdjustment.connect(audioEngine.destination);
             break;
+
         case 'stopplayback': //These share some logic and operate on start() accordingly.
         case 'startfromlater':
             //Takes values between 0-100 (floating point) and converts them into percentages of the file's length.
