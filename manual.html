@@ -39,12 +39,12 @@
         <p>This uses HTML5-based controls. From top to bottom, the following functions are available: <br>
         <strong>Minimap</strong>: This shows a small view of the entire field. Clicking anywhere on it will move your view to a different part of the field. <br>
         <strong>Pitch Indicator</strong>: This indicates your current pitch (we use mathematics to convert it into an actual pitch in hertz). When you press number keys and/or +/-, it changes. You'll also hear your instrument play.<br>
-        <strong>Instrument Menu</strong>: This allows you to select which instrument is applied to the tile you're painting.<br>
+        <strong>Instrument Menu</strong>: This allows you to select which instrument is applied to the tile you're painting. It slides out when you roll over it so you can see the full names of the instruments.<br>
         <strong>Audio FX Menu</strong>: Use this dropdown menu to select an audio effect to apply to your current tile. You will also need to input a value into the text field below it.<br>
-        <strong>Flow Control Menu</strong>: Use this dropdown menu to select a flow control effect to apply to your current tile.<br>
+        <strong>Flow Control Menu</strong>: Use the "Change" button to select a flow control effect to apply to your current tile.<br>
         <strong>Volume Slider</strong>: Click and drag this slider to set the volume attribute for a tile.<br>
         <strong>Bug Storage</strong>: This shows the status of Tracker2D's 8 bugs (analogous to audio channels). By hovering over one of the boxes, you can see on the minimap the location of the corresponding bug. The other major functionality of this (click a box to toggle whether a bug is on the field or in storage) is mentioned in the UI.<br>
-        <strong>Tick Counter</strong>: This shows how many units of time/tempo have passed since the last reset.<br>
+        <strong>Tick Counter</strong>: This shows how many units of time/tempo have passed since the last reset. It is updated by both manual resets and the reset tile.<br>
         <strong>Facebook</strong>: This takes you to Tracker2D's Facebook page, which opens in a new window. Pretty basic.<br>
         </p>
 
@@ -66,6 +66,7 @@
         <strong><img src="images/adjust_pointer_button.png" alt="Pointer Adjuster">Pointer Adjuster</strong>: This tool makes the first tile you click with it point to the second tile you click with it.<br>
         <strong><img src="images/arrow_pen_button.png" alt="Arrow Pen">Arrow Pen</strong>: This is an alternate painting method to the normal pen that uses the keyboard. You can reposition the 'cursor' of the arrow pen (a yellow translucent overlay) by clicking on the map. Then, you can move it one tile at a time by pressing arrow keys on the numpad (2/4/6/8). Press "5" to change whether it paints tiles with your current properties or not when you move it around. <br>
         <strong><img src="images/extrapolate_button.png" alt="Extrapolator">Extrapolator</strong>: This tool requires you to select two tiles on the field. If the tiles contain data in them, it draws a line between them; the data in the line's tiles is 'extrapolated' into a gradual transition between the values in the tiles you clicked. You can change which tile property is used in the UI properties menu.<br>
+        <strong><img src="images/fill_button.png" alt="Fill Selection">Fill Selection</strong>: Once you've selected a rectangle using the select tool, you can use the fill button to replace all the tiles in the selection with your current tile. This is more useful from an art perspective than it is for music.<br>
         <strong><img src="images/horizontal_flip_button.png" alt="Horizontal Flipper"><img src="images/vertical_flip_button.png" alt="Vertical Flipper">Selection Flippers</strong>: These tools flip your current selection horizontally or vertically. You don't need to have the selection tool active to use these. Please note that using them sets your paste mode back to overwrite mode.<br>
         <br>
         The menu bloc: <br>
@@ -107,7 +108,7 @@
         </ul>
         </p>
         <h3>Song Properties</h3>
-        <p>Important field information is stored here; these values are stored at the end of a savefile.</p>
+        <p>Important field information is stored here; these values are stored at the end of a savefile, along with an internal version number (which is not user-updatable and is used to improve backwards compatibility).</p>
         <strong><li>Tempo:</li></strong>
         Represents how fast the song is in beats per minute; this defaults to 120. Tempos can range anywhere from 1 to 999 BPM, although I personally don't recommend pushing your tempos to values that are too extreme.
         <strong><li>Playfield Size:</li></strong>
@@ -117,7 +118,7 @@
         <br><br>
         <hr>
         <h2>Effect Reference</h2>
-            <p>Tracker2D gives you a couple ways to adjust the sound and playback order of tiles. Expand and rephrase this.</p>
+            <p>Tracker2D gives you a couple ways to adjust the sound and playback order of tiles.</p>
         <hr>
         <h2>Audio Effects</h2>
             <p>Keep in mind that it is currently only possible to apply one audio effect to a tile at a time. This may be changed in the future, although it would require significant revision to the audio playback engine.</p>

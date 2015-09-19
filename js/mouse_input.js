@@ -298,7 +298,7 @@ function interact(action, e) {
                             if(fieldContents[currentTile[0]][currentTile[1]] !== undefined) {                     
                                 if(fieldContents[currentTile[0]][currentTile[1]].note !== undefined) {
                                 //The tile's frequency multiplier needs to be converted to the correct pitch before we can use this.
-                                    $("#modifyTilePitchSpinner").val(fieldContents[currentTile[0]][currentTile[1]].note);
+                                    $("#modifyTilePitchSpinner").val(pitchTable.indexOf(fieldContents[currentTile[0]][currentTile[1]].note));
                                 }
                                 if(fieldContents[currentTile[0]][currentTile[1]].instrument !== undefined) {  
                                     $("#modifyTileInstrumentSpinner").val(fieldContents[currentTile[0]][currentTile[1]].instrument);

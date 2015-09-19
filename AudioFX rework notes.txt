@@ -1,0 +1,38 @@
+The plan:
+
+The list of audio effects on a file needs to be represented as an array of objects. Each one should generate a tab or menu box or something in the UI element I design for it that contains all relevant user modifiable effects.
+
+Problems to solve:
+- Complicated (Might need a separate file just to prevent confusion!)
+- Ballooning save file size and complexity
+- Needs good UI to not be confusing
+- How to make the application of multiple complicated audio effects to multiple tiles efficient? Extrapolator is (was) a start.
+
+Things to implement (not necessarily in this order):
+1. Audio FX editing window, which can possibly be accessed through editing tile props or adding them. The key is that users should be able to add and edit a tile's FX independently of the rest of its data. Could be useful even with just one audio effect at a time
+2. Arbitrary length FX chains. Modify playSound to use an array. Possibly prototype the chain code outside of Tracker2D.
+3. Representation of FX chains. Some sort of JSON. See an example at the end of the file.
+4. String processing to efficiently handle FX lists in file saving/loading.
+5. Error trapping to gracefully handle malformed input/output
+
+JSON example (Needs refinement?):
+{
+    FX: [
+    {
+        type: "lowpass",
+        frequency: 200,
+        range: 200,
+        gain: 4.0
+    },
+    {
+        type: "hipass",
+        frequency: 800,
+        range: 50,
+        gain: 2.0
+    },    
+    {
+        type: "pitchbend",
+        multiplier: 4
+    },
+    ]
+}

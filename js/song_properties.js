@@ -11,4 +11,4 @@ var ZOOM_MULTIPLIER = [1, 2, 4, 8]; //Derived from the playfield size, and will 
 var author = "Nooblet";
 var songTitle = "Noob Song";
 var songDescription = "If you see this, the author couldn't be bothered to say anything about his work.";
-var version = "Alpha"; //Expand upon this and come up with a reasonable version numbering system to improve backward compatibility.
+var version = 1;
