@@ -159,6 +159,15 @@ function hookKeyboard(){
         resizeFile();
     });
 
+    jQuery('#modifyTilePitchSpinner').change(function (){
+        if(this.value >= 0 && this.value <= 71) {
+            fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].note = pitchTable[parseInt(this.value)]; 
+        } else if(this.value < 0 || this.value > 71) {
+            this.value.replace(pitchTable.indexOf(fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].note));
+        }
+        fieldContents[currentlyEditedTile[0]][currentlyEditedTile[1]].updateColor(); 
+    });
+
     //Instrument adjuster in Tile Properties
     jQuery('#modifyTileInstrumentSpinner').change(function (){
         //currentlyEditedTile gets around scoping...

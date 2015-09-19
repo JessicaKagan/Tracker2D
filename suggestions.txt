@@ -3,12 +3,8 @@ Suggestions people have made:
 - Progress display (A naive one that just displays the amount of updates since a reset is implemented, but calculating the length of the song in advance could be difficult and hard to make performant)
 - Overall UI simplification and clarification (Potentially hard, but always being done.)
 
-
-
 Things I know I want to do (which could get very long):
-- Add Web MIDI API support to allow instrument input
 - Zoom feature (Which might need better graphics to really shine and will be complicated to implement.)
-- "Find Bug" feature that centers the camera on a bug (Made less useful by minimap finder.)
 - Performance optimization (Not enough effort has been made in this realm yet.)
 - Functions to rotate and flip a selection (flips implemented, 90 degree rotation still necessary; latter is partially done but not quite there yet.)
 - Rotate turn tiles with the rotate selection tool (make this function optional), or perhaps add a tool to increment through flow control options.
@@ -18,14 +14,13 @@ Things I know I want to do (which could get very long):
 - Add an "amount of revisions" property to savefiles; increment on saves and add to the file name by default.
 - Note names instead of mere numbers (Update the query tool to use note names, requires functionalization of note-naming code)
 - Responsive window size (to make the program look better on larger monitors. Time consuming!)
-- Properly implement versioning and use this to make the save format more robust and less likely to break compatibility with old files.
-- Simply add more audio effects (like reverb, etc).
+- Properly implement versioning and use this to make the save format more robust and less likely to break compatibility with old files (Ongoing)
 - Simple "undo" function? It will not be so simple.
 - Improve the overall UI/UX of exceptionally large fields.
 - Open up more audio FX parameters to the user (requires save file versioning update, extrapolator improvements)
-- Improve the overall UI/UX of the audio FX menu
-- Add the rest of the BiquadFilterNode FX (trivial)
-
+- Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data; one way to do this would possibly be adding audio effects to bugs).
+- Flow control tile to jump to a random tile within a radius defined by the flow control value.
+- Adjust implementation of query tool to allow querying tiles under the query window
 
 
 Things I might do but am not sure about:
@@ -38,7 +33,8 @@ Things I might do but am not sure about:
 - Show the selected tilebuffer on the minimap as an overlay (which might be difficult or awkward to do as image data).
 - Flow control features to dynamically adjust bug properties (possibly really cool, but programming would be annoying, especially on the save/load/revert frontier)
 - Flow control features to dynamically adjust SONG properties! (Currently only tempo; would require similar expansion of file I/O to dynamic bug properties)
-- Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data; one way to do this would possibly be adding audio effects to bugs).
+- Add Web MIDI API support to allow instrument input (Not sure since only Chrome and Opera support it)
+
 
 
 
@@ -60,4 +56,5 @@ Suggestions and planned features that have already been implemented:
 - Save the user's UI properties in localStorage.
 - Graphical menu for flow control FX (Implemented through buttons; make more efficient.)
 - Fill bucket tool for the selection buffer
-- Multiple color schemes for the UI (or better yet, let the user define them with RGBA strings?)
+- Multiple color schemes for the UI (The user can set their own colors.)
+- Add the rest of the BiquadFilterNode FX (trivial)
