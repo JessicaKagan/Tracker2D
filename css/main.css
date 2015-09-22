@@ -263,6 +263,10 @@ select {
     border: none;
 }
 
+#queryInfo {
+    pointer-events: none;
+}
+
 .bugHoldingPen {
     position: absolute;
     width: 24px;

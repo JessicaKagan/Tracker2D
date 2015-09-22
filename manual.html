@@ -159,7 +159,7 @@
                     <div class="flowControlImages">
                         <img src="images/teleporter_overlay.png" alt="Teleporter">
                     </div>
-                    <strong>Teleport</strong>: When a bug passes over this tile, they will be moved (after playing the tile's computed sound) to the tile that the teleporter tile points to. Their current direction will not change.
+                    <strong>Teleport</strong>: When a bug passes over this tile, they will be moved (after playing the tile's computed sound) to the tile that the teleporter tile points to. The bug's current direction will not change.
                 </li>
                 <br>
                 <li>
@@ -174,6 +174,12 @@
                         <img src="images/restore_bugs_button.png" alt="Revert Tile">
                     </div>
                     <strong>Revert</strong>: When a bug passes over this tile, all bugs are moved back to their initial positions stored in memory (which is updated whenever the user presses the "Store Bug Positions" button, whenever they save a file, or whenever they load a file). Playback does not pause. This is best used for looping music.
+                </li>
+                <li>
+                    <div class="flowControlImages">
+                        <img src="images/random_teleport_overlay.png" alt="Jump To A Random Tile">
+                    </div>
+                    <strong>Jump To A Random Tile</strong>: When a bug passes over this tile, they will be moved (after playing the tile's computed sound) to a random nearby tile. You can set the range of this effect by modifying the tile's flow control value. The bug's current direction will not change.
                 </li>
             </ul>
         </div>

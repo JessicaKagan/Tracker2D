@@ -86,12 +86,17 @@ Bug.prototype.updateBug = function() {
                 this.action = 'moveDown';
                 break;
             case "freeze":
-            //There are some questionable interactions, but freeze should only be used at the very end of a song.
+            //There are some questionable interactions, so freeze should only be used at the very end of a song.
                 pauseState = true; 
                 return;
+            //teleportToRandomTile is a variant of the regular teleport. Someday, these should share more code.
             case "teleport": 
                 this.previousAction = this.action;
                 this.action = 'teleportToTile';
+                break;
+            case "randomjump":
+                this.previousAction = this.action;
+                this.action = 'teleportToRandomTile';
                 break;
             case "counter":
             //Counters are cool. Bugs decrement them until they hit 0 and turn into whatever tile they point to.
@@ -158,6 +163,27 @@ Bug.prototype.updateBug = function() {
                 this.action = this.previousAction; //Restore the previous action once we have teleported the bug.
                 //console.log(this.action + " , " + this.previousAction);
             }
+            break;
+        case 'teleportToRandomTile':
+            //Define offsets. These need to eventually stop being 0.
+            var randomXOffSet = 0;
+            var randomYOffSet = 0;
+            var randomRange = fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue;  
+            //Generate valid values for the offsets.
+            while(randomXOffSet === 0) { randomXOffSet = Math.floor(Math.random() * (randomRange - (-randomRange) + 1)) + (-randomRange);}
+            while(randomYOffSet === 0) { randomYOffSet = Math.floor(Math.random() * (randomRange - (-randomRange) + 1)) + (-randomRange);}
+            //console.log(randomXOffSet, randomYOffSet);
+            //Then, if necessary, adjust the offset so that bugs do not fall off the map.
+            while(randomXOffSet + this.bugTile[0] < 0) { ++randomXOffSet; }
+            while(randomYOffSet + this.bugTile[1] < 0) { ++randomYOffSet; }
+            while(randomXOffSet + this.bugTile[0] > (parseInt(FILE_SIZE[0]) - 1) ) { --randomXOffSet; }
+            while(randomYOffSet + this.bugTile[1] > (parseInt(FILE_SIZE[1]) - 1) ) { --randomYOffSet; }
+            console.log( (randomXOffSet + this.bugTile[0]) + " , " + (randomYOffSet + this.bugTile[1]) );
+            //Finally, move the bug.
+            this.bugTile[0] += randomXOffSet;
+            this.bugTile[1] += randomYOffSet;
+            //And since this is a teleport, restore the previous action.
+            this.action = this.previousAction;
             break;
         default:
             break;

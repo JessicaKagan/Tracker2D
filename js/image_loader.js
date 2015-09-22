@@ -13,6 +13,7 @@ function getImages() {
     tileOverlayImages[9].src = 'images/percussion_overlay.png';
     tileOverlayImages[10].src = 'images/teleporter_overlay.png';
     tileOverlayImages[11].src = 'images/incrementer_overlay.png';
+    tileOverlayImages[12].src = 'images/random_teleport_overlay.png';
 
     UIImages[0].src = 'images/pause_button.png';
     UIImages[1].src = 'images/play_button.png';

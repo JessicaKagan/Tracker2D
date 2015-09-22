@@ -508,6 +508,9 @@ function setFlowControl(value){
             break;        
         case "revert":
             $("#currentFlowControl > img").replaceWith('<img src="images/revert_button.png">');
+            break;       
+        case "randomjump":
+            $("#currentFlowControl > img").replaceWith('<img src="images/random_teleport_overlay.png">');
             break;
         default:
             break;
