@@ -75,7 +75,7 @@ var currentFlowControl = "none";
 
 //Image arrays used in image_loader.js
 var UIImages = new Array(31); //These are almost entirely buttons.
-var tileOverlayImages = new Array(12); //Used for flow control and anything that needs to be drawn above a bug or tile.
+var tileOverlayImages = new Array(13); //Used for flow control and anything that needs to be drawn above a bug or tile.
 var bugImages = new Array(8);
 //Define the arrays used for bug data.
 var bugList = new Array(8);
@@ -202,6 +202,7 @@ function init() {
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;teleport&quot;)"><img src="images/teleporter_overlay.png"></button>Teleporter<br>');
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;freeze&quot;)"><img src="images/freeze_overlay.png"></button>Freeze<br>');
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;revert&quot;)"><img src="images/revert_button.png"></button>Revert Tile<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;randomjump&quot;)"><img src="images/random_teleport_overlay.png"></button>Jump To A Random Tile<br>');
 
 
         /*
