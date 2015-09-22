@@ -95,8 +95,10 @@ Bug.prototype.updateBug = function() {
                 this.action = 'teleportToTile';
                 break;
             case "randomjump":
-                this.previousAction = this.action;
-                this.action = 'teleportToRandomTile';
+                if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue != 0){
+                    this.previousAction = this.action;
+                    this.action = 'teleportToRandomTile';
+                }
                 break;
             case "counter":
             //Counters are cool. Bugs decrement them until they hit 0 and turn into whatever tile they point to.
