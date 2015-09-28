@@ -173,15 +173,21 @@ function init() {
         //This handles the audio FX menu.
         for(var i = 0; i < possibleDSPEffects.length; ++i){
             $('#DSPInput').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
+            $('.chooseAudioFXType').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
         }
         $( "#DSPInput" ).change(function() {
             currentDSP = $(this).find('option:selected').attr('value');
             console.log(currentDSP);
         });
+        //Prep for the new audioFX stuff.
+        $( ".chooseAudioFXType" ).change(function() {
+            currentDSP = $(this).find('option:selected').attr('value');
+            console.log(currentDSP);
+        });
         //Definitely functionalize. This handles input for Audio FX.    
-        $('#dspValueInput').keydown(function(event){
+        $('#audioFX1Value1').keydown(function(event){
             if (event.keyCode == 13) {
-                currentDSPValue = $('#dspValueInput').val(); //Unlike the others, this needs to be interpreted based on the current DSP.
+                currentDSPValue = $('#audioFX1Value1').val(); //Unlike the others, this needs to be interpreted based on the current DSP.
                 console.log(currentDSPValue);
                 //$('#dspValueInput').val('');
             }
@@ -205,16 +211,6 @@ function init() {
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;randomjump&quot;)"><img src="images/random_teleport_overlay.png"></button>Jump To A Random Tile<br>');
 
 
-        /*
-        for(var i = 0; i < possibleFlowEffects.length; ++i){
-            $('#controlInput').append('<option value="' + possibleFlowEffects[i] + '">' + possibleFlowEffects[i] + '</option>');
-        }
-        $( "#controlInput" ).change(function() {
-            currentFlowControl = $(this).find('option:selected').attr('value');
-            console.log(currentFlowControl);
-        });
-        */
-
         //Left bar menu stuff ends here.
     }
     handleLeftBarMenu();
@@ -234,12 +230,6 @@ function init() {
     }
     //Populating this will prevent unsolicited load errors.
     storeBugPositions();
-
-    //Add an event listener for hovering in the bug storage divs.
-    //This is going to be kind of inefficient, but we'll live.
-    //I have a more generic version of this, but it runs into scope problems with i.
-    //See this to fix it. http://stackoverflow.com/questions/7774636/jquery-event-handler-created-in-loop
-
 
     //More compact hovercode that uses HTML classes and event delegation to determine where the user hovers.
     $(".bugHoldingPen").hover(

@@ -254,6 +254,9 @@ function hideUI(){
     }
     if($("#flowControlSelector").hasClass("currentlyHidden") === false) { 
         setTimeout(function() {$("#flowControlSelector").addClass("currentlyHidden");}, 50);
+    }    
+    if($("#audioFXWindow").hasClass("currentlyHidden") === false) { 
+        setTimeout(function() {$("#audioFXWindow").addClass("currentlyHidden");}, 50);
     }
 
 }

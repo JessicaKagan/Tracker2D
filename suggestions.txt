@@ -19,7 +19,6 @@ Things I know I want to do (which could get very long):
 - Improve the overall UI/UX of exceptionally large fields.
 - Open up more audio FX parameters to the user (requires save file versioning update, extrapolator improvements)
 - Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data; one way to do this would possibly be adding audio effects to bugs).
-- Flow control tile to jump to a random tile within a radius defined by the flow control value.
 
 
 
@@ -59,3 +58,4 @@ Suggestions and planned features that have already been implemented:
 - Multiple color schemes for the UI (The user can set their own colors.)
 - Add the rest of the BiquadFilterNode FX (trivial)
 - Adjust implementation of query tool to allow querying tiles under the query window (Perhaps by moving it based on cursor location)
+- Flow control tile to jump to a random tile within a radius defined by the flow control value.

@@ -337,7 +337,7 @@ function interact(action, e) {
                             //JQuery has a scrollTop() method.
 
                             currentDSP = fieldContents[currentTile[0]][currentTile[1]].dspEffect;
-                            $('#DSPInput').val(currentDSP);
+                            $('#audioFX1Value1').val(currentDSP);
 
                             currentFlowControl = fieldContents[currentTile[0]][currentTile[1]].flowEffect;
                             $('#controlInput').val(currentFlowControl);
