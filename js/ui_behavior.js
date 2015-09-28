@@ -520,14 +520,30 @@ function setFlowControl(value){
     }
 }
 
-/*        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;none&quot;)"><img src="images/no_flow_control.png"></button>None<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_west&quot;)"><img src="images/west_arrow_overlay.png"></button>Turn West<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_north&quot;)"><img src="images/north_arrow_overlay.png"></button>Turn North<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_east&quot;)"><img src="images/east_arrow_overlay.png"></button>Turn East<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_south&quot;)"><img src="images/south_arrow_overlay.png"></button>Turn South<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;counter&quot;)"><img src="images/counter_overlay.png"></button>Counter<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;incrementer&quot;)"><img src="images/incrementer_overlay.png"></button>Incrementer<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;teleport&quot;)"><img src="images/teleporter_overlay.png"></button>Teleporter<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;freeze&quot;)"><img src="images/freeze_overlay.png"></button>Freeze<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;revert&quot;)"><img src="images/revert_button.png"></button>Revert Tile<br>');
+/*  These functions were added to ui_behavior because they only add FX to the audio FX list,
+    and then add UI controls for the user.
 */
+function addAudioFXToList(){
+    //Push to the array
+    var newEffect = new audioEffect("none");
+    //console.log("Done adding another effect");
+    if(currentAudioEffects.length < 8){ currentAudioEffects.push(newEffect); }
+    else { alert("Maximum of 8 audio effects per tile"); }
+    console.log(currentAudioEffects);
+}
+
+function removeAudioFXFromList(){
+    if(currentAudioEffects.length > 0){
+        currentAudioEffects.pop();
+    } else { console.log("Nothing to remove"); }
+    console.log(currentAudioEffects);
+    //Pop from the array
+}
+
+//Called at the end of the last two functions if there's anything that has to be done.
+//We probably need a function for exposing an effect's options based on what kind of effect it is.
+//Loop through the "requiredOptions" array?
+function renderAudioFXList(){
+    //Create the "type" and value entries?
+
+}

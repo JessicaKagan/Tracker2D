@@ -1,5 +1,7 @@
 //Under construction.
-//The goal here is to create some JSON representing all the audio effects
+//The goal here is to create some JSON representing all the audio effects?
+
+var currentAudioEffects = new Array(0); //Used for painting tools, too. Extensible up to 8 effects.
 
 //An array of audio effects are what we need.
 function audioEffect(type){
@@ -7,10 +9,16 @@ function audioEffect(type){
     switch(type){
         case "lowpass":
         case "highpass":
-            this.requiredOptions = ['frequency','range','gain'];
-            this.frequency = "200";
-            this.range = "200";
-            this.gain = "4.0";
+            this.requiredOptions = ['Frequency','Range','Gain'];
+            this.frequency = 200;
+            this.range = 200;
+            this.gain = 4.0;
+            break;
+        case "bendpitch":
+            this.requiredOptions = ['Multiplier']
+            this.multiplier = 1;
+        case "none":
+            //Probably should remove "none" as a possible audio FX option at some point?
             break;
         default:
             break;

@@ -180,7 +180,7 @@ Bug.prototype.updateBug = function() {
             while(randomYOffSet + this.bugTile[1] < 0) { ++randomYOffSet; }
             while(randomXOffSet + this.bugTile[0] > (parseInt(FILE_SIZE[0]) - 1) ) { --randomXOffSet; }
             while(randomYOffSet + this.bugTile[1] > (parseInt(FILE_SIZE[1]) - 1) ) { --randomYOffSet; }
-            console.log( (randomXOffSet + this.bugTile[0]) + " , " + (randomYOffSet + this.bugTile[1]) );
+            //console.log( (randomXOffSet + this.bugTile[0]) + " , " + (randomYOffSet + this.bugTile[1]) );
             //Finally, move the bug.
             this.bugTile[0] += randomXOffSet;
             this.bugTile[1] += randomYOffSet;

@@ -178,7 +178,7 @@ function interact(action, e) {
                     case "pencil":
                         setDrawingStatus();
                         if(drawingStatus === true){
-                            fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, currentVolume, currentDSPValue, 0);
+                            fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, currentVolume, currentDSPValue, 0, 0, 0, 0, currentAudioEffects);
                         }
                         break;
                     case "eraser":

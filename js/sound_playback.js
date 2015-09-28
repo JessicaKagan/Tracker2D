@@ -32,6 +32,25 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
      * Fill each one in based on parameters in a tile
      * Connect after defining them?
      */
+
+    /*
+        var audioFilters = new Array(8); 
+        for(var i = 0; i < audioFilters.length; ++i){
+            switch(dspEffect){
+                Build and connect filters as needed.
+                filter[i] = audioEngine.createWhateverFilter;
+                Then the filter properties
+                if(filter[i].connect(filter[i-1])){
+                    
+                }
+                
+            }
+        }
+        //Connect the volume adjustment stuff
+        volumeAdjustment.connect(audioEngine.destination);
+        //Then to the playback.
+
+    */
     var biQuadFilter = audioEngine.createBiquadFilter();
     switch(dspEffect){
         //Removes all pitches above a value

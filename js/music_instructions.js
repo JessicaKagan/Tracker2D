@@ -28,7 +28,7 @@ var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_s
 
 //Possible extension: Tiles that only affect certain bugs. For N bugs we will need 2^N intspace to handle it.
 //For instance: 10000001 would change the behavior of bugs 1 and 8 (equivalent to 129).
-var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, flowValue, color, xPointer, yPointer) {
+var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, flowValue, color, xPointer, yPointer, audioEffectList) {
     this.note = note; //Note ID to relative pitch conversion now takes place when the tile is instanced, for save-load compatibility
     this.instrument = instrument;
     this.dspEffect = dspEffect;
@@ -36,6 +36,7 @@ var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, f
     this.volume = volume;
     this.dspValue = dspValue;
     this.flowValue = flowValue;
+    this.audioEffectList = audioEffectList; //A list of up to 8 audioEffect objects.
     if(this.volume === undefined) { this.volume = 0.6; }
     if(this.dspValue === undefined) { this.dspValue = 0; }
     if(this.flowValue === undefined) { this.flowValue = 0; }

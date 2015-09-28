@@ -179,11 +179,14 @@ function init() {
             currentDSP = $(this).find('option:selected').attr('value');
             console.log(currentDSP);
         });
+
         //Prep for the new audioFX stuff.
+        //When one of the audio FX choice things changes, change the input fields that are visible and interactable.
         $( ".chooseAudioFXType" ).change(function() {
             currentDSP = $(this).find('option:selected').attr('value');
             console.log(currentDSP);
         });
+
         //Definitely functionalize. This handles input for Audio FX.    
         $('#audioFX1Value1').keydown(function(event){
             if (event.keyCode == 13) {
