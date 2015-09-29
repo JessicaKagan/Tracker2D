@@ -521,23 +521,32 @@ function setFlowControl(value){
 }
 
 /*  These functions were added to ui_behavior because they only add FX to the audio FX list,
-    and then add UI controls for the user.
+    and then add UI controls for the user. Separation of concerns could be better.
 */
 function addAudioFXToList(){
     //Push to the array
     var newEffect = new audioEffect("none");
     //console.log("Done adding another effect");
-    if(currentAudioEffects.length < 8){ currentAudioEffects.push(newEffect); }
-    else { alert("Maximum of 8 audio effects per tile"); }
-    console.log(currentAudioEffects);
+    if(currentAudioEffects.length < 8){ 
+        currentAudioEffects.push(newEffect);
+        genericAudioFXDiv.clone().appendTo("#audioFXPropertiesBox"); 
+        //Make the new effect's ID equivalent to our length.
+        $(".audioFXInstance").last().attr("id","audioFXInstance" + currentAudioEffects.length);
+    } else { alert("Maximum of 8 audio effects per tile"); }
+
+    console.log(currentAudioEffects.length);
+    //$("#audioFXPropertiesBox"),$(".audioFXInstance"), genericAudioFXDiv
 }
 
 function removeAudioFXFromList(){
+    //Pop the effect from the array
     if(currentAudioEffects.length > 0){
         currentAudioEffects.pop();
-    } else { console.log("Nothing to remove"); }
-    console.log(currentAudioEffects);
-    //Pop from the array
+        //Remove the element's representation from the DOM.
+        $(".audioFXInstance").last().remove();
+    } else { alert("No effects to remove"); }
+
+    console.log(currentAudioEffects.length);    
 }
 
 //Called at the end of the last two functions if there's anything that has to be done.

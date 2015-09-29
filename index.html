@@ -206,17 +206,19 @@
                     <button onClick="addAudioFXToList()">Add FX</button>
                     <button onClick="removeAudioFXFromList()">Remove Bottom FX</button>
                     <p>Currently adding the following effects to each tile:</p>
-                    <div class="audioFXPropertiesBox">
-                        Type: <select class="chooseAudioFXType"></select><br>      
-                        <!--Fields need to be generated based on the type and using proper techniques.--> 
+                    <div id="audioFXPropertiesBox">
+                        <div class="audioFXInstance" id="audioFXInstance1">
+                        Type: <select class="chooseAudioFXType" id="audioFXMenu1"></select><br>      
                         Values:<br>
-                        Example FX: <input type="text" placeholder="Submit with enter" id="audioFX1Value1" class="numbersOnly audioFXValue"></input><br>
-                        <!--
+                        Example FX: <input type="text" placeholder="Submit with enter" id="audioFX1Value1" class="numbersOnly audioFXValue"></input><br>   
+                        </div>
+
+                    </div>
+                    <!--
                         Example FX 2: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue"></input><br>
                         Example FX 3: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue"></input><br>
                     -->
-                        <!--http://stackoverflow.com/questions/3231459/create-unique-id-with-javascript-->           
-                    </div>
+                        <!--http://stackoverflow.com/questions/3231459/create-unique-id-with-javascript-->   
                 </div>
             </div>
         </div>

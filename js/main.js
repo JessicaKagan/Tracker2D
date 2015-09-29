@@ -72,6 +72,8 @@ var currentVolume = 0.6;
 var currentDSP = "none";
 var currentFlowControl = "none";
 
+//Used in the Audio FX window
+var genericAudioFXDiv;
 
 //Image arrays used in image_loader.js
 var UIImages = new Array(31); //These are almost entirely buttons.
@@ -175,6 +177,9 @@ function init() {
             $('#DSPInput').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
             $('.chooseAudioFXType').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
         }
+        genericAudioFXDiv = $(".audioFXInstance").clone();
+        //removeAudioFXFromList(); //Kludge; gets rid of the template.
+
         $( "#DSPInput" ).change(function() {
             currentDSP = $(this).find('option:selected').attr('value');
             console.log(currentDSP);
