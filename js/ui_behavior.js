@@ -549,10 +549,34 @@ function removeAudioFXFromList(){
     console.log(currentAudioEffects.length);    
 }
 
-//Called at the end of the last two functions if there's anything that has to be done.
-//We probably need a function for exposing an effect's options based on what kind of effect it is.
-//Loop through the "requiredOptions" array?
-function renderAudioFXList(){
-    //Create the "type" and value entries?
+//Generates the needed input fields for an audio effect type.
+//Also initializes/purges the relevant fields in currentAudioEffects
+function renderAudioFXList(type,number){
+    console.log(type,number);
+    //delete currentAudioEffects[number - 1].ReplaceWithAllProperties;
+    var domID = "#audioFXInstance" + number + " > .generatedAudioFX";  //Get the DOM scope we need.
+    $(domID).html(""); //Remove everything just to be on the safe side.
+
+    //Start making elements as needed.
+
+    //Frequency, used by pretty much all the biQuad stuff.
+    if(type == "lowpass" || type == "hipass" || type == "bandpass" || type == "lowshelf" || 
+       type == "highshelf" || type == "peaking" || type == "notch" || type == "allpass") {
+        $(domID).append('Frequency: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="frequency"></input><br>');
+    }
+    //Quality factor, which is basically the width of a frequency band/change.
+    if(type == "lowpass" || type == "hipass" || type == "bandpass" || 
+       type == "peaking" || type == "notch" || type == "allpass") {
+        $(domID).append('Quality: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="quality"></input><br>');
+    }
+    //Gain. It's basically volume.
+    if(type == "lowshelf" || type == "highshelf" || type == "peaking") {
+        $(domID).append('Gain: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="gain"></input><br>');
+    }
+    //Multiplier, which is only used for the pitch bender.
+    if(type == "bendpitch") {
+        $(domID).append('Pitch Multiplier: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="bendpitch"></input><br>');
+    }
+
 
 }

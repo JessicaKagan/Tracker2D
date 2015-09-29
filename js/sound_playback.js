@@ -33,7 +33,8 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
      * Connect after defining them?
      */
 
-    /*
+    /* Here's some pseudocode.
+        
         var audioFilters = new Array(8); 
         for(var i = 0; i < audioFilters.length; ++i){
             switch(dspEffect){

@@ -185,14 +185,24 @@ function init() {
             console.log(currentDSP);
         });
 
-        //Prep for the new audioFX stuff.
         //When one of the audio FX choice things changes, change the input fields that are visible and interactable.
-        $( ".chooseAudioFXType" ).change(function() {
-            currentDSP = $(this).find('option:selected').attr('value');
-            console.log(currentDSP);
+        //Also, prep the new type.
+        //$( ".chooseAudioFXType" ).change(function() {
+        $( "#audioFXPropertiesBox" ).on("change", ".chooseAudioFXType", function() {
+            //currentDSP = $(this).find('option:selected').attr('value'); //Old style
+            //New style follows:
+            //Get the ID of the element this class belongs to.
+            var currentDiv = $(this).parent().attr("id");
+            var currentDivType = $(this).find('option:selected').attr('value')
+            var currentDivID = currentDiv.substr(currentDiv.length - 1);
+            //Set the type of the relevant audio effect in our list. Handle cleanup in the next function.
+            currentAudioEffects[currentDivID - 1].type = currentDivType;
+            //Pass the 'renderer' the current effect and the ID we acquired.
+            renderAudioFXList(currentDivType, currentDivID);
+
         });
 
-        //Definitely functionalize. This handles input for Audio FX.    
+        //Rebuild once AudioFXType is set up.   
         $('#audioFX1Value1').keydown(function(event){
             if (event.keyCode == 13) {
                 currentDSPValue = $('#audioFX1Value1').val(); //Unlike the others, this needs to be interpreted based on the current DSP.

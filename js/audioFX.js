@@ -10,13 +10,13 @@ function audioEffect(type){
         case "lowpass":
         case "highpass":
         case "bandpass":
-            this.requiredOptions = ['Frequency','Range'];
+            //this.requiredOptions = ['Frequency','Range'];
             this.frequency = 200;
             this.range = 200;
             this.gain = 4.0;
             break;
         case "bendpitch":
-            this.requiredOptions = ['Multiplier']
+            //this.requiredOptions = ['Multiplier']
             this.multiplier = 1;
         case "none":
             //Any sort of code needed here? Not sure.

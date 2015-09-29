@@ -202,15 +202,16 @@
                 <div id="audioFXWindow" class="editingWindow currentlyHidden">
                     <button class="closeButton" onClick="hideUI()">Close Window</button>
                     <br><br>
-                    <p>A massive overhaul is impending to this section.</p>
+                    <p>A massive overhaul is impending to this section. Make sure users can test sounds easily by playing notes as they add FX</p>
                     <button onClick="addAudioFXToList()">Add FX</button>
                     <button onClick="removeAudioFXFromList()">Remove Bottom FX</button>
                     <p>Currently adding the following effects to each tile:</p>
                     <div id="audioFXPropertiesBox">
                         <div class="audioFXInstance" id="audioFXInstance1">
-                        Type: <select class="chooseAudioFXType" id="audioFXMenu1"></select><br>      
-                        Values:<br>
-                        Example FX: <input type="text" placeholder="Submit with enter" id="audioFX1Value1" class="numbersOnly audioFXValue"></input><br>   
+                        Type: <select class="chooseAudioFXType"></select><br>
+                            <div class="generatedAudioFX">
+                            Example FX: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="example"></input><br> 
+                            </div>  
                         </div>
 
                     </div>
