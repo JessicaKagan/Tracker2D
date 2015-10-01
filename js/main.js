@@ -186,11 +186,8 @@ function init() {
             console.log(currentDSP);
         });
 
-        //When one of the audio FX choice things changes, change the input fields that are visible and interactable.
-        //Also, prep the new type.
-        //$( ".chooseAudioFXType" ).change(function() {
+        //When one of the audio FX type selectors changes, change the input fields that are visible and interactable.
         $( "#audioFXPropertiesBox" ).on("change", ".chooseAudioFXType", function() {
-            //currentDSP = $(this).find('option:selected').attr('value'); //Old style
             //New style follows:
             //Get the ID of the element this class belongs to.
             var currentDiv = $(this).parent().attr("id");
@@ -210,8 +207,32 @@ function init() {
                 //Jump up two DOM levels, get the ID of such, and then do the substring thing.
                 var currentDiv = $(this).parent().parent().attr("id");
                 var currentDivID = parseInt(currentDiv.substr(currentDiv.length - 1)) - 1;
+                var FXValue = parseFloat($(this).val());
+                //Run these sanity checks to prevent ear-destroying output. Add a feature to opt out later.
+                switch(FXProperty){
+                    case "bendpitch":
+                        if(FXValue > 16){
+                            alert("Don't set your pitch multiplier above 16. You'll irritate someone's dog!");
+                            $(this).val("");
+                            return;
+                        }
+                    case "quality":
+                        if(FXValue > 30){
+                            alert("Don't set the quality factor above 30. You'll hurt yourself!");
+                            $(this).val("");
+                            return;
+                        }
+                    case "gain":
+                        if(FXValue > 12){
+                            alert("Don't set the audio gain above 12 dB. You'll kill your speakers!");
+                            $(this).val("");
+                            return;
+                        }
+                    default:
+                        break;
+                }
                 //And thusly do we have our new value. I assume parseFloat is valid for now.
-                currentAudioEffects[currentDivID][FXProperty] = parseFloat($(this).val());
+                currentAudioEffects[currentDivID][FXProperty] = FXValue;
                 console.log(currentAudioEffects);
                 //$('#dspValueInput').val('');
             }
