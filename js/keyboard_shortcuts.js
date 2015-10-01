@@ -92,7 +92,7 @@ function hookKeyboard(){
                 } else if(arrowPenDrawingActivated === true && selectedTool === "arrowPen") {
                     arrowPenDrawingActivated = false;
                 }
-                console.log(arrowPenDrawingActivated);
+                //console.log(arrowPenDrawingActivated);
                 break;
             default:
                 pressedNoteKey = false; 

@@ -202,16 +202,21 @@ function init() {
 
         });
 
-        //Rebuild once AudioFXType is set up.   
-        $('#audioFX1Value1').keydown(function(event){
+        //When the user types in a value to one of the generated propboxes in the AudioFX Window, pass them to currentAudioEffects.
+        $("#audioFXPropertiesBox").on("keydown", ".audioFXValue", function() {
             if (event.keyCode == 13) {
-                currentDSPValue = $('#audioFX1Value1').val(); //Unlike the others, this needs to be interpreted based on the current DSP.
-                console.log(currentDSPValue);
+                var FXProperty = $(this).attr("name");
+                //Jump up two DOM levels, get the ID of such, and then do the substring thing.
+                var currentDiv = $(this).parent().parent().attr("id");
+                var currentDivID = parseInt(currentDiv.substr(currentDiv.length - 1)) - 1;
+                //And thusly do we have our new value.
+                currentAudioEffects[currentDivID][FXProperty] = $(this).val();
+                console.log(currentAudioEffects);
                 //$('#dspValueInput').val('');
             }
-        })
-        //This handles the flow control menu. Under revision.
+        });
 
+        //This handles the flow control menu. Under revision.
         //Generate all the buttons we need and use a function to set the current flow control properly.
         //See ui_behavior.js for setFlowControl.
         //Kind of ugly and verbose.

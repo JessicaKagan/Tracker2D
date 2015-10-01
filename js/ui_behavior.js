@@ -552,7 +552,7 @@ function removeAudioFXFromList(){
 //Generates the needed input fields for an audio effect type.
 //Also initializes/purges the relevant fields in currentAudioEffects
 function renderAudioFXList(type,number){
-    console.log(type,number);
+    //console.log(type,number);
     //delete currentAudioEffects[number - 1].ReplaceWithAllProperties;
     var domID = "#audioFXInstance" + number + " > .generatedAudioFX";  //Get the DOM scope we need.
     $(domID).html(""); //Remove everything just to be on the safe side.

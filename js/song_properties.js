@@ -12,3 +12,7 @@ var author = "Nooblet";
 var songTitle = "Noob Song";
 var songDescription = "If you see this, the author couldn't be bothered to say anything about his work.";
 var version = 1;
+
+//Version reference
+//1: First versioned... version
+//2: AudioFX Chain overhaul
