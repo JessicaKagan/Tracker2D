@@ -560,12 +560,12 @@ function renderAudioFXList(type,number){
     //Start making elements as needed.
 
     //Frequency, used by pretty much all the biQuad stuff.
-    if(type == "lowpass" || type == "hipass" || type == "bandpass" || type == "lowshelf" || 
+    if(type == "lowpass" || type == "highpass" || type == "bandpass" || type == "lowshelf" || 
        type == "highshelf" || type == "peaking" || type == "notch" || type == "allpass") {
         $(domID).append('Frequency: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="frequency"></input><br>');
     }
     //Quality factor, which is basically the width of a frequency band/change.
-    if(type == "lowpass" || type == "hipass" || type == "bandpass" || 
+    if(type == "lowpass" || type == "highpass" || type == "bandpass" || 
        type == "peaking" || type == "notch" || type == "allpass") {
         $(domID).append('Quality: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="quality"></input><br>');
     }

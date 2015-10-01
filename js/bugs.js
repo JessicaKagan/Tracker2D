@@ -61,12 +61,21 @@ Bug.prototype.updateBug = function() {
         //Frozen bugs only play their tile's sound once. Anything else would be detrimental to your sanity.
         if(fieldContents[this.bugTile[0]][this.bugTile[1]].instrument != -1 && this.action !== "holdPosition"){
             //console.log(fieldContents[bugTile[0]][bugTile[1]].dspValue);
-            playSound(soundFont[fieldContents[this.bugTile[0]][this.bugTile[1]].instrument],
+            //Use the new playback routine for tiles that have newstyle audio DSP effect data.
+            if( fieldContents[this.bugTile[0]][this.bugTile[1]].audioEffectList != undefined) {
+                playSound2(soundFont[fieldContents[this.bugTile[0]][this.bugTile[1]].instrument],
+                                fieldContents[this.bugTile[0]][this.bugTile[1]].note,
+                                (fieldContents[this.bugTile[0]][this.bugTile[1]].volume * (this.volume/100)),
+                                fieldContents[this.bugTile[0]][this.bugTile[1]].audioEffectList
+                                );
+            } else {
+                playSound(soundFont[fieldContents[this.bugTile[0]][this.bugTile[1]].instrument],
                                 fieldContents[this.bugTile[0]][this.bugTile[1]].note,
                                 fieldContents[this.bugTile[0]][this.bugTile[1]].dspEffect,
                                 fieldContents[this.bugTile[0]][this.bugTile[1]].dspValue,
                                 (fieldContents[this.bugTile[0]][this.bugTile[1]].volume * (this.volume/100))
                                 );
+            }
         }
     }
 

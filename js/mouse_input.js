@@ -178,7 +178,9 @@ function interact(action, e) {
                     case "pencil":
                         setDrawingStatus();
                         if(drawingStatus === true){
-                            fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, currentDSP, currentFlowControl, currentVolume, currentDSPValue, 0, 0, 0, 0, currentAudioEffects);
+                            fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, undefined, 
+                                currentFlowControl, currentVolume, undefined, 0, 0, 0, 0, 
+                                jQuery.extend(true, {}, currentAudioEffects) ); //Extendcopy is proving necessary more than expected.
                         }
                         break;
                     case "eraser":
@@ -326,6 +328,7 @@ function interact(action, e) {
                         break;
                     case "eyeDropper":
                         if(action === "click" && fieldContents[currentTile[0]][currentTile[1]] !== undefined) {
+                            alert("Eyedropper needs to be overhauled for the new Audio Effects engine");
                             console.log(fieldContents[currentTile[0]][currentTile[1]]);
                             //I thought I had to do a logarithm to figure this out! I was so wrong.
                             currentPitch = pitchTable.indexOf(fieldContents[currentTile[0]][currentTile[1]].note);

@@ -29,8 +29,3 @@ audioEffect.prototype.toString = function() {
     
 }
 */
-
-//Possible syntax for the new audio FX.
-/*fieldContents[0][1].audioEffects = [audioEffect {type: "lowpass", requiredOptions: Array[3], frequency: "200", range: "200", gain: "4.0"},
-                                      audioEffect {type: "hipass", requiredOptions: Array[3], frequency: "800", range: "200", gain: "2.0"}]
-*/

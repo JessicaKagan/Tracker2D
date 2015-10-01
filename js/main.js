@@ -67,12 +67,14 @@ var scaleNote = 0; //Used in keyboard_shortcuts to adjust currentPitch;
 var currentOctave = 3;
 var currentPitch = 36;
 var currentInstrument = 1;
-var currentDSPValue = 0;
 var currentVolume = 0.6;
-var currentDSP = "none";
 var currentFlowControl = "none";
+//These are being dummied out.
+var currentDSPValue = 0;
+var currentDSP = undefined;
 
-//Used in the Audio FX window
+
+//Used in the Audio FX window, stores some HTML.
 var genericAudioFXDiv;
 
 //Image arrays used in image_loader.js
@@ -174,7 +176,6 @@ function init() {
 
         //This handles the audio FX menu.
         for(var i = 0; i < possibleDSPEffects.length; ++i){
-            $('#DSPInput').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
             $('.chooseAudioFXType').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
         }
         genericAudioFXDiv = $(".audioFXInstance").clone();
@@ -209,8 +210,8 @@ function init() {
                 //Jump up two DOM levels, get the ID of such, and then do the substring thing.
                 var currentDiv = $(this).parent().parent().attr("id");
                 var currentDivID = parseInt(currentDiv.substr(currentDiv.length - 1)) - 1;
-                //And thusly do we have our new value.
-                currentAudioEffects[currentDivID][FXProperty] = $(this).val();
+                //And thusly do we have our new value. I assume parseFloat is valid for now.
+                currentAudioEffects[currentDivID][FXProperty] = parseFloat($(this).val());
                 console.log(currentAudioEffects);
                 //$('#dspValueInput').val('');
             }

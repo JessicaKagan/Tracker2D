@@ -38,8 +38,6 @@ Things I might do but am not sure about:
 - Add Web MIDI API support to allow instrument input (Not sure since only Chrome and Opera support it)
 
 
-
-
 Suggestions and planned features that have already been implemented:
 - Actually show the tile buffer (as filled up by the select tool) somehow, like a translucent overlay
 - Indicate current part of the window on the minimap

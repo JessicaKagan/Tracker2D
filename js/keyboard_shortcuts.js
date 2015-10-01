@@ -104,7 +104,12 @@ function hookKeyboard(){
             //UI function to demonstrate sounds to the user. Make this optional.
             if(pressedNoteKey === true && $("#modifySongProperties").hasClass("currentlyHidden") === true &&
                 $('#samplePlayback').prop('checked') === true ) {
-                playSound(soundFont[currentInstrument],pitchTable[currentPitch],currentDSP,currentDSPValue,currentVolume);
+                //playSound(soundFont[currentInstrument],pitchTable[currentPitch],currentDSP,currentDSPValue,currentVolume);
+                if(currentDSP != undefined){
+                    playSound(soundFont[currentInstrument],pitchTable[currentPitch],currentDSP,currentDSPValue,currentVolume);
+                } else {
+                    playSound2(soundFont[currentInstrument],pitchTable[currentPitch],currentVolume, currentAudioEffects);
+                }
             };
         }
         updatePitchDescription(); //Prettyprint the current pitch value.
