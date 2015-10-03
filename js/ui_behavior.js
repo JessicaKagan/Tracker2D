@@ -533,9 +533,7 @@ function addAudioFXToList(){
         //Make the new effect's ID equivalent to our length.
         $(".audioFXInstance").last().attr("id","audioFXInstance" + currentAudioEffects.length);
     } else { alert("Maximum of 8 audio effects per tile"); }
-
-    console.log(currentAudioEffects.length);
-    //$("#audioFXPropertiesBox"),$(".audioFXInstance"), genericAudioFXDiv
+    $("#FXAppliedNumber").html(currentAudioEffects.length);
 }
 
 function removeAudioFXFromList(){
@@ -545,15 +543,12 @@ function removeAudioFXFromList(){
         //Remove the element's representation from the DOM.
         $(".audioFXInstance").last().remove();
     } else { alert("No effects to remove"); }
-
-    console.log(currentAudioEffects.length);    
+    $("#FXAppliedNumber").html(currentAudioEffects.length);
 }
 
-//Generates the needed input fields for an audio effect type.
-//Also initializes/purges the relevant fields in currentAudioEffects
+//Generates the needed input fields for an audio effect type. Also initializes/purges the relevant fields in currentAudioEffects.
+//This does not handle the actual assignment of values.
 function renderAudioFXList(type,number){
-    //console.log(type,number);
-    //delete currentAudioEffects[number - 1].ReplaceWithAllProperties;
     var domID = "#audioFXInstance" + number + " > .generatedAudioFX";  //Get the DOM scope we need.
     $(domID).html(""); //Remove everything just to be on the safe side.
 

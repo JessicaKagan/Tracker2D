@@ -174,17 +174,19 @@ function init() {
             }
         });
 
-        //This handles the audio FX menu.
+        //This handles each audio FX menu.
         for(var i = 0; i < possibleDSPEffects.length; ++i){
             $('.chooseAudioFXType').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
         }
         genericAudioFXDiv = $(".audioFXInstance").clone();
         //removeAudioFXFromList(); //Kludge; gets rid of the template.
 
+        /*
         $( "#DSPInput" ).change(function() {
             currentDSP = $(this).find('option:selected').attr('value');
             console.log(currentDSP);
         });
+        */
 
         //When one of the audio FX type selectors changes, change the input fields that are visible and interactable.
         $( "#audioFXPropertiesBox" ).on("change", ".chooseAudioFXType", function() {

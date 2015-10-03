@@ -184,15 +184,12 @@ function playSound2(buffer, pitch, volume, effects){
             //console.log("Connected volumeAdjustment");
         } else { //Otherwise...
             DSPNodes[i - 1].connect(DSPNodes[i]);
-            console.log(DSPNodes);
-            //console.log(DSPNodes[i - 1]);
+            //console.log(DSPNodes);
         }
     }
     //console.log(DSPNodes, DSPNodes.length);
 
     //Then finish up and actually play the sound!
-
-    //console.log("End length was " + DSPNodes.length);
     if(DSPNodes.length == 0){
         volumeAdjustment.connect(audioEngine.destination);
     } else {
