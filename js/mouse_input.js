@@ -180,7 +180,8 @@ function interact(action, e) {
                         if(drawingStatus === true){
                             fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, undefined, 
                                 currentFlowControl, currentVolume, undefined, 0, 0, 0, 0, 
-                                jQuery.extend(true, {}, currentAudioEffects) ); //Extendcopy is proving necessary more than expected.
+                                jQuery.extend(true, [], currentAudioEffects) ); //Extendcopy for depth; recursively merges empty array with desired content.
+                            
                         }
                         break;
                     case "eraser":

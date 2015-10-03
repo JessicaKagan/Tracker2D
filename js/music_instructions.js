@@ -31,7 +31,7 @@ var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_s
 var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, flowValue, color, xPointer, yPointer, audioEffectList) {
     this.note = note; //Note ID to relative pitch conversion now takes place when the tile is instanced, for save-load compatibility
     this.instrument = instrument;
-    this.dspEffect = dspEffect;
+    this.dspEffect = dspEffect; //dspEfect and flowEffect are only for backwards compatibility.
     this.flowEffect = flowEffect;
     this.volume = volume;
     this.dspValue = dspValue;
@@ -72,6 +72,7 @@ Tile.prototype.toString = function exportTile() {
                        this.dspValue + "," + 
                        this.flowValue + "," +
                        this.xPointer + "," +
-                       this.yPointer;
+                       this.yPointer + "!!" +
+                       JSON.stringify(this.audioEffectList);
     return tileToString;
 }

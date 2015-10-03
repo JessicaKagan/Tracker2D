@@ -181,7 +181,7 @@ function playSound2(buffer, pitch, volume, effects){
         }
         if(i == 0){
             volumeAdjustment.connect(DSPNodes[i]);
-            console.log("Connected volumeAdjustment");
+            //console.log("Connected volumeAdjustment");
         } else { //Otherwise...
             DSPNodes[i - 1].connect(DSPNodes[i]);
             console.log(DSPNodes);
@@ -191,24 +191,13 @@ function playSound2(buffer, pitch, volume, effects){
     //console.log(DSPNodes, DSPNodes.length);
 
     //Then finish up and actually play the sound!
-    //This is where we currently break down.
-    //source -> volumeNode -> DSPNodes[0] -> ... DSPNodes[DSPNodes.length] -> audioEngine.destination
+
     //console.log("End length was " + DSPNodes.length);
-    //console.log(DSPNodes);
     if(DSPNodes.length == 0){
         volumeAdjustment.connect(audioEngine.destination);
     } else {
         DSPNodes[DSPNodes.length - 1].connect(audioEngine.destination);
-        console.log(DSPNodes[DSPNodes.length - 1]);
+        //console.log(DSPNodes[DSPNodes.length - 1]);
     }
-    /*
-    if(DSPNodes.length - 1 > 0){ 
-        //console.log(DSPNodes.length - 1, DSPNodes[DSPNodes.length - 1]);
-        console.log(finalNode);
-        finalNode.connect(audioEngine.destination); 
-    } 
-    else { volumeAdjustment.connect(audioEngine.destination); }
-    */
-    //console.log(audioEngine.destination);
     source.start();
 }

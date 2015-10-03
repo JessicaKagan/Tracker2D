@@ -216,18 +216,21 @@ function init() {
                             $(this).val("");
                             return;
                         }
+                        break;
                     case "quality":
                         if(FXValue > 30){
                             alert("Don't set the quality factor above 30. You'll hurt yourself!");
                             $(this).val("");
                             return;
                         }
+                        break;
                     case "gain":
                         if(FXValue > 12){
                             alert("Don't set the audio gain above 12 dB. You'll kill your speakers!");
                             $(this).val("");
                             return;
                         }
+                        break;
                     default:
                         break;
                 }
