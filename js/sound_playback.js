@@ -11,6 +11,7 @@ function soundsAreReady(soundList) {
     $("#initButton").html("Loaded, click to write music"); //Clicking this button calls init().
 }
 
+//Legacy playback mechanism for version 1 files. Might get dummied out someday.
 function playSound(buffer, pitch, dspEffect, dspValue, volume) {
 
     var source = audioEngine.createBufferSource();  
@@ -26,12 +27,6 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
         volumeAdjustment.gain.value = volume; 
     } else { volumeAdjustment.gain.value = 0.6; }
 
-    //Decide how to handle audio when page isn't visible, see http://www.w3.org/TR/page-visibility/?csw=1
-    /* To support an arbitrary amount of audio filters (probably limited for UI/save simplicity):
-     * Define an array of nodes
-     * Fill each one in based on parameters in a tile
-     * Connect after defining them?
-     */
     var biQuadFilter = audioEngine.createBiquadFilter();
     switch(dspEffect){
         //Removes all pitches above a value
@@ -42,7 +37,7 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
             biQuadFilter.connect(audioEngine.destination);
             break;
         //Removes all pitches below a value
-        case 'hipass':
+        case 'highpass':
             volumeAdjustment.connect(biQuadFilter);
             biQuadFilter.type = 'highpass';
             biQuadFilter.frequency.value = dspValue;
@@ -127,4 +122,93 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
         source.start(); //By default, we play the entire sound.
     } 
     
+}
+
+function playSound2(buffer, pitch, volume, effects){
+    //console.log(buffer, pitch, volume, effects);
+    //Everything begins the same as the old version.
+    var source = audioEngine.createBufferSource();  
+    source.buffer = buffer;
+    var playbackMidPoint = source.buffer.duration; //Fallback.
+    source.playbackRate.value = pitch; 
+    var volumeAdjustment = audioEngine.createGain();
+    source.connect(volumeAdjustment);
+    if(volume >= 0 && volume <= 1) { 
+        volumeAdjustment.gain.value = volume; 
+    } else { volumeAdjustment.gain.value = 0.6; }
+
+
+    //The bulk of the new code starts here.
+    var DSPNodes = new Array(effects.length); //Used to actually store node objects.
+    var startSound = 0;
+    var endSound = source.buffer.duration;
+    //console.log(DSPNodes.length + " at the beginning");
+    for(var i = 0; i < effects.length; ++i){
+        //console.log(effects[i].type);
+        switch(effects[i].type){
+            //Case for biQuadFilters
+            case "lowpass":
+            case "highpass":
+            case "bandpass":
+            case "lowshelf":
+            case "highshelf":
+            case "peaking":
+            case "notch":
+            case "allpass":
+                DSPNodes[i] = audioEngine.createBiquadFilter();
+                DSPNodes[i].type = effects[i].type;
+                if(effects[i].frequency != null) { DSPNodes[i].frequency.value = effects[i].frequency; }
+                if(effects[i].quality != null) { DSPNodes[i].Q.value = effects[i].quality; }
+                if(effects[i].gain != null) { DSPNodes[i].gain.value = effects[i].gain; }
+                break;
+            case "bendpitch":
+                if(effects[i].bendpitch <= 16 && effects[i].bendpitch > 0 && effects[i].bendpitch != null) { 
+                    source.playbackRate.value *= effects[i].bendpitch; } 
+                else { console.log('bendpitch only takes values between 0 and 16, for the sake of sanity. Effect not applied.'); }
+                DSPNodes[i] = audioEngine.createBiquadFilter();
+                DSPNodes[i].frequency.value = 65536; //Kludge
+                break;
+            //Implement these.
+            case "startfromlater":
+                if(effects[i].cutoff != null) { startSound = source.buffer.duration * (effects[i].cutoff/100); }
+                DSPNodes[i] = audioEngine.createBiquadFilter();
+                DSPNodes[i].frequency.value = 65536; //Kludge
+                break;
+            case "stopplayback":
+                if(effects[i].cutoff != null) { endSound = source.buffer.duration * (effects[i].cutoff/100); }
+                DSPNodes[i] = audioEngine.createBiquadFilter();
+                DSPNodes[i].frequency.value = 65536; //Kludge
+                break;
+
+            default:
+            //We still need to connect nodes, and possibly build some sort of null one.
+            //Splice doesn't give us the right length when we need it.
+                DSPNodes[i] = audioEngine.createBiquadFilter();
+                DSPNodes[i].frequency.value = 65536; //Kludge
+                break;
+        }
+        if(i == 0){
+            volumeAdjustment.connect(DSPNodes[i]);
+            //console.log("Connected volumeAdjustment");
+        } else { //Otherwise...
+            DSPNodes[i - 1].connect(DSPNodes[i]);
+            //console.log(DSPNodes);
+        }
+    }
+    //Sanitize certain types of input if necessary. For now, that's just the cutoff effects.
+    if(startSound > endSound){
+        var swapCutoff = startSound;
+        startSound = endSound;
+        endSound = swapCutoff;
+    }
+
+    //Then finish up and actually play the sound!
+    if(DSPNodes.length == 0){
+        volumeAdjustment.connect(audioEngine.destination);
+    } else {
+        DSPNodes[DSPNodes.length - 1].connect(audioEngine.destination);
+        //console.log(DSPNodes[DSPNodes.length - 1]);
+    }
+    //source.start();
+    source.start(0,startSound,endSound); //Stops playing after a percentage of the duration.
 }

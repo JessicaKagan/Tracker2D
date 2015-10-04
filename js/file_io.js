@@ -75,16 +75,49 @@ function loadFile(evt) {
                         fieldContents[j][i] = undefined;
                     } else if(loadingWorkArray[currentIndex + 1] !== "undefined") {
                     */
-                    //Kludgetastic.
-                    var currentTile = loadingWorkArray[currentIndex + 1].split(",");
+
+                    //Kludgetastic and probably kind of janky.
+                    //Regex so commas in brackets are not split.
+                    var currentTileWithFXArray = loadingWorkArray[currentIndex + 1].split("!!")
+                    //console.log(currentTileWithFXArray);
+                    var currentTile = currentTileWithFXArray[0].split(",");
+                    if(currentTileWithFXArray[1] !== undefined){
+                        //If it exists, parse the JSON.
+                        //console.log(JSON.parse(currentTileWithFXArray[1]));
+                        currentTile[9] = JSON.parse(currentTileWithFXArray[1]);
+                    } else {
+                        currentTile[9] = Array[0];
+                    }
+
+
                     if(isNaN(currentTile[0]) === true){
                         fieldContents[j][i] = undefined;
                     } else if(isNaN(currentTile[0]) === false){
-                        fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
-                                                   currentTile[2],currentTile[3],
-                                                   currentTile[4],currentTile[5],
-                                                   currentTile[6],undefined,
-                                                   currentTile[7],currentTile[8]);
+                        //This needs adjusting for audioTiles, and we also need backwards compatibility for V1 files. Technically.
+                        //Use switch statements? 
+                        switch(loadingWorkArray[loadingWorkArray.length - 1]) {
+                            //Latest version.
+                            case "2":
+                                
+                                fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
+                               "none",currentTile[3],
+                               currentTile[4],0,
+                               currentTile[6],undefined,
+                               currentTile[7],currentTile[8],currentTile[9]);
+                                //console.log(currentTile[9]);
+                                console.log(fieldContents[j][i]);
+                                break;
+                            //Legacy
+                            case "1":
+                            default:
+                                fieldContents[j][i] = new Tile(currentTile[0],currentTile[1],
+                               currentTile[2],currentTile[3],
+                               currentTile[4],currentTile[5],
+                               currentTile[6],undefined,
+                               currentTile[7],currentTile[8]);
+                                    break;
+
+                        }
                     }
                     //console.log(fieldContents[j][i]);
                     //}
@@ -99,7 +132,7 @@ function loadFile(evt) {
                 bugList[(i/5)].action = loadingWorkArray[i + tileLength + 3];
                 bugList[(i/5)].inStorage = $.parseJSON(loadingWorkArray[i + tileLength + 4]);
                 bugList[(i/5)].volume = $.parseJSON(loadingWorkArray[i + tileLength + 5]);
-                console.log(bugList[i/5]);
+                //console.log(bugList[i/5]);
             }
             //Run the obligatory bug checking loop and store the loaded bug positions in the buffer.
             for(var i = 0; i < bugList.length; ++i) {
@@ -110,8 +143,9 @@ function loadFile(evt) {
             //Song properties are stored at the very end of the file.
 
             //Quick kludge for versioning. Don't name any songs "1" (minus quotes)
-            if(loadingWorkArray[loadingWorkArray.length - 1] === "1"){
-                console.log("Version 01 load algorithm used");
+            console.log(loadingWorkArray[loadingWorkArray.length - 1]);
+            if(parseInt(loadingWorkArray[loadingWorkArray.length - 1]) >= 1 ){
+                console.log("Version " + loadingWorkArray[loadingWorkArray.length - 1] + " load algorithm used");
                 TEMPO = loadingWorkArray[loadingWorkArray.length - 6];
                 updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
                 $("#tempoSpinner").attr('value', TEMPO);

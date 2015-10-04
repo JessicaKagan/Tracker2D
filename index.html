@@ -25,18 +25,22 @@
             </div>
             <div id="UIShifter2" class="UIInputBox">
                 <p>Instrument</p>
-                <select id="instrumentInput" class="UIShifterInput" size ="4">
+                <select id="instrumentInput" class="UIShifterInput" size = "4">
                 </select>
             </div>
+            <!--Selector for AudioFX. This is really under construction. Trust me.-->
             <div id="UIShifter3" class="UIInputBox">
                 <p>Audio FX</p>
-                <select class="UIShifterInput" id="DSPInput"></select>
+                <span id ="FXAppliedNumber">1</span> active <br><button onClick='$("#audioFXWindow").removeClass("currentlyHidden")'>Show UI</button>
+                <!--<select class="UIShifterInput" id="DSPInput"></select>-->
 
             </div>
             <!--Audio FX value-->
+            <!--
             <div id="UIShifter4" class="UIInputBox">
                 <input type="text" placeholder="Submit with enter" class="UIShifterInput" id="dspValueInput" class="numbersOnly"></input>
             </div>
+            -->
             <!--Flow Control Menu-->
             <div id="UIShifter5" class="UIInputBox">
                 <p>Flow Control</p>
@@ -115,7 +119,7 @@
                     <p>Currently editing tile: <span id="modifyTileTarget"></span></p> <br>
                     <p>Pitch: <input id = "modifyTilePitchSpinner" class = "numbersOnly" type="number" name="pitch" min="0" max="71" value="36"></input></p>
                     <p>Instrument: <input id = "modifyTileInstrumentSpinner" class = "numbersOnly" type="number" name="Instrument" min="0" max="175" value="1"></input></p>
-                    <p>Audio FX Value (Not implemented yet): </p>
+                    <p>Audio FX Value (To be dummied out): </p>
                     <p>Flow Control Value: <input id = "modifyTileFlowSpinner" class = "numbersOnly" type="number" name="FlowControl" min="0" max="999" value="0"></input></p>
                     <p>Points to the tile at these coordinates:<br>
                         <input id = "modifyPointerTileX" class = "numbersOnly" type="number" name="Instrument" min="0" max="512" value="0">X</input><br>
@@ -194,6 +198,29 @@
                         </div>
                     </div>
                 </div>
+                <!--The upcoming Audio FX window.-->
+                <div id="audioFXWindow" class="editingWindow currentlyHidden">
+                    <button class="closeButton" onClick="hideUI()">Close Window</button>
+                    <br><br>
+                    <p>You can have up to 8 effects on every note. Hope your CPU can handle it! Some supporting UI features still need to be implemented.</p>
+                    <button onClick="addAudioFXToList()">Add FX</button>
+                    <button onClick="removeAudioFXFromList()">Remove Bottom FX</button>
+                    <p>Currently adding the following effects to each tile:</p>
+                    <div id="audioFXPropertiesBox">
+                        <div class="audioFXInstance" id="audioFXInstance1">
+                        Type: <select class="chooseAudioFXType"></select><br>
+                            <div class="generatedAudioFX">
+                            Currently not adding anything. 
+                            </div>  
+                        </div>
+
+                    </div>
+                    <!--
+                        Example FX 2: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue"></input><br>
+                        Example FX 3: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue"></input><br>
+                    -->
+                        <!--http://stackoverflow.com/questions/3231459/create-unique-id-with-javascript-->   
+                </div>
             </div>
         </div>
     </body>
@@ -212,6 +239,7 @@
     <script src="js/ui_behavior.js"></script> <!--Functions in mouse_input and keyboard_shortcuts call functions from here.-->
     <script src="js/image_loader.js"></script> <!--To reduce clutter, all the defined images live here.-->
     <script src="js/rendering.js"></script> <!--Our Canvas graphics rendering loop.-->
+    <script src="js/audioFX.js"></script> <!--Handles Audio FX type objects.-->
     <script src="js/sound_playback.js"></script> <!--Audio playback and DSP processing code.-->
     <script src="js/file_io.js"></script> <!--This handles save and load logic for songs and UI settings.-->
     <script src="js/main.js"></script> <!--Basic engine logic and anything that hasn't been moved to a separate file.-->

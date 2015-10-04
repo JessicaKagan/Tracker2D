@@ -254,6 +254,9 @@ function hideUI(){
     }
     if($("#flowControlSelector").hasClass("currentlyHidden") === false) { 
         setTimeout(function() {$("#flowControlSelector").addClass("currentlyHidden");}, 50);
+    }    
+    if($("#audioFXWindow").hasClass("currentlyHidden") === false) { 
+        setTimeout(function() {$("#audioFXWindow").addClass("currentlyHidden");}, 50);
     }
 
 }
@@ -517,14 +520,61 @@ function setFlowControl(value){
     }
 }
 
-/*        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;none&quot;)"><img src="images/no_flow_control.png"></button>None<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_west&quot;)"><img src="images/west_arrow_overlay.png"></button>Turn West<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_north&quot;)"><img src="images/north_arrow_overlay.png"></button>Turn North<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_east&quot;)"><img src="images/east_arrow_overlay.png"></button>Turn East<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;turn_south&quot;)"><img src="images/south_arrow_overlay.png"></button>Turn South<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;counter&quot;)"><img src="images/counter_overlay.png"></button>Counter<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;incrementer&quot;)"><img src="images/incrementer_overlay.png"></button>Incrementer<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;teleport&quot;)"><img src="images/teleporter_overlay.png"></button>Teleporter<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;freeze&quot;)"><img src="images/freeze_overlay.png"></button>Freeze<br>');
-        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;revert&quot;)"><img src="images/revert_button.png"></button>Revert Tile<br>');
+/*  These functions were added to ui_behavior because they only add FX to the audio FX list,
+    and then add UI controls for the user. Separation of concerns could be better.
 */
+function addAudioFXToList(){
+    //Push to the array
+    var newEffect = new audioEffect("none");
+    //console.log("Done adding another effect");
+    if(currentAudioEffects.length < 8){ 
+        currentAudioEffects.push(newEffect);
+        genericAudioFXDiv.clone().appendTo("#audioFXPropertiesBox"); 
+        //Make the new effect's ID equivalent to our length.
+        $(".audioFXInstance").last().attr("id","audioFXInstance" + currentAudioEffects.length);
+    } else { alert("Maximum of 8 audio effects per tile"); }
+    $("#FXAppliedNumber").html(currentAudioEffects.length);
+}
+
+function removeAudioFXFromList(){
+    //Pop the effect from the array
+    if(currentAudioEffects.length > 0){
+        currentAudioEffects.pop();
+        //Remove the element's representation from the DOM.
+        $(".audioFXInstance").last().remove();
+    } else { alert("No effects to remove"); }
+    $("#FXAppliedNumber").html(currentAudioEffects.length);
+}
+
+//Generates the needed input fields for an audio effect type. Also initializes/purges the relevant fields in currentAudioEffects.
+//This does not handle the actual assignment of values.
+function renderAudioFXList(type,number){
+    var domID = "#audioFXInstance" + number + " > .generatedAudioFX";  //Get the DOM scope we need.
+    $(domID).html(""); //Remove everything just to be on the safe side.
+
+    //Start making elements as needed.
+
+    //Frequency, used by pretty much all the biQuad stuff.
+    if(type == "lowpass" || type == "highpass" || type == "bandpass" || type == "lowshelf" || 
+       type == "highshelf" || type == "peaking" || type == "notch" || type == "allpass") {
+        $(domID).append('Frequency: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="frequency"></input><br>');
+    }
+    //Quality factor, which is basically the width of a frequency band/change.
+    if(type == "lowpass" || type == "highpass" || type == "bandpass" || 
+       type == "peaking" || type == "notch" || type == "allpass") {
+        $(domID).append('Quality: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="quality"></input><br>');
+    }
+    //Gain. It's basically volume.
+    if(type == "lowshelf" || type == "highshelf" || type == "peaking") {
+        $(domID).append('Gain: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="gain"></input><br>');
+    }
+    //Multiplier, which is only used for the pitch bender.
+    if(type == "bendpitch") {
+        $(domID).append('Pitch Multiplier: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="bendpitch"></input><br>');
+    }
+    //Cutoff point, used for truncation effects.
+    if(type == "stopplayback" || type == "startfromlater") {
+        $(domID).append('Cutoff: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="cutoff"></input><br>');
+    }
+
+}

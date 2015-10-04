@@ -21,21 +21,22 @@ for(var i = 1; i < pitchTable.length; ++i){
 
 //It might be good to improve the DSP menu simular to how Flow control was improved. We need more of these. 
 //Allpass doesn't work yet.
-var possibleDSPEffects = ['none','bendpitch', 'lowpass', 'bandpass', 'hipass', 'lowshelf', 'highshelf', 'peaking', 'notch', 'stopplayback', 'startfromlater'];
+var possibleDSPEffects = ['none','bendpitch', 'lowpass', 'bandpass', 'highpass', 'lowshelf', 'highshelf', 'peaking', 'notch', 'stopplayback', 'startfromlater'];
 var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south', 'counter','incrementer','teleport', 'freeze', 'revert'];
 //To be implemented: "random_tile", which will send the bug to a random tile within a user defined range.
 
 
 //Possible extension: Tiles that only affect certain bugs. For N bugs we will need 2^N intspace to handle it.
 //For instance: 10000001 would change the behavior of bugs 1 and 8 (equivalent to 129).
-var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, flowValue, color, xPointer, yPointer) {
+var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, flowValue, color, xPointer, yPointer, audioEffectList) {
     this.note = note; //Note ID to relative pitch conversion now takes place when the tile is instanced, for save-load compatibility
     this.instrument = instrument;
-    this.dspEffect = dspEffect;
+    this.dspEffect = dspEffect; //dspEfect and flowEffect are only for backwards compatibility.
     this.flowEffect = flowEffect;
     this.volume = volume;
     this.dspValue = dspValue;
     this.flowValue = flowValue;
+    this.audioEffectList = audioEffectList; //A list of up to 8 audioEffect objects.
     if(this.volume === undefined) { this.volume = 0.6; }
     if(this.dspValue === undefined) { this.dspValue = 0; }
     if(this.flowValue === undefined) { this.flowValue = 0; }
@@ -71,6 +72,7 @@ Tile.prototype.toString = function exportTile() {
                        this.dspValue + "," + 
                        this.flowValue + "," +
                        this.xPointer + "," +
-                       this.yPointer;
+                       this.yPointer + "!!" +
+                       JSON.stringify(this.audioEffectList);
     return tileToString;
 }

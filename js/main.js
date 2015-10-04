@@ -67,11 +67,15 @@ var scaleNote = 0; //Used in keyboard_shortcuts to adjust currentPitch;
 var currentOctave = 3;
 var currentPitch = 36;
 var currentInstrument = 1;
-var currentDSPValue = 0;
 var currentVolume = 0.6;
-var currentDSP = "none";
 var currentFlowControl = "none";
+//These are being dummied out.
+var currentDSPValue = 0;
+var currentDSP = undefined;
 
+
+//Used in the Audio FX window, stores some HTML.
+var genericAudioFXDiv;
 
 //Image arrays used in image_loader.js
 var UIImages = new Array(31); //These are almost entirely buttons.
@@ -170,24 +174,83 @@ function init() {
             }
         });
 
-        //This handles the audio FX menu.
+        //This handles each audio FX menu.
         for(var i = 0; i < possibleDSPEffects.length; ++i){
-            $('#DSPInput').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
+            $('.chooseAudioFXType').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
         }
+        genericAudioFXDiv = $(".audioFXInstance").clone();
+        //removeAudioFXFromList(); //Kludge; gets rid of the template.
+
+        /*
         $( "#DSPInput" ).change(function() {
             currentDSP = $(this).find('option:selected').attr('value');
             console.log(currentDSP);
         });
-        //Definitely functionalize. This handles input for Audio FX.    
-        $('#dspValueInput').keydown(function(event){
+        */
+
+        //When one of the audio FX type selectors changes, change the input fields that are visible and interactable.
+        $( "#audioFXPropertiesBox" ).on("change", ".chooseAudioFXType", function() {
+            //New style follows:
+            //Get the ID of the element this class belongs to.
+            var currentDiv = $(this).parent().attr("id");
+            var currentDivType = $(this).find('option:selected').attr('value')
+            var currentDivID = currentDiv.substr(currentDiv.length - 1);
+            //Set the type of the relevant audio effect in our list. Handle cleanup in the next function.
+            currentAudioEffects[currentDivID - 1].type = currentDivType;
+            //Pass the 'renderer' the current effect and the ID we acquired.
+            renderAudioFXList(currentDivType, currentDivID);
+
+        });
+
+        //When the user types in a value to one of the generated propboxes in the AudioFX Window, pass them to currentAudioEffects.
+        $("#audioFXPropertiesBox").on("keydown", ".audioFXValue", function() {
             if (event.keyCode == 13) {
-                currentDSPValue = $('#dspValueInput').val(); //Unlike the others, this needs to be interpreted based on the current DSP.
-                console.log(currentDSPValue);
+                var FXProperty = $(this).attr("name");
+                //Jump up two DOM levels, get the ID of such, and then do the substring thing.
+                var currentDiv = $(this).parent().parent().attr("id");
+                var currentDivID = parseInt(currentDiv.substr(currentDiv.length - 1)) - 1;
+                var FXValue = parseFloat($(this).val());
+                //Run these sanity checks to prevent ear-destroying or invalid output. Add a feature to opt out later.
+                switch(FXProperty){
+                    case "bendpitch":
+                        if(FXValue > 16){
+                            alert("Don't set your pitch multiplier above 16. You'll irritate someone's dog!");
+                            $(this).val("");
+                            return;
+                        }
+                        break;
+                    case "quality":
+                        if(FXValue > 30){
+                            alert("Don't set the quality factor above 30. You'll hurt yourself!");
+                            $(this).val("");
+                            return;
+                        }
+                        break;
+                    case "gain":
+                        if(FXValue > 12){
+                            alert("Don't set the audio gain above 12 dB. You'll kill your speakers!");
+                            $(this).val("");
+                            return;
+                        }
+                        break;
+                    case "cutoff":
+                        if(FXValue < 0 || FXValue > 100){
+                            alert("You need to set a value between 0-100% (don't type in the percentage) to represent when playback stops/starts.");
+                            $(this).val("");
+                            return;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                //And thusly do we have our new value. I assume parseFloat is valid for now.
+                currentAudioEffects[currentDivID][FXProperty] = FXValue;
+                console.log(currentAudioEffects);
                 //$('#dspValueInput').val('');
             }
-        })
-        //This handles the flow control menu. Under revision.
+        });
 
+        //This handles the flow control menu. Under revision.
         //Generate all the buttons we need and use a function to set the current flow control properly.
         //See ui_behavior.js for setFlowControl.
         //Kind of ugly and verbose.
@@ -203,21 +266,11 @@ function init() {
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;freeze&quot;)"><img src="images/freeze_overlay.png"></button>Freeze<br>');
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;revert&quot;)"><img src="images/revert_button.png"></button>Revert Tile<br>');
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;randomjump&quot;)"><img src="images/random_teleport_overlay.png"></button>Jump To A Random Tile<br>');
-
-
-        /*
-        for(var i = 0; i < possibleFlowEffects.length; ++i){
-            $('#controlInput').append('<option value="' + possibleFlowEffects[i] + '">' + possibleFlowEffects[i] + '</option>');
-        }
-        $( "#controlInput" ).change(function() {
-            currentFlowControl = $(this).find('option:selected').attr('value');
-            console.log(currentFlowControl);
-        });
-        */
-
-        //Left bar menu stuff ends here.
+        
     }
+    //Left bar menu stuff ends here.
     handleLeftBarMenu();
+
     
     //Define the bugs. The names are for flavor.
     bugList[0] = new Bug(bugImages[0], 1,1,'moveRight','George', false);
@@ -234,12 +287,6 @@ function init() {
     }
     //Populating this will prevent unsolicited load errors.
     storeBugPositions();
-
-    //Add an event listener for hovering in the bug storage divs.
-    //This is going to be kind of inefficient, but we'll live.
-    //I have a more generic version of this, but it runs into scope problems with i.
-    //See this to fix it. http://stackoverflow.com/questions/7774636/jquery-event-handler-created-in-loop
-
 
     //More compact hovercode that uses HTML classes and event delegation to determine where the user hovers.
     $(".bugHoldingPen").hover(

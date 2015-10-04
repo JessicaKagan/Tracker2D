@@ -20,18 +20,21 @@ JSON example (Needs refinement?):
     FX: [
     {
         type: "lowpass",
+        requiredOptions: ['frequency','range','gain'],
         frequency: 200,
         range: 200,
         gain: 4.0
     },
     {
         type: "hipass",
+        requiredOptions: ['frequency','range','gain'],
         frequency: 800,
         range: 50,
         gain: 2.0
     },    
     {
         type: "pitchbend",
+        requiredOptions: ['multiplier'],
         multiplier: 4
     },
     ]
