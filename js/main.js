@@ -203,8 +203,8 @@ function init() {
         });
 
         //When the user types in a value to one of the generated propboxes in the AudioFX Window, pass them to currentAudioEffects.
-        $("#audioFXPropertiesBox").on("keydown", ".audioFXValue", function() {
-            if (event.keyCode == 13) {
+        $("#audioFXPropertiesBox").on("keydown", ".audioFXValue", function( event ) {
+            if (event.keyCode == 13 || event.charCode == 13 || event.which == 13 ) {
                 var FXProperty = $(this).attr("name");
                 //Jump up two DOM levels, get the ID of such, and then do the substring thing.
                 var currentDiv = $(this).parent().parent().attr("id");
