@@ -572,6 +572,9 @@ function renderAudioFXList(type,number){
     if(type == "bendpitch") {
         $(domID).append('Pitch Multiplier: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="bendpitch"></input><br>');
     }
-
+    //Cutoff point, used for truncation effects.
+    if(type == "stopplayback" || type == "startfromlater") {
+        $(domID).append('Cutoff: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="cutoff"></input><br>');
+    }
 
 }

@@ -210,7 +210,7 @@ function init() {
                 var currentDiv = $(this).parent().parent().attr("id");
                 var currentDivID = parseInt(currentDiv.substr(currentDiv.length - 1)) - 1;
                 var FXValue = parseFloat($(this).val());
-                //Run these sanity checks to prevent ear-destroying output. Add a feature to opt out later.
+                //Run these sanity checks to prevent ear-destroying or invalid output. Add a feature to opt out later.
                 switch(FXProperty){
                     case "bendpitch":
                         if(FXValue > 16){
@@ -229,6 +229,13 @@ function init() {
                     case "gain":
                         if(FXValue > 12){
                             alert("Don't set the audio gain above 12 dB. You'll kill your speakers!");
+                            $(this).val("");
+                            return;
+                        }
+                        break;
+                    case "cutoff":
+                        if(FXValue < 0 || FXValue > 100){
+                            alert("You need to set a value between 0-100% (don't type in the percentage) to represent when playback stops/starts.");
                             $(this).val("");
                             return;
                         }
@@ -259,11 +266,11 @@ function init() {
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;freeze&quot;)"><img src="images/freeze_overlay.png"></button>Freeze<br>');
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;revert&quot;)"><img src="images/revert_button.png"></button>Revert Tile<br>');
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;randomjump&quot;)"><img src="images/random_teleport_overlay.png"></button>Jump To A Random Tile<br>');
-
-
-        //Left bar menu stuff ends here.
+        
     }
+    //Left bar menu stuff ends here.
     handleLeftBarMenu();
+
     
     //Define the bugs. The names are for flavor.
     bugList[0] = new Bug(bugImages[0], 1,1,'moveRight','George', false);

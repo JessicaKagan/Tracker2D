@@ -140,6 +140,8 @@ function playSound2(buffer, pitch, volume, effects){
 
     //The bulk of the new code starts here.
     var DSPNodes = new Array(effects.length); //Used to actually store node objects.
+    var startSound = 0;
+    var endSound = source.buffer.duration;
     //console.log(DSPNodes.length + " at the beginning");
     for(var i = 0; i < effects.length; ++i){
         //console.log(effects[i].type);
@@ -167,11 +169,17 @@ function playSound2(buffer, pitch, volume, effects){
                 DSPNodes[i].frequency.value = 65536; //Kludge
                 break;
             //Implement these.
-            case "stopplayback":
             case "startfromlater":
+                if(effects[i].cutoff != null) { startSound = source.buffer.duration * (effects[i].cutoff/100); }
                 DSPNodes[i] = audioEngine.createBiquadFilter();
                 DSPNodes[i].frequency.value = 65536; //Kludge
                 break;
+            case "stopplayback":
+                if(effects[i].cutoff != null) { endSound = source.buffer.duration * (effects[i].cutoff/100); }
+                DSPNodes[i] = audioEngine.createBiquadFilter();
+                DSPNodes[i].frequency.value = 65536; //Kludge
+                break;
+
             default:
             //We still need to connect nodes, and possibly build some sort of null one.
             //Splice doesn't give us the right length when we need it.
@@ -187,7 +195,12 @@ function playSound2(buffer, pitch, volume, effects){
             //console.log(DSPNodes);
         }
     }
-    //console.log(DSPNodes, DSPNodes.length);
+    //Sanitize certain types of input if necessary. For now, that's just the cutoff effects.
+    if(startSound > endSound){
+        var swapCutoff = startSound;
+        startSound = endSound;
+        endSound = swapCutoff;
+    }
 
     //Then finish up and actually play the sound!
     if(DSPNodes.length == 0){
@@ -196,5 +209,6 @@ function playSound2(buffer, pitch, volume, effects){
         DSPNodes[DSPNodes.length - 1].connect(audioEngine.destination);
         //console.log(DSPNodes[DSPNodes.length - 1]);
     }
-    source.start();
+    //source.start();
+    source.start(0,startSound,endSound); //Stops playing after a percentage of the duration.
 }
