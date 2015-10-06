@@ -161,36 +161,35 @@ function playSound2(buffer, pitch, volume, effects){
                 if(effects[i].quality != null) { DSPNodes[i].Q.value = effects[i].quality; }
                 if(effects[i].gain != null) { DSPNodes[i].gain.value = effects[i].gain; }
                 break;
+            //We still need to generate nodes even if we aren't using them for filters.
             case "bendpitch":
                 if(effects[i].bendpitch <= 16 && effects[i].bendpitch > 0 && effects[i].bendpitch != null) { 
                     source.playbackRate.value *= effects[i].bendpitch; } 
                 else { console.log('bendpitch only takes values between 0 and 16, for the sake of sanity. Effect not applied.'); }
                 DSPNodes[i] = audioEngine.createBiquadFilter();
-                DSPNodes[i].frequency.value = 65536; //Kludge
+                DSPNodes[i].frequency.value = 65536;
                 break;
-            //Implement these.
+            //The cutoff effects use duration and don't really proc until playback time.
             case "startfromlater":
                 if(effects[i].cutoff != null) { startSound = source.buffer.duration * (effects[i].cutoff/100); }
                 DSPNodes[i] = audioEngine.createBiquadFilter();
-                DSPNodes[i].frequency.value = 65536; //Kludge
+                DSPNodes[i].frequency.value = 65536; 
                 break;
             case "stopplayback":
                 if(effects[i].cutoff != null) { endSound = source.buffer.duration * (effects[i].cutoff/100); }
                 DSPNodes[i] = audioEngine.createBiquadFilter();
-                DSPNodes[i].frequency.value = 65536; //Kludge
+                DSPNodes[i].frequency.value = 65536; 
                 break;
-
             default:
-            //We still need to connect nodes, and possibly build some sort of null one.
-            //Splice doesn't give us the right length when we need it.
                 DSPNodes[i] = audioEngine.createBiquadFilter();
                 DSPNodes[i].frequency.value = 65536; //Kludge
                 break;
         }
+        //The first node needs special treatment.
         if(i == 0){
             volumeAdjustment.connect(DSPNodes[i]);
             //console.log("Connected volumeAdjustment");
-        } else { //Otherwise...
+        } else {
             DSPNodes[i - 1].connect(DSPNodes[i]);
             //console.log(DSPNodes);
         }
@@ -210,5 +209,5 @@ function playSound2(buffer, pitch, volume, effects){
         //console.log(DSPNodes[DSPNodes.length - 1]);
     }
     //source.start();
-    source.start(0,startSound,endSound); //Stops playing after a percentage of the duration.
+    source.start(0,startSound,endSound); //Starts playing immediately (0), percentages determined by startSound and endSound.
 }
