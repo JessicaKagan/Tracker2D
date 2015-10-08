@@ -10,7 +10,7 @@
         <p>The most basic tutorial follows:</p>
         <ol>
         <li> Select an instrument from the instrument menu. </li>
-        <li> The QWERTY row on a standard keyboard represents a Western chromatic scale; press any key there to select a note; plus and minus allow you to adjust your octave. </li>
+        <li> The QWERTY row on a standard (English-language) keyboard represents a Western chromatic scale; press any key there to select a note; plus and minus allow you to adjust your octave. </li>
         <li> When the "PEN" tool is selected (which it is when you first load up the application), clicking on a square will put instructions on the tile based on the parameters on the left. </li>
         <li> Once you have some instructions painted on the screen, press the play button in the lower left to get the bugs moving. Whenever they move over a grey tile, they'll play sounds based on the instructions in the tile. </li>
         </ol>
@@ -124,14 +124,30 @@
             <p>Tracker2D gives you a couple ways to adjust the sound and playback order of tiles.</p>
         <hr>
         <h2>Audio Effects</h2>
-            <p>In light of the major audio rework of late September, this section needs some revision.</p>
+            <p>Due to the major audio rework of late September, you can now apply up to 8 audio effects to every tile.
             <ul>
             <li><strong>Bend Pitch</strong>: Multiplies the pitch of a note by a value between 0 and 16. Useful for pushing an instrument beyond its 6 octave range, transposing without changing notes, or creating microtonal music.</li>
-            <li><strong>Lowpass</strong>: Removes frequencies above the input value from a sound. Takes values between 0 and 20,000. This filter is applied after any pitch shifting.</li>
-            <li><strong>Highpass</strong>: Removes frequencies below the input value from a sound. Takes values between 0 and 20,000. This filter is applied after any pitch shifting, and is generally very similar to lowpass.</li>
-            <li><strong>Stop Playback</strong>: Cuts off a sample once a certain percentage of it has played. Takes values between 0 and 100.</li>
-            <li><strong>Start From Later</strong>: Causes a sample to play from its middle. Like "Stop Playback", takes values between 0 and 100.</li>
+            <li><strong>Lowpass</strong>: Removes frequencies above the input value from a sound. Uses the frequency and quality fields.</li>
+            <li><strong>Highpass</strong>: Removes frequencies below the input value from a sound. Uses the frequency and quality fields, and is very similar to lowpass.</li>            
+            <li><strong>Bandpass</strong>: Removes all frequencies that aren't within a certain range of the user's input frequency. Uses the frequency and quality fields. </li>
+            <li><strong>Lowshelf</strong>: Increases or reduces the volume of frequencies below a certain value depending on gain. Uses the frequency and gain fields.</li>
+            <li><strong>Highshelf</strong>: Increases or reduces the volume of frequencies above a certain value depending on gain. Uses the frequency and gain fields.</li>
+            <li><strong>Peaking</strong>: Increases or reduces the volume of frequencies within a a specific range; similar to Bandpass. Uses frequency, quality, and gain fields.</li>
+            <li><strong>Notch</strong>: The opposite of bandpass - removes all frequencies that <em>are</em> within a certain range of the user's input frequency. Uses the frequency and quality fields.</li>
+            <!--<li><strong>Allpass</strong>: </li>-->
+            <li><strong>Stop Playback</strong>: Cuts off a sample once a certain percentage of it has played.
+            <li><strong>Start From Later</strong>: Causes a sample to start playing from some point in its duration.</li>
             </ul>
+            </p>
+            <p>The Audio FX Properties window generates relevant input fields for each filter. A description of each follows:
+                <ul>
+                <li><strong>Frequency</strong>: Used for most of the "biquad" filters; represents the pitch at which the filter starts taking effect. Takes values between 0 and 20,000 hertz.</li>  
+                <li><strong>Quality</strong>: This alters how 'abruptly' a pitch filter starts affecting a range of pitches. The higher it is, the closer a frequency in a sound has to be to the effect's frequency value in order to be affected by the filter. Takes values between 0 and 30.</li>  
+                <li><strong>Gain</strong>: For effects that alter the volume of a set of frequencies, this simply determines how much louder or quieter the effect gets. Takes values below 12 decibels, including negative values.</li>  
+                <li><strong>Pitch Multiplier</strong>: Currently used only for the "Bend Pitch" effect. This multiplies all frequencies in a sound by a value between 0 and 16. </li> </li>  
+                <li><strong>Cutoff</strong>: Used to determine at what point in a sample's duration that it starts playing from, or stops playing at. Takes values between 0 and 100, representing percentiles.</li>  
+                </ul>
+            </p>
         <hr>
         <div class = "alternateBackground">
             <h2>Flow Control Effects</h2>
@@ -212,6 +228,7 @@
         </p>
         <p>
         These sections are very incomplete (or perhaps not even written yet), even compared to some of the others.
+        </p>
         <h3>The Rendering Loop</h3>
         <p>Like most programs with any sort of graphics, Tracker2D performs a great deal of graphics functions at any given time. While the actual graphical elements are again very simple (and essentially placeholders barring the creation of more detailed artwork), the graphics rendering loop isn't. This section only refers to graphics tasks handled with HTML5 Canvas - there are several important ones that are handled using standard HTML DOM elements.</p>
         <ol>
@@ -223,6 +240,7 @@
         <h3>Tiles</h3>
         <h3>(Intentional) Bug Behavior</h3>
         <h3>The Tracker2D Field File Format</h3>
+        <p>Tracker2D stores its files as multidimensional arrays of plaintext. A compression feature is planned for the long run, but in the mean time, plaintext is helpful for debugging.<br><br> The first value in a save file is the file's "size" - its length and width in tiles, which can be squared to get the total amount of tiles. The bulk of a file is composed of strings representing the tile data in order of column (move down before going right) [FINISH THIS]
         </p>
         <hr>
         <p>More text and better formatting coming eventually.</p>

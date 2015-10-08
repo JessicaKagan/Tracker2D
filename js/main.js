@@ -235,7 +235,7 @@ function init() {
                         break;
                     case "cutoff":
                         if(FXValue < 0 || FXValue > 100){
-                            alert("You need to set a value between 0-100% (don't type in the percentage) to represent when playback stops/starts.");
+                            alert("You need to set a value between 0-100% (don't type in the percentage sign) to represent when playback stops/starts.");
                             $(this).val("");
                             return;
                         }
@@ -308,14 +308,13 @@ function init() {
         }
     );
 
-    //Add an event listener for the instrument bank to widen it when the user rolls over it.
-    //This should make instrument names more legible.
+    //Widens the instrument menu when the user rolls over it. This should make instrument names more legible.
     $("#instrumentInput").hover(
         function(){
             $("#instrumentInput").animate({
                 width: "176px",
             }, 150, function(){
-                //Animation complete; we don't do anything here yet.
+                //Animation complete; we don't do anything else yet.
             });
         }, 
         function(){
