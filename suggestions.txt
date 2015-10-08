@@ -21,13 +21,12 @@ Things I know I want to do (which could get very long):
 - Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data; one way to do this would possibly be adding audio effects to bugs).
 - Add function to paint audio effects without adding any other data to a tile. Put it in the UI props?  
 - Add hotkeys for changing UI properties more efficiently.
-- Make the "numbersOnly" class used for some input more robust.
-
+- Make the "numbersOnly" class used for some input more robust in filtering out non-numeric input.
+- Add a delayed playback audio effect.
 
 
 Things I might do but am not sure about:
-- Bug on bug collision detection (which has the potential to be very inefficient), so that bugs can't overlap and collisions probably change their behavior. (Up to 36 checks per second? Divergent series.)
-- Make selection flip and rotate tools change the direction of turnsignals.
+- Make selection flip and rotate tools optionally change the direction of turnsignals.
 - A basic scripting language to allow for arbitrarily complicated conditional code and such on the field (potentially very difficult and time consuming, besides ballooning file sizes). 
 - Antialiasing for large file minimaps.
 - Make bugs in storage translucent instead of completely invisible, at least optionally.
@@ -36,6 +35,7 @@ Things I might do but am not sure about:
 - Flow control features to dynamically adjust bug properties (possibly really cool, but programming would be annoying, especially on the save/load/revert frontier)
 - Flow control features to dynamically adjust SONG properties! (Currently only tempo; would require similar expansion of file I/O to dynamic bug properties)
 - Add Web MIDI API support to allow instrument input (Not sure since only Chrome and Opera support it)
+- Add a way to save and load audio FX presets?
 
 
 Suggestions and planned features that have already been implemented:

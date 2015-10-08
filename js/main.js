@@ -235,7 +235,7 @@ function init() {
                         break;
                     case "cutoff":
                         if(FXValue < 0 || FXValue > 100){
-                            alert("You need to set a value between 0-100% (don't type in the percentage) to represent when playback stops/starts.");
+                            alert("You need to set a value between 0-100% (don't type in the percentage sign) to represent when playback stops/starts.");
                             $(this).val("");
                             return;
                         }
@@ -308,14 +308,13 @@ function init() {
         }
     );
 
-    //Add an event listener for the instrument bank to widen it when the user rolls over it.
-    //This should make instrument names more legible.
+    //Widens the instrument menu when the user rolls over it. This should make instrument names more legible.
     $("#instrumentInput").hover(
         function(){
             $("#instrumentInput").animate({
                 width: "176px",
             }, 150, function(){
-                //Animation complete; we don't do anything here yet.
+                //Animation complete; we don't do anything else yet.
             });
         }, 
         function(){
@@ -341,7 +340,7 @@ function init() {
 }
 
 //Graphics functions. It might be wise to make these subfunctions of something tile related.
-//They are, however, enormously useful.
+//This one is currently only used in mouse_input.js
 function getTile(x,y) {
     var tileX = Math.floor((x - 80)/TILE_SIZE) + fieldOffset[0];
     var tileY = Math.floor(y/TILE_SIZE) + fieldOffset[1];
@@ -349,16 +348,19 @@ function getTile(x,y) {
 }
 
 //Well, not this one. I should probably remove it, since nothing seems to call it.
+
+/*
 function convertTiletoPixels(x,y){
     var pixelX = (x*24) + 80;
     var pixelY = y*24;
     return [pixelX, pixelY];
 }
+*/
 
 function main(){
     /* This is our main loop! It updates the internal model of bug positions and such when the game is unpaused.
      * Then it calls the render function to update the view so that the user sees the actual state of this toy.
-     * This needs to link partially into the tempo variable. Bug positions only need to update on tempo ticks.
+     * This needs to link partially into the tempo variable, and bug positions only need to update on tempo ticks.
      * However, rendering needs to be as fast and responsive as possible, so it's independent of our timing function.
      */
     updateFrequency = TICK_MULTIPLIER/TEMPO; //Recomputing this here will come in handy when the user changes the tempo.

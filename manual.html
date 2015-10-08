@@ -10,7 +10,7 @@
         <p>The most basic tutorial follows:</p>
         <ol>
         <li> Select an instrument from the instrument menu. </li>
-        <li> The QWERTY row on a standard keyboard represents a Western chromatic scale; press any key there to select a note; plus and minus allow you to adjust your octave. </li>
+        <li> The QWERTY row on a standard (English-language) keyboard represents a Western chromatic scale; press any key there to select a note; plus and minus allow you to adjust your octave. </li>
         <li> When the "PEN" tool is selected (which it is when you first load up the application), clicking on a square will put instructions on the tile based on the parameters on the left. </li>
         <li> Once you have some instructions painted on the screen, press the play button in the lower left to get the bugs moving. Whenever they move over a grey tile, they'll play sounds based on the instructions in the tile. </li>
         </ol>
@@ -40,7 +40,7 @@
         <strong>Minimap</strong>: This shows a small view of the entire field. Clicking anywhere on it will move your view to a different part of the field. <br>
         <strong>Pitch Indicator</strong>: This indicates your current pitch (we use mathematics to convert it into an actual pitch in hertz). When you press number keys and/or +/-, it changes. You'll also hear your instrument play.<br>
         <strong>Instrument Menu</strong>: This allows you to select which instrument is applied to the tile you're painting. It slides out when you roll over it so you can see the full names of the instruments.<br>
-        <strong>Audio FX Menu</strong>: Use this dropdown menu to select an audio effect to apply to your current tile. You will also need to input a value into the text field below it.<br>
+        <strong>Audio FX Button</strong>: This opens the new Audio Effects window, which allows you to set audio effects to apply to tiles. It is in desperate need of documentation.<br>
         <strong>Flow Control Menu</strong>: Use the "Change" button to select a flow control effect to apply to your current tile.<br>
         <strong>Volume Slider</strong>: Click and drag this slider to set the volume attribute for a tile.<br>
         <strong>Bug Storage</strong>: This shows the status of Tracker2D's 8 bugs (analogous to audio channels). By hovering over one of the boxes, you can see on the minimap the location of the corresponding bug. The other major functionality of this (click a box to toggle whether a bug is on the field or in storage) is mentioned in the UI.<br>
@@ -85,16 +85,16 @@
         </p>  
         <hr>
         <h2>The Dialog Windows</h2>
-        As of this writing, there are four of these that have any thing interesting within them.
+        As of this writing, there are five of these that have any thing interesting within them.
         <h3>Bug Properties</h3>
         <p>Currently, the only purpose of this window is that it lets you adjust the volume multiplier on a bug, which is multiplied by the volume data of a tile to get the total playback volume of a sample. Use this sparingly; at its absolute lowest it can combine with tile volume to reduce a sample's volume to an essentially inaudible 0.01%.</p>
         <h3>UI Properties</h3>
-        <p>As previously mentioned, the settings here alter how you interact with Tracker2D, and are saved between sessions. A list of options available through here follows.</p>
+        <p>As previously mentioned, the settings here alter how you interact with Tracker2D, and are saved between sessions in your local storage. A list of options available through here follows.</p>
         <ul>
             <strong><li>Paste Style:</li></strong>
             Tracker2D has two ways of pasting data from the select buffer. By default, it overwrites every tile in the rectangle where you paste, but in mix-paste mode, it only overwrites empty tiles and leaves tiles with data in them alone. 
             <strong><li>Extrapolate Style:</li></strong>
-            You can choose three different types of data to use for the extrapolator - note pitches, volumes, or the 'audio effect' value (as distinguished from the type of audio effect in a tile). Pitch is extrapolated by default.
+            You can choose three different types of data to use for the extrapolator - note pitches, volumes, or the 'audio effect' value (as distinguished from the type of audio effect in a tile). Pitch is extrapolated by default. The 'audio effect' extrapolation needs to be rebuilt due to the filter system being reworked.
             <strong><li>Play Sample When Pitch Key Is Pressed:</li></strong> 
             When this is selected, pressing keys on the home row (assuming a QWERTY keyboard) to choose a pitch will cause your current instrument to play at the chosen pitch and with any audio FX you have applied.
             <strong><li>UI Colors:</li></strong>
@@ -108,27 +108,46 @@
         </ul>
         </p>
         <h3>Song Properties</h3>
-        <p>Important field information is stored here; these values are stored at the end of a savefile, along with an internal version number (which is not user-updatable and is used to improve backwards compatibility).</p>
+        <p>Important field information is stored here; these values are stored at the end of a savefile, along with an internal version number (which is not user-updatable and is used to improve backwards compatibility).
         <strong><li>Tempo:</li></strong>
         Represents how fast the song is in beats per minute; this defaults to 120. Tempos can range anywhere from 1 to 999 BPM, although I personally don't recommend pushing your tempos to values that are too extreme.
         <strong><li>Playfield Size:</li></strong>
         Use this to adjust your filesize in increments of 64 tiles, up to a maximum of 512*512 tiles. Due to the current state of implementation, I recommend only enlarging your files when you're certain you will need more space. Each expansion gives you more room than the last, but also makes the program more resource intensive.
         <strong><li>Song Metadata:</li></strong>
         These fields allow you to declare the author and title of a track, as well as write a description. The default values are rather derogatory.
-        <br><br>
+        </p>
+        <h3>Audio FX Properties</h3>
+        <p>This menu is activated by pressing the "Show UI" button on the menu bar. It allows you to alter what filters are applied when you paint a tile; you can have up to 8 of them at any given time. For more details on each effect does, see the effect reference section of this manual.</p>
+        <br>
         <hr>
         <h2>Effect Reference</h2>
             <p>Tracker2D gives you a couple ways to adjust the sound and playback order of tiles.</p>
         <hr>
         <h2>Audio Effects</h2>
-            <p>Keep in mind that it is currently only possible to apply one audio effect to a tile at a time. This may be changed in the future, although it would require significant revision to the audio playback engine.</p>
+            <p>Due to the major audio rework of late September, you can now apply up to 8 audio effects to every tile.
             <ul>
             <li><strong>Bend Pitch</strong>: Multiplies the pitch of a note by a value between 0 and 16. Useful for pushing an instrument beyond its 6 octave range, transposing without changing notes, or creating microtonal music.</li>
-            <li><strong>Lowpass</strong>: Removes frequencies above the input value from a sound. Takes values between 0 and 20,000. This filter is applied after any pitch shifting.</li>
-            <li><strong>Highpass</strong>: Removes frequencies below the input value from a sound. Takes values between 0 and 20,000. This filter is applied after any pitch shifting, and is generally very similar to lowpass.</li>
-            <li><strong>Stop Playback</strong>: Cuts off a sample once a certain percentage of it has played. Takes values between 0 and 100.</li>
-            <li><strong>Start From Later</strong>: Causes a sample to play from its middle. Like "Stop Playback", takes values between 0 and 100.</li>
+            <li><strong>Lowpass</strong>: Removes frequencies above the input value from a sound. Uses the frequency and quality fields.</li>
+            <li><strong>Highpass</strong>: Removes frequencies below the input value from a sound. Uses the frequency and quality fields, and is very similar to lowpass.</li>            
+            <li><strong>Bandpass</strong>: Removes all frequencies that aren't within a certain range of the user's input frequency. Uses the frequency and quality fields. </li>
+            <li><strong>Lowshelf</strong>: Increases or reduces the volume of frequencies below a certain value depending on gain. Uses the frequency and gain fields.</li>
+            <li><strong>Highshelf</strong>: Increases or reduces the volume of frequencies above a certain value depending on gain. Uses the frequency and gain fields.</li>
+            <li><strong>Peaking</strong>: Increases or reduces the volume of frequencies within a a specific range; similar to Bandpass. Uses frequency, quality, and gain fields.</li>
+            <li><strong>Notch</strong>: The opposite of bandpass - removes all frequencies that <em>are</em> within a certain range of the user's input frequency. Uses the frequency and quality fields.</li>
+            <!--<li><strong>Allpass</strong>: </li>-->
+            <li><strong>Stop Playback</strong>: Cuts off a sample once a certain percentage of it has played.
+            <li><strong>Start From Later</strong>: Causes a sample to start playing from some point in its duration.</li>
             </ul>
+            </p>
+            <p>The Audio FX Properties window generates relevant input fields for each filter. A description of each follows:
+                <ul>
+                <li><strong>Frequency</strong>: Used for most of the "biquad" filters; represents the pitch at which the filter starts taking effect. Takes values between 0 and 20,000 hertz.</li>  
+                <li><strong>Quality</strong>: This alters how 'abruptly' a pitch filter starts affecting a range of pitches. The higher it is, the closer a frequency in a sound has to be to the effect's frequency value in order to be affected by the filter. Takes values between 0 and 30.</li>  
+                <li><strong>Gain</strong>: For effects that alter the volume of a set of frequencies, this simply determines how much louder or quieter the effect gets. Takes values below 12 decibels, including negative values.</li>  
+                <li><strong>Pitch Multiplier</strong>: Currently used only for the "Bend Pitch" effect. This multiplies all frequencies in a sound by a value between 0 and 16. </li> </li>  
+                <li><strong>Cutoff</strong>: Used to determine at what point in a sample's duration that it starts playing from, or stops playing at. Takes values between 0 and 100, representing percentiles.</li>  
+                </ul>
+            </p>
         <hr>
         <div class = "alternateBackground">
             <h2>Flow Control Effects</h2>
@@ -209,6 +228,7 @@
         </p>
         <p>
         These sections are very incomplete (or perhaps not even written yet), even compared to some of the others.
+        </p>
         <h3>The Rendering Loop</h3>
         <p>Like most programs with any sort of graphics, Tracker2D performs a great deal of graphics functions at any given time. While the actual graphical elements are again very simple (and essentially placeholders barring the creation of more detailed artwork), the graphics rendering loop isn't. This section only refers to graphics tasks handled with HTML5 Canvas - there are several important ones that are handled using standard HTML DOM elements.</p>
         <ol>
@@ -220,6 +240,7 @@
         <h3>Tiles</h3>
         <h3>(Intentional) Bug Behavior</h3>
         <h3>The Tracker2D Field File Format</h3>
+        <p>Tracker2D stores its files as multidimensional arrays of plaintext. A compression feature is planned for the long run, but in the mean time, plaintext is helpful for debugging.<br><br> The first value in a save file is the file's "size" - its length and width in tiles, which can be squared to get the total amount of tiles. The bulk of a file is composed of strings representing the tile data in order of column (move down before going right) [FINISH THIS]
         </p>
         <hr>
         <p>More text and better formatting coming eventually.</p>

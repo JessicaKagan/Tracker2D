@@ -4,6 +4,7 @@
 var currentAudioEffects = new Array(new audioEffect("none")); //Used for painting tools, too. Extensible up to 8 effects.
 
 //An array of audio effects are what we need.
+//Fill this out with sane default effects and display them when the user creates a new instance of each effect?
 function audioEffect(type){
     this.type = type;
     switch(type){
