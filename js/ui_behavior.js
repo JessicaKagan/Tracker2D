@@ -576,5 +576,8 @@ function renderAudioFXList(type,number){
     if(type == "stopplayback" || type == "startfromlater") {
         $(domID).append('Cutoff: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="cutoff"></input><br>');
     }
-
+    //Duration, currently only used for delayplayback.
+    if(type == "delayplayback") {
+        $(domID).append('Duration: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="duration"></input><br>');
+    }
 }

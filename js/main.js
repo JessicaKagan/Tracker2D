@@ -240,6 +240,12 @@ function init() {
                             return;
                         }
                         break;
+                    case "duration":
+                        if(FXValue < 0 || FXValue > 5){
+                            alert("For sanity purposes, you can only set a delay between 0 and 5 seconds. Move your playback points around if you need any more.");
+                            $(this).val("");
+                            return;
+                        }
                     default:
                         break;
                 }
