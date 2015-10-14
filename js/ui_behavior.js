@@ -180,12 +180,20 @@ function respondToQuery(X, Y) {
         if(fieldContents[X][Y].note !== undefined ) { queryResponse += "<p>Pitch: " + Math.floor(fieldContents[X][Y].note * 44100) + " (Note #" + pitchTable.indexOf(fieldContents[X][Y].note) + ")";}
         else { queryResponse += "Does not reference a pitch."; }
         queryResponse += "<p> Instrument: " +  soundSet[fieldContents[X][Y].instrument][0] + "</p>";
-        queryResponse += "<p> Audio Effect: " +  fieldContents[X][Y].dspEffect + "</p>";
-        queryResponse += "<p> Audio Effect Value: " +  fieldContents[X][Y].dspValue + "</p>";        
+        //For legacy files only.
+        if(fieldContents[X][Y].dspEffect != undefined){
+            queryResponse += "<p> Legacy Audio Effect: " +  fieldContents[X][Y].dspEffect + "</p>";
+            queryResponse += "<p> Audio Effect Value: " +  fieldContents[X][Y].dspValue + "</p>";   
+        }     
         queryResponse += "<p> Flow Effect: " +  fieldContents[X][Y].flowEffect + "</p>";
         queryResponse += "<p> Flow Effect Value: " +  fieldContents[X][Y].flowValue + "</p>"; //Uncomment when relevant.
         queryResponse += "<p> Volume: " + (fieldContents[X][Y].volume * 100) + "%</p>";
         queryResponse += "<p> Points to this tile: " + fieldContents[X][Y].xPointer + " , " + fieldContents[X][Y].yPointer + "</p>";
+        //New Audio FX query response. Should perhaps be expanded with detailed representation of everything.
+        if(fieldContents[X][Y].audioEffectList != undefined) {
+            queryResponse += "<p> Amount of DSP effects applied: " + fieldContents[X][Y].audioEffectList.length + "</p>";
+        }
+        
     } else queryResponse += "No data in this tile.";
     //If there's a bug here, describe the one on top. This assumes that bugs should be allowed to overlap...
     for(var i = 0; i < bugList.length; ++i){
