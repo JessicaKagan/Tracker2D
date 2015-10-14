@@ -36,7 +36,7 @@ var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, f
     this.volume = volume;
     this.dspValue = dspValue;
     this.flowValue = flowValue;
-    this.audioEffectList = audioEffectList; //A list of up to 8 audioEffect objects.
+    this.audioEffectList = jQuery.extend(true,[], audioEffectList); //A list of up to 8 audioEffect objects. Extend is a test.
     if(this.volume === undefined) { this.volume = 0.6; }
     if(this.dspValue === undefined) { this.dspValue = 0; }
     if(this.flowValue === undefined) { this.flowValue = 0; }

@@ -84,16 +84,6 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
             biQuadFilter.Q.value = 1;
             biQuadFilter.connect(audioEngine.destination);
             break;
-        //Changes the "phase relationship" between frequencies. Doesn't seem to do anything yet.
-        /*
-        case 'allpass':
-            volumeAdjustment.connect(biQuadFilter);
-            biQuadFilter.type = 'allpass';
-            biQuadFilter.frequency.value = dspValue;
-            biQuadFilter.Q.value = 200;
-            biQuadFilter.connect(audioEngine.destination);
-            break;
-        */
         //Separate from all the frequency filters
         case 'bendpitch':
             if(dspValue <= 16 && dspValue > 0) { source.playbackRate.value *= dspValue; } 

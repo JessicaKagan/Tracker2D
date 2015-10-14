@@ -193,7 +193,7 @@ function respondToQuery(X, Y) {
         if(fieldContents[X][Y].audioEffectList != undefined) {
             queryResponse += "<p> Amount of DSP effects applied: " + fieldContents[X][Y].audioEffectList.length + "</p>";
         }
-        
+
     } else queryResponse += "No data in this tile.";
     //If there's a bug here, describe the one on top. This assumes that bugs should be allowed to overlap...
     for(var i = 0; i < bugList.length; ++i){
@@ -531,6 +531,7 @@ function setFlowControl(value){
 /*  These functions were added to ui_behavior because they only add FX to the audio FX list,
     and then add UI controls for the user. Separation of concerns could be better.
 */
+//Note: Add and remove functions are called only by the prespawned HTML buttons.
 function addAudioFXToList(){
     //Push to the array
     var newEffect = new audioEffect("none");

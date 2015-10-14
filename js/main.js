@@ -179,7 +179,7 @@ function init() {
             $('.chooseAudioFXType').append('<option value="' + possibleDSPEffects[i] + '">' + possibleDSPEffects[i] + '</option>');
         }
         genericAudioFXDiv = $(".audioFXInstance").clone();
-        //removeAudioFXFromList(); //Kludge; gets rid of the template.
+        removeAudioFXFromList(); //Kludge; gets rid of the template.
 
         /*
         $( "#DSPInput" ).change(function() {
