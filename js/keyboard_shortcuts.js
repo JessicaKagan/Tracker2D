@@ -123,10 +123,10 @@ function hookKeyboard(){
 
     //Input sanitization for number only fields ("spinners"). Thanks, Stackoverflow!
     //http://stackoverflow.com/questions/891696/jquery-what-is-the-best-way-to-restrict-number-only-input-for-textboxes-all
-    jQuery('.numbersOnly').keypress(function (){  
+    //I might be able to dummy this out due to number inputs being an option in HTML5.
+    $( "#box" ).on("change", ".numbersOnly", function() {
+    //jQuery('.numbersOnly').keypress(function (){  
         this.value = this.value.replace(/[^0-9\.]/g,'');
-        //var testTempo = this.value.parseInt();
-        //console.log(testTempo); 
     });
 
     //UI hooks for the Song Properties and Tile Properties windows

@@ -210,40 +210,46 @@ function init() {
                 var currentDiv = $(this).parent().parent().attr("id");
                 var currentDivID = parseInt(currentDiv.substr(currentDiv.length - 1)) - 1;
                 var FXValue = parseFloat($(this).val());
-                //Run these sanity checks to prevent ear-destroying or invalid output. Add a feature to opt out later.
+                //Run these sanity checks to prevent ear-destroying or invalid output.
+                //These aren't AS important now that limits are built into HTML5, but they're still useful.
                 switch(FXProperty){
                     case "bendpitch":
                         if(FXValue > 16){
                             alert("Don't set your pitch multiplier above 16. You'll irritate someone's dog!");
-                            $(this).val("");
+                            $(this).val(currentAudioEffects[currentDivID][FXProperty]);
+                            return;
+                        }
+                        if(FXValue < 0.1){
+                            alert("Don't set your pitch multplier below 0.1. You'll melt someone's CPU!");
+                            $(this).val(currentAudioEffects[currentDivID][FXProperty]);
                             return;
                         }
                         break;
                     case "quality":
                         if(FXValue > 30){
                             alert("Don't set the quality factor above 30. You'll hurt yourself!");
-                            $(this).val("");
+                            $(this).val(currentAudioEffects[currentDivID][FXProperty]);
                             return;
                         }
                         break;
                     case "gain":
                         if(FXValue > 12){
                             alert("Don't set the audio gain above 12 dB. You'll kill your speakers!");
-                            $(this).val("");
+                            $(this).val(currentAudioEffects[currentDivID][FXProperty]);
                             return;
                         }
                         break;
                     case "cutoff":
                         if(FXValue < 0 || FXValue > 100){
                             alert("You need to set a value between 0-100% (don't type in the percentage sign) to represent when playback stops/starts.");
-                            $(this).val("");
+                            $(this).val(currentAudioEffects[currentDivID][FXProperty]);
                             return;
                         }
                         break;
                     case "duration":
                         if(FXValue < 0 || FXValue > 5){
                             alert("For sanity purposes, you can only set a delay between 0 and 5 seconds. Move your playback points around if you need any more.");
-                            $(this).val("");
+                            $(this).val(currentAudioEffects[currentDivID][FXProperty]);
                             return;
                         }
                     default:
