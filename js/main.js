@@ -79,9 +79,10 @@ var genericAudioFXDiv;
 
 //Image arrays used in image_loader.js
 var UIImages = new Array(31); //These are almost entirely buttons.
-var tileOverlayImages = new Array(13); //Used for flow control and anything that needs to be drawn above a bug or tile.
+var tileOverlayImages = new Array(14); //Used for flow control and anything that needs to be drawn above a bug or tile.
+
+//Define the arrays used for bug data and images.
 var bugImages = new Array(8);
-//Define the arrays used for bug data.
 var bugList = new Array(8);
 
 //Various pre-init things, like actually beginning the preloads.
@@ -278,6 +279,7 @@ function init() {
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;freeze&quot;)"><img src="images/freeze_overlay.png"></button>Freeze<br>');
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;revert&quot;)"><img src="images/revert_button.png"></button>Revert Tile<br>');
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;randomjump&quot;)"><img src="images/random_teleport_overlay.png"></button>Jump To A Random Tile<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;move_camera&quot;)"><img src="images/move_camera_overlay.png"></button>Move Camera<br>');
         
     }
     //Left bar menu stuff ends here.

@@ -139,6 +139,10 @@ Bug.prototype.updateBug = function() {
             //Queue up a revert operation for the main() loop.
                 revertCalled = true;
                 return;
+            //Centers the camera on whatever tile this tile is pointing to.
+            case "move_camera":
+                moveViewingField(fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer,fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer);
+                break;
             default:
                 break;
         }

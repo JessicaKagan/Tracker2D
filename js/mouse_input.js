@@ -185,7 +185,7 @@ function interact(action, e) {
                             //Paint new tiles, though, and the new effect also gets modified when modifying them?
                             fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, undefined, 
                                 currentFlowControl, currentVolume, undefined, 0, 0, 0, 0, 
-                                $.extend(true, [], currentAudioEffects ); 
+                                $.extend(true, [], currentAudioEffects )); 
                         
                         }
                         break;

@@ -23,7 +23,7 @@ Things I know I want to do (which could get very long):
 - Add hotkeys for changing UI properties more efficiently.
 - Make the "numbersOnly" class used for some input more robust in filtering out non-numeric input.
 - Eyedropper tool should change the audioFX array.
-
+- "Center camera" flow control effect (which would call moveViewingField in rendering.js)
 
 Things I might do but am not sure about:
 - Make selection flip and rotate tools optionally change the direction of turnsignals.

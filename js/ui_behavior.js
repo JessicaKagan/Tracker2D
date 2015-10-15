@@ -522,6 +522,9 @@ function setFlowControl(value){
             break;       
         case "randomjump":
             $("#currentFlowControl > img").replaceWith('<img src="images/random_teleport_overlay.png">');
+            break;        
+        case "move_camera":
+            $("#currentFlowControl > img").replaceWith('<img src="images/move_camera_overlay.png">');
             break;
         default:
             break;
