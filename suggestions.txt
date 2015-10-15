@@ -22,8 +22,8 @@ Things I know I want to do (which could get very long):
 - Add function to paint audio effects without adding any other data to a tile. Put it in the UI props?  
 - Add hotkeys for changing UI properties more efficiently.
 - Make the "numbersOnly" class used for some input more robust in filtering out non-numeric input.
-- Add a delayed playback audio effect.
-
+- Eyedropper tool should change the audioFX array.
+- "Center camera" flow control effect (which would call moveViewingField in rendering.js)
 
 Things I might do but am not sure about:
 - Make selection flip and rotate tools optionally change the direction of turnsignals.
@@ -60,3 +60,4 @@ Suggestions and planned features that have already been implemented:
 - Add the rest of the BiquadFilterNode FX (trivial)
 - Adjust implementation of query tool to allow querying tiles under the query window (Perhaps by moving it based on cursor location)
 - Flow control tile to jump to a random tile within a radius defined by the flow control value.
+- Add a delayed playback audio effect.

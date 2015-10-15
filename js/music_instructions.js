@@ -21,7 +21,7 @@ for(var i = 1; i < pitchTable.length; ++i){
 
 //It might be good to improve the DSP menu simular to how Flow control was improved. We need more of these. 
 //Allpass doesn't work yet.
-var possibleDSPEffects = ['none','bendpitch', 'lowpass', 'bandpass', 'highpass', 'lowshelf', 'highshelf', 'peaking', 'notch', 'stopplayback', 'startfromlater'];
+var possibleDSPEffects = ['none','bendpitch', 'lowpass', 'bandpass', 'highpass', 'lowshelf', 'highshelf', 'peaking', 'notch', 'stopplayback', 'startfromlater', 'delayplayback'];
 var possibleFlowEffects =['none','turn_west', 'turn_north', 'turn_east', 'turn_south', 'counter','incrementer','teleport', 'freeze', 'revert'];
 //To be implemented: "random_tile", which will send the bug to a random tile within a user defined range.
 
@@ -36,7 +36,7 @@ var Tile = function(note, instrument, dspEffect, flowEffect, volume, dspValue, f
     this.volume = volume;
     this.dspValue = dspValue;
     this.flowValue = flowValue;
-    this.audioEffectList = audioEffectList; //A list of up to 8 audioEffect objects.
+    this.audioEffectList = jQuery.extend(true,[], audioEffectList); //A list of up to 8 audioEffect objects. Extend is a test.
     if(this.volume === undefined) { this.volume = 0.6; }
     if(this.dspValue === undefined) { this.dspValue = 0; }
     if(this.flowValue === undefined) { this.flowValue = 0; }

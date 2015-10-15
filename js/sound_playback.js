@@ -84,16 +84,6 @@ function playSound(buffer, pitch, dspEffect, dspValue, volume) {
             biQuadFilter.Q.value = 1;
             biQuadFilter.connect(audioEngine.destination);
             break;
-        //Changes the "phase relationship" between frequencies. Doesn't seem to do anything yet.
-        /*
-        case 'allpass':
-            volumeAdjustment.connect(biQuadFilter);
-            biQuadFilter.type = 'allpass';
-            biQuadFilter.frequency.value = dspValue;
-            biQuadFilter.Q.value = 200;
-            biQuadFilter.connect(audioEngine.destination);
-            break;
-        */
         //Separate from all the frequency filters
         case 'bendpitch':
             if(dspValue <= 16 && dspValue > 0) { source.playbackRate.value *= dspValue; } 
@@ -138,11 +128,12 @@ function playSound2(buffer, pitch, volume, effects){
     } else { volumeAdjustment.gain.value = 0.6; }
 
 
-    //The bulk of the new code starts here.
+    //The bulk of the new code starts here. Some variable definitions first.
     var DSPNodes = new Array(effects.length); //Used to actually store node objects.
     var startSound = 0;
     var endSound = source.buffer.duration;
-    //console.log(DSPNodes.length + " at the beginning");
+    var delayDuration = 0;
+    //Chew through the effect array that got passed in.
     for(var i = 0; i < effects.length; ++i){
         //console.log(effects[i].type);
         switch(effects[i].type){
@@ -162,6 +153,8 @@ function playSound2(buffer, pitch, volume, effects){
                 if(effects[i].gain != null) { DSPNodes[i].gain.value = effects[i].gain; }
                 break;
             //We still need to generate nodes even if we aren't using them for filters.
+            //This code creates a lowpass filter removing everything above 65536 Hz.
+            //Essentially, it removes nothing because you can't possibly hear anything that high.
             case "bendpitch":
                 if(effects[i].bendpitch <= 16 && effects[i].bendpitch > 0 && effects[i].bendpitch != null) { 
                     source.playbackRate.value *= effects[i].bendpitch; } 
@@ -169,7 +162,7 @@ function playSound2(buffer, pitch, volume, effects){
                 DSPNodes[i] = audioEngine.createBiquadFilter();
                 DSPNodes[i].frequency.value = 65536;
                 break;
-            //The cutoff effects use duration and don't really proc until playback time.
+            //These effects use duration values and don't really proc until playback time.
             case "startfromlater":
                 if(effects[i].cutoff != null) { startSound = source.buffer.duration * (effects[i].cutoff/100); }
                 DSPNodes[i] = audioEngine.createBiquadFilter();
@@ -180,9 +173,14 @@ function playSound2(buffer, pitch, volume, effects){
                 DSPNodes[i] = audioEngine.createBiquadFilter();
                 DSPNodes[i].frequency.value = 65536; 
                 break;
+            case "delayplayback":
+                if(effects[i].duration != null) { delayDuration = effects[i].duration; }
+                DSPNodes[i] = audioEngine.createBiquadFilter();
+                DSPNodes[i].frequency.value = 65536; 
+                break;
             default:
                 DSPNodes[i] = audioEngine.createBiquadFilter();
-                DSPNodes[i].frequency.value = 65536; //Kludge
+                DSPNodes[i].frequency.value = 65536;
                 break;
         }
         //The first node needs special treatment.
@@ -209,5 +207,5 @@ function playSound2(buffer, pitch, volume, effects){
         //console.log(DSPNodes[DSPNodes.length - 1]);
     }
     //source.start();
-    source.start(0,startSound,endSound); //Starts playing immediately (0), percentages determined by startSound and endSound.
+    source.start( (audioEngine.currentTime + delayDuration) ,startSound,endSound); //Starts playing after [delayDuration] seconds, percentages determined by startSound and endSound.
 }

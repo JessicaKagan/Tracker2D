@@ -180,12 +180,20 @@ function respondToQuery(X, Y) {
         if(fieldContents[X][Y].note !== undefined ) { queryResponse += "<p>Pitch: " + Math.floor(fieldContents[X][Y].note * 44100) + " (Note #" + pitchTable.indexOf(fieldContents[X][Y].note) + ")";}
         else { queryResponse += "Does not reference a pitch."; }
         queryResponse += "<p> Instrument: " +  soundSet[fieldContents[X][Y].instrument][0] + "</p>";
-        queryResponse += "<p> Audio Effect: " +  fieldContents[X][Y].dspEffect + "</p>";
-        queryResponse += "<p> Audio Effect Value: " +  fieldContents[X][Y].dspValue + "</p>";        
+        //For legacy files only.
+        if(fieldContents[X][Y].dspEffect != undefined){
+            queryResponse += "<p> Legacy Audio Effect: " +  fieldContents[X][Y].dspEffect + "</p>";
+            queryResponse += "<p> Audio Effect Value: " +  fieldContents[X][Y].dspValue + "</p>";   
+        }     
         queryResponse += "<p> Flow Effect: " +  fieldContents[X][Y].flowEffect + "</p>";
         queryResponse += "<p> Flow Effect Value: " +  fieldContents[X][Y].flowValue + "</p>"; //Uncomment when relevant.
         queryResponse += "<p> Volume: " + (fieldContents[X][Y].volume * 100) + "%</p>";
         queryResponse += "<p> Points to this tile: " + fieldContents[X][Y].xPointer + " , " + fieldContents[X][Y].yPointer + "</p>";
+        //New Audio FX query response. Should perhaps be expanded with detailed representation of everything.
+        if(fieldContents[X][Y].audioEffectList != undefined) {
+            queryResponse += "<p> Amount of DSP effects applied: " + fieldContents[X][Y].audioEffectList.length + "</p>";
+        }
+
     } else queryResponse += "No data in this tile.";
     //If there's a bug here, describe the one on top. This assumes that bugs should be allowed to overlap...
     for(var i = 0; i < bugList.length; ++i){
@@ -514,6 +522,9 @@ function setFlowControl(value){
             break;       
         case "randomjump":
             $("#currentFlowControl > img").replaceWith('<img src="images/random_teleport_overlay.png">');
+            break;        
+        case "move_camera":
+            $("#currentFlowControl > img").replaceWith('<img src="images/move_camera_overlay.png">');
             break;
         default:
             break;
@@ -523,6 +534,7 @@ function setFlowControl(value){
 /*  These functions were added to ui_behavior because they only add FX to the audio FX list,
     and then add UI controls for the user. Separation of concerns could be better.
 */
+//Note: Add and remove functions are called only by the prespawned HTML buttons.
 function addAudioFXToList(){
     //Push to the array
     var newEffect = new audioEffect("none");
@@ -557,24 +569,27 @@ function renderAudioFXList(type,number){
     //Frequency, used by pretty much all the biQuad stuff.
     if(type == "lowpass" || type == "highpass" || type == "bandpass" || type == "lowshelf" || 
        type == "highshelf" || type == "peaking" || type == "notch" || type == "allpass") {
-        $(domID).append('Frequency: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="frequency"></input><br>');
+        $(domID).append('Frequency: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="frequency"></input><br>');
     }
     //Quality factor, which is basically the width of a frequency band/change.
     if(type == "lowpass" || type == "highpass" || type == "bandpass" || 
        type == "peaking" || type == "notch" || type == "allpass") {
-        $(domID).append('Quality: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="quality"></input><br>');
+        $(domID).append('Quality: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="quality" max="30" step="0.1"></input><br>');
     }
     //Gain. It's basically volume.
     if(type == "lowshelf" || type == "highshelf" || type == "peaking") {
-        $(domID).append('Gain: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="gain"></input><br>');
+        $(domID).append('Gain: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="gain" max="12" step="0.1"></input><br>');
     }
     //Multiplier, which is only used for the pitch bender.
     if(type == "bendpitch") {
-        $(domID).append('Pitch Multiplier: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="bendpitch"></input><br>');
+        $(domID).append('Pitch Multiplier: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="bendpitch" max="16" step="0.1"></input><br>');
     }
     //Cutoff point, used for truncation effects.
     if(type == "stopplayback" || type == "startfromlater") {
-        $(domID).append('Cutoff: <input type="text" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="cutoff"></input><br>');
+        $(domID).append('Cutoff: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="cutoff" min="0" max="100" step="1"></input><br>');
     }
-
+    //Duration, currently only used for delayplayback.
+    if(type == "delayplayback") {
+        $(domID).append('Duration: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="duration" min="0" max="5" step="0.05"></input><br>');
+    }
 }

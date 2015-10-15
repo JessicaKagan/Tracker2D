@@ -10,8 +10,9 @@
     <body>
         <div id="loadScreen"><img src ="./images/loading_screen_2.png" width="800" height="600">
             <div id="loadingScreenText">
-                <p>Tracker2D is in <em>active</em> development. If you want to contribute, please do so! For example, check out the <a href="http://www.github.com/GabeKagan/Tracker2D">GitHub</a> repository. We always need improved artwork, more sounds, feature suggestions, and even bug reports, so definitely give us, the community, a hand if you can. <br><br>
-                Want an example file to play around with? Download <a href="https://www.mediafire.com/?j4ug5bwgfo28hoe">this</a> file to somewhere on your PC and open it with the floppy disc icon in the far lower right corner. You can also click the "HELP" button in the lower left toolbar to pull up the documentation.
+                <p>Tracker2D is in <em>active</em> development. If you want to contribute, please do so! We have a <a href="http://www.github.com/GabeKagan/Tracker2D">GitHub</a> repository, and we always need improved assets, feature suggestions, and even bug reports. <br><br>
+                Want an example file to play around with? Download <a href="https://www.mediafire.com/?j4ug5bwgfo28hoe">this</a> file to somewhere on your PC and open it with the floppy disc icon in the far lower right corner. You can also click the "HELP" button in the bottom toolbar to pull up the documentation.<br><br>
+                Protip: Use the QWERTY row and +/- keys to change pitch.
                 </p>
             </div>
         <button id="initButton" type="button" onclick = "loadIfReady()">Loading...</button>
@@ -114,6 +115,7 @@
 
                 <!--This allows you to change tile properties in a more detailed fashion than the leftmenu.-->
                 <div id="modifyTile" class="editingWindow currentlyHidden">
+                    <button class="closeButton" onClick="hideUI()">Close Window</button>
                     <p>Maybe this should be merged with queryInfo and the query Tool. Indicate to the user that you have to click on a tile in order to activate this tool!</p> <br>
                     <p>Currently editing tile: <span id="modifyTileTarget"></span></p> <br>
                     <p>Pitch: <input id = "modifyTilePitchSpinner" class = "numbersOnly" type="number" name="pitch" min="0" max="71" value="36"></input></p>
@@ -124,7 +126,7 @@
                         <input id = "modifyPointerTileX" class = "numbersOnly" type="number" name="Instrument" min="0" max="512" value="0">X</input><br>
                         <input id = "modifyPointerTileY" class = "numbersOnly" type="number" name="Instrument" min="0" max="512" value="0">Y</input>
                     </p>
-                    <button class="closeButton" onClick="hideUI()">Close Window</button>
+                    
                 </div>
                 <!--This will allow you to change song properties.-->
                 <div id="modifySongProperties" class="currentlyHidden editingWindow">

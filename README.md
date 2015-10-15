@@ -9,7 +9,7 @@ So far, this code runs best on Chrome. Firefox seems to handle it decently as we
 
 Current bugs:
 - Not enough watchful eyes bleeding at the sight of code errors
-- Some tools may use reference pastes instead of deep clone pastes via jQuery.extend();
+- Some long-running issues revolving around the fine differences between copying by reference and cloning objects
 - Mouse input can be 'sticky' and occasionally problematic if you click too fast or drag properly (I can't tell you more because I don't know how quite to describe it).
 - Occasionally, if you click the bottom row, the canvas doesn't register the click properly and instead selects some unknown text (eventually the first UIShifter div).
 - Large fields and their save/loads may have various odd bugs. They're also really slow.

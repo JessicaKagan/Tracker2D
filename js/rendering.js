@@ -136,6 +136,9 @@ function paintTile(tileX, tileY, color){
                 break;            
             case "randomjump":
                 ctx.drawImage(tileOverlayImages[12],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;            
+            case "move_camera":
+                ctx.drawImage(tileOverlayImages[13],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
             default:
                 break;
