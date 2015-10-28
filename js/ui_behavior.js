@@ -219,10 +219,6 @@ function respondToQuery(X, Y) {
 //General UI handling function called whenever the user opens up a UI element through Canvas.
 //The timeouts prevent clicks from bleeding through to other elements; the animation is to make it look nicer.
 function hideUI(){
-    if($("#saveExport").hasClass("currentlyHidden") === false) { 
-        setTimeout(function() {$("#saveExport").addClass("currentlyHidden");}, 200);
-        $("#saveExport").animate({ opacity: "0.0", }, 200, function(){ $("#saveExport").css("opacity", "1.0");});
-    }
     if($("#loadExport").hasClass("currentlyHidden") === false) { 
         setTimeout(function() {$("#loadExport").addClass("currentlyHidden");}, 200);
         $("#loadExport").animate({ opacity: "0.0", }, 200, function(){ $("#loadExport").css("opacity", "1.0");});

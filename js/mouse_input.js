@@ -168,287 +168,283 @@ function interact(action, e) {
         //console.log("In the playfield");
         currentTile = getTile(cursorX, cursorY);
         //console.log(currentTile);
-        
         //This statement reduces painting with UI elements open; timeouts handle the rest.
-        //Update it for the new UI elements.
-            if($("#saveExport").hasClass("currentlyHidden") === true &&
-               $("#loadExport").hasClass("currentlyHidden") === true){
-                
-                switch(selectedTool){
-                    case "pencil":
-                        setDrawingStatus();
-                        if(drawingStatus === true){
-                            //Something is wrong with the audioFX parameter (the last one).
-                            //It doesn't seem to properly deep clone.
-                            //Therefore, modifying currentAudioEffects sometimes (but unreliably) changes the tile.
-                            //Mess around and then add a new effect, and the new effect doesn't get added to said tiles.
-                            //Paint new tiles, though, and the new effect also gets modified when modifying them?
-                            fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, undefined, 
-                                currentFlowControl, currentVolume, undefined, 0, 0, 0, 0, 
-                                $.extend(true, [], currentAudioEffects )); 
-                        
-                        }
-                        break;
-                    case "eraser":
-                        setDrawingStatus();
-                        if(drawingStatus === true){
-                            fieldContents[currentTile[0]][currentTile[1]] = undefined;
-                        }
-                        break;
-                    case "selectBox":
-                        if(action === "click") {
-                            if(selectBoxStage === 1) {
-                                //Get the first pair for the buffer.
-                                selectBoxCoords[0] = currentTile[0];
-                                selectBoxCoords[2] = currentTile[1];
-                                selectBoxStage = 2;
-                                alert("Click a second tile (or the same tile) to define a selection rectangle.");
-                            } else if(selectBoxStage === 2) {
-                                //A second click gets the second pair. 
-                                selectBoxCoords[1] = currentTile[0];
-                                selectBoxCoords[3] = currentTile[1];
-                                /* If the user selected something above or to the left of their first selection,
-                                 * swap the coordinates. X values first, then Y.
-                                 * This uses a functional but inelegant temporary swapping variable.
-                                 */
-                                if(selectBoxCoords[0] > selectBoxCoords[1]) {
-                                    var selectBoxBuffer = selectBoxCoords[0];
-                                    selectBoxCoords[0] = selectBoxCoords[1];
-                                    selectBoxCoords[1] = selectBoxBuffer;
-                                }
-                                if(selectBoxCoords[2] > selectBoxCoords[3]) {
-                                    var selectBoxBuffer = selectBoxCoords[2];
-                                    selectBoxCoords[2] = selectBoxCoords[3];
-                                    selectBoxCoords[3] = selectBoxBuffer;
-                                }
-                                //Finally, we send these coords to the buffer filler.
-                                defaultBuffer.fillBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3],'selectBox');
-                                //And this allows the user to select something again.
-                                selectBoxStage = 1;
-                            } else console.log("selectBox() in interact() failed.");
-                        }
-                        break;
-                    case "paste":
-                    //For now, you can use a paste as a brush, which can actually look kind of cool.
-                        setDrawingStatus();
-                        if(drawingStatus === true){
-                        //Paste doesn't work if there's no tilebuffer, or if the tilebuffer is too large.
-                            if(defaultBuffer.array !== undefined) {
-                                //There might be other conditions; I'll implement them if I can think of them.
-                                if(defaultBuffer.array.length !== FIELD_SIZE[0] ||
-                                   defaultBuffer.array.length !== FIELD_SIZE[1]) {
-                                    //We include offset for where the user clicked.
-                                    defaultBuffer.pasteBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3], 
-                                                currentTile[0], currentTile[1]);
-                                } else { console.log("Can't paste that. It's too damn big!")};
-                            } else { console.log("Select something first, then try pasting it.");}
-                        } 
-                        break;
-                    case "query":
-                        $("#queryInfo").removeClass("currentlyHidden");
-                        respondToQuery(currentTile[0],currentTile[1]);
-                        break;
-                    case "moveBug":
-                    //Move bug should eventually be upgraded to support click and drag like the pen and eraser features.
-                        pauseState = true; //I recommend against trying to manually move bugs during playback.
-                        if(action === "click") {
-                            if(moveBugStage === 1) {
-                                for(var i = 0; i < bugList.length; ++i){
-                                    if((bugList[i].bugTile[0]) === currentTile[0] && 
-                                        bugList[i].bugTile[1] === currentTile[1]) {
-                                        selectedBug = i;
-                                        moveBugStage = 2;
-                                        alert("Now click where in the field you want to move the bug. You can move the field with the minimap during this process.");
-                                    }
-                                }
-                            } else if (moveBugStage === 2) {
-                                //console.log(currentTile[0],currentTile[1]);
-                                moveBugStage = 1;
-                                bugList[selectedBug].bugTile = [currentTile[0],currentTile[1]];
-                            } else {
-                                console.log("moveBug() in interact() failed.");
-                                moveBugStage = 1;
+        //It could probably be removed since the elements have Z-layers and such.
+            switch(selectedTool){
+                case "pencil":
+                    setDrawingStatus();
+                    if(drawingStatus === true){
+                        //Something is wrong with the audioFX parameter (the last one).
+                        //It doesn't seem to properly deep clone.
+                        //Therefore, modifying currentAudioEffects sometimes (but unreliably) changes the tile.
+                        //Mess around and then add a new effect, and the new effect doesn't get added to said tiles.
+                        //Paint new tiles, though, and the new effect also gets modified when modifying them?
+                        fieldContents[currentTile[0]][currentTile[1]] = new Tile(pitchTable[currentPitch], currentInstrument, undefined, 
+                            currentFlowControl, currentVolume, undefined, 0, 0, 0, 0, 
+                            $.extend(true, [], currentAudioEffects )); 
+                    
+                    }
+                    break;
+                case "eraser":
+                    setDrawingStatus();
+                    if(drawingStatus === true){
+                        fieldContents[currentTile[0]][currentTile[1]] = undefined;
+                    }
+                    break;
+                case "selectBox":
+                    if(action === "click") {
+                        if(selectBoxStage === 1) {
+                            //Get the first pair for the buffer.
+                            selectBoxCoords[0] = currentTile[0];
+                            selectBoxCoords[2] = currentTile[1];
+                            selectBoxStage = 2;
+                            alert("Click a second tile (or the same tile) to define a selection rectangle.");
+                        } else if(selectBoxStage === 2) {
+                            //A second click gets the second pair. 
+                            selectBoxCoords[1] = currentTile[0];
+                            selectBoxCoords[3] = currentTile[1];
+                            /* If the user selected something above or to the left of their first selection,
+                             * swap the coordinates. X values first, then Y.
+                             * This uses a functional but inelegant temporary swapping variable.
+                             */
+                            if(selectBoxCoords[0] > selectBoxCoords[1]) {
+                                var selectBoxBuffer = selectBoxCoords[0];
+                                selectBoxCoords[0] = selectBoxCoords[1];
+                                selectBoxCoords[1] = selectBoxBuffer;
                             }
-                        }
-                        break;
-                    case "turnBug":
-                        for(var i = 0; i < bugList.length; ++i){
-                                if( (bugList[i].bugTile[0]) === currentTile[0] && 
-                                     bugList[i].bugTile[1] === currentTile[1] &&
-                                     action === "click") { 
-                                    //Check for a bug in the chosen tile; if there is one, rotate its heading 90 degrees clockwise.
-                                    switch(bugList[i].action) {
-                                        case 'moveLeft':
-                                            bugList[i].action = 'moveUp';
-                                            break;
-                                        case 'moveUp':
-                                            bugList[i].action = 'moveRight';
-                                            break;
-                                        case 'moveRight':
-                                            bugList[i].action = 'moveDown';
-                                            break;
-                                        case 'moveDown':
-                                            bugList[i].action = 'moveLeft';
-                                            break;            
-                                        default:
-                                            break;
-                                    }
+                            if(selectBoxCoords[2] > selectBoxCoords[3]) {
+                                var selectBoxBuffer = selectBoxCoords[2];
+                                selectBoxCoords[2] = selectBoxCoords[3];
+                                selectBoxCoords[3] = selectBoxBuffer;
+                            }
+                            //Finally, we send these coords to the buffer filler.
+                            defaultBuffer.fillBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3],'selectBox');
+                            //And this allows the user to select something again.
+                            selectBoxStage = 1;
+                        } else console.log("selectBox() in interact() failed.");
+                    }
+                    break;
+                case "paste":
+                //For now, you can use a paste as a brush, which can actually look kind of cool.
+                    setDrawingStatus();
+                    if(drawingStatus === true){
+                    //Paste doesn't work if there's no tilebuffer, or if the tilebuffer is too large.
+                        if(defaultBuffer.array !== undefined) {
+                            //There might be other conditions; I'll implement them if I can think of them.
+                            if(defaultBuffer.array.length !== FIELD_SIZE[0] ||
+                               defaultBuffer.array.length !== FIELD_SIZE[1]) {
+                                //We include offset for where the user clicked.
+                                defaultBuffer.pasteBuffer(selectBoxCoords[0],selectBoxCoords[1],selectBoxCoords[2],selectBoxCoords[3], 
+                                            currentTile[0], currentTile[1]);
+                            } else { console.log("Can't paste that. It's too damn big!")};
+                        } else { console.log("Select something first, then try pasting it.");}
+                    } 
+                    break;
+                case "query":
+                    $("#queryInfo").removeClass("currentlyHidden");
+                    respondToQuery(currentTile[0],currentTile[1]);
+                    break;
+                case "moveBug":
+                //Move bug should eventually be upgraded to support click and drag like the pen and eraser features.
+                    pauseState = true; //I recommend against trying to manually move bugs during playback.
+                    if(action === "click") {
+                        if(moveBugStage === 1) {
+                            for(var i = 0; i < bugList.length; ++i){
+                                if((bugList[i].bugTile[0]) === currentTile[0] && 
+                                    bugList[i].bugTile[1] === currentTile[1]) {
+                                    selectedBug = i;
+                                    moveBugStage = 2;
+                                    alert("Now click where in the field you want to move the bug. You can move the field with the minimap during this process.");
                                 }
                             }
-                        
-                        break;
-                    case "editTile":
-                        //currentlyEditedTile is used when we need global scope. Probably not optimal.
-                        if(action === "click") {
-                            currentlyEditedTile = currentTile; 
-                            $("#modifyTileTarget").html(currentTile[0] + " , " + currentTile[1]);
-                            //Fill the window with the values from the tile if relevant. Substitute defaults if it's empty.
-                            if(fieldContents[currentTile[0]][currentTile[1]] !== undefined) {                     
-                                if(fieldContents[currentTile[0]][currentTile[1]].note !== undefined) {
-                                //The tile's frequency multiplier needs to be converted to the correct pitch before we can use this.
-                                    $("#modifyTilePitchSpinner").val(pitchTable.indexOf(fieldContents[currentTile[0]][currentTile[1]].note));
-                                }
-                                if(fieldContents[currentTile[0]][currentTile[1]].instrument !== undefined) {  
-                                    $("#modifyTileInstrumentSpinner").val(fieldContents[currentTile[0]][currentTile[1]].instrument);
-                                }                            
-                                if(fieldContents[currentTile[0]][currentTile[1]].flowValue !== undefined) {  
-                                    $("#modifyTileFlowSpinner").val(fieldContents[currentTile[0]][currentTile[1]].flowValue);
-                                }
-                                if(fieldContents[currentTile[0]][currentTile[1]].xPointer !== undefined) {
-                                    $("#modifyPointerTileX").val(fieldContents[currentTile[0]][currentTile[1]].xPointer)
-                                } 
-                                if(fieldContents[currentTile[0]][currentTile[1]].yPointer !== undefined) {
-                                    $("#modifyPointerTileY").val(fieldContents[currentTile[0]][currentTile[1]].yPointer)
-                                }
-                            //If the tile's undefined, we need some default values!
-                            } else {
-                                $("#modifyTilePitchSpinner").val(36);
-                                $("#modifyTileInstrumentSpinner").val(0);
-                                $("#modifyTileFlowSpinner").val(0);
-                                $("#modifyPointerTileX").val(0);
-                                $("#modifyPointerTileY").val(0);
-                            }
-                            //Then show the window to the user.
-                            $("#modifyTile").removeClass("currentlyHidden");
+                        } else if (moveBugStage === 2) {
+                            //console.log(currentTile[0],currentTile[1]);
+                            moveBugStage = 1;
+                            bugList[selectedBug].bugTile = [currentTile[0],currentTile[1]];
+                        } else {
+                            console.log("moveBug() in interact() failed.");
+                            moveBugStage = 1;
                         }
-                        break;
-                    case "eyeDropper":
-                        if(action === "click") {
-                            if(fieldContents[currentTile[0]][currentTile[1]] !== undefined){
-                                alert("Eyedropper needs to be overhauled for the new Audio Effects engine");
-                                //console.log(fieldContents[currentTile[0]][currentTile[1]]);
-                                //I thought I had to do a logarithm to figure this out! I was so wrong.
-                                currentPitch = pitchTable.indexOf(fieldContents[currentTile[0]][currentTile[1]].note);
-                                updatePitchDescription();
-                                //When we change the value being painted, we also need to inform the user by updating UI elements.
-                                currentInstrument = fieldContents[currentTile[0]][currentTile[1]].instrument;
-                                $('#instrumentInput').val(currentInstrument);
-                                //Needs to scroll and change the highlighted element. Look this up!
-                                //JQuery has a scrollTop() method.
+                    }
+                    break;
+                case "turnBug":
+                    for(var i = 0; i < bugList.length; ++i){
+                            if( (bugList[i].bugTile[0]) === currentTile[0] && 
+                                 bugList[i].bugTile[1] === currentTile[1] &&
+                                 action === "click") { 
+                                //Check for a bug in the chosen tile; if there is one, rotate its heading 90 degrees clockwise.
+                                switch(bugList[i].action) {
+                                    case 'moveLeft':
+                                        bugList[i].action = 'moveUp';
+                                        break;
+                                    case 'moveUp':
+                                        bugList[i].action = 'moveRight';
+                                        break;
+                                    case 'moveRight':
+                                        bugList[i].action = 'moveDown';
+                                        break;
+                                    case 'moveDown':
+                                        bugList[i].action = 'moveLeft';
+                                        break;            
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                    
+                    break;
+                case "editTile":
+                    //currentlyEditedTile is used when we need global scope. Probably not optimal.
+                    if(action === "click") {
+                        currentlyEditedTile = currentTile; 
+                        $("#modifyTileTarget").html(currentTile[0] + " , " + currentTile[1]);
+                        //Fill the window with the values from the tile if relevant. Substitute defaults if it's empty.
+                        if(fieldContents[currentTile[0]][currentTile[1]] !== undefined) {                     
+                            if(fieldContents[currentTile[0]][currentTile[1]].note !== undefined) {
+                            //The tile's frequency multiplier needs to be converted to the correct pitch before we can use this.
+                                $("#modifyTilePitchSpinner").val(pitchTable.indexOf(fieldContents[currentTile[0]][currentTile[1]].note));
+                            }
+                            if(fieldContents[currentTile[0]][currentTile[1]].instrument !== undefined) {  
+                                $("#modifyTileInstrumentSpinner").val(fieldContents[currentTile[0]][currentTile[1]].instrument);
+                            }                            
+                            if(fieldContents[currentTile[0]][currentTile[1]].flowValue !== undefined) {  
+                                $("#modifyTileFlowSpinner").val(fieldContents[currentTile[0]][currentTile[1]].flowValue);
+                            }
+                            if(fieldContents[currentTile[0]][currentTile[1]].xPointer !== undefined) {
+                                $("#modifyPointerTileX").val(fieldContents[currentTile[0]][currentTile[1]].xPointer)
+                            } 
+                            if(fieldContents[currentTile[0]][currentTile[1]].yPointer !== undefined) {
+                                $("#modifyPointerTileY").val(fieldContents[currentTile[0]][currentTile[1]].yPointer)
+                            }
+                        //If the tile's undefined, we need some default values!
+                        } else {
+                            $("#modifyTilePitchSpinner").val(36);
+                            $("#modifyTileInstrumentSpinner").val(0);
+                            $("#modifyTileFlowSpinner").val(0);
+                            $("#modifyPointerTileX").val(0);
+                            $("#modifyPointerTileY").val(0);
+                        }
+                        //Then show the window to the user.
+                        $("#modifyTile").removeClass("currentlyHidden");
+                    }
+                    break;
+                case "eyeDropper":
+                    if(action === "click") {
+                        if(fieldContents[currentTile[0]][currentTile[1]] !== undefined){
+                            alert("Eyedropper needs to be overhauled for the new Audio Effects engine");
+                            //console.log(fieldContents[currentTile[0]][currentTile[1]]);
+                            //I thought I had to do a logarithm to figure this out! I was so wrong.
+                            currentPitch = pitchTable.indexOf(fieldContents[currentTile[0]][currentTile[1]].note);
+                            updatePitchDescription();
+                            //When we change the value being painted, we also need to inform the user by updating UI elements.
+                            currentInstrument = fieldContents[currentTile[0]][currentTile[1]].instrument;
+                            $('#instrumentInput').val(currentInstrument);
+                            //Needs to scroll and change the highlighted element. Look this up!
+                            //JQuery has a scrollTop() method.
 
-                                currentDSP = fieldContents[currentTile[0]][currentTile[1]].dspEffect;
-                                $('#audioFX1Value1').val(currentDSP);
-                                currentFlowControl = fieldContents[currentTile[0]][currentTile[1]].flowEffect;
-                                $('#controlInput').val(currentFlowControl);
-                                currentVolume = fieldContents[currentTile[0]][currentTile[1]].volume;
-                                $('#adjustInputVolume').val(currentVolume*100);
-                                currentDSPValue = fieldContents[currentTile[0]][currentTile[1]].dspValue;
-                                $('#dspValueInput').val(currentDSPValue);
-                                //Color value should be added later.
-                                //Flow control specifics are not eyedropped yet and probably should be, since probably isn't that hard. 
+                            currentDSP = fieldContents[currentTile[0]][currentTile[1]].dspEffect;
+                            $('#audioFX1Value1').val(currentDSP);
+                            currentFlowControl = fieldContents[currentTile[0]][currentTile[1]].flowEffect;
+                            $('#controlInput').val(currentFlowControl);
+                            currentVolume = fieldContents[currentTile[0]][currentTile[1]].volume;
+                            $('#adjustInputVolume').val(currentVolume*100);
+                            currentDSPValue = fieldContents[currentTile[0]][currentTile[1]].dspValue;
+                            $('#dspValueInput').val(currentDSPValue);
+                            //Color value should be added later.
+                            //Flow control specifics are not eyedropped yet and probably should be, since probably isn't that hard. 
+                            
+                            //Suck up the audio effects. Later, though, once I figure out some paste-by-reference bugs.
+
+                            /*
+                            currentAudioEffects = fieldContents[currentTile[0]][currentTile[1]].audioEffectList;
+                            //currentAudioEffects = jQuery.extend(true, [], fieldContents[currentTile[0]][currentTile[1]].audioEffectList);
+                            console.log(fieldContents[currentTile[0]][currentTile[1]].audioEffectList[0]);
+                            console.log(currentAudioEffects[0]);
+
+                            //Rebuild the entire FXInstance array.
+                            while($(".audioFXInstance").length > 0){
+                                $(".audioFXInstance").last().remove();
                                 
-                                //Suck up the audio effects. Later, though, once I figure out some paste-by-reference bugs.
-
-                                /*
-                                currentAudioEffects = fieldContents[currentTile[0]][currentTile[1]].audioEffectList;
-                                //currentAudioEffects = jQuery.extend(true, [], fieldContents[currentTile[0]][currentTile[1]].audioEffectList);
-                                console.log(fieldContents[currentTile[0]][currentTile[1]].audioEffectList[0]);
-                                console.log(currentAudioEffects[0]);
-
-                                //Rebuild the entire FXInstance array.
-                                while($(".audioFXInstance").length > 0){
-                                    $(".audioFXInstance").last().remove();
-                                    
-                                }
-                                while($(".audioFXInstance").length < currentAudioEffects.length){
-                                    //Duplicated from ui_behavior and therefore not too efficent.
-                                    genericAudioFXDiv.clone().appendTo("#audioFXPropertiesBox"); 
-                                    $(".audioFXInstance").last().attr("id","audioFXInstance" + currentAudioEffects.length);
-                                }
-               
-                                $("#FXAppliedNumber").html(currentAudioEffects.length);
-                                //Then render everything.
-                                for(var i = 0; i < currentAudioEffects.length; ++i){
-                                    console.log(currentAudioEffects[i].type);
-                                    renderAudioFXList(currentAudioEffects[i].type, i);
-                                }
-                                */
                             }
-                            else {
-                                alert("You can't use the eyedropper on an empty tile.");
+                            while($(".audioFXInstance").length < currentAudioEffects.length){
+                                //Duplicated from ui_behavior and therefore not too efficent.
+                                genericAudioFXDiv.clone().appendTo("#audioFXPropertiesBox"); 
+                                $(".audioFXInstance").last().attr("id","audioFXInstance" + currentAudioEffects.length);
                             }
+           
+                            $("#FXAppliedNumber").html(currentAudioEffects.length);
+                            //Then render everything.
+                            for(var i = 0; i < currentAudioEffects.length; ++i){
+                                console.log(currentAudioEffects[i].type);
+                                renderAudioFXList(currentAudioEffects[i].type, i);
+                            }
+                            */
                         }
-                        break;
-                    case "adjustPointer":
-                        if(action === "click") {
-                            if(adjustPointerStage === 1) {
-                                //Get one tile. 
-                                pointeeX = currentTile[0];
-                                pointeeY = currentTile[1];
-                                adjustPointerStage = 2;
-                                alert("Select the tile you want your previous selection to point to.");
-                            } else if(adjustPointerStage === 2) {
-                                //Get the coords yet again.
-                                var pointToX = currentTile[0];
-                                var pointToY = currentTile[1];
-                                //Use this pair to adjust data in the first pair.
-                                fieldContents[pointeeX][pointeeY].xPointer = pointToX;
-                                fieldContents[pointeeX][pointeeY].yPointer = pointToY;
-                                adjustPointerStage = 1;
-                            } else console.log("adjustPointer() in interact() failed.");
+                        else {
+                            alert("You can't use the eyedropper on an empty tile.");
                         }
-                        break;
-                    //This simply moves the arrowPen location around.
-                    case "arrowPen":
-                        if(action === "click") {
-                            currentArrowPenTile = currentTile;
-                            console.log(currentArrowPenTile);
-                        }
-                        break;
-                    case "extrapolate":
-                        if(action === "click") {
-                            if(extrapolateStage === 1){
-                                extrapolateTiles[0] = currentTile[0];
-                                extrapolateTiles[1] = currentTile[1];
-                                extrapolateStage = 2;
-                                //console.log(extrapolateTiles);
-                            } else if(extrapolateStage === 2){
-                                //Extrapolate takes values from two tiles and paints the area between said tiles with their averages.
-                                extrapolateTiles[2] = currentTile[0];
-                                extrapolateTiles[3] = currentTile[1];
-                                //If the tiles are equivalent, stop executing.
-                                if(extrapolateTiles[0] === extrapolateTiles[2] &&
-                                   extrapolateTiles[1] === extrapolateTiles[3]){
-                                    extrapolateStage = 1;
-                                    alert("You have to click different tiles for the Extrapolator to work properly.");
-                                    break;
-                                }
-                                //Once we have two tiles, behavior diverges based on what the user has selected in the relevant UI props.
-                                if($('#extrapolatePitch').is(':checked')){
-                                    extrapolateTileData("note");
-                                } else if($('#extrapolateVolume').is(':checked')){
-                                    extrapolateTileData("volume");
-                                } else if($('#extrapolateFXValue').is(':checked')){
-                                    extrapolateTileData("dspValue"); //The capitalization on this is actually important!
-                                }
+                    }
+                    break;
+                case "adjustPointer":
+                    if(action === "click") {
+                        if(adjustPointerStage === 1) {
+                            //Get one tile. 
+                            pointeeX = currentTile[0];
+                            pointeeY = currentTile[1];
+                            adjustPointerStage = 2;
+                            alert("Select the tile you want your previous selection to point to.");
+                        } else if(adjustPointerStage === 2) {
+                            //Get the coords yet again.
+                            var pointToX = currentTile[0];
+                            var pointToY = currentTile[1];
+                            //Use this pair to adjust data in the first pair.
+                            fieldContents[pointeeX][pointeeY].xPointer = pointToX;
+                            fieldContents[pointeeX][pointeeY].yPointer = pointToY;
+                            adjustPointerStage = 1;
+                        } else console.log("adjustPointer() in interact() failed.");
+                    }
+                    break;
+                //This simply moves the arrowPen location around.
+                case "arrowPen":
+                    if(action === "click") {
+                        currentArrowPenTile = currentTile;
+                        console.log(currentArrowPenTile);
+                    }
+                    break;
+                case "extrapolate":
+                    if(action === "click") {
+                        if(extrapolateStage === 1){
+                            extrapolateTiles[0] = currentTile[0];
+                            extrapolateTiles[1] = currentTile[1];
+                            extrapolateStage = 2;
+                            //console.log(extrapolateTiles);
+                        } else if(extrapolateStage === 2){
+                            //Extrapolate takes values from two tiles and paints the area between said tiles with their averages.
+                            extrapolateTiles[2] = currentTile[0];
+                            extrapolateTiles[3] = currentTile[1];
+                            //If the tiles are equivalent, stop executing.
+                            if(extrapolateTiles[0] === extrapolateTiles[2] &&
+                               extrapolateTiles[1] === extrapolateTiles[3]){
                                 extrapolateStage = 1;
+                                alert("You have to click different tiles for the Extrapolator to work properly.");
+                                break;
                             }
+                            //Once we have two tiles, behavior diverges based on what the user has selected in the relevant UI props.
+                            if($('#extrapolatePitch').is(':checked')){
+                                extrapolateTileData("note");
+                            } else if($('#extrapolateVolume').is(':checked')){
+                                extrapolateTileData("volume");
+                            } else if($('#extrapolateFXValue').is(':checked')){
+                                extrapolateTileData("dspValue"); //The capitalization on this is actually important!
+                            }
+                            extrapolateStage = 1;
                         }
-                        break;
-                    default:
-                        break;
-                }
+                    }
+                    break;
+                default:
+                    break;
             }
+        
     }
     //Used for the pen and eraser tools and anything with a standard draw mechanism.
     //These need refining to make the buttons less 'sticky'.
