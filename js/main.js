@@ -10,6 +10,7 @@ var FIELD_PIXELS = [80,0,800,552]; //This is the area not covered by the UI; x-c
 //A series of button coordinates. The size might be redundant.
 var PAUSE_PLAY_BUTTON_AREA = [80,576,24,24];
 var PENCIL_BUTTON_AREA = [104,576,24,24];
+var FXPENCIL_BUTTON_AREA = [104,552,24,24];
 var ERASER_BUTTON_AREA = [128,576,24,24];
 var SELECTBOX_BUTTON_AREA = [152,576,24,24];
 var PASTE_BUTTON_AREA = [176,576,24,24];
@@ -78,7 +79,7 @@ var currentDSP = undefined;
 var genericAudioFXDiv;
 
 //Image arrays used in image_loader.js
-var UIImages = new Array(31); //These are almost entirely buttons.
+var UIImages = new Array(32); //These are almost entirely buttons.
 var tileOverlayImages = new Array(14); //Used for flow control and anything that needs to be drawn above a bug or tile.
 
 //Define the arrays used for bug data and images.

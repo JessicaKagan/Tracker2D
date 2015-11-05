@@ -243,6 +243,7 @@ var drawButtons = function() {
     else if(pauseState == true) { ctx.drawImage(UIImages[1],PAUSE_PLAY_BUTTON_AREA[0],PAUSE_PLAY_BUTTON_AREA[1]); }
     //Most buttons, though, do not change function when clicked.
     ctx.drawImage(UIImages[2],PENCIL_BUTTON_AREA[0],PENCIL_BUTTON_AREA[1]); 
+    ctx.drawImage(UIImages[31],FXPENCIL_BUTTON_AREA[0],FXPENCIL_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[3],ERASER_BUTTON_AREA[0],ERASER_BUTTON_AREA[1]); 
     ctx.drawImage(UIImages[6],SELECTBOX_BUTTON_AREA[0],SELECTBOX_BUTTON_AREA[1]);
     //Actually putting the second menu row to use.
@@ -290,6 +291,9 @@ var drawSelectedToolOverlay = function() {
     switch(selectedTool) {
                     case "pencil":
                     ctx.fillRect(PENCIL_BUTTON_AREA[0], PENCIL_BUTTON_AREA[1],PENCIL_BUTTON_AREA[2],PENCIL_BUTTON_AREA[3]);
+                        break;                    
+                    case "audioFXPen":
+                    ctx.fillRect(FXPENCIL_BUTTON_AREA[0], FXPENCIL_BUTTON_AREA[1],FXPENCIL_BUTTON_AREA[2],FXPENCIL_BUTTON_AREA[3]);
                         break;
                     case "eraser":
                     ctx.fillRect(ERASER_BUTTON_AREA[0], ERASER_BUTTON_AREA[1],ERASER_BUTTON_AREA[2],ERASER_BUTTON_AREA[3]);
