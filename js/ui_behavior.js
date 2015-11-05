@@ -217,31 +217,35 @@ function respondToQuery(X, Y) {
 
 
 //General UI handling function called whenever the user opens up a UI element through Canvas.
-//The timeouts prevent clicks from bleeding through to other elements.
+//The timeouts prevent clicks from bleeding through to other elements; the animation is to make it look nicer.
 function hideUI(){
-    if($("#saveExport").hasClass("currentlyHidden") === false) { 
-        setTimeout(function() {$("#saveExport").addClass("currentlyHidden");}, 50);
-    }
     if($("#loadExport").hasClass("currentlyHidden") === false) { 
-        setTimeout(function() {$("#loadExport").addClass("currentlyHidden");}, 50);
+        setTimeout(function() {$("#loadExport").addClass("currentlyHidden");}, 200);
+        $("#loadExport").animate({ opacity: "0.0", }, 200, function(){ $("#loadExport").css("opacity", "1.0");});
     }
     if($("#modifySongProperties").hasClass("currentlyHidden") === false) { 
-        setTimeout(function() {$("#modifySongProperties").addClass("currentlyHidden");}, 50);
+        setTimeout(function() {$("#modifySongProperties").addClass("currentlyHidden");}, 200);
+        $("#modifySongProperties").animate({ opacity: "0.0", }, 200, function(){ $("#modifySongProperties").css("opacity", "1.0");});   
     }
     if($("#modifyTile").hasClass("currentlyHidden") === false) { 
-        setTimeout(function() {$("#modifyTile").addClass("currentlyHidden");}, 50);
+        setTimeout(function() {$("#modifyTile").addClass("currentlyHidden");}, 200);
+        $("#modifyTile").animate({ opacity: "0.0", }, 200, function(){ $("#modifyTile").css("opacity", "1.0");});
     }
     if($("#helpPage").hasClass("currentlyHidden") === false) { 
-        setTimeout(function() {$("#helpPage").addClass("currentlyHidden");}, 50);
+        setTimeout(function() {$("#helpPage").addClass("currentlyHidden");}, 200);
+        $("#helpPage").animate({ opacity: "0.0", }, 200, function(){ $("#helpPage").css("opacity", "1.0");});
     }
     if($("#queryInfo").hasClass("currentlyHidden") === false) { 
-        setTimeout(function() {$("#queryInfo").addClass("currentlyHidden");}, 50);
+        setTimeout(function() {$("#queryInfo").addClass("currentlyHidden");}, 200);
+        $("#queryInfo").animate({ opacity: "0.0", }, 200, function(){ $("#queryInfo").css("opacity", "1.0");});
     }     
     if($("#modifyBugProperties").hasClass("currentlyHidden") === false) { 
-        setTimeout(function() {$("#modifyBugProperties").addClass("currentlyHidden");}, 50);
+        setTimeout(function() {$("#modifyBugProperties").addClass("currentlyHidden");}, 200);
+        $("#modifyBugProperties").animate({ opacity: "0.0", }, 200, function(){ $("#modifyBugProperties").css("opacity", "1.0");});
     }     
     if($("#modifyUIProperties").hasClass("currentlyHidden") === false) { 
-        setTimeout(function() {$("#modifyUIProperties").addClass("currentlyHidden");}, 50);
+        setTimeout(function() {$("#modifyUIProperties").addClass("currentlyHidden");}, 200);
+        $("#modifyUIProperties").animate({ opacity: "0.0", }, 200, function(){ $("#modifyUIProperties").css("opacity", "1.0");});
         //Some UI properties need to be saved to localStorage when we close this.
         if($('#extrapolatePitch').is(':checked')){
             localStorage.extrapolateStyle = "note";
@@ -261,10 +265,12 @@ function hideUI(){
         localStorage.tileBoundaryColor = tileBoundaryColor;
     }
     if($("#flowControlSelector").hasClass("currentlyHidden") === false) { 
-        setTimeout(function() {$("#flowControlSelector").addClass("currentlyHidden");}, 50);
+        setTimeout(function() {$("#flowControlSelector").addClass("currentlyHidden");}, 200);
+        $("#flowControlSelector").animate({ opacity: "0.0", }, 200, function(){ $("#flowControlSelector").css("opacity", "1.0");});
     }    
     if($("#audioFXWindow").hasClass("currentlyHidden") === false) { 
-        setTimeout(function() {$("#audioFXWindow").addClass("currentlyHidden");}, 50);
+        setTimeout(function() {$("#audioFXWindow").addClass("currentlyHidden");}, 200);
+        $("#audioFXWindow").animate({ opacity: "0.0", }, 200, function(){ $("#audioFXWindow").css("opacity", "1.0");});
     }
 
 }

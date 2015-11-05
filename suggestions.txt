@@ -17,13 +17,12 @@ Things I know I want to do (which could get very long):
 - Properly implement versioning and use this to make the save format more robust and less likely to break compatibility with old files (Ongoing)
 - Simple "undo" function? It will not be so simple.
 - Improve the overall UI/UX of exceptionally large fields.
-- Open up more audio FX parameters to the user (requires save file versioning update, extrapolator improvements)
-- Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data; one way to do this would possibly be adding audio effects to bugs).
-- Add function to paint audio effects without adding any other data to a tile. Put it in the UI props?  
+- Add function to paint audio effects without adding any other data to a tile. Make this a tool. 
 - Add hotkeys for changing UI properties more efficiently.
-- Make the "numbersOnly" class used for some input more robust in filtering out non-numeric input.
+- Make the "numbersOnly" class used for some input more robust in filtering out non-numeric input (being phased out in favor of HTML number input tags).
 - Eyedropper tool should change the audioFX array.
-- "Center camera" flow control effect (which would call moveViewingField in rendering.js)
+- Create something with D3.js that analyzes a file and does some visualization.
+
 
 Things I might do but am not sure about:
 - Make selection flip and rotate tools optionally change the direction of turnsignals.
@@ -61,3 +60,6 @@ Suggestions and planned features that have already been implemented:
 - Adjust implementation of query tool to allow querying tiles under the query window (Perhaps by moving it based on cursor location)
 - Flow control tile to jump to a random tile within a radius defined by the flow control value.
 - Add a delayed playback audio effect.
+- "Center camera" flow control effect (it calls moveViewingField in rendering.js)
+- Open up more audio FX parameters to the user (requires save file versioning update, extrapolator improvements)
+- Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data; one way to do this would possibly be adding audio effects to bugs).
