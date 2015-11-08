@@ -46,7 +46,10 @@ function interact(action, e) {
             selectBoxStage = 1; //Start the selection process.
         } else if(cursorY >= 576 && cursorX >= 176 && cursorX < 200) {
             console.log("PASTE_BUTTON_AREA");
-            selectedTool = "paste";  
+            selectedTool = "paste";
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 104 && cursorX < 128) {
+            console.log("FXPEN_BUTTON_AREA");
+            selectedTool = "audioFXPen";
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 128 && cursorX < 152) {
             console.log("FILL_BUTTON_AREA"); 
             if( (selectBoxCoords[0] == selectBoxCoords[1]) && (selectBoxCoords[2] == selectBoxCoords[3]) ) { 
@@ -168,8 +171,6 @@ function interact(action, e) {
         //console.log("In the playfield");
         currentTile = getTile(cursorX, cursorY);
         //console.log(currentTile);
-        //This statement reduces painting with UI elements open; timeouts handle the rest.
-        //It could probably be removed since the elements have Z-layers and such.
             switch(selectedTool){
                 case "pencil":
                     setDrawingStatus();
@@ -183,6 +184,13 @@ function interact(action, e) {
                             currentFlowControl, currentVolume, undefined, 0, 0, 0, 0, 
                             $.extend(true, [], currentAudioEffects )); 
                     
+                    }
+                    break;
+                case "audioFXPen":
+                //This has the same pointer problem as the regular pen.
+                    setDrawingStatus();
+                    if(drawingStatus === true && fieldContents[currentTile[0]][currentTile[1]] !== undefined){
+                        fieldContents[currentTile[0]][currentTile[1]].audioEffectList = $.extend(true, [], currentAudioEffects); 
                     }
                     break;
                 case "eraser":

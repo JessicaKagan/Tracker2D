@@ -17,11 +17,11 @@ Things I know I want to do (which could get very long):
 - Properly implement versioning and use this to make the save format more robust and less likely to break compatibility with old files (Ongoing)
 - Simple "undo" function? It will not be so simple.
 - Improve the overall UI/UX of exceptionally large fields.
-- Add function to paint audio effects without adding any other data to a tile. Make this a tool. 
 - Add hotkeys for changing UI properties more efficiently.
 - Make the "numbersOnly" class used for some input more robust in filtering out non-numeric input (being phased out in favor of HTML number input tags).
 - Eyedropper tool should change the audioFX array.
 - Create something with D3.js that analyzes a file and does some visualization.
+- Add a visual effect to the Audio FX pen to indicate that it's changed a tile.
 
 
 Things I might do but am not sure about:
