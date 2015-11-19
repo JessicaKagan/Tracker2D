@@ -177,7 +177,7 @@ function respondToQuery(X, Y) {
     queryResponse += "<p>Tile Coordinates: " + X + " , " + Y + "</p>";
     if(fieldContents[X][Y] !== undefined) {
         //We iterate through the tile properties.
-        if(fieldContents[X][Y].note !== undefined ) { queryResponse += "<p>Pitch: " + Math.floor(fieldContents[X][Y].note * 44100) + " (Note #" + pitchTable.indexOf(fieldContents[X][Y].note) + ")";}
+        if(fieldContents[X][Y].note !== undefined ) { queryResponse += "<p>Pitch: " + Math.floor(fieldContents[X][Y].note * 44100) + " (" + updatePitchDescription(pitchTable.indexOf(fieldContents[X][Y].note)) + ")";}
         else { queryResponse += "Does not reference a pitch."; }
         queryResponse += "<p> Instrument: " +  soundSet[fieldContents[X][Y].instrument][0] + "</p>";
         //For legacy files only.
@@ -437,9 +437,20 @@ function resizeFile(){
 }
 
 //This function renames the value of the pitch to more accurately reflect where it is in a traditional Western 12 tone scale.
-function updatePitchDescription(){
-    var noteName;
-    switch(scaleNote){
+function updatePitchDescription(getValue){
+    //console.log(getValue);
+    var noteName, getOctave;
+    //Get the info we need.
+    if(getValue === undefined){
+        //No argument is passed from keyboard/mouse pitch adjustment, so we  can use the value being passed to them.
+        getValue = scaleNote%12;
+        getOctave = currentOctave;
+    } else {
+        //But when you use the query tool, we do pass in an argument, so this should be derived from the tile contents.
+        getOctave = Math.floor(getValue/12); 
+        getValue = getValue%12; //This is destructive, so octave first.
+    }
+    switch(getValue){
         case 0:
             noteName = "C";
             break;        
@@ -480,7 +491,10 @@ function updatePitchDescription(){
             alert("Something has gone horribly wrong in updatePitchDescription()!");
             return;
     }
-    $('#pitchInput').html(noteName + "-" + (currentOctave + 1) );
+    noteName += "-" + (getOctave + 1);
+    $('#pitchInput').html(noteName);
+    //If called with an argument, return the prettyprint as a value.
+    return noteName;
 
 }
 

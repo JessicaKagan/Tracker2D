@@ -30,7 +30,7 @@ Things I might do but am not sure about:
 - Antialiasing for large file minimaps.
 - Make bugs in storage translucent instead of completely invisible, at least optionally.
 - Flow control feature to move the viewing field to the pointers.
-- Show the selected tilebuffer on the minimap as an overlay (which might be difficult or awkward to do as image data).
+- Show the selected tilebuffer on the minimap as an overlay (make this optional.)
 - Flow control features to dynamically adjust bug properties (possibly really cool, but programming would be annoying, especially on the save/load/revert frontier)
 - Flow control features to dynamically adjust SONG properties! (Currently only tempo; would require similar expansion of file I/O to dynamic bug properties)
 - Add Web MIDI API support to allow instrument input (Not sure since only Chrome and Opera support it)

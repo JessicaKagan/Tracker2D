@@ -186,11 +186,13 @@ function paintMiniMap(){
                 miniMapImage.data[miniMapIndex + 3] = 255;
             }
             //If the tile is in the selection buffer, draw an overlay on the minimap.
-            if(selectBoxCoords[0] <= i && i <= selectBoxCoords[1] && 
-               selectBoxCoords[2] <= j && j <= selectBoxCoords[3]) {
-                miniMapImage.data[miniMapIndex + 0] = ((miniMapImage.data[miniMapIndex + 0] + 128)/2);
-                miniMapImage.data[miniMapIndex + 1] = ((miniMapImage.data[miniMapIndex + 1] + 128)/2);
-                miniMapImage.data[miniMapIndex + 2] = ((miniMapImage.data[miniMapIndex + 2] + 128)/2);
+            if( selectedTool === "selectBox" || selectedTool === "paste" ) {
+                if(selectBoxCoords[0] <= i && i <= selectBoxCoords[1] && 
+                   selectBoxCoords[2] <= j && j <= selectBoxCoords[3]) {
+                    miniMapImage.data[miniMapIndex + 0] = ((miniMapImage.data[miniMapIndex + 0] + 128)/2);
+                    miniMapImage.data[miniMapIndex + 1] = ((miniMapImage.data[miniMapIndex + 1] + 128)/2);
+                    miniMapImage.data[miniMapIndex + 2] = ((miniMapImage.data[miniMapIndex + 2] + 128)/2);
+                }
             }
         }
     }
