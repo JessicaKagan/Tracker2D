@@ -8,22 +8,18 @@ function hookKeyboard(){
         var pressedNoteKey = true;
         var pressedArrowKey = false;
         switch(keyboardInput){
-            //Pitch adjustment. This should perhaps be disabled when a window requiring text input is open.
-            //It might be good to play the current instrument at the selected pitch when the user triggers hotkeys.
+            //Octave adjustment. This should perhaps be disabled when a window requiring text input is open.
             case 61:
                 if(currentOctave < 5) {
                     currentOctave += 1;
                     currentPitch += 12;
-                    //$('#pitchInput').val(currentPitch);
                 }
                 break;
             case 45:
                 if(currentOctave > 0) {
                     currentOctave -= 1;
                     currentPitch -= 12;
-                    //$('#pitchInput').val(currentPitch);
                 }
-                //$('#pitchInput').val(currentPitch);
                 break;
             //QWERTY row - 12 tone scale
             case 113:
@@ -101,17 +97,17 @@ function hookKeyboard(){
         //If the user pressed a note key, change the current pitch.
         if(keyboardInput !== 61 && keyboardInput !== 45) { 
             currentPitch = currentOctave*12 + scaleNote; 
-            //UI function to demonstrate sounds to the user. Make this optional.
+        }
+        //UI function to demonstrate sounds to the user. Make this optional.
             if(pressedNoteKey === true && $("#modifySongProperties").hasClass("currentlyHidden") === true &&
                 $('#samplePlayback').prop('checked') === true ) {
-                //playSound(soundFont[currentInstrument],pitchTable[currentPitch],currentDSP,currentDSPValue,currentVolume);
                 if(currentDSP != undefined){
+                    //Legacy playback
                     playSound(soundFont[currentInstrument],pitchTable[currentPitch],currentDSP,currentDSPValue,currentVolume);
                 } else {
                     playSound2(soundFont[currentInstrument],pitchTable[currentPitch],currentVolume, currentAudioEffects);
                 }
-            };
-        }
+        };
         updatePitchDescription(); //Prettyprint the current pitch value.
         //If the user pressed an arrow key while using the arrow pen, paint in the direction they pressed.
         if(pressedArrowKey === true && selectedTool === "arrowPen" && arrowPenDrawingActivated === true){
