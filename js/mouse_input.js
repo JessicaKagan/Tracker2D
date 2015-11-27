@@ -350,20 +350,27 @@ function interact(action, e) {
                             //Needs to scroll and change the highlighted element. Look this up!
                             //JQuery has a scrollTop() method.
 
+                            //Legacy DSP stuff probably shouldn't be sucked up. It could cause problems.
+                            /*
                             currentDSP = fieldContents[currentTile[0]][currentTile[1]].dspEffect;
                             $('#audioFX1Value1').val(currentDSP);
+                            currentDSPValue = fieldContents[currentTile[0]][currentTile[1]].dspValue;
+                            $('#dspValueInput').val(currentDSPValue);
+                            */
+
+                            //Specific flow control values (like pointers) aren't eyedropped since you can't set them by painting. 
                             currentFlowControl = fieldContents[currentTile[0]][currentTile[1]].flowEffect;
                             $('#controlInput').val(currentFlowControl);
                             currentVolume = fieldContents[currentTile[0]][currentTile[1]].volume;
                             $('#adjustInputVolume').val(currentVolume*100);
-                            currentDSPValue = fieldContents[currentTile[0]][currentTile[1]].dspValue;
-                            $('#dspValueInput').val(currentDSPValue);
-                            //Color value should be added later.
-                            //Flow control specifics are not eyedropped yet and probably should be, since probably isn't that hard. 
-                            
-                            //Suck up the audio effects. Later, though, once I figure out some paste-by-reference bugs.
 
-                            /*
+                            //Color value should be added later.
+                            
+                            
+
+
+                            //Suck up the audio effects. Later, though, once I figure out some paste-by-reference bugs.
+                            //What's the problem here?
                             currentAudioEffects = fieldContents[currentTile[0]][currentTile[1]].audioEffectList;
                             //currentAudioEffects = jQuery.extend(true, [], fieldContents[currentTile[0]][currentTile[1]].audioEffectList);
                             console.log(fieldContents[currentTile[0]][currentTile[1]].audioEffectList[0]);
@@ -386,7 +393,7 @@ function interact(action, e) {
                                 console.log(currentAudioEffects[i].type);
                                 renderAudioFXList(currentAudioEffects[i].type, i);
                             }
-                            */
+                            
                         }
                         else {
                             alert("You can't use the eyedropper on an empty tile.");
