@@ -642,7 +642,7 @@ function renderAudioFXList(type,number){
         //console.log(selector);
         var currentDiv = selector.parent().attr("id");
         var currentDivType = selector.find('option:selected').attr('value')
-        console.log(currentDivType);
+        //console.log(currentDivType);
         var currentDivID = currentDiv.substr(currentDiv.length - 1);
         //Set the type of the relevant audio effect in our list. Handle cleanup in the next function.
         currentAudioEffects[currentDivID - 1].type = currentDivType;

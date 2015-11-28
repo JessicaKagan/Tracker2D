@@ -20,6 +20,7 @@ Things I know I want to do (which could get very long):
 - Eyedropper tool should change the audioFX array.
 - Create something with D3.js that analyzes a file and does some visualization.
 - Add a visual effect to the Audio FX pen to indicate that it's changed a tile.
+- Remove the "load file" window and just pull up the dialog (easy)
 
 
 Things I might do but am not sure about:

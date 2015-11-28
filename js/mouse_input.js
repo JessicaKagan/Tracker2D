@@ -360,8 +360,10 @@ function interact(action, e) {
 
                             //Color value should be added later, at least if user-defined color is added.
                             
-                            //Suck up the audio effects.
-                            //I might have done so by now.
+                            //Used to determine whether to play an animation later.
+                            if(currentAudioEffects.length != fieldContents[currentTile[0]][currentTile[1]].audioEffectList.length){
+                                var effectListChanged = true;
+                            }
                             currentAudioEffects = fieldContents[currentTile[0]][currentTile[1]].audioEffectList;
                             //currentAudioEffects = jQuery.extend(true, [], fieldContents[currentTile[0]][currentTile[1]].audioEffectList);
 
@@ -387,6 +389,15 @@ function interact(action, e) {
                                 adjustAudioEffectOptions(instanceSelector.children('select'));
                             }
                             $("#FXAppliedNumber").html(currentAudioEffects.length); //"X active" on the left bar.
+                            //If the effects are different, animate the Audio FX area on the menu to show this.
+                            if(effectListChanged === true){
+                                //Animation doesn't work yet, but the function gets
+                                $("#UIShifter3").animate(
+                                    {left:"20px"}, 100, function(){
+                                $("#UIShifter3").animate({left:"0px"}, 100); 
+                                });
+                            }
+
                         }
                         else {
                             alert("You can't use the eyedropper on an empty tile.");
