@@ -556,16 +556,16 @@ function setFlowControl(value){
 */
 //Note: Add and remove functions are called only by the prespawned HTML buttons.
 function addAudioFXToList(){
-    //Push to the array
+    //Create a new instance of an effect, and push it to the effect array
     var newEffect = new audioEffect("none");
     //console.log("Done adding another effect");
     if(currentAudioEffects.length < 8){ 
         currentAudioEffects.push(newEffect);
-        genericAudioFXDiv.clone().appendTo("#audioFXPropertiesBox"); 
+        genericAudioFXDiv.clone().appendTo("#audioFXPropertiesBox"); //Creates the visual representation of the new effect 
         //Make the new effect's ID equivalent to our length.
         $(".audioFXInstance").last().attr("id","audioFXInstance" + currentAudioEffects.length);
     } else { alert("Maximum of 8 audio effects per tile"); }
-    $("#FXAppliedNumber").html(currentAudioEffects.length);
+    $("#FXAppliedNumber").html(currentAudioEffects.length); //Adds the new effect's representation to the DOM.
 }
 
 function removeAudioFXFromList(){
@@ -613,3 +613,19 @@ function renderAudioFXList(type,number){
         $(domID).append('Duration: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="duration" min="0" max="5" step="0.05"></input><br>');
     }
 }
+
+//I de-encapsulated this function thusly to make it available to the eyedropper in mouse_input.js.
+//Move this to ui_behavior or something.
+    function adjustAudioEffectOptions(selector){
+        //New style follows:
+        //Get the ID of the element this class belongs to.
+        //console.log(selector);
+        var currentDiv = selector.parent().attr("id");
+        var currentDivType = selector.find('option:selected').attr('value')
+        console.log(currentDivType);
+        var currentDivID = currentDiv.substr(currentDiv.length - 1);
+        //Set the type of the relevant audio effect in our list. Handle cleanup in the next function.
+        currentAudioEffects[currentDivID - 1].type = currentDivType;
+        //Pass the 'renderer' the current effect and the ID we acquired.
+        renderAudioFXList(currentDivType, currentDivID);
+    }
