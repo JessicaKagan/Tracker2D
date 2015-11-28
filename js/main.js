@@ -192,16 +192,7 @@ function init() {
 
         //When one of the audio FX type selectors changes, change the input fields that are visible and interactable.
         $( "#audioFXPropertiesBox" ).on("change", ".chooseAudioFXType", function() {
-            //New style follows:
-            //Get the ID of the element this class belongs to.
-            var currentDiv = $(this).parent().attr("id");
-            var currentDivType = $(this).find('option:selected').attr('value')
-            var currentDivID = currentDiv.substr(currentDiv.length - 1);
-            //Set the type of the relevant audio effect in our list. Handle cleanup in the next function.
-            currentAudioEffects[currentDivID - 1].type = currentDivType;
-            //Pass the 'renderer' the current effect and the ID we acquired.
-            renderAudioFXList(currentDivType, currentDivID);
-
+            adjustAudioEffectOptions($(this));
         });
 
         //When the user types in a value to one of the generated propboxes in the AudioFX Window, pass them to currentAudioEffects.
@@ -285,7 +276,6 @@ function init() {
     }
     //Left bar menu stuff ends here.
     handleLeftBarMenu();
-
     
     //Define the bugs. The names are for flavor.
     bugList[0] = new Bug(bugImages[0], 1,1,'moveRight','George', false);

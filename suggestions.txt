@@ -12,13 +12,11 @@ Things I know I want to do (which could get very long):
 - When the pointer setting tool is selected, apply an overlay to pointee tiles when hovering over a tile.
 - "Megamap" that displays a 64*64 to 512*512 pixel image showing the entire field in miniature.
 - Add an "amount of revisions" property to savefiles; increment on saves and add to the file name by default.
-- Note names instead of mere numbers (Update the query tool to use note names, requires functionalization of note-naming code)
 - Responsive window size (to make the program look better on larger monitors. Time consuming!)
 - Properly implement versioning and use this to make the save format more robust and less likely to break compatibility with old files (Ongoing)
 - Simple "undo" function? It will not be so simple.
 - Improve the overall UI/UX of exceptionally large fields.
 - Add hotkeys for changing UI properties more efficiently.
-- Make the "numbersOnly" class used for some input more robust in filtering out non-numeric input (being phased out in favor of HTML number input tags).
 - Eyedropper tool should change the audioFX array.
 - Create something with D3.js that analyzes a file and does some visualization.
 - Add a visual effect to the Audio FX pen to indicate that it's changed a tile.
@@ -63,3 +61,4 @@ Suggestions and planned features that have already been implemented:
 - "Center camera" flow control effect (it calls moveViewingField in rendering.js)
 - Open up more audio FX parameters to the user (requires save file versioning update, extrapolator improvements)
 - Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data; one way to do this would possibly be adding audio effects to bugs).
+- Note names instead of mere numbers (Update the query tool to use note names, requires functionalization of note-naming code)

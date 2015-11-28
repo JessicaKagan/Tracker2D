@@ -339,7 +339,7 @@ function interact(action, e) {
                 case "eyeDropper":
                     if(action === "click") {
                         if(fieldContents[currentTile[0]][currentTile[1]] !== undefined){
-                            alert("Eyedropper needs to be overhauled for the new Audio Effects engine");
+                            //alert("Eyedropper needs to be overhauled for the new Audio Effects engine");
                             //console.log(fieldContents[currentTile[0]][currentTile[1]]);
                             //I thought I had to do a logarithm to figure this out! I was so wrong.
                             currentPitch = pitchTable.indexOf(fieldContents[currentTile[0]][currentTile[1]].note);
@@ -350,43 +350,43 @@ function interact(action, e) {
                             //Needs to scroll and change the highlighted element. Look this up!
                             //JQuery has a scrollTop() method.
 
-                            currentDSP = fieldContents[currentTile[0]][currentTile[1]].dspEffect;
-                            $('#audioFX1Value1').val(currentDSP);
+                            //Legacy DSP filters probably shouldn't be eyedropped; it used to be in earlier versions.
+
+                            //Specific flow control values and pointers aren't eyedropped, since you can't set them by painting. 
                             currentFlowControl = fieldContents[currentTile[0]][currentTile[1]].flowEffect;
                             $('#controlInput').val(currentFlowControl);
                             currentVolume = fieldContents[currentTile[0]][currentTile[1]].volume;
                             $('#adjustInputVolume').val(currentVolume*100);
-                            currentDSPValue = fieldContents[currentTile[0]][currentTile[1]].dspValue;
-                            $('#dspValueInput').val(currentDSPValue);
-                            //Color value should be added later.
-                            //Flow control specifics are not eyedropped yet and probably should be, since probably isn't that hard. 
-                            
-                            //Suck up the audio effects. Later, though, once I figure out some paste-by-reference bugs.
 
-                            /*
+                            //Color value should be added later, at least if user-defined color is added.
+                            
+                            //Suck up the audio effects.
+                            //I might have done so by now.
                             currentAudioEffects = fieldContents[currentTile[0]][currentTile[1]].audioEffectList;
                             //currentAudioEffects = jQuery.extend(true, [], fieldContents[currentTile[0]][currentTile[1]].audioEffectList);
-                            console.log(fieldContents[currentTile[0]][currentTile[1]].audioEffectList[0]);
-                            console.log(currentAudioEffects[0]);
 
-                            //Rebuild the entire FXInstance array.
+                            //Then, Rebuild the entire FXInstance array.
                             while($(".audioFXInstance").length > 0){
-                                $(".audioFXInstance").last().remove();
-                                
+                                $(".audioFXInstance").last().remove();  
                             }
+
                             while($(".audioFXInstance").length < currentAudioEffects.length){
-                                //Duplicated from ui_behavior and therefore not too efficent.
-                                genericAudioFXDiv.clone().appendTo("#audioFXPropertiesBox"); 
-                                $(".audioFXInstance").last().attr("id","audioFXInstance" + currentAudioEffects.length);
+                                //Similar to addAudioFXToList() in ui_behavior, except that it doesn't change the underlying array.
+                                //It still sets up an instance and its ID.
+                                var ID = $(".audioFXInstance").length;
+                                //console.log(ID);
+                                genericAudioFXDiv.clone().appendTo("#audioFXPropertiesBox");
+                                var instanceSelector = $(".audioFXInstance").last();
+                                $(".audioFXInstance").last().attr("id","audioFXInstance" + (ID + 1) ); 
+                                var selectMenu = instanceSelector.children('select'); //Find the select menu...
+                                //And change the selected option to match the corresponding type.   
+                                selectMenu.val(currentAudioEffects[ID].type).change();
+                                //console.log(selectMenu);
+
+                                //With that available, we can correctly update the fields.
+                                adjustAudioEffectOptions(instanceSelector.children('select'));
                             }
-           
-                            $("#FXAppliedNumber").html(currentAudioEffects.length);
-                            //Then render everything.
-                            for(var i = 0; i < currentAudioEffects.length; ++i){
-                                console.log(currentAudioEffects[i].type);
-                                renderAudioFXList(currentAudioEffects[i].type, i);
-                            }
-                            */
+                            $("#FXAppliedNumber").html(currentAudioEffects.length); //"X active" on the left bar.
                         }
                         else {
                             alert("You can't use the eyedropper on an empty tile.");
