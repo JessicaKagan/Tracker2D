@@ -589,7 +589,7 @@ function renderAudioFXList(type,number){
     //Frequency, used by pretty much all the biQuad stuff.
     if(type == "lowpass" || type == "highpass" || type == "bandpass" || type == "lowshelf" || 
        type == "highshelf" || type == "peaking" || type == "notch" || type == "allpass") {
-        $(domID).append('Frequency: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="frequency"></input><br>');
+        $(domID).append('Frequency (hz): <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="frequency"></input><br>');
     }
     //Quality factor, which is basically the width of a frequency band/change.
     if(type == "lowpass" || type == "highpass" || type == "bandpass" || 
@@ -598,7 +598,7 @@ function renderAudioFXList(type,number){
     }
     //Gain. It's basically volume.
     if(type == "lowshelf" || type == "highshelf" || type == "peaking") {
-        $(domID).append('Gain: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="gain" max="12" step="0.1"></input><br>');
+        $(domID).append('Gain (dB): <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="gain" max="12" step="0.1"></input><br>');
     }
     //Multiplier, which is only used for the pitch bender.
     if(type == "bendpitch") {
@@ -606,11 +606,11 @@ function renderAudioFXList(type,number){
     }
     //Cutoff point, used for truncation effects.
     if(type == "stopplayback" || type == "startfromlater") {
-        $(domID).append('Cutoff: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="cutoff" min="0" max="100" step="1"></input><br>');
+        $(domID).append('Cutoff %: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="cutoff" min="0" max="100" step="1"></input><br>');
     }
     //Duration, currently only used for delayplayback.
     if(type == "delayplayback") {
-        $(domID).append('Duration: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="duration" min="0" max="5" step="0.05"></input><br>');
+        $(domID).append('Duration (seconds): <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="duration" min="0" max="5" step="0.05"></input><br>');
     }
 }
 
