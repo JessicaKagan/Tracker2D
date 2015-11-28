@@ -584,33 +584,53 @@ function renderAudioFXList(type,number){
     var domID = "#audioFXInstance" + number + " > .generatedAudioFX";  //Get the DOM scope we need.
     $(domID).html(""); //Remove everything just to be on the safe side.
 
-    //Start making elements as needed.
+    /*  Start making elements as needed. 
+        In each case, we should also use the array to check for a defined value and fill it in if necessary.
+        That's used primarily for the extrapolate tool. */
 
     //Frequency, used by pretty much all the biQuad stuff.
     if(type == "lowpass" || type == "highpass" || type == "bandpass" || type == "lowshelf" || 
        type == "highshelf" || type == "peaking" || type == "notch" || type == "allpass") {
         $(domID).append('Frequency (hz): <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="frequency"></input><br>');
+        if(currentAudioEffects[number - 1].frequency !== undefined){
+            $(domID).children("input[name=frequency]").val(currentAudioEffects[number - 1].frequency).change();
+        }
     }
     //Quality factor, which is basically the width of a frequency band/change.
     if(type == "lowpass" || type == "highpass" || type == "bandpass" || 
        type == "peaking" || type == "notch" || type == "allpass") {
         $(domID).append('Quality: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="quality" max="30" step="0.1"></input><br>');
+        if(currentAudioEffects[number - 1].quality !== undefined){
+            $(domID).children("input[name=quality]").val(currentAudioEffects[number - 1].quality).change();
+        }
     }
     //Gain. It's basically volume.
     if(type == "lowshelf" || type == "highshelf" || type == "peaking") {
         $(domID).append('Gain (dB): <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="gain" max="12" step="0.1"></input><br>');
+        if(currentAudioEffects[number - 1].gain !== undefined){
+            $(domID).children("input[name=gain]").val(currentAudioEffects[number - 1].gain).change();
+        }
     }
     //Multiplier, which is only used for the pitch bender.
     if(type == "bendpitch") {
         $(domID).append('Pitch Multiplier: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="bendpitch" max="16" step="0.1"></input><br>');
+        if(currentAudioEffects[number - 1].bendpitch !== undefined){
+            $(domID).children("input[name=bendpitch]").val(currentAudioEffects[number - 1].bendpitch).change();
+        }
     }
     //Cutoff point, used for truncation effects.
     if(type == "stopplayback" || type == "startfromlater") {
         $(domID).append('Cutoff %: <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="cutoff" min="0" max="100" step="1"></input><br>');
+        if(currentAudioEffects[number - 1].cutoff !== undefined){
+            $(domID).children("input[name=cutoff]").val(currentAudioEffects[number - 1].cutoff).change();
+        }
     }
     //Duration, currently only used for delayplayback.
     if(type == "delayplayback") {
         $(domID).append('Duration (seconds): <input type="number" placeholder="Submit with enter" class="numbersOnly audioFXValue" name="duration" min="0" max="5" step="0.05"></input><br>');
+        if(currentAudioEffects[number - 1].duration !== undefined){
+            $(domID).children("input[name=duration]").val(currentAudioEffects[number - 1].duration).change();
+        }
     }
 }
 

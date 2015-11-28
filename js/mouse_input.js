@@ -339,7 +339,7 @@ function interact(action, e) {
                 case "eyeDropper":
                     if(action === "click") {
                         if(fieldContents[currentTile[0]][currentTile[1]] !== undefined){
-                            alert("Eyedropper needs to be overhauled for the new Audio Effects engine");
+                            //alert("Eyedropper needs to be overhauled for the new Audio Effects engine");
                             //console.log(fieldContents[currentTile[0]][currentTile[1]]);
                             //I thought I had to do a logarithm to figure this out! I was so wrong.
                             currentPitch = pitchTable.indexOf(fieldContents[currentTile[0]][currentTile[1]].note);
