@@ -18,10 +18,10 @@ Things I know I want to do (which could get very long):
 - Improve the overall UI/UX of exceptionally large fields.
 - Add hotkeys for changing UI properties more efficiently.
 - Eyedropper tool should change the audioFX array.
-- Create something with D3.js that analyzes a file and does some visualization.
+- Create something with D3.js that analyzes a file and does some visualization (Doing analysis in-file. Maybe export it later).
 - Add a visual effect to the Audio FX pen to indicate that it's changed a tile.
-- Remove the "load file" window and just pull up the dialog (easy)
-
+- "Splitter tiles" that change which direction a bug is sent in after a bug moves over them
+- Allow player to rerun the analysis function at will without reloading.
 
 Things I might do but am not sure about:
 - Make selection flip and rotate tools optionally change the direction of turnsignals.

@@ -160,7 +160,7 @@ function loadFile(evt) {
                 TEMPO = loadingWorkArray[loadingWorkArray.length - 5];
                 updateFrequency = TICK_MULTIPLIER/TEMPO; //Important that we derive this value.
                 $("#tempoSpinner").attr('value', TEMPO);
-                console.log($("#tempoSpinner"));
+                //console.log($("#tempoSpinner"));
                 PLAYFIELD_SIZE = loadingWorkArray[loadingWorkArray.length - 4];
                 $("#fieldSizeSpinner").val = PLAYFIELD_SIZE*64;
                 author = loadingWorkArray[loadingWorkArray.length - 3];
@@ -168,10 +168,19 @@ function loadFile(evt) {
                 songTitle = loadingWorkArray[loadingWorkArray.length - 1];
             }
             loadedTiles = jQuery.extend(true, {}, fieldContents);
+
+            //Get ready to either analyze the file or tell the user it's not going to happen.
+            var analyzeAfterLoading = true; //Just for now, until the choice is implemented.
+            if(analyzeAfterLoading == true){
+                analyzeFile();
+            } else {
+                $("#loadAnalysis").html("Nothing to see here, because analytics were disabled the last time you loaded a file.");
+            }
         }
 
         reader.readAsText(file);
         renderMinimap = true;
+
     } else {
         alert("File load failed for some reason. If you exited out of your browser's file uploader manually, please disregard this.");
         renderMinimap = true;
@@ -239,4 +248,19 @@ function loadUserSettings() {
     updateUIColors("bottomBarColor",localStorage.bottomBarColor);
     updateUIColors("tileBoundaryColor",localStorage.tileBoundaryColor);
     */
+}
+
+//Analytics. Doesn't get called at the right time.
+function analyzeFile(){
+    var analysisHTML = "";
+    var amountOfTilesPainted = 0;
+    for(var i = 0; i < (FILE_SIZE[0]); ++i){
+        for(var j = 0; j < (FILE_SIZE[1]); ++j){
+            if(fieldContents[i][j] != undefined ){ ++amountOfTilesPainted; }
+        }
+    }
+    analysisHTML += "<p>When this file was loaded, the following statements were true:</p>"
+    analysisHTML += "<p>Amount of tiles painted: " + amountOfTilesPainted + "/" + Math.pow(fieldContents.length, 2) + " total";
+    analysisHTML += "</p>";
+    $("#loadAnalysis").html(analysisHTML);
 }
