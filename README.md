@@ -5,15 +5,16 @@ This program is in late alpha. While the program is far from complete, there is 
 
 Currently, this software uses jQuery 2.1.3, the Web Audio API, and eventually the HTML File API (currently FileReader is used). More acknowledgements as I add things. It also uses XMLHTTPRequest to prep sound files, so you won't be able to run it locally unless you have server software like XAMPP set up. Making it work without that will probably require a major refactoring and the replacement of various crucial libraries. I also use Vorbis audio for the sound set, so make sure your browser supports that.
 
-So far, this code runs best on Chrome. Firefox seems to handle it decently as well, but there are some issues with visual alignment that eventually need to be handled.
+So far, this code runs best on Chrome. Firefox seems to handle it decently as well, but there are some issues with visual alignment that eventually need to be handled. Microsoft Edge is not supported because it doesn't support Vorbis audio, and legacy Internet Explorer doesn't support the Web Audio API at all.
 
 Current bugs:
 - Not enough watchful eyes bleeding at the sight of code errors
 - Some long-running issues revolving around the fine differences between copying by reference and cloning objects
 - Mouse input can be 'sticky' and occasionally problematic if you click too fast or drag properly (I can't tell you more because I don't know how quite to describe it).
-- Occasionally, if you click the bottom row, the canvas doesn't register the click properly and instead selects some unknown text (eventually the first UIShifter div).
+- Occasionally, if you click the bottom row, the canvas doesn't register the click properly and instead selects some unknown text (usually the first UIShifter div).
 - Large fields and their save/loads may have various odd bugs. They're also really slow.
-- Microsoft Edge does not support Vorbis audio.
+- The query tool has trouble figuring out the pitch of tiles with audio FX. Might be related to the eyedropper.
+
 
 Tracker2D contains some code released under the MIT License. The following block of legalese applies to such:
 
