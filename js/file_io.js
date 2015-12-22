@@ -250,7 +250,7 @@ function loadUserSettings() {
     */
 }
 
-//Analytics. Doesn't get called at the right time.
+//Analytics; can be called by the load routine or manually.
 function analyzeFile(){
     var analysisHTML = "";
     var amountOfTilesPainted = 0;
@@ -259,7 +259,7 @@ function analyzeFile(){
             if(fieldContents[i][j] != undefined ){ ++amountOfTilesPainted; }
         }
     }
-    analysisHTML += "<p>When this file was loaded, the following statements were true:</p>"
+    analysisHTML += "<p>When this file was last analyzed, the following statements were true:</p>"
     analysisHTML += "<p>Amount of tiles painted: " + amountOfTilesPainted + "/" + Math.pow(fieldContents.length, 2) + " total";
     analysisHTML += "</p>";
     $("#loadAnalysis").html(analysisHTML);

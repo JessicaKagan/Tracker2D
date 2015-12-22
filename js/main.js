@@ -352,8 +352,8 @@ function getTile(x,y) {
     return [tileX, tileY];
 }
 
-//Well, not this one. I should probably remove it, since nothing seems to call it.
 
+//Probably obsolete.
 /*
 function convertTiletoPixels(x,y){
     var pixelX = (x*24) + 80;
