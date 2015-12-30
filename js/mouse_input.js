@@ -20,36 +20,42 @@ function interact(action, e) {
             }
     }
 
-    //Dummied out for now, but I'm keeping it in the off chance we need something in the left bar later.
-    /*
-    if(cursorX <= 80 && cursorX > 0 && action === "click") { 
-        console.log("LEFT_VERTICAL_BAR"); 
-    }
-    */
+    //Logic for the bottom bar.
     if(cursorY >= 540 && cursorY <= 600 && cursorX >= 80 && action === "click") { 
+        //Start building a tool reminder.
+        var toolReminder = "Selected tool: ";
         console.log("BOTTOM_HORIZONTAL_BAR");
         //UI buttons on the bottom horizontal bar.
         if(cursorY >= 576 && cursorX < 104) { 
             console.log("PAUSE_PLAY_BUTTON_AREA");
-            if(pauseState == true || undefined) { pauseState = false; }
+            if(pauseState == true || undefined) { 
+                pauseState = false; 
+                toolReminder += "Play";
+            }
             else pauseState = true;
-            console.log(pauseState);
+            toolReminder += "Pause";
+            //console.log(pauseState);
         } else if(cursorY >= 576 && cursorX >= 104 && cursorX < 128) { 
             console.log("PENCIL_BUTTON_AREA");
             selectedTool = "pencil";
+            toolReminder += "Pencil";
         } else if(cursorY >= 576 && cursorX >= 128 && cursorX < 152) { 
             console.log("ERASER_BUTTON_AREA");
             selectedTool = "eraser";
+            toolReminder += "Eraser";
         } else if(cursorY >= 576 && cursorX >= 152 && cursorX < 176) { 
             console.log("SELECTBOX_BUTTON_AREA");
             selectedTool = "selectBox";
             selectBoxStage = 1; //Start the selection process.
+            toolReminder += "Select Rectangle";
         } else if(cursorY >= 576 && cursorX >= 176 && cursorX < 200) {
             console.log("PASTE_BUTTON_AREA");
             selectedTool = "paste";
+            toolReminder += "Paste Selection";
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 104 && cursorX < 128) {
             console.log("FXPEN_BUTTON_AREA");
             selectedTool = "audioFXPen";
+            toolReminder += "Apply AudioFX To Tile";
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 128 && cursorX < 152) {
             console.log("FILL_BUTTON_AREA"); 
             if( (selectBoxCoords[0] == selectBoxCoords[1]) && (selectBoxCoords[2] == selectBoxCoords[3]) ) { 
@@ -62,45 +68,57 @@ function interact(action, e) {
                     }
                 }
             }
+            toolReminder += "Fill Selection";
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 152 && cursorX < 176) {
             console.log("HORIFLIP_BUTTON_AREA"); 
             defaultBuffer.transformBuffer("horizontalFlip");
+            toolReminder += "Flip Selection Horizontally";
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 176 && cursorX < 200) { 
             console.log("VERTFLIP_BUTTON_AREA"); 
-            defaultBuffer.transformBuffer("verticalFlip");     
+            defaultBuffer.transformBuffer("verticalFlip"); 
+            toolReminder += "Flip Selection Vertically";    
         /*   
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 200 && cursorX < 224) { 
             console.log("ROTATELEFT_BUTTON_AREA"); 
-            defaultBuffer.transformBuffer("rotateLeft");        
+            defaultBuffer.transformBuffer("rotateLeft");  
+            toolReminder += "Rotate Selection Counterclockwise";      
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 224 && cursorX < 248) { 
             console.log("ROTATERIGHT_BUTTON_AREA"); 
             defaultBuffer.transformBuffer("rotateRight");
+            toolReminder += "Rotate Selection Clockwise";
         */
         } else if(cursorY >= 576 && cursorX >= 200 && cursorX < 224) {
             console.log("QUERY_BUTTON_AREA");
             selectedTool = "query";
+            toolReminder += "Query Tile";
         } else if(cursorY >= 576 && cursorX >= 224 && cursorX < 248) {
             console.log("MOVE_BUG_BUTTON_AREA");
             selectedTool = "moveBug";
             moveBugStage = 1; //Like selecting a box, this is a two step process.
+            toolReminder += "Move Bug";
         } else if(cursorY >= 576 && cursorX >= 248 && cursorX < 272) {
             console.log("TURNBUG_BUTTON_AREA");
-            selectedTool = "turnBug";        
+            selectedTool = "turnBug";    
+            toolReminder += "Rotate Bug";    
         } else if(cursorY >= 576 && cursorX >= 272 && cursorX < 296) {
             console.log("EYEDROPPER_BUTTON_AREA");
             selectedTool = "eyeDropper";
+            toolReminder += "Eyedropper";
         } else if(cursorY >= 576 && cursorX >= 296 && cursorX < 320) {
             console.log("ADJUSTPOINTER_BUTTON_AREA");
             selectedTool = "adjustPointer";
             adjustPointerStage = 1;
+            toolReminder += "Change Tile's Pointer Value";
         } else if(cursorY >= 576 && cursorX >= 320 && cursorX < 344) {
             console.log("ARROWPEN_BUTTON_AREA");
             selectedTool = "arrowPen";
+            toolReminder += "Arrow Pen";
             alert("To use this tool, press the numpad arrow keys (2/4/6/8), and click where you want to start. Each keypress will paint one tile in the relevant direction. Rephrase this.")
         }else if(cursorY >= 576 && cursorX >= 344 && cursorX < 368) {
             console.log("EXTRAPOLATE_BUTTON_AREA");
             selectedTool = "extrapolate";
             extrapolateStage = 1;
+            toolReminder += "Draw Line With Extrapolated Data";
         } else if(cursorY >= 576 && cursorX >= 560 && cursorX < 588) {
             console.log("HELP_BUTTON_AREA");
             hideUI();
@@ -143,9 +161,11 @@ function interact(action, e) {
         } else if(cursorY >= 576 && cursorX >= 680 && cursorX < 704) {
             console.log('STOREBUG_BUTTON_AREA');
             storeBugPositions();
+            toolReminder += "Save Bug Positions";
         } else if(cursorY >= 576 && cursorX >= 704 && cursorX < 728) {
             console.log('RESTOREBUG_BUTTON_AREA');
             restoreBugPositions(true);
+            toolReminder += "Load Saved Bug Positions";
         } else if(cursorY >= 576 && cursorX >= 752 && cursorX < 776) {
             console.log('SAVE_BUTTON_AREA');
             hideUI();
@@ -156,6 +176,7 @@ function interact(action, e) {
             $("#loadExport").removeClass("currentlyHidden");
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 776 && cursorX < 800) {
             console.log("REVERT_BUTTON_AREA");
+            toolReminder += "Revert To Previous Save";
             if(loadedTiles !== undefined){
                 var continueReverting = confirm("Revert restores the most recent copy of the field from your latest save or load operation. Your bugs' positions and headings will not be affected.");
                 if(continueReverting === true) {
@@ -164,7 +185,21 @@ function interact(action, e) {
                 }
             } else { alert("Can't revert because you haven't attempted to save or load a file yet.");}
         }
+        //Display the results of the tool reminder to the user.
+        $("#toolInfo").html(toolReminder);
+        $("#toolInfo").removeClass("currentlyHidden");
+        //Animate the div fading out.
+        setTimeout(function(){
+            $("#toolInfo").animate({
+                    opacity: "0",
+                }, 200, function(){
+                    $("#toolInfo").addClass("currentlyHidden");
+                    $("#toolInfo").css("opacity", 1);
+            });
+        }, 800);
+
     }
+
     //If we're inside the playfield, convert the coordinates to a tile.
     //The logic for this is going to become a great deal more complex with time, I think.
     if(cursorX >= 80 && cursorX <= 800 && cursorY >= 0 && cursorY <= 540){
