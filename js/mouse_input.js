@@ -185,23 +185,25 @@ function interact(action, e) {
                 }
             } else { alert("Can't revert because you haven't attempted to save or load a file yet.");}
         }
-        //Display the results of the tool reminder to the user.
+        //Display the results of the tool reminder to the user if doing so is enabled in the UI Props.
         $("#toolInfo").html(toolReminder);
-        $("#toolInfo").removeClass("currentlyHidden");
-        //Animate the div fading out.
-        setTimeout(function(){
-            $("#toolInfo").animate({
-                    opacity: "0",
-                }, 200, function(){
-                    $("#toolInfo").addClass("currentlyHidden");
-                    $("#toolInfo").css("opacity", 1);
-            });
-        }, 800);
+        if($('#showToolReminders').prop('checked') === true){
+            $("#toolInfo").removeClass("currentlyHidden");
+            //Animate the div fading out.
+            setTimeout(function(){
+                $("#toolInfo").animate({
+                        opacity: "0",
+                    }, 200, function(){
+                        $("#toolInfo").addClass("currentlyHidden");
+                        $("#toolInfo").css("opacity", 1);
+                });
+            }, 800);
+        }
 
     }
 
     //If we're inside the playfield, convert the coordinates to a tile.
-    //The logic for this is going to become a great deal more complex with time, I think.
+    //Featuring the mother of all switch statements.
     if(cursorX >= 80 && cursorX <= 800 && cursorY >= 0 && cursorY <= 540){
         //console.log("In the playfield");
         currentTile = getTile(cursorX, cursorY);

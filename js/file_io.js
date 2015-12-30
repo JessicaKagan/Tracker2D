@@ -216,7 +216,7 @@ function loadUserSettings() {
             localStorage.extrapolateStyle = "note";
             break;
     }
-    //Same here. Localstorage doesn't like booleans, so we use strings instead.
+    //Same with these checkboxes. Localstorage doesn't like booleans, so we use strings instead.
     $('#samplePlayback').prop('checked', false);
     switch(localStorage.samplePlayback){
         case "true":
@@ -228,6 +228,19 @@ function loadUserSettings() {
         default:
             localStorage.samplePlayback = "true";
             $('#samplePlayback').prop('checked', true);
+            break;
+    }    
+    $('#showToolReminders').prop('checked', false);
+    switch(localStorage.showToolReminders){
+        case "true":
+            $('#showToolReminders').prop('checked', true);
+            break;        
+        case "false":
+            $('#showToolReminders').prop('checked', false);
+            break;
+        default:
+            localStorage.showToolReminders = "true";
+            $('#showToolReminders').prop('checked', true);
             break;
     }
     //Using the UI updater function should give me free error checking. I hope.
