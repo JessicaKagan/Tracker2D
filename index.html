@@ -106,10 +106,10 @@
                     <br><br>
                     <input type="file" id="loadFileUI" name="tracker2DSave">
                     <br><br>
-                    <input type="button" id="analyticsEnabled" name="analyticsEnabled"> Analyze Current File</input>
+                    <button type="button" id="analyticsEnabled" name="analyticsEnabled" onClick="analyzeFile()"> Analyze Current File</button>
                     <br><br>
                     <h2>Analytics</h2>
-                    <div id="loadAnalysis"><p>Expect to see ever more statistics here after loading a file once analytics are established.</p></div>
+                    <div id="loadAnalysis"><p>Want to see stats for a file? Click the "Analyze Current File" button or load a new file.</p></div>
                 </div>
 
                 <!--This allows you to change tile properties in a more detailed fashion than the leftmenu.-->
@@ -157,7 +157,9 @@
                     </p>
                     <br>
                     <p><input id="samplePlayback" type="checkbox" checked>Play Sample When Pitch Key Is Pressed</input>
-                    </p>
+                    </p>                       
+                    <p><input id="showToolReminders" type="checkbox" checked>Show Tool Reminders</input>
+                    </p>                    
                     <br>
                     <p>UI Colors (<em>Example - 64,128,255,0.5</em>):<br><br>
                     First 3 values (RGB) need to be between 0->255, value 4 (alpha) takes values between 0->1<br>
@@ -171,6 +173,10 @@
                 </div>
                 <!--Unhidden when the user pulls up the query tool.-->
                 <div id="queryInfo" class="currentlyHidden">
+                </div>
+                <!--Unhidden when the user clicks a tool.-->
+                <div id="toolInfo" class="currentlyHidden">
+                    <p>Test</p>
                 </div>
                 <div id="helpPage" class="currentlyHidden">
                     <iframe src="manual.html" width="480" height="480"></iframe>

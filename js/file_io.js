@@ -216,7 +216,7 @@ function loadUserSettings() {
             localStorage.extrapolateStyle = "note";
             break;
     }
-    //Same here. Localstorage doesn't like booleans, so we use strings instead.
+    //Same with these checkboxes. Localstorage doesn't like booleans, so we use strings instead.
     $('#samplePlayback').prop('checked', false);
     switch(localStorage.samplePlayback){
         case "true":
@@ -228,6 +228,19 @@ function loadUserSettings() {
         default:
             localStorage.samplePlayback = "true";
             $('#samplePlayback').prop('checked', true);
+            break;
+    }    
+    $('#showToolReminders').prop('checked', false);
+    switch(localStorage.showToolReminders){
+        case "true":
+            $('#showToolReminders').prop('checked', true);
+            break;        
+        case "false":
+            $('#showToolReminders').prop('checked', false);
+            break;
+        default:
+            localStorage.showToolReminders = "true";
+            $('#showToolReminders').prop('checked', true);
             break;
     }
     //Using the UI updater function should give me free error checking. I hope.
@@ -250,7 +263,7 @@ function loadUserSettings() {
     */
 }
 
-//Analytics. Doesn't get called at the right time.
+//Analytics; can be called by the load routine or manually.
 function analyzeFile(){
     var analysisHTML = "";
     var amountOfTilesPainted = 0;
@@ -259,7 +272,7 @@ function analyzeFile(){
             if(fieldContents[i][j] != undefined ){ ++amountOfTilesPainted; }
         }
     }
-    analysisHTML += "<p>When this file was loaded, the following statements were true:</p>"
+    analysisHTML += "<p>When this file was last analyzed, the following statements were true:</p>"
     analysisHTML += "<p>Amount of tiles painted: " + amountOfTilesPainted + "/" + Math.pow(fieldContents.length, 2) + " total";
     analysisHTML += "</p>";
     $("#loadAnalysis").html(analysisHTML);

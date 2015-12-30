@@ -258,6 +258,11 @@ function hideUI(){
             localStorage.samplePlayback = "true";
         } else if($('#samplePlayback').prop('checked') === false ){ 
             localStorage.samplePlayback = "false"; 
+        }        
+        if($('#showToolReminders').prop('checked') === true ) {
+            localStorage.showToolReminders = "true";
+        } else if($('#showToolReminders').prop('checked') === false ){ 
+            localStorage.showToolReminders = "false"; 
         }
         localStorage.backgroundColor = backgroundColor;
         localStorage.leftBarColor = leftBarColor;
