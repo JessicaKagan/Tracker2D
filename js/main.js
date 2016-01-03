@@ -80,7 +80,7 @@ var genericAudioFXDiv;
 
 //Image arrays used in image_loader.js
 var UIImages = new Array(32); //These are almost entirely buttons.
-var tileOverlayImages = new Array(14); //Used for flow control and anything that needs to be drawn above a bug or tile.
+var tileOverlayImages = new Array(18); //Used for flow control and anything that needs to be drawn above a bug or tile.
 
 //Define the arrays used for bug data and images.
 var bugImages = new Array(8);

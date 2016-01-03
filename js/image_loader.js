@@ -15,6 +15,10 @@ function getImages() {
     tileOverlayImages[11].src = 'images/incrementer_overlay.png';
     tileOverlayImages[12].src = 'images/random_teleport_overlay.png';
     tileOverlayImages[13].src = 'images/move_camera_overlay.png';
+    tileOverlayImages[14].src = 'images/west_split_overlay.png';
+    tileOverlayImages[15].src = 'images/north_split_overlay.png';
+    tileOverlayImages[16].src = 'images/east_split_overlay.png';
+    tileOverlayImages[17].src = 'images/south_split_overlay.png';
 
     UIImages[0].src = 'images/pause_button.png';
     UIImages[1].src = 'images/play_button.png';
