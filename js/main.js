@@ -272,6 +272,11 @@ function init() {
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;revert&quot;)"><img src="images/revert_button.png"></button>Revert Tile<br>');
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;randomjump&quot;)"><img src="images/random_teleport_overlay.png"></button>Jump To A Random Tile<br>');
         $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;move_camera&quot;)"><img src="images/move_camera_overlay.png"></button>Move Camera<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;split_west&quot;)"><img src="images/west_split_overlay.png"></button>Turn West<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;split_north&quot;)"><img src="images/north_split_overlay.png"></button>Turn North<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;split_east&quot;)"><img src="images/east_split_overlay.png"></button>Turn East<br>');
+        $('#flowControlSelector').append('<button onclick="setFlowControl(&quot;split_south&quot;)"><img src="images/south_split_overlay.png"></button>Turn South<br>');
+
         
     }
     //Left bar menu stuff ends here.

@@ -140,6 +140,18 @@ function paintTile(tileX, tileY, color){
             case "move_camera":
                 ctx.drawImage(tileOverlayImages[13],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
+            case "split_west":
+                ctx.drawImage(tileOverlayImages[14],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;
+            case "split_north":
+                ctx.drawImage(tileOverlayImages[15],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;
+            case "split_east":
+                ctx.drawImage(tileOverlayImages[16],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;
+            case "split_south":
+                ctx.drawImage(tileOverlayImages[17],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;
             default:
                 break;
         }
