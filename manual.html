@@ -207,6 +207,17 @@
                     </div>
                     <strong>Move Camera</strong>: When a bug passes over this tile, the user's view will be moved so that it is centered (or at least as close to centered as possible) on the tile that this tile points to. The bug's current direction will not change, and any sound data in the tile will be processed normally.
                 </li>
+                <li>
+                <br>
+                    <div class="flowControlImages">
+                        <img src="images/north_split_overlay.png" alt="Split North">
+                        <img src="images/east_split_overlay.png" alt="Split East">
+                        <img src="images/south_split_overlay.png" alt="Split South">
+                        <img src="images/west_split_overlay.png" alt="Split West">
+                    </div>
+                    <strong>Splitter Tiles</strong>: When a bug passes over this tile, it will turn either clockwise or counterclockwise based on the current 'state' of the tile. Tile state is based on whether the flow control value associated with the tile is even (clockwise) or odd (counterclockwise). What makes this a "splitter" tile by default is the fact that the flow control value changes whenever a bug travels over the tile. Currently, splitter tiles are one way only - a bug will only turn if it was previously traveling in the direction indicated by the tile.
+                </li>
+
             </ul>
             <br>
         </div>

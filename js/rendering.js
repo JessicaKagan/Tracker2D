@@ -165,9 +165,9 @@ function paintTile(tileX, tileY, color){
                 console.log("Duh");
                 ctx.font = "8px Tahoma";
                 ctx.fillStyle = 'rgba(255,255,255,1)'; 
-                if(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue == 0){
+                if(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue %2 == 0){
                     ctx.fillText("CW", FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 8, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 6,22);
-                } else if (fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue == 1) {
+                } else if (fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue %2 == 1) {
                     ctx.fillText("CCW", FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 8, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 6,22);
                 }
                 break;
