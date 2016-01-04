@@ -140,9 +140,39 @@ function paintTile(tileX, tileY, color){
             case "move_camera":
                 ctx.drawImage(tileOverlayImages[13],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
                 break;
+            case "split_west":
+                ctx.drawImage(tileOverlayImages[14],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;
+            case "split_north":
+                ctx.drawImage(tileOverlayImages[15],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;
+            case "split_east":
+                ctx.drawImage(tileOverlayImages[16],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;
+            case "split_south":
+                ctx.drawImage(tileOverlayImages[17],FIELD_PIXELS[0] + (TILE_SIZE*tileX),FIELD_PIXELS[1] + (TILE_SIZE*tileY));
+                break;
             default:
                 break;
         }
+        //A special case for all splitter tiles.
+        switch(currentOverlay.flowEffect) {          
+            //Doesn't execute properly yet.
+            case "split_west":
+            case "split_north":
+            case "split_east":
+            case "split_south":
+                console.log("Duh");
+                ctx.font = "8px Tahoma";
+                ctx.fillStyle = 'rgba(255,255,255,1)'; 
+                if(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue %2 == 0){
+                    ctx.fillText("CW", FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 8, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 6,22);
+                } else if (fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue %2 == 1) {
+                    ctx.fillText("CCW", FIELD_PIXELS[0] + (TILE_SIZE*tileX) + 8, FIELD_PIXELS[1] + (TILE_SIZE*tileY) + 6,22);
+                }
+                break;
+        }
+
     }
     //The second layer tells us which part of the soundbank we're looking at.
     //0-128 is the General MIDI melodic bank and has no extra overlay.

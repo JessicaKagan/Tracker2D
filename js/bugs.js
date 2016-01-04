@@ -93,6 +93,54 @@ Bug.prototype.updateBug = function() {
                 break;    
             case "turn_south":
                 this.action = 'moveDown';
+                break;   
+            //Splitters currently only accept movement in one direction.
+            //Currently, if the flow control value is even, you turn clockwise; odd leads to a counterclockwise turn.
+            //This means you can control splitters with incrementers.
+            //Splitters also change direction after each successful usage.   
+            case "split_west":
+                if(this.action == 'moveLeft'){
+                    if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue%2 == 0){
+                        this.action = 'moveUp';
+                        fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue = 1;
+                    } else if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue%2 == 1){
+                        this.action = 'moveDown';
+                        fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue = 0;
+                    }
+                }
+                break;
+            case "split_north":
+                if(this.action == 'moveUp'){
+                    if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue%2 == 0){
+                        this.action = 'moveRight';
+                        fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue = 1;
+                    } else if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue%2 == 1){
+                        this.action = 'moveLeft';
+                        fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue = 0;
+                    }
+                }
+                break;
+            case "split_east":
+                if(this.action == 'moveRight'){
+                    if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue%2 == 0){
+                        this.action = 'moveDown';
+                        fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue = 1;
+                    } else if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue%2 == 1){
+                        this.action = 'moveUp';
+                        fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue = 0;
+                    }
+                }
+                break;    
+            case "split_south":
+                if(this.action == 'moveDown'){
+                    if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue%2 == 0){
+                        this.action = 'moveLeft';
+                        fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue = 1;
+                    } else if(fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue%2 == 1){
+                        this.action = 'moveRight';
+                        fieldContents[this.bugTile[0]][this.bugTile[1]].flowValue = 0;
+                    }
+                }
                 break;
             case "freeze":
             //There are some questionable interactions, so freeze should only be used at the very end of a song.
@@ -126,7 +174,7 @@ Bug.prototype.updateBug = function() {
                 break;
             case "incrementer":
             //Incrementers increase the value of the counter they point to by 1 every time a bug walks over them.
-            //Get the coords we're pointing to, then increment that tile's flowvalue.
+            //Get the coords we're pointing to, then increment that tile's flow value.
                 var XCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].xPointer;
                 var YCoord = fieldContents[this.bugTile[0]][this.bugTile[1]].yPointer;
                 //console.log(fieldContents[XCoord][YCoord]);

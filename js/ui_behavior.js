@@ -551,6 +551,18 @@ function setFlowControl(value){
         case "move_camera":
             $("#currentFlowControl > img").replaceWith('<img src="images/move_camera_overlay.png">');
             break;
+        case "split_west":
+            $("#currentFlowControl > img").replaceWith('<img src="images/west_split_overlay.png">');
+            break;        
+        case "split_east":
+            $("#currentFlowControl > img").replaceWith('<img src="images/east_split_overlay.png">');
+            break;        
+        case "split_north":
+            $("#currentFlowControl > img").replaceWith('<img src="images/north_split_overlay.png">');
+            break;        
+        case "split_south":
+            $("#currentFlowControl > img").replaceWith('<img src="images/south_split_overlay.png">');
+            break;
         default:
             break;
     }
