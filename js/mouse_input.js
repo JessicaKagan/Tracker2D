@@ -71,11 +71,15 @@ function interact(action, e) {
             toolReminder += "Fill Selection";
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 152 && cursorX < 176) {
             console.log("HORIFLIP_BUTTON_AREA"); 
-            defaultBuffer.transformBuffer("horizontalFlip");
+            if(defaultBuffer.toX - defaultBuffer.fromX == 0 || defaultBuffer.toY - defaultBuffer.fromY == 0){
+                alert("You need to select a rectangle in order to flip it horizontally.");
+            } else { defaultBuffer.transformBuffer("horizontalFlip"); }
             toolReminder += "Flip Selection Horizontally";
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 176 && cursorX < 200) { 
             console.log("VERTFLIP_BUTTON_AREA"); 
-            defaultBuffer.transformBuffer("verticalFlip"); 
+            if(defaultBuffer.toX - defaultBuffer.fromX == 0 || defaultBuffer.toY - defaultBuffer.fromY == 0){
+                alert("You need to select a rectangle in order to flip it vertically.");
+            } else { defaultBuffer.transformBuffer("verticalFlip"); }
             toolReminder += "Flip Selection Vertically";    
         /*   
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 200 && cursorX < 224) { 
