@@ -273,7 +273,8 @@ function analyzeFile(){
         }
     }
     analysisHTML += "<p>When this file was last analyzed, the following statements were true:</p>"
-    analysisHTML += "<p>Amount of tiles painted: " + amountOfTilesPainted + "/" + Math.pow(fieldContents.length, 2) + " total";
+    analysisHTML += "<p>Amount of tiles painted: " + amountOfTilesPainted + "/" + Math.pow(fieldContents.length, 2) + " total (" +
+    ((amountOfTilesPainted/Math.pow(fieldContents.length, 2))*100).toPrecision(3) + "%)";
     analysisHTML += "</p>";
     $("#loadAnalysis").html(analysisHTML);
 }
