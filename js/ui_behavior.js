@@ -444,16 +444,19 @@ function resizeFile(){
 //This function renames the value of the pitch to more accurately reflect where it is in a traditional Western 12 tone scale.
 function updatePitchDescription(getValue){
     //console.log(getValue);
-    var noteName, getOctave;
+    var noteName, getOctave; 
+    var calledWithValue = false; //Since getValue has to be changed to make this work, the state is stored here.
     //Get the info we need.
     if(getValue === undefined){
         //No argument is passed from keyboard/mouse pitch adjustment, so we  can use the value being passed to them.
         getValue = scaleNote%12;
         getOctave = currentOctave;
+        calledWithValue = false;
     } else {
         //But when you use the query tool, we do pass in an argument, so this should be derived from the tile contents.
         getOctave = Math.floor(getValue/12); 
         getValue = getValue%12; //This is destructive, so octave first.
+        calledWithValue = true;
     }
     switch(getValue){
         case 0:
@@ -497,7 +500,7 @@ function updatePitchDescription(getValue){
             return;
     }
     noteName += "-" + (getOctave + 1);
-    $('#pitchInput').html(noteName);
+    if(calledWithValue == false) { $('#pitchInput').html(noteName) };
     //If called with an argument, return the prettyprint as a value.
     return noteName;
 

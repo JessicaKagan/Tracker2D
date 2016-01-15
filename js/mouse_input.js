@@ -387,7 +387,16 @@ function interact(action, e) {
                             updatePitchDescription();
                             //When we change the value being painted, we also need to inform the user by updating UI elements.
                             currentInstrument = fieldContents[currentTile[0]][currentTile[1]].instrument;
-                            $('#instrumentInput').val(currentInstrument);
+                            
+                            //Come back to this when it works.
+                            //Scrolling algorithm lifted from: http://stackoverflow.com/questions/7205702/how-to-scroll-a-select-list-with-javascript-or-jquery
+                            /*
+                            var EDInstrumentTop = $("#instrumentInput").offset().top;
+                            var EDInstrumentScrollTo = $("#instrumentInput option:selected").offset().top;
+                             $("#instrumentInput").scrollTop( (EDInstrumentScrollTo - EDInstrumentTop) );
+                            */
+
+                            console.log($('#instrumentInput').val());
                             //Needs to scroll and change the highlighted element. Look this up!
                             //JQuery has a scrollTop() method.
 
@@ -432,7 +441,6 @@ function interact(action, e) {
                             $("#FXAppliedNumber").html(currentAudioEffects.length); //"X active" on the left bar.
                             //If the effects are different, animate the Audio FX area on the menu to show this.
                             if(effectListChanged === true){
-                                //Animation doesn't work yet, but the function gets
                                 $("#UIShifter3").animate(
                                     {left:"20px"}, 100, function(){
                                 $("#UIShifter3").animate({left:"0px"}, 100); 
