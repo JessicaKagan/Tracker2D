@@ -71,11 +71,15 @@ function interact(action, e) {
             toolReminder += "Fill Selection";
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 152 && cursorX < 176) {
             console.log("HORIFLIP_BUTTON_AREA"); 
-            defaultBuffer.transformBuffer("horizontalFlip");
+            if(defaultBuffer.toX - defaultBuffer.fromX == 0 || defaultBuffer.toY - defaultBuffer.fromY == 0){
+                alert("You need to select a rectangle in order to flip it horizontally.");
+            } else { defaultBuffer.transformBuffer("horizontalFlip"); }
             toolReminder += "Flip Selection Horizontally";
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 176 && cursorX < 200) { 
             console.log("VERTFLIP_BUTTON_AREA"); 
-            defaultBuffer.transformBuffer("verticalFlip"); 
+            if(defaultBuffer.toX - defaultBuffer.fromX == 0 || defaultBuffer.toY - defaultBuffer.fromY == 0){
+                alert("You need to select a rectangle in order to flip it vertically.");
+            } else { defaultBuffer.transformBuffer("verticalFlip"); }
             toolReminder += "Flip Selection Vertically";    
         /*   
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 200 && cursorX < 224) { 
@@ -383,7 +387,16 @@ function interact(action, e) {
                             updatePitchDescription();
                             //When we change the value being painted, we also need to inform the user by updating UI elements.
                             currentInstrument = fieldContents[currentTile[0]][currentTile[1]].instrument;
-                            $('#instrumentInput').val(currentInstrument);
+                            
+                            //Come back to this when it works.
+                            //Scrolling algorithm lifted from: http://stackoverflow.com/questions/7205702/how-to-scroll-a-select-list-with-javascript-or-jquery
+                            /*
+                            var EDInstrumentTop = $("#instrumentInput").offset().top;
+                            var EDInstrumentScrollTo = $("#instrumentInput option:selected").offset().top;
+                             $("#instrumentInput").scrollTop( (EDInstrumentScrollTo - EDInstrumentTop) );
+                            */
+
+                            console.log($('#instrumentInput').val());
                             //Needs to scroll and change the highlighted element. Look this up!
                             //JQuery has a scrollTop() method.
 
@@ -428,7 +441,6 @@ function interact(action, e) {
                             $("#FXAppliedNumber").html(currentAudioEffects.length); //"X active" on the left bar.
                             //If the effects are different, animate the Audio FX area on the menu to show this.
                             if(effectListChanged === true){
-                                //Animation doesn't work yet, but the function gets
                                 $("#UIShifter3").animate(
                                     {left:"20px"}, 100, function(){
                                 $("#UIShifter3").animate({left:"0px"}, 100); 

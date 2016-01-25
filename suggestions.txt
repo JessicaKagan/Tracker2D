@@ -18,10 +18,11 @@ Things I know I want to do (which could get very long):
 - Improve the overall UI/UX of exceptionally large fields.
 - Add hotkeys for changing UI properties more efficiently.
 - Eyedropper tool should change the audioFX array.
-- Create something with D3.js that analyzes a file and does some visualization (Doing analysis in-file. Maybe export it later).
+- Create something with D3.js that analyzes a file and does some visualization (Doing analysis in-program. Maybe export it later).
 - Add a visual effect to the Audio FX pen to indicate that it's changed a tile.
-- "Splitter tiles" that change which direction a bug is sent in after a bug moves over them
-- Add tooltips to the bottom bar buttons.
+- More analysis functions!
+- Bidirectional splitters (take either horizontal or vertical input and rotate 90 degrees CW/CCW depending on user settings.)
+
 
 
 Things I might do but am not sure about:
@@ -66,3 +67,5 @@ Suggestions and planned features that have already been implemented:
 - Overhaul audio FX to allow multiple effects to be added to a single note (which would require a major overhaul to playback involving loops and functionalization, new UI functions for adding audio FX, expansion of save data; one way to do this would possibly be adding audio effects to bugs).
 - Note names instead of mere numbers (Update the query tool to use note names, requires functionalization of note-naming code)
 - Allow player to rerun the analysis function at will without reloading.
+- "Splitter tiles" that change which direction a bug is sent in after a bug moves over them
+- Add tooltips to the bottom bar buttons.

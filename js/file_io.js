@@ -267,13 +267,27 @@ function loadUserSettings() {
 function analyzeFile(){
     var analysisHTML = "";
     var amountOfTilesPainted = 0;
+    var averageNotePitch = 0;
     for(var i = 0; i < (FILE_SIZE[0]); ++i){
         for(var j = 0; j < (FILE_SIZE[1]); ++j){
-            if(fieldContents[i][j] != undefined ){ ++amountOfTilesPainted; }
+            if(fieldContents[i][j] != undefined ){ 
+                ++amountOfTilesPainted;
+                //Summate the pitches; we'll divide later.
+                averageNotePitch += pitchTable.indexOf(fieldContents[i][j].note);
+            }
         }
     }
+    averageNotePitch = Math.round(averageNotePitch/amountOfTilesPainted);
+    console.log(averageNotePitch);
+
     analysisHTML += "<p>When this file was last analyzed, the following statements were true:</p>"
-    analysisHTML += "<p>Amount of tiles painted: " + amountOfTilesPainted + "/" + Math.pow(fieldContents.length, 2) + " total";
+    analysisHTML += "<p>Amount of tiles painted: " + amountOfTilesPainted + "/" + Math.pow(fieldContents.length, 2) + " total (" + ((amountOfTilesPainted/Math.pow(fieldContents.length, 2))*100).toPrecision(3) + "%)";
+    if(amountOfTilesPainted != 0) {
+        //Regex to remove whitespace
+        analysisHTML += "<p>Average note pitch: " + updatePitchDescription(averageNotePitch) + "</p>";
+    } else {
+        analysisHTML += "<p>There can be no average note pitch if there are no notes on the field!</p>";
+    }
     analysisHTML += "</p>";
     $("#loadAnalysis").html(analysisHTML);
 }
