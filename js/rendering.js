@@ -162,7 +162,6 @@ function paintTile(tileX, tileY, color){
             case "split_north":
             case "split_east":
             case "split_south":
-                console.log("Duh");
                 ctx.font = "8px Tahoma";
                 ctx.fillStyle = 'rgba(255,255,255,1)'; 
                 if(fieldContents[tileX + fieldOffset[0]][tileY + fieldOffset[1]].flowValue %2 == 0){
