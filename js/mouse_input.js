@@ -81,7 +81,7 @@ function interact(action, e) {
                 alert("You need to select a rectangle in order to flip it vertically.");
             } else { defaultBuffer.transformBuffer("verticalFlip"); }
             toolReminder += "Flip Selection Vertically";    
-        /*   
+        /* Used for the legacy selection rotator that was postponed due to tech issues.
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 200 && cursorX < 224) { 
             console.log("ROTATELEFT_BUTTON_AREA"); 
             defaultBuffer.transformBuffer("rotateLeft");  
@@ -90,7 +90,15 @@ function interact(action, e) {
             console.log("ROTATERIGHT_BUTTON_AREA"); 
             defaultBuffer.transformBuffer("rotateRight");
             toolReminder += "Rotate Selection Clockwise";
-        */
+        */        
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 200 && cursorX < 224) { 
+            console.log("ROTATELEFT_BUTTON_AREA"); 
+            selectedTool = "turnTileCCW";
+            toolReminder += "Rotate Tile Counterclockwise";      
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 224 && cursorX < 248) { 
+            console.log("ROTATERIGHT_BUTTON_AREA"); 
+            selectedTool = "turnTileCW";
+            toolReminder += "Rotate Tile Clockwise";
         } else if(cursorY >= 576 && cursorX >= 200 && cursorX < 224) {
             console.log("QUERY_BUTTON_AREA");
             selectedTool = "query";
@@ -509,6 +517,12 @@ function interact(action, e) {
                         }
                     }
                     break;
+                case "turnTileCW":
+                case "turnTileCCW": {
+                    if(action === "click") {
+                        console.log("Not implemented yet");
+                    }
+                }
                 default:
                     break;
             }
