@@ -518,11 +518,58 @@ function interact(action, e) {
                     }
                     break;
                 case "turnTileCW":
-                case "turnTileCCW": {
+                case "turnTileCCW": 
                     if(action === "click") {
-                        console.log("Not implemented yet");
+                        //Calls an inline function.
+                        //This isn't ideal, but I want to pick up two very similar actions in one go and reuse some code.
+                        //console.log(selectedTool);
+                        rotateSingleTile(selectedTool);
+                        function rotateSingleTile(direction){
+                            if(fieldContents[currentTile[0]][currentTile[1]] == undefined){
+                                alert("There's no point in trying to rotate an empty tile.");
+                                return;
+                            } else {
+                                switch(fieldContents[currentTile[0]][currentTile[1]].flowEffect){
+                                    case "turn_north":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_east"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_west"; }
+                                        break;
+                                    case "turn_east":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_south"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_north"; }
+                                        break;
+                                    case "turn_south":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_west"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_east"; }
+                                        break; 
+                                    case "turn_west":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_north"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_south"; }                                    
+                                        break;                                    
+                                    case "split_north":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_east"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_west"; }
+                                        break;
+                                    case "split_east":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_south"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_north"; }
+                                        break;
+                                    case "split_south":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_west"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_east"; }
+                                        break; 
+                                    case "split_west":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_north"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_south"; }
+                                        break;
+                                    default:
+                                        alert("You can only rotate turn and splitter tiles for now.");
+                                        break;
+                                }
+                            }
+                        }
                     }
-                }
+                
                 default:
                     break;
             }
