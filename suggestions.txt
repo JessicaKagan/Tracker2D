@@ -22,6 +22,7 @@ Things I know I want to do (which could get very long):
 - Add a visual effect to the Audio FX pen to indicate that it's changed a tile.
 - More analysis functions!
 - Bidirectional splitters (take either horizontal or vertical input and rotate 90 degrees CW/CCW depending on user settings.)
+- Add an option to make the "Turn Bug" tool turn bugs counterclockwise.
 
 
 

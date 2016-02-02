@@ -81,7 +81,7 @@ function interact(action, e) {
                 alert("You need to select a rectangle in order to flip it vertically.");
             } else { defaultBuffer.transformBuffer("verticalFlip"); }
             toolReminder += "Flip Selection Vertically";    
-        /*   
+        /* Used for the legacy selection rotator that was postponed due to tech issues.
         } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 200 && cursorX < 224) { 
             console.log("ROTATELEFT_BUTTON_AREA"); 
             defaultBuffer.transformBuffer("rotateLeft");  
@@ -90,7 +90,15 @@ function interact(action, e) {
             console.log("ROTATERIGHT_BUTTON_AREA"); 
             defaultBuffer.transformBuffer("rotateRight");
             toolReminder += "Rotate Selection Clockwise";
-        */
+        */        
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 200 && cursorX < 224) { 
+            console.log("ROTATELEFT_BUTTON_AREA"); 
+            selectedTool = "turnTileCCW";
+            toolReminder += "Rotate Tile Counterclockwise";      
+        } else if(cursorY >= 552 && cursorY < 576 && cursorX >= 224 && cursorX < 248) { 
+            console.log("ROTATERIGHT_BUTTON_AREA"); 
+            selectedTool = "turnTileCW";
+            toolReminder += "Rotate Tile Clockwise";
         } else if(cursorY >= 576 && cursorX >= 200 && cursorX < 224) {
             console.log("QUERY_BUTTON_AREA");
             selectedTool = "query";
@@ -509,6 +517,59 @@ function interact(action, e) {
                         }
                     }
                     break;
+                case "turnTileCW":
+                case "turnTileCCW": 
+                    if(action === "click") {
+                        //Calls an inline function.
+                        //This isn't ideal, but I want to pick up two very similar actions in one go and reuse some code.
+                        //console.log(selectedTool);
+                        rotateSingleTile(selectedTool);
+                        function rotateSingleTile(direction){
+                            if(fieldContents[currentTile[0]][currentTile[1]] == undefined){
+                                alert("There's no point in trying to rotate an empty tile.");
+                                return;
+                            } else {
+                                switch(fieldContents[currentTile[0]][currentTile[1]].flowEffect){
+                                    case "turn_north":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_east"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_west"; }
+                                        break;
+                                    case "turn_east":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_south"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_north"; }
+                                        break;
+                                    case "turn_south":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_west"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_east"; }
+                                        break; 
+                                    case "turn_west":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_north"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "turn_south"; }                                    
+                                        break;                                    
+                                    case "split_north":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_east"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_west"; }
+                                        break;
+                                    case "split_east":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_south"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_north"; }
+                                        break;
+                                    case "split_south":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_west"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_east"; }
+                                        break; 
+                                    case "split_west":
+                                        if(direction == "turnTileCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_north"; }
+                                        if(direction == "turnTileCCW") { fieldContents[currentTile[0]][currentTile[1]].flowEffect = "split_south"; }
+                                        break;
+                                    default:
+                                        alert("You can only rotate turn and splitter tiles for now.");
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                
                 default:
                     break;
             }
